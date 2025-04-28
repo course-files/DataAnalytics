@@ -47,3 +47,5 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+/sandbox
+/1_simple_linear_regression_files

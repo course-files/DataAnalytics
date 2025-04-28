@@ -1,0 +1,11 @@
+DebtRatio,Income,CreditRisk
+0.3,45000,Low
+0.5,60000,Medium
+0.7,30000,High
+0.2,75000,Low
+0.6,50000,Medium
+0.9,25000,High
+0.4,65000,Low
+0.8,40000,High
+0.1,80000,Low
+0.55,58000,Medium
