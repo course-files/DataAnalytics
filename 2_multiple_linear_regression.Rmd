@@ -1,0 +1,266 @@
+---
+title: "Multiple Linear Regression"
+author: "Allan Omondi"
+date: "`r Sys.Date()`"
+output:
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  pdf_document: 
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
+---
+
+```{r setup_chunk, message=FALSE, warning=FALSE, include=FALSE}
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+# Load the Dataset
+
+```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("readr")
+
+advertising_data <- read_csv("./data/advertising.csv")
+head(advertising_data)
+```
+
+# Initial EDA
+
+[**View the Dimensions**]{.underline}
+
+The number of observations and the number of variables.
+
+```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
+dim(advertising_data)
+```
+
+[**View the Data Types**]{.underline}
+
+```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(advertising_data, class)
+```
+
+```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
+str(advertising_data)
+```
+
+[**Descriptive Statistics**]{.underline}
+
+## [**Measures of Frequency**]{.underline}
+
+This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories).
+
+## [**Measures of Central Tendency**]{.underline}
+
+The median and the mean of each numeric variable:
+
+```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
+summary(advertising_data)
+```
+
+## [**Measures of Distribution**]{.underline}
+
+Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
+
+Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+
+### **Variance**
+
+```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(advertising_data[,], var)
+```
+
+### **Standard Deviation**
+
+```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(advertising_data[,], sd)
+```
+
+### **Kurtosis**
+
+The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS.
+
+In “type = 2” (used in SPSS and SAS):
+
+1.  Kurtosis \< 3 implies a low number of outliers
+
+2.  Kurtosis = 3 implies a medium number of outliers
+
+3.  Kurtosis \> 3 implies a high number of outliers
+
+```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("e1071")
+sapply(advertising_data[,],  kurtosis, type = 2)
+```
+
+### **Skewness**
+
+The skewness is used to identify the asymmetry of the distribution of results. Similar to kurtosis, there are several ways of computing the skewness.
+
+Using “type = 2” (common in other statistical software like SPSS and SAS) can be interpreted as:
+
+1.  Skewness between -0.4 and 0.4 (inclusive) implies that there is no skew in the distribution of results; the distribution of results is symmetrical; it is a normal distribution; a Gaussian distribution.
+
+2.  Skewness above 0.4 implies a positive skew; a right-skewed distribution.
+
+3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
+
+```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(advertising_data[,], skewness, type = 2)
+```
+
+## [**Measures of Relationship**]{.underline}
+
+### **Covariance**
+
+Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
+
+-   **Positive Covariance:** When one variable increases, the other tends to increase as well.
+
+-   **Negative Covariance:** When one variable increases, the other tends to decrease.
+
+-   **Zero Covariance:** No linear relationship exists between the variables.
+
+While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
+
+```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
+cov(advertising_data, method = "spearman")
+```
+
+### **Correlation**
+
+A strong correlation between variables enables us to better predict the value of the dependent variable using the value of the independent variable. However, a weak correlation between two variables does not help us to predict the value of the dependent variable from the value of the independent variable. This is useful only if there is a linear association between the variables.
+
+We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
+
+**Option 1:** Conduct a correlation test between the dependent variable and each independent variable one at a time.
+
+```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
+cor.test(advertising_data$Sales, advertising_data$YouTube, method = "spearman")
+
+cor.test(advertising_data$Sales, advertising_data$TikTok, method = "spearman")
+
+cor.test(advertising_data$Sales, advertising_data$Facebook, method = "spearman")
+```
+
+**Option 2:** To view the correlation of all variables at the same time
+
+```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
+cor(advertising_data, method = "spearman")
+```
+
+**Option 3:**
+
+## [**Basic Visualizations**]{.underline}
+
+### **Histogram**
+
+```{r visualization_histogram, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(advertising_data[[i]])) {
+    hist(advertising_data[[i]],
+         main = names(advertising_data)[i],
+         xlab = names(advertising_data)[i])
+  } else {
+    message(paste("Column", names(advertising_data)[i], "is not numeric and will be skipped."))
+  }
+}
+```
+
+### **Box and Whisker Plot**
+
+```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+# `boxplot()` This is the function used to plot the box and whisker plot visualization
+par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(advertising_data[[i]])) {
+    boxplot(advertising_data[[i]], main = names(advertising_data)[i])
+  } else {
+    message(paste("Column", names(advertising_data)[i], "is not numeric and will be skipped."))
+  }
+}
+```
+
+### **Missing Data Plot**
+
+```{r missing_data_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+pacman::p_load("Amelia")
+
+missmap(advertising_data, col = c("red", "grey"), legend = TRUE)
+```
+
+### **Correlation Plot**
+
+```{r correlation_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+pacman::p_load("ggcorrplot")
+
+ggcorrplot(cor(advertising_data[,]))
+```
+
+### **Scatter Plot**
+
+```{r scatter_plot_1, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+pacman::p_load("corrplot")
+
+pairs(advertising_data$Sales ~ ., data = advertising_data, col = advertising_data$Sales)
+```
+
+```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+pacman::p_load("ggplot2")
+ggplot(advertising_data,
+       aes(x = Sales, y = YouTube)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = "Relationship between Sales Revenue and \nExpenditure on YouTube Marketing",
+    x = "Expenditure",
+    y = "Sales"
+  )
+```
+
+# Statistical Test
+
+We then apply a simple linear regression as a statistical test for regression.
+
+```{r statistical_test_SLR, message=FALSE, warning=FALSE, include=FALSE}
+mlr_test <- lm(Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
+```
+
+View the summary of the model.
+
+```{r statistical_test_interpretation, echo=TRUE, message=FALSE, warning=FALSE}
+summary(mlr_test)
+```
+
+# Diagnostic EDA
