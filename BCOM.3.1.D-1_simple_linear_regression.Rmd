@@ -1,0 +1,6 @@
+---
+title: "Simple Linear Regression"
+output: html_notebook
+---
+
+# Load the Dataset
