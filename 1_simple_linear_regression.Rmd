@@ -3,6 +3,26 @@ title: "Simple Linear Regression"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -12,26 +32,6 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
-  html_notebook:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    self_contained: false
-  word_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    keep_md: true
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    self_contained: false
-    keep_md: true
 ---
 
 ```{r setup_chunk, message=FALSE, warning=FALSE, include=FALSE}
@@ -303,7 +303,7 @@ Diagnostic EDA is performed to validate that the regression assumptions are true
 
 ## [**Test of Linearity**]{.underline}
 
-The test of linearity is used to assess whether the relationship between the dependent variables and the independent variables is linear. This is necessary given that linearity is one of the key assumptions of linear regression models and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
+The test of linearity is used to assess whether the relationship between the dependent variables and the independent variables is linear. This is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
 
 A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line, i.e., the residuals should randomly vary around the mean of the value of the response variable.
 
@@ -366,7 +366,7 @@ plot(slr_test, which = 3)
 
 The graphical representations of the various tests of assumptions should be accompanied by quantitative values. The `gvlma` package (Global Validation of Linear Models Assumptions) is useful for this purpose.
 
-```{r message=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+```{r QuantitativeValidationofAssumptions, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("gvlma")
 gvlma_results <- gvlma(slr_test)
 summary(gvlma_results)
@@ -378,7 +378,7 @@ We can interpret the results of the statistical test with more confidence if the
 
 ## Academic Statement
 
-A simple linear regression was conducted to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI[19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
+A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
 
 ## Business Analysis
 

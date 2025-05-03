@@ -1,7 +1,7 @@
 ---
 title: "Multiple Linear Regression"
 author: "Allan Omondi"
-date: "`r Sys.Date()`"
+date: "2025-05-03"
 output:
   word_document:
     toc: true
@@ -34,24 +34,28 @@ output:
     latex_engine: xelatex
 ---
 
-```{r setup_chunk, message=FALSE, warning=FALSE, include=FALSE}
-if (!"pacman" %in% installed.packages()[, "Package"]) {
-  install.packages("pacman", dependencies = TRUE)
-  library("pacman", character.only = TRUE)
-}
 
-pacman::p_load("here")
-
-knitr::opts_knit$set(root.dir = here::here())
-```
 
 # Load the Dataset
 
-```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("readr")
 
 advertising_data <- read_csv("./data/advertising.csv")
 head(advertising_data)
+```
+
+```
+## # A tibble: 6 × 4
+##   YouTube TikTok Facebook Sales
+##     <dbl>  <dbl>    <dbl> <dbl>
+## 1    1200    800     1000  95.3
+## 2    1500    900     1100 101. 
+## 3    1300    850     1050  99.5
+## 4    1600    950     1150 107. 
+## 5    1100    780      980  93.0
+## 6    1700   1000     1200 108.
 ```
 
 # Initial EDA
@@ -60,18 +64,46 @@ head(advertising_data)
 
 The number of observations and the number of variables.
 
-```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 dim(advertising_data)
+```
+
+```
+## [1] 10  4
 ```
 
 [**View the Data Types**]{.underline}
 
-```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 sapply(advertising_data, class)
 ```
 
-```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
+```
+##   YouTube    TikTok  Facebook     Sales 
+## "numeric" "numeric" "numeric" "numeric"
+```
+
+
+``` r
 str(advertising_data)
+```
+
+```
+## spc_tbl_ [10 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ YouTube : num [1:10] 1200 1500 1300 1600 1100 1700 1400 1800 1250 1550
+##  $ TikTok  : num [1:10] 800 900 850 950 780 1000 880 1020 820 970
+##  $ Facebook: num [1:10] 1000 1100 1050 1150 980 1200 1080 1220 1010 1130
+##  $ Sales   : num [1:10] 95.3 101.2 99.5 106.8 93 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   YouTube = col_double(),
+##   ..   TikTok = col_double(),
+##   ..   Facebook = col_double(),
+##   ..   Sales = col_double()
+##   .. )
+##  - attr(*, "problems")=<externalptr>
 ```
 
 [**Descriptive Statistics**]{.underline}
@@ -84,8 +116,19 @@ This is applicable in cases where you have categorical variables, e.g., 60% of t
 
 The median and the mean of each numeric variable:
 
-```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 summary(advertising_data)
+```
+
+```
+##     YouTube         TikTok          Facebook        Sales       
+##  Min.   :1100   Min.   : 780.0   Min.   : 980   Min.   : 93.02  
+##  1st Qu.:1262   1st Qu.: 827.5   1st Qu.:1020   1st Qu.: 97.27  
+##  Median :1450   Median : 890.0   Median :1090   Median :101.95  
+##  Mean   :1440   Mean   : 897.0   Mean   :1092   Mean   :101.93  
+##  3rd Qu.:1588   3rd Qu.: 965.0   3rd Qu.:1145   3rd Qu.:106.17  
+##  Max.   :1800   Max.   :1020.0   Max.   :1220   Max.   :111.82
 ```
 
 ## [**Measures of Distribution**]{.underline}
@@ -96,14 +139,26 @@ Low variability is ideal because it means that you can better predict informatio
 
 ### **Variance**
 
-```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 sapply(advertising_data[,], var)
+```
+
+```
+##     YouTube      TikTok    Facebook       Sales 
+## 52111.11111  7267.77778  6951.11111    36.13165
 ```
 
 ### **Standard Deviation**
 
-```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 sapply(advertising_data[,], sd)
+```
+
+```
+##   YouTube    TikTok  Facebook     Sales 
+## 228.27858  85.25126  83.37332   6.01096
 ```
 
 ### **Kurtosis**
@@ -118,9 +173,15 @@ In “type = 2” (used in SPSS and SAS):
 
 3.  Kurtosis \> 3 implies a high number of outliers
 
-```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("e1071")
 sapply(advertising_data[,],  kurtosis, type = 2)
+```
+
+```
+##    YouTube     TikTok   Facebook      Sales 
+## -1.0800892 -1.4726766 -1.1989242 -0.8697324
 ```
 
 ### **Skewness**
@@ -135,8 +196,14 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 
 3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
 
-```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 sapply(advertising_data[,], skewness, type = 2)
+```
+
+```
+##    YouTube     TikTok   Facebook      Sales 
+## 0.08266188 0.09234643 0.19089944 0.10505432
 ```
 
 ## [**Measures of Relationship**]{.underline}
@@ -153,8 +220,17 @@ Covariance is a statistical measure that indicates the direction of the linear r
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
-```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 cov(advertising_data, method = "spearman")
+```
+
+```
+##           YouTube   TikTok Facebook    Sales
+## YouTube  9.166667 9.055556 9.166667 9.055556
+## TikTok   9.055556 9.166667 9.055556 8.944444
+## Facebook 9.166667 9.055556 9.166667 9.055556
+## Sales    9.055556 8.944444 9.055556 9.166667
 ```
 
 ### **Correlation**
@@ -165,25 +241,76 @@ We can measure the statistical significance of the correlation using Spearman's 
 
 **Option 1:** Conduct a correlation test between the dependent variable and each independent variable one at a time.
 
-```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 cor.test(advertising_data$Sales, advertising_data$YouTube, method = "spearman")
+```
 
+```
+## 
+## 	Spearman's rank correlation rho
+## 
+## data:  advertising_data$Sales and advertising_data$YouTube
+## S = 2, p-value < 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9878788
+```
+
+``` r
 cor.test(advertising_data$Sales, advertising_data$TikTok, method = "spearman")
+```
 
+```
+## 
+## 	Spearman's rank correlation rho
+## 
+## data:  advertising_data$Sales and advertising_data$TikTok
+## S = 4, p-value < 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9757576
+```
+
+``` r
 cor.test(advertising_data$Sales, advertising_data$Facebook, method = "spearman")
+```
+
+```
+## 
+## 	Spearman's rank correlation rho
+## 
+## data:  advertising_data$Sales and advertising_data$Facebook
+## S = 2, p-value < 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9878788
 ```
 
 **Option 2:** To view the correlation of all variables at the same time
 
-```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 cor(advertising_data, method = "spearman")
+```
+
+```
+##            YouTube    TikTok  Facebook     Sales
+## YouTube  1.0000000 0.9878788 1.0000000 0.9878788
+## TikTok   0.9878788 1.0000000 0.9878788 0.9757576
+## Facebook 1.0000000 0.9878788 1.0000000 0.9878788
+## Sales    0.9878788 0.9757576 0.9878788 1.0000000
 ```
 
 ## [**Basic Visualizations**]{.underline}
 
 ### **Histogram**
 
-```{r visualization_histogram, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 par(mfrow = c(1, 2))
 for (i in 1:4) {
   if (is.numeric(advertising_data[[i]])) {
@@ -196,9 +323,12 @@ for (i in 1:4) {
 }
 ```
 
+![](2_multiple_linear_regression_files/figure-docx/visualization_histogram-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-docx/visualization_histogram-2.png)<!-- -->
+
 ### **Box and Whisker Plot**
 
-```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 # `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
 for (i in 1:4) {
@@ -210,31 +340,43 @@ for (i in 1:4) {
 }
 ```
 
+![](2_multiple_linear_regression_files/figure-docx/visualization_boxplot-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-docx/visualization_boxplot-2.png)<!-- -->
+
 ### **Missing Data Plot**
 
-```{r missing_data_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("Amelia")
 
 missmap(advertising_data, col = c("red", "grey"), legend = TRUE)
 ```
 
+![](2_multiple_linear_regression_files/figure-docx/missing_data_plot-1.png)<!-- -->
+
 ### **Correlation Plot**
 
-```{r correlation_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("ggcorrplot")
 
 ggcorrplot(cor(advertising_data[,]))
 ```
 
+![](2_multiple_linear_regression_files/figure-docx/correlation_plot-1.png)<!-- -->
+
 ### **Scatter Plot**
 
-```{r scatter_plot_1, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("corrplot")
 
 pairs(advertising_data$Sales ~ ., data = advertising_data, col = advertising_data$Sales)
 ```
 
-```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+![](2_multiple_linear_regression_files/figure-docx/scatter_plot_1-1.png)<!-- -->
+
+
+``` r
 pacman::p_load("ggplot2")
 ggplot(advertising_data,
        aes(x = YouTube, y = Sales)) + 
@@ -247,7 +389,10 @@ ggplot(advertising_data,
   )
 ```
 
-```{r scatter_plot_3, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+![](2_multiple_linear_regression_files/figure-docx/scatter_plot_2-1.png)<!-- -->
+
+
+``` r
 pacman::p_load("dplyr")
 advertising_data_composite <- advertising_data %>%
   mutate(Total_Expenditure = YouTube + TikTok + Facebook)
@@ -263,24 +408,55 @@ ggplot(advertising_data_composite,
   )
 ```
 
+![](2_multiple_linear_regression_files/figure-docx/scatter_plot_3-1.png)<!-- -->
+
 # Statistical Test
 
 We then apply a simultaneous multiple linear regression as a statistical test for regression. The term "simultaneous" refers to how the predictor variables are entered and considered in the statistical test. It means that all the predictor variables included in the model are entered and evaluated at the same time.
 
-```{r statistical_test_SLR, message=FALSE, warning=FALSE, include=FALSE}
-mlr_test <- lm(Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
-```
+
 
 View the summary of the model.
 
-```{r statistical_test_interpretation, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 summary(mlr_test)
+```
+
+```
+## 
+## Call:
+## lm(formula = Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5436 -0.6159  0.1056  0.6598  1.5978 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept) 32.019096  24.432018   1.311    0.238
+## YouTube      0.006088   0.015876   0.384    0.715
+## TikTok      -0.007662   0.032263  -0.237    0.820
+## Facebook     0.062289   0.048787   1.277    0.249
+## 
+## Residual standard error: 1.2 on 6 degrees of freedom
+## Multiple R-squared:  0.9734,	Adjusted R-squared:  0.9602 
+## F-statistic: 73.32 on 3 and 6 DF,  p-value: 4.055e-05
 ```
 
 To obtain a 95% confidence interval:
 
-```{r 95_confidence_interval, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 confint(mlr_test, level = 0.95)
+```
+
+```
+##                    2.5 %      97.5 %
+## (Intercept) -27.76389745 91.80208927
+## YouTube      -0.03275855  0.04493539
+## TikTok       -0.08660653  0.07128263
+## Facebook     -0.05708823  0.18166580
 ```
 
 # Diagnostic EDA
@@ -293,9 +469,12 @@ The test of linearity is used to assess whether the relationship between the dep
 
 A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line, i.e., the residuals should randomly vary around the mean of the value of the response variable.
 
-```{r test_of_linearity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 plot(mlr_test, which = 1)
 ```
+
+![](2_multiple_linear_regression_files/figure-docx/test_of_linearity-1.png)<!-- -->
 
 ## [**Test of Independence of Errors**]{.underline}
 
@@ -309,9 +488,19 @@ The "**Durbin-Watson Test**" can be used as a test of independence of errors (te
 
 If the p-value is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.5316, therefore, the test of independence of errors around the regression line passes.
 
-```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("lmtest")
 dwtest(mlr_test)
+```
+
+```
+## 
+## 	Durbin-Watson test
+## 
+## data:  mlr_test
+## DW = 2.1498, p-value = 0.5316
+## alternative hypothesis: true autocorrelation is greater than 0
 ```
 
 ## [**Test of Normality**]{.underline}
@@ -322,9 +511,12 @@ A Q-Q plot is a scatterplot of the quantiles of the residuals against the quanti
 
 If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
 
-```{r test_of_normality, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 plot(mlr_test, which = 2)
 ```
+
+![](2_multiple_linear_regression_files/figure-docx/test_of_normality-1.png)<!-- -->
 
 ## [**Test of Homoscedasticity**]{.underline}
 
@@ -344,27 +536,73 @@ In a model with homoscedastic errors (equal variance across all predicted values
 
 Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
 
-```{r test_of_homoscedasticity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
+
+``` r
 plot(mlr_test, which = 3)
 ```
+
+![](2_multiple_linear_regression_files/figure-docx/test_of_homoscedasticity-1.png)<!-- -->
 
 ## [**Quantitative Validation of Assumptions**]{.underline}
 
 The graphical representations of the various tests of assumptions should be accompanied by quantitative values. The `gvlma` package (Global Validation of Linear Models Assumptions) is useful for this purpose.
 
-```{r QuantitativeValidationofAssumptions, echo=TRUE, message=FALSE, warning=FALSE, message=FALSE}
+
+``` r
 pacman::p_load("gvlma")
 gvlma_results <- gvlma(mlr_test)
 summary(gvlma_results)
+```
+
+```
+## 
+## Call:
+## lm(formula = Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.5436 -0.6159  0.1056  0.6598  1.5978 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept) 32.019096  24.432018   1.311    0.238
+## YouTube      0.006088   0.015876   0.384    0.715
+## TikTok      -0.007662   0.032263  -0.237    0.820
+## Facebook     0.062289   0.048787   1.277    0.249
+## 
+## Residual standard error: 1.2 on 6 degrees of freedom
+## Multiple R-squared:  0.9734,	Adjusted R-squared:  0.9602 
+## F-statistic: 73.32 on 3 and 6 DF,  p-value: 4.055e-05
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = mlr_test) 
+## 
+##                      Value p-value                Decision
+## Global Stat        0.92304  0.9212 Assumptions acceptable.
+## Skewness           0.04975  0.8235 Assumptions acceptable.
+## Kurtosis           0.30420  0.5813 Assumptions acceptable.
+## Link Function      0.41234  0.5208 Assumptions acceptable.
+## Heteroscedasticity 0.15675  0.6922 Assumptions acceptable.
 ```
 
 ## Test of Multicollinearity
 
 Multicollinearity arises when two or more independent variables (predictors) are highly intercorrelated. The **Variance Inflation Factor (VIF)** quantifies how much the variance of a coefficient estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no collinearity; values above 5 suggest problematic levels of collinearity. High VIF values (VIF \> 5) suggest that the coefficient estimates are less reliable due to the correlations between predictors.
 
-```{r multicollinearity, echo=TRUE, message=FALSE, warning=FALSE}
+
+``` r
 pacman::p_load("car")
 vif(mlr_test)
+```
+
+```
+##   YouTube    TikTok  Facebook 
+##  82.13782  47.30912 103.46518
 ```
 
 # Interpretation of the Results

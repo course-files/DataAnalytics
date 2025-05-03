@@ -13,15 +13,15 @@
 
 <meta name="date" content="2025-05-03" />
 
-<title>Simple Linear Regression</title>
+<title>Multiple Linear Regression</title>
 
-<script src="1_simple_linear_regression_files/header-attrs-2.29/header-attrs.js"></script>
-<script src="1_simple_linear_regression_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="2_multiple_linear_regression_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="2_multiple_linear_regression_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="1_simple_linear_regression_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-<script src="1_simple_linear_regression_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="1_simple_linear_regression_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="1_simple_linear_regression_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="2_multiple_linear_regression_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="2_multiple_linear_regression_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="2_multiple_linear_regression_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="2_multiple_linear_regression_files/bootstrap-3.3.5/shim/respond.min.js"></script>
 <style>h1 {font-size: 34px;}
        h1.title {font-size: 38px;}
        h2 {font-size: 30px;}
@@ -31,9 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="1_simple_linear_regression_files/navigation-1.1/tabsets.js"></script>
-<link href="1_simple_linear_regression_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="1_simple_linear_regression_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="2_multiple_linear_regression_files/navigation-1.1/tabsets.js"></script>
+<link href="2_multiple_linear_regression_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="2_multiple_linear_regression_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -162,7 +162,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Simple Linear Regression</h1>
+<h1 class="title toc-ignore">Multiple Linear Regression</h1>
 <h4 class="author">Allan Omondi</h4>
 <h4 class="date">2025-05-03</h4>
 
@@ -257,6 +257,9 @@ Homoscedasticity</strong></u></a></li>
 id="toc-quantitative-validation-of-assumptions"><span
 class="toc-section-number">4.5</span> <u><strong>Quantitative Validation
 of Assumptions</strong></u></a></li>
+<li><a href="#test-of-multicollinearity"
+id="toc-test-of-multicollinearity"><span
+class="toc-section-number">4.6</span> Test of Multicollinearity</a></li>
 </ul></li>
 <li><a href="#interpretation-of-the-results"
 id="toc-interpretation-of-the-results"><span
@@ -274,71 +277,45 @@ class="toc-section-number">5.3</span> Limitations</a></li>
 
 <div id="load-the-dataset" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Load the Dataset</h1>
-<p>The following synthetic dataset contains the estimated Customer
-Lifetime Value (CLV) as the dependent variable and the customer purchase
-frequency as the independent variable. The dataset is loaded as shown
-below.</p>
-<pre class="r"><code># `pacman::p_load()` is designed to both install and load packages
-pacman::p_load(&quot;readr&quot;)
+<pre class="r"><code>pacman::p_load(&quot;readr&quot;)
 
-clv_data &lt;- read_csv(&quot;./data/clv_data.csv&quot;)
-head(clv_data)</code></pre>
-<pre><code>## # A tibble: 6 × 2
-##   purchase_frequency customer_lifetime_value
-##                &lt;dbl&gt;                   &lt;dbl&gt;
-## 1                  3                   110. 
-## 2                  7                   190. 
-## 3                  6                   160. 
-## 4                  2                    94.4
-## 5                  4                   133. 
-## 6                  8                   223.</code></pre>
+advertising_data &lt;- read_csv(&quot;./data/advertising.csv&quot;)
+head(advertising_data)</code></pre>
+<pre><code>## # A tibble: 6 × 4
+##   YouTube TikTok Facebook Sales
+##     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+## 1    1200    800     1000  95.3
+## 2    1500    900     1100 101. 
+## 3    1300    850     1050  99.5
+## 4    1600    950     1150 107. 
+## 5    1100    780      980  93.0
+## 6    1700   1000     1200 108.</code></pre>
 </div>
 <div id="initial-eda" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Initial EDA</h1>
 <p><u><strong>View the Dimensions</strong></u></p>
 <p>The number of observations and the number of variables.</p>
-<pre class="r"><code>dim(clv_data)</code></pre>
-<pre><code>## [1] 500   2</code></pre>
+<pre class="r"><code>dim(advertising_data)</code></pre>
+<pre><code>## [1] 10  4</code></pre>
 <p><u><strong>View the Data Types</strong></u></p>
-<pre class="r"><code>sapply(clv_data, class)</code></pre>
-<pre><code>##      purchase_frequency customer_lifetime_value 
-##               &quot;numeric&quot;               &quot;numeric&quot;</code></pre>
-<pre class="r"><code>str(clv_data)</code></pre>
-<pre><code>## spc_tbl_ [500 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
-##  $ purchase_frequency     : num [1:500] 3 7 6 2 4 8 0 4 8 3 ...
-##  $ customer_lifetime_value: num [1:500] 110.3 190.2 160 94.4 133.2 ...
+<pre class="r"><code>sapply(advertising_data, class)</code></pre>
+<pre><code>##   YouTube    TikTok  Facebook     Sales 
+## &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot; &quot;numeric&quot;</code></pre>
+<pre class="r"><code>str(advertising_data)</code></pre>
+<pre><code>## spc_tbl_ [10 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ YouTube : num [1:10] 1200 1500 1300 1600 1100 1700 1400 1800 1250 1550
+##  $ TikTok  : num [1:10] 800 900 850 950 780 1000 880 1020 820 970
+##  $ Facebook: num [1:10] 1000 1100 1050 1150 980 1200 1080 1220 1010 1130
+##  $ Sales   : num [1:10] 95.3 101.2 99.5 106.8 93 ...
 ##  - attr(*, &quot;spec&quot;)=
 ##   .. cols(
-##   ..   purchase_frequency = col_double(),
-##   ..   customer_lifetime_value = col_double()
+##   ..   YouTube = col_double(),
+##   ..   TikTok = col_double(),
+##   ..   Facebook = col_double(),
+##   ..   Sales = col_double()
 ##   .. )
 ##  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt;</code></pre>
 <p><u><strong>Descriptive Statistics</strong></u></p>
-<p>Understanding your data can lead to:</p>
-<ul>
-<li><p><strong>Data cleaning:</strong> To remove extreme outliers or
-impute missing data.</p></li>
-<li><p><strong>Data transformation:</strong> To reduce skewness</p></li>
-<li><p><strong>Data modelling:</strong> You may notice properties of the
-data such as distributions or data types that suggest the use of
-parametric or non-parametric statistical tests and algorithms</p></li>
-</ul>
-<p>Descriptive statistics can be used to understand your data. Typical
-descriptive statistics include:</p>
-<ol style="list-style-type: decimal">
-<li><p><strong>Measures of frequency:</strong> count and
-percent</p></li>
-<li><p><strong>Measures of central tendency:</strong> mean, median, and
-mode</p></li>
-<li><p><strong>Measures of
-distribution/dispersion/spread/scatter/variability:</strong> minimum,
-quartiles, maximum, variance, standard deviation, coefficient of
-variation, range, interquartile range (IQR) [includes a box and whisker
-plot for visualization], kurtosis, skewness [includes a histogram for
-visualization]).</p></li>
-<li><p><strong>Measures of relationship:</strong> covariance and
-correlation</p></li>
-</ol>
 <div id="measures-of-frequency" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> <u><strong>Measures
 of Frequency</strong></u></h2>
@@ -351,14 +328,14 @@ number="2.2">
 <h2><span class="header-section-number">2.2</span> <u><strong>Measures
 of Central Tendency</strong></u></h2>
 <p>The median and the mean of each numeric variable:</p>
-<pre class="r"><code>summary(clv_data)</code></pre>
-<pre><code>##  purchase_frequency customer_lifetime_value
-##  Min.   :-1.000     Min.   : 26.13         
-##  1st Qu.: 4.000     1st Qu.:122.04         
-##  Median : 5.000     Median :148.21         
-##  Mean   : 4.914     Mean   :148.25         
-##  3rd Qu.: 6.000     3rd Qu.:175.88         
-##  Max.   :11.000     Max.   :262.04</code></pre>
+<pre class="r"><code>summary(advertising_data)</code></pre>
+<pre><code>##     YouTube         TikTok          Facebook        Sales       
+##  Min.   :1100   Min.   : 780.0   Min.   : 980   Min.   : 93.02  
+##  1st Qu.:1262   1st Qu.: 827.5   1st Qu.:1020   1st Qu.: 97.27  
+##  Median :1450   Median : 890.0   Median :1090   Median :101.95  
+##  Mean   :1440   Mean   : 897.0   Mean   :1092   Mean   :101.93  
+##  3rd Qu.:1588   3rd Qu.: 965.0   3rd Qu.:1145   3rd Qu.:106.17  
+##  Max.   :1800   Max.   :1020.0   Max.   :1220   Max.   :111.82</code></pre>
 </div>
 <div id="measures-of-distribution" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> <u><strong>Measures
@@ -371,30 +348,19 @@ population.</p>
 information about the population based on the sample data. High
 variability means that the values are less consistent, thus making it
 harder to make predictions.</p>
-<p>The syntax <code>dataset[rows, columns]</code> can be used to specify
-the exact rows and columns to be considered.
-<code>dataset[, columns]</code> implies all rows will be considered. For
-example, specifying <code>BostonHousing[, -4]</code> implies all the
-columns except column number 4. This can also be stated as
-<code>BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]</code>. This
-allows us to calculate the standard deviation of only columns that are
-numeric, thus leaving out the columns termed as “factors” (categorical)
-or those that have a string data type.</p>
 <div id="variance" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span>
 <strong>Variance</strong></h3>
-<pre class="r"><code># `sapply()` is designed to apply a function to a variable in a dataset
-# In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
-sapply(clv_data[,], var)</code></pre>
-<pre><code>##      purchase_frequency customer_lifetime_value 
-##                4.146898             1642.315996</code></pre>
+<pre class="r"><code>sapply(advertising_data[,], var)</code></pre>
+<pre><code>##     YouTube      TikTok    Facebook       Sales 
+## 52111.11111  7267.77778  6951.11111    36.13165</code></pre>
 </div>
 <div id="standard-deviation" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> <strong>Standard
 Deviation</strong></h3>
-<pre class="r"><code>sapply(clv_data[,], sd)</code></pre>
-<pre><code>##      purchase_frequency customer_lifetime_value 
-##                2.036393               40.525498</code></pre>
+<pre class="r"><code>sapply(advertising_data[,], sd)</code></pre>
+<pre><code>##   YouTube    TikTok  Facebook     Sales 
+## 228.27858  85.25126  83.37332   6.01096</code></pre>
 </div>
 <div id="kurtosis" class="section level3" number="2.3.3">
 <h3><span class="header-section-number">2.3.3</span>
@@ -410,9 +376,9 @@ used in other statistical software like SPSS and SAS.</p>
 <li><p>Kurtosis &gt; 3 implies a high number of outliers</p></li>
 </ol>
 <pre class="r"><code>pacman::p_load(&quot;e1071&quot;)
-sapply(clv_data[,],  kurtosis, type = 2)</code></pre>
-<pre><code>##      purchase_frequency customer_lifetime_value 
-##              -0.1220038              -0.1484811</code></pre>
+sapply(advertising_data[,],  kurtosis, type = 2)</code></pre>
+<pre><code>##    YouTube     TikTok   Facebook      Sales 
+## -1.0800892 -1.4726766 -1.1989242 -0.8697324</code></pre>
 </div>
 <div id="skewness" class="section level3" number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span>
@@ -432,9 +398,9 @@ distribution.</p></li>
 <li><p>Skewness below -0.4 implies a negative skew; a left-skewed
 distribution.</p></li>
 </ol>
-<pre class="r"><code>sapply(clv_data[,], skewness, type = 2)</code></pre>
-<pre><code>##      purchase_frequency customer_lifetime_value 
-##             -0.04021915             -0.01608242</code></pre>
+<pre class="r"><code>sapply(advertising_data[,], skewness, type = 2)</code></pre>
+<pre><code>##    YouTube     TikTok   Facebook      Sales 
+## 0.08266188 0.09234643 0.19089944 0.10505432</code></pre>
 </div>
 </div>
 <div id="measures-of-relationship" class="section level2" number="2.4">
@@ -459,10 +425,12 @@ between the variables.</p></li>
 not convey the strength or consistency of the relationship. The
 correlation coefficient is used to indicate the strength of the
 relationship.</p>
-<pre class="r"><code>cov(clv_data, method = &quot;spearman&quot;)</code></pre>
-<pre><code>##                         purchase_frequency customer_lifetime_value
-## purchase_frequency                20409.91                20235.73
-## customer_lifetime_value           20235.73                20874.99</code></pre>
+<pre class="r"><code>cov(advertising_data, method = &quot;spearman&quot;)</code></pre>
+<pre><code>##           YouTube   TikTok Facebook    Sales
+## YouTube  9.166667 9.055556 9.166667 9.055556
+## TikTok   9.055556 9.166667 9.055556 8.944444
+## Facebook 9.166667 9.055556 9.166667 9.055556
+## Sales    9.055556 8.944444 9.055556 9.166667</code></pre>
 </div>
 <div id="correlation" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span>
@@ -480,21 +448,46 @@ between two variables implies that as one variable increases, the other
 variable either consistently increases or consistently decreases. The
 key characteristic is the preservation of the direction of change,
 though the rate of change may vary.</p>
-<pre class="r"><code>cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = &quot;spearman&quot;)</code></pre>
+<p><strong>Option 1:</strong> Conduct a correlation test between the
+dependent variable and each independent variable one at a time.</p>
+<pre class="r"><code>cor.test(advertising_data$Sales, advertising_data$YouTube, method = &quot;spearman&quot;)</code></pre>
 <pre><code>## 
 ##  Spearman&#39;s rank correlation rho
 ## 
-## data:  clv_data$customer_lifetime_value and clv_data$purchase_frequency
-## S = 409190, p-value &lt; 2.2e-16
+## data:  advertising_data$Sales and advertising_data$YouTube
+## S = 2, p-value &lt; 2.2e-16
 ## alternative hypothesis: true rho is not equal to 0
 ## sample estimates:
 ##       rho 
-## 0.9803588</code></pre>
-<p>To view the correlation of all variables</p>
-<pre class="r"><code>cor(clv_data, method = &quot;spearman&quot;)</code></pre>
-<pre><code>##                         purchase_frequency customer_lifetime_value
-## purchase_frequency               1.0000000               0.9803588
-## customer_lifetime_value          0.9803588               1.0000000</code></pre>
+## 0.9878788</code></pre>
+<pre class="r"><code>cor.test(advertising_data$Sales, advertising_data$TikTok, method = &quot;spearman&quot;)</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  advertising_data$Sales and advertising_data$TikTok
+## S = 4, p-value &lt; 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9757576</code></pre>
+<pre class="r"><code>cor.test(advertising_data$Sales, advertising_data$Facebook, method = &quot;spearman&quot;)</code></pre>
+<pre><code>## 
+##  Spearman&#39;s rank correlation rho
+## 
+## data:  advertising_data$Sales and advertising_data$Facebook
+## S = 2, p-value &lt; 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9878788</code></pre>
+<p><strong>Option 2:</strong> To view the correlation of all variables
+at the same time</p>
+<pre class="r"><code>cor(advertising_data, method = &quot;spearman&quot;)</code></pre>
+<pre><code>##            YouTube    TikTok  Facebook     Sales
+## YouTube  1.0000000 0.9878788 1.0000000 0.9878788
+## TikTok   0.9878788 1.0000000 0.9878788 0.9757576
+## Facebook 1.0000000 0.9878788 1.0000000 0.9878788
+## Sales    0.9878788 0.9757576 0.9878788 1.0000000</code></pre>
 </div>
 </div>
 <div id="basic-visualizations" class="section level2" number="2.5">
@@ -503,108 +496,126 @@ Visualizations</strong></u></h2>
 <div id="histogram" class="section level3" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span>
 <strong>Histogram</strong></h3>
-<pre class="r"><code># `par(mfrow = c(1, 2))` This is used to divide the area used to plot the visualization into a 1 row by 2 columns grid
-# `for (i in 1:2)` This is used to identify the variable (column) that is being processed
-# `clv_data[[i]]` This is used to extract the i-th column as a vector
-# `hist()` This is the function used to plot the histogram
-par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    hist(clv_data[[i]],
-         main = names(clv_data)[i],
-         xlab = names(clv_data)[i])
+<pre class="r"><code>par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(advertising_data[[i]])) {
+    hist(advertising_data[[i]],
+         main = names(advertising_data)[i],
+         xlab = names(advertising_data)[i])
   } else {
-    message(paste(&quot;Column&quot;, names(clv_data)[i], &quot;is not numeric and will be skipped.&quot;))
+    message(paste(&quot;Column&quot;, names(advertising_data)[i], &quot;is not numeric and will be skipped.&quot;))
   }
 }</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/visualization_histogram-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/visualization_histogram-1.png" /><!-- --><img
+src="2_multiple_linear_regression_files/figure-html/visualization_histogram-2.png" /><!-- --></p>
 </div>
 <div id="box-and-whisker-plot" class="section level3" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> <strong>Box and
 Whisker Plot</strong></h3>
 <pre class="r"><code># `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    boxplot(clv_data[[i]], main = names(clv_data)[i])
+for (i in 1:4) {
+  if (is.numeric(advertising_data[[i]])) {
+    boxplot(advertising_data[[i]], main = names(advertising_data)[i])
   } else {
-    message(paste(&quot;Column&quot;, names(clv_data)[i], &quot;is not numeric and will be skipped.&quot;))
+    message(paste(&quot;Column&quot;, names(advertising_data)[i], &quot;is not numeric and will be skipped.&quot;))
   }
 }</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/visualization_boxplot-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/visualization_boxplot-1.png" /><!-- --><img
+src="2_multiple_linear_regression_files/figure-html/visualization_boxplot-2.png" /><!-- --></p>
 </div>
 <div id="missing-data-plot" class="section level3" number="2.5.3">
 <h3><span class="header-section-number">2.5.3</span> <strong>Missing
 Data Plot</strong></h3>
 <pre class="r"><code>pacman::p_load(&quot;Amelia&quot;)
 
-missmap(clv_data, col = c(&quot;red&quot;, &quot;grey&quot;), legend = TRUE)</code></pre>
+missmap(advertising_data, col = c(&quot;red&quot;, &quot;grey&quot;), legend = TRUE)</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/missing_data_plot-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/missing_data_plot-1.png" /><!-- --></p>
 </div>
 <div id="correlation-plot" class="section level3" number="2.5.4">
 <h3><span class="header-section-number">2.5.4</span> <strong>Correlation
 Plot</strong></h3>
 <pre class="r"><code>pacman::p_load(&quot;ggcorrplot&quot;)
 
-ggcorrplot(cor(clv_data[,]))</code></pre>
+ggcorrplot(cor(advertising_data[,]))</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/correlation_plot-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/correlation_plot-1.png" /><!-- --></p>
 </div>
 <div id="scatter-plot" class="section level3" number="2.5.5">
 <h3><span class="header-section-number">2.5.5</span> <strong>Scatter
 Plot</strong></h3>
 <pre class="r"><code>pacman::p_load(&quot;corrplot&quot;)
 
-pairs(clv_data$customer_lifetime_value ~ ., data = clv_data, col = clv_data$customer_lifetime_value)</code></pre>
+pairs(advertising_data$Sales ~ ., data = advertising_data, col = advertising_data$Sales)</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/scatter_plot_1-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/scatter_plot_1-1.png" /><!-- --></p>
 <pre class="r"><code>pacman::p_load(&quot;ggplot2&quot;)
-ggplot(clv_data,
-       aes(x = purchase_frequency, y = customer_lifetime_value)) + 
+ggplot(advertising_data,
+       aes(x = YouTube, y = Sales)) + 
   geom_point() +
   geom_smooth(method = lm) +
   labs(
-    title = &quot;Relationship between Customer Lifetime Value and Purchase Frequency&quot;,
-    x = &quot;Purchase Frequency&quot;,
-    y = &quot;Customer Lifetime Value&quot;
+    title = &quot;Relationship between Sales Revenue and \nExpenditure on YouTube Marketing&quot;,
+    x = &quot;Expenditure&quot;,
+    y = &quot;Sales&quot;
   )</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/scatter_plot_2-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/scatter_plot_2-1.png" /><!-- --></p>
+<pre class="r"><code>pacman::p_load(&quot;dplyr&quot;)
+advertising_data_composite &lt;- advertising_data %&gt;%
+  mutate(Total_Expenditure = YouTube + TikTok + Facebook)
+
+ggplot(advertising_data_composite,
+       aes(x = Total_Expenditure, y = Sales)) +
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = &quot;Relationship between Sales Revenue and \nTotal Marketing Expenditure&quot;,
+    x = &quot;Total Expenditure&quot;,
+    y = &quot;Sales&quot;
+  )</code></pre>
+<p><img
+src="2_multiple_linear_regression_files/figure-html/scatter_plot_3-1.png" /><!-- --></p>
 </div>
 </div>
 </div>
 <div id="statistical-test" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Statistical Test</h1>
-<p>We then apply a simple linear regression as a statistical test for
-regression.</p>
+<p>We then apply a simultaneous multiple linear regression as a
+statistical test for regression. The term “simultaneous” refers to how
+the predictor variables are entered and considered in the statistical
+test. It means that all the predictor variables included in the model
+are entered and evaluated at the same time.</p>
 <p>View the summary of the model.</p>
-<pre class="r"><code>summary(slr_test)</code></pre>
+<pre class="r"><code>summary(mlr_test)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = customer_lifetime_value ~ purchase_frequency, data = clv_data)
+## lm(formula = Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.1176  -5.6169  -0.0491   5.6618  20.4837 
+##     Min      1Q  Median      3Q     Max 
+## -1.5436 -0.6159  0.1056  0.6598  1.5978 
 ## 
 ## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)         52.2538     0.9042   57.79   &lt;2e-16 ***
-## purchase_frequency  19.5356     0.1700  114.91   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 32.019096  24.432018   1.311    0.238
+## YouTube      0.006088   0.015876   0.384    0.715
+## TikTok      -0.007662   0.032263  -0.237    0.820
+## Facebook     0.062289   0.048787   1.277    0.249
 ## 
-## Residual standard error: 7.734 on 498 degrees of freedom
-## Multiple R-squared:  0.9637, Adjusted R-squared:  0.9636 
-## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 1.2 on 6 degrees of freedom
+## Multiple R-squared:  0.9734, Adjusted R-squared:  0.9602 
+## F-statistic: 73.32 on 3 and 6 DF,  p-value: 4.055e-05</code></pre>
 <p>To obtain a 95% confidence interval:</p>
-<pre class="r"><code>confint(slr_test, level = 0.95)</code></pre>
-<pre><code>##                       2.5 %   97.5 %
-## (Intercept)        50.47731 54.03036
-## purchase_frequency 19.20159 19.86965</code></pre>
+<pre class="r"><code>confint(mlr_test, level = 0.95)</code></pre>
+<pre><code>##                    2.5 %      97.5 %
+## (Intercept) -27.76389745 91.80208927
+## YouTube      -0.03275855  0.04493539
+## TikTok       -0.08660653  0.07128263
+## Facebook     -0.05708823  0.18166580</code></pre>
 </div>
 <div id="diagnostic-eda" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Diagnostic EDA</h1>
@@ -627,9 +638,9 @@ be no pattern in the distribution of residuals and the residuals should
 be randomly placed around the 0.0 residual line, i.e., the residuals
 should randomly vary around the mean of the value of the response
 variable.</p>
-<pre class="r"><code>plot(slr_test, which = 1)</code></pre>
+<pre class="r"><code>plot(mlr_test, which = 1)</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/test_of_linearity-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/test_of_linearity-1.png" /><!-- --></p>
 </div>
 <div id="test-of-independence-of-errors" class="section level2"
 number="4.2">
@@ -652,15 +663,15 @@ autocorrelation</p></li>
 </ul>
 <p>If the p-value is greater than 0.05 then there is no evidence to
 reject the null hypothesis that “there is no autocorrelation”. The
-results below show a p-value of 0.1573, therefore, the test of
+results below show a p-value of 0.5316, therefore, the test of
 independence of errors around the regression line passes.</p>
 <pre class="r"><code>pacman::p_load(&quot;lmtest&quot;)
-dwtest(slr_test)</code></pre>
+dwtest(mlr_test)</code></pre>
 <pre><code>## 
 ##  Durbin-Watson test
 ## 
-## data:  slr_test
-## DW = 1.9104, p-value = 0.1573
+## data:  mlr_test
+## DW = 2.1498, p-value = 0.5316
 ## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
 </div>
 <div id="test-of-normality" class="section level2" number="4.3">
@@ -681,9 +692,9 @@ Examples of quantiles include: quartiles (4 equal parts), percentiles
 normality assumption is satisfied. If the points in the Q-Q plot do not
 fall along a straight line, then the normality assumption is not
 satisfied.</p>
-<pre class="r"><code>plot(slr_test, which = 2)</code></pre>
+<pre class="r"><code>plot(mlr_test, which = 2)</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/test_of_normality-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/test_of_normality-1.png" /><!-- --></p>
 </div>
 <div id="test-of-homoscedasticity" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> <u><strong>Test of
@@ -709,9 +720,9 @@ visible</p></li>
 <p>Points forming a cone shape that widens from left to right suggests
 heteroscedasticity with increasing variance for larger fitted
 values.</p>
-<pre class="r"><code>plot(slr_test, which = 3)</code></pre>
+<pre class="r"><code>plot(mlr_test, which = 3)</code></pre>
 <p><img
-src="1_simple_linear_regression_files/figure-html/test_of_homoscedasticity-1.png" /><!-- --></p>
+src="2_multiple_linear_regression_files/figure-html/test_of_homoscedasticity-1.png" /><!-- --></p>
 </div>
 <div id="quantitative-validation-of-assumptions" class="section level2"
 number="4.5">
@@ -722,26 +733,26 @@ should be accompanied by quantitative values. The <code>gvlma</code>
 package (Global Validation of Linear Models Assumptions) is useful for
 this purpose.</p>
 <pre class="r"><code>pacman::p_load(&quot;gvlma&quot;)
-gvlma_results &lt;- gvlma(slr_test)
+gvlma_results &lt;- gvlma(mlr_test)
 summary(gvlma_results)</code></pre>
 <pre><code>## 
 ## Call:
-## lm(formula = customer_lifetime_value ~ purchase_frequency, data = clv_data)
+## lm(formula = Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -19.1176  -5.6169  -0.0491   5.6618  20.4837 
+##     Min      1Q  Median      3Q     Max 
+## -1.5436 -0.6159  0.1056  0.6598  1.5978 
 ## 
 ## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)         52.2538     0.9042   57.79   &lt;2e-16 ***
-## purchase_frequency  19.5356     0.1700  114.91   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 32.019096  24.432018   1.311    0.238
+## YouTube      0.006088   0.015876   0.384    0.715
+## TikTok      -0.007662   0.032263  -0.237    0.820
+## Facebook     0.062289   0.048787   1.277    0.249
 ## 
-## Residual standard error: 7.734 on 498 degrees of freedom
-## Multiple R-squared:  0.9637, Adjusted R-squared:  0.9636 
-## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: &lt; 2.2e-16
+## Residual standard error: 1.2 on 6 degrees of freedom
+## Multiple R-squared:  0.9734, Adjusted R-squared:  0.9602 
+## F-statistic: 73.32 on 3 and 6 DF,  p-value: 4.055e-05
 ## 
 ## 
 ## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
@@ -749,54 +760,149 @@ summary(gvlma_results)</code></pre>
 ## Level of Significance =  0.05 
 ## 
 ## Call:
-##  gvlma(x = slr_test) 
+##  gvlma(x = mlr_test) 
 ## 
 ##                      Value p-value                Decision
-## Global Stat        5.08943 0.27824 Assumptions acceptable.
-## Skewness           0.03973 0.84201 Assumptions acceptable.
-## Kurtosis           3.61252 0.05735 Assumptions acceptable.
-## Link Function      0.01459 0.90385 Assumptions acceptable.
-## Heteroscedasticity 1.42258 0.23298 Assumptions acceptable.</code></pre>
+## Global Stat        0.92304  0.9212 Assumptions acceptable.
+## Skewness           0.04975  0.8235 Assumptions acceptable.
+## Kurtosis           0.30420  0.5813 Assumptions acceptable.
+## Link Function      0.41234  0.5208 Assumptions acceptable.
+## Heteroscedasticity 0.15675  0.6922 Assumptions acceptable.</code></pre>
+</div>
+<div id="test-of-multicollinearity" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Test of
+Multicollinearity</h2>
+<p>Multicollinearity arises when two or more independent variables
+(predictors) are highly intercorrelated. The <strong>Variance Inflation
+Factor (VIF)</strong> quantifies how much the variance of a coefficient
+estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no
+collinearity; values above 5 suggest problematic levels of collinearity.
+High VIF values (VIF &gt; 5) suggest that the coefficient estimates are
+less reliable due to the correlations between predictors.</p>
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+vif(mlr_test)</code></pre>
+<pre><code>##   YouTube    TikTok  Facebook 
+##  82.13782  47.30912 103.46518</code></pre>
 </div>
 </div>
 <div id="interpretation-of-the-results" class="section level1"
 number="5">
 <h1><span class="header-section-number">5</span> Interpretation of the
 Results</h1>
-<p>We can interpret the results of the statistical test with more
-confidence if the tests of assumptions are successful.</p>
 <div id="academic-statement" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Academic
 Statement</h2>
-<p>A simple linear regression was conducted on data from 500
-observations (N = 500) to examine the relationship between customer
-lifetime value (CLV) and purchase frequency. The results indicated that
-purchase frequency significantly predicted CLV, <span
-class="math inline">\(\beta\)</span> = 19.54, 95% CI [19.20, 19.87], SE
-= 0.17, <em>t</em>(498) = 114.91, <em>p</em> &lt; .001. The model
-explained 96.37% of the variance in CLV (R<sup>2</sup> = .96,
-<em>F</em>(1, 498) = 13,200, <em>p</em> &lt; .001). For every unit
-increase in purchase frequency, CLV increased by approximately 19.54
-units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual
-standard error was 7.73, indicating strong predictive accuracy.</p>
+<p>A simultaneous multiple linear regression analysis was conducted on
+data from 10 observations (N=10) to examine whether advertising
+expenditures on YouTube, TikTok, and Facebook collectively predict
+Sales. The results indicated that neither expenses on YouTube (<span
+class="math inline">\(\beta\)</span> = 0.01, 95% CI [-.03, .04], SE =
+0.02, <em>t</em>(6) = 0.38, <em>p</em> = .715), nor TikTok (<span
+class="math inline">\(\beta\)</span> = -0.01, 95% CI [-.09, .07], SE =
+0.03, <em>t</em>(6) = -0.24, <em>p</em> = .820) nor Facebook (<span
+class="math inline">\(\beta\)</span> = 0.06, 95% CI [-.06, .18], SE =
+0.05, <em>t</em>(6) = 1.28, <em>p</em> = .249) individually
+significantly predicted Sales (all <em>p</em> &gt; 0.05). The model
+explained 97.34% of the variance in Sales (Multiple R<sup>2</sup> = .97,
+Adjusted R<sup>2</sup> = .96, <em>F</em>(3, 6) = 73.32, <em>p</em> &lt;
+.001). The intercept was 32.02, 95% CI [-27.76, 91.80], SE = 24.43,
+<em>t</em>(6) = 1.31, <em>p</em> = .238. The residual standard error was
+1.2, indicating a robust model. The full results are presented in the
+table below.</p>
+<table>
+<caption>Regression Coefficients Predicting Sales from Multiple
+Advertising Channels</caption>
+<thead>
+<tr class="header">
+<th align="center">Predictor</th>
+<th align="center"><span class="math inline">\(\beta\)</span></th>
+<th align="center">95% CI</th>
+<th align="center">SE</th>
+<th align="center"><em>t</em>(6)</th>
+<th align="center"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">(Intercept)</td>
+<td align="center">32.02</td>
+<td align="center">[-27.76, 91.80]</td>
+<td align="center">24.43</td>
+<td align="center">1.31</td>
+<td align="center">.238</td>
+</tr>
+<tr class="even">
+<td align="center">YouTube</td>
+<td align="center">0.01</td>
+<td align="center">[-.03, .04]</td>
+<td align="center">0.02</td>
+<td align="center">0.38</td>
+<td align="center">.715</td>
+</tr>
+<tr class="odd">
+<td align="center">TikTok</td>
+<td align="center">-0.01</td>
+<td align="center">[-.09, .07]</td>
+<td align="center">0.03</td>
+<td align="center">-0.24</td>
+<td align="center">.820</td>
+</tr>
+<tr class="even">
+<td align="center">Facebook</td>
+<td align="center">0.06</td>
+<td align="center">[-.06, .18]</td>
+<td align="center">0.05</td>
+<td align="center">1.28</td>
+<td align="center">.249</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Note.</em></strong> N = 10; SE = standard error;
+CI = confidence interval.</p>
+<p>Even though the results indicated a robust model whereby
+advertisement expenditures collectively predict sales, individual
+parameter estimates did not reach statistical significance when
+controlling for the other parameters. This suggests that the advertising
+channels collectively explain variation in Sales but do not uniquely
+predict Sales in this small sample. This may reflect multicollinearity
+among the different advertising platforms or limited statistical power
+due to the small sample size (<em>N</em> = 10). Future research should
+investigate these predictors with a larger sample and assess potential
+collinearity.</p>
 </div>
 <div id="business-analysis" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Business
 Analysis</h2>
-<p>The strength of the relationship highlights the critical importance
-of customer retention. Initiatives that effectively encourage repeat
-purchases appear to be a primary driver of customer lifetime value based
-on this analysis. This understanding can guide the allocation of
-resources towards strategies that foster customer loyalty and encourage
-repeat business.</p>
+<p>Although aggregate digital advertising spend across YouTube, TikTok,
+and Facebook is highly predictive of Sales (accounting for nearly all
+observed variation), the absence of statistically significant individual
+coefficients indicates that no single channel can be reliably credited
+with driving incremental Sales in this dataset. This finding suggests
+that, within the current investment levels and the constraints of a
+small sample, the three platforms function as a cohesive portfolio
+rather than as independent drivers of sales revenue. Recommendation for
+management:</p>
+<ol style="list-style-type: decimal">
+<li>Continue to view YouTube, TikTok, and Facebook as complementary
+elements of a unified digital marketing strategy focusing on the total
+expenditure rather than favouring a single platform.</li>
+</ol>
 </div>
 <div id="limitations" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Limitations</h2>
-<p>The model employed is a simple linear regression, which only
-considers the linear relationship between purchase frequency and CLV.
-Other potentially influential factors that are not included in this
-model could also play a significant role in determining CLV, e.g., the
-average monetary value of each purchase.</p>
+<ol style="list-style-type: decimal">
+<li><p>Small Sample Size (N = 10): Using a limited number of
+observations restricts statistical power and inflates standard errors,
+raising the risk of a Type II error (failing to detect true channel
+effects).</p></li>
+<li><p>Potential Multicollinearity: High intercorrelations among
+YouTube, TikTok, and Facebook expenditures may obscure unique
+contributions.</p></li>
+<li><p>Restricted Expenditure Range: Limited range of advertisement
+expenditures impairs the ability to detect linear effects.</p></li>
+<li><p>Methodology: Lack of experimental variation in advertisement
+expenditure limits causal attribution to any single platform.</p></li>
+</ol>
 </div>
 </div>
 

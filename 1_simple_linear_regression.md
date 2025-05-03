@@ -1,7 +1,7 @@
 ---
 title: "Simple Linear Regression"
 author: "Allan Omondi"
-date: "2025-04-27"
+date: "2025-05-03"
 output:
   word_document:
     toc: true
@@ -15,6 +15,14 @@ output:
     number_sections: true
     fig_width: 6
     self_contained: false
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -24,14 +32,6 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    self_contained: false
-    keep_md: true
 ---
 
 
@@ -61,24 +61,7 @@ head(clv_data)
 ## 6                  8                   223.
 ```
 
-Display a summary of all the variables.
-
-
-``` r
-summary(clv_data)
-```
-
-```
-##  purchase_frequency customer_lifetime_value
-##  Min.   :-1.000     Min.   : 26.13         
-##  1st Qu.: 4.000     1st Qu.:122.04         
-##  Median : 5.000     Median :148.21         
-##  Mean   : 4.914     Mean   :148.25         
-##  3rd Qu.: 6.000     3rd Qu.:175.88         
-##  Max.   :11.000     Max.   :262.04
-```
-
-# Initial Exploratory Data Analysis (EDA)
+# Initial EDA
 
 [**View the Dimensions**]{.underline}
 
@@ -148,7 +131,7 @@ This is applicable in cases where you have categorical variables, e.g., 60% of t
 
 ## [**Measures of Central Tendency**]{.underline}
 
-The median and the mean of each numeric varible:
+The median and the mean of each numeric variable:
 
 
 ``` r
@@ -171,9 +154,9 @@ Measuring the variability in the dataset is important because the amount of vari
 
 Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
 
-The format `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. Specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to calculate the standard deviation of only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
+The syntax `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. For example, specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to calculate the standard deviation of only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
 
-**Variance:**
+### **Variance**
 
 
 ``` r
@@ -187,7 +170,7 @@ sapply(clv_data[,], var)
 ##                4.146898             1642.315996
 ```
 
-**Standard deviation:**
+### **Standard Deviation**
 
 
 ``` r
@@ -199,7 +182,7 @@ sapply(clv_data[,], sd)
 ##                2.036393               40.525498
 ```
 
-**Kurtosis:**
+### **Kurtosis**
 
 The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS.
 
@@ -222,7 +205,7 @@ sapply(clv_data[,],  kurtosis, type = 2)
 ##              -0.1220038              -0.1484811
 ```
 
-**Skewness:**
+### **Skewness**
 
 The skewness is used to identify the asymmetry of the distribution of results. Similar to kurtosis, there are several ways of computing the skewness.
 
@@ -246,7 +229,7 @@ sapply(clv_data[,], skewness, type = 2)
 
 ## [**Measures of Relationship**]{.underline}
 
-**Covariance:**
+### **Covariance**
 
 Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
 
@@ -269,7 +252,7 @@ cov(clv_data, method = "spearman")
 ## customer_lifetime_value           20235.73                20874.99
 ```
 
-**Correlation:**
+### **Correlation**
 
 A strong correlation between variables enables us to better predict the value of the dependent variable using the value of the independent variable. However, a weak correlation between two variables does not help us to predict the value of the dependent variable from the value of the independent variable. This is useful only if there is a linear association between the variables.
 
@@ -429,13 +412,26 @@ summary(slr_test)
 ## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: < 2.2e-16
 ```
 
+To obtain a 95% confidence interval:
+
+
+``` r
+confint(slr_test, level = 0.95)
+```
+
+```
+##                       2.5 %   97.5 %
+## (Intercept)        50.47731 54.03036
+## purchase_frequency 19.20159 19.86965
+```
+
 # Diagnostic EDA
 
 Diagnostic EDA is performed to validate that the regression assumptions are true with respect to the statistical test. Validating the regression assumption in turn ensures that the statistical tests applied are appropriate for the data and helps to prevent incorrect conclusions.
 
 ## [**Test of Linearity**]{.underline}
 
-The test of lineary is used to assess whether the relationship between the dependent variables and the independent variables is linear. This is necessary given that linearity is one of the key assumptions of linear regression models and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
+The test of linearity is used to assess whether the relationship between the dependent variables and the independent variables is linear. This is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
 
 A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line, i.e., the residuals should randomly vary around the mean of the value of the response variable.
 
@@ -560,14 +556,18 @@ summary(gvlma_results)
 ## Heteroscedasticity 1.42258 0.23298 Assumptions acceptable.
 ```
 
-# Interpret the Results
+# Interpretation of the Results
 
 We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful.
 
 ## Academic Statement
 
-A simple linear regression was conducted to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, β = 19.54, SE = 0.17, t(498) = 114.91, p \< .001. The model explained 96.37% of the variance in CLV (R2=0.9637, F(1, 498) = 13,200, p \< .001). For every one-unit increase in purchase frequency, CLV increased by approximately 19.54 units. The residual standard error was 7.73, indicating strong predictive accuracy.
+A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
 
 ## Business Analysis
 
 The strength of the relationship highlights the critical importance of customer retention. Initiatives that effectively encourage repeat purchases appear to be a primary driver of customer lifetime value based on this analysis. This understanding can guide the allocation of resources towards strategies that foster customer loyalty and encourage repeat business.
+
+## Limitations
+
+The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
