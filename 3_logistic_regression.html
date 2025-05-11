@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Allan Omondi" />
+
+<meta name="date" content="2025-05-11" />
+
+<title>Logistic Regression</title>
+
+<script src="3_logistic_regression_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="3_logistic_regression_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="3_logistic_regression_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="3_logistic_regression_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="3_logistic_regression_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="3_logistic_regression_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="3_logistic_regression_files/navigation-1.1/tabsets.js"></script>
+<link href="3_logistic_regression_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="3_logistic_regression_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Logistic Regression</h1>
+<h4 class="author">Allan Omondi</h4>
+<h4 class="date">2025-05-11</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#load-the-dataset" id="toc-load-the-dataset"><span
+class="toc-section-number">1</span> Load the Dataset</a></li>
+<li><a href="#initial-eda" id="toc-initial-eda"><span
+class="toc-section-number">2</span> Initial EDA</a>
+<ul>
+<li><a href="#measures-of-frequency"
+id="toc-measures-of-frequency"><span
+class="toc-section-number">2.1</span> Measures of Frequency</a></li>
+<li><a href="#measures-of-central-tendency"
+id="toc-measures-of-central-tendency"><span
+class="toc-section-number">2.2</span> Measures of Central
+Tendency</a></li>
+<li><a href="#measures-of-distribution"
+id="toc-measures-of-distribution"><span
+class="toc-section-number">2.3</span> Measures of Distribution</a>
+<ul>
+<li><a href="#variance" id="toc-variance"><span
+class="toc-section-number">2.3.1</span> Variance</a></li>
+<li><a href="#standard-deviation" id="toc-standard-deviation"><span
+class="toc-section-number">2.3.2</span> Standard Deviation</a></li>
+<li><a href="#kurtosis" id="toc-kurtosis"><span
+class="toc-section-number">2.3.3</span> Kurtosis</a></li>
+<li><a href="#skewness" id="toc-skewness"><span
+class="toc-section-number">2.3.4</span> Skewness</a></li>
+</ul></li>
+<li><a href="#measures-of-relationship"
+id="toc-measures-of-relationship"><span
+class="toc-section-number">2.4</span> Measures of Relationship</a>
+<ul>
+<li><a href="#covariance" id="toc-covariance"><span
+class="toc-section-number">2.4.1</span> Covariance</a></li>
+<li><a href="#correlation" id="toc-correlation"><span
+class="toc-section-number">2.4.2</span> Correlation</a></li>
+</ul></li>
+<li><a href="#basic-visualizations" id="toc-basic-visualizations"><span
+class="toc-section-number">2.5</span> Basic Visualizations</a>
+<ul>
+<li><a href="#histogram" id="toc-histogram"><span
+class="toc-section-number">2.5.1</span> Histogram</a></li>
+<li><a href="#box-and-whisker-plot" id="toc-box-and-whisker-plot"><span
+class="toc-section-number">2.5.2</span> Box and Whisker Plot</a></li>
+<li><a href="#missing-data-plot" id="toc-missing-data-plot"><span
+class="toc-section-number">2.5.3</span> Missing Data Plot</a></li>
+<li><a href="#correlation-plot" id="toc-correlation-plot"><span
+class="toc-section-number">2.5.4</span> Correlation Plot</a></li>
+<li><a href="#scatter-plot" id="toc-scatter-plot"><span
+class="toc-section-number">2.5.5</span> Scatter Plot</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#statistical-test" id="toc-statistical-test"><span
+class="toc-section-number">3</span> Statistical Test</a>
+<ul>
+<li><a href="#p-value-of-the-chi2-statistic"
+id="toc-p-value-of-the-chi2-statistic"><span
+class="toc-section-number">3.1</span> p-Value of the <span
+class="math inline">\(\chi^2\)</span> Statistic</a></li>
+<li><a href="#confidence-interval-of-the-parameters"
+id="toc-confidence-interval-of-the-parameters"><span
+class="toc-section-number">3.2</span> 95% Confidence Interval of the
+Parameters</a></li>
+<li><a href="#odds-ratio" id="toc-odds-ratio"><span
+class="toc-section-number">3.3</span> Odds Ratio</a>
+<ul>
+<li><a href="#confidence-interval-for-the-odds-ratio"
+id="toc-confidence-interval-for-the-odds-ratio"><span
+class="toc-section-number">3.3.1</span> 95% Confidence Interval for the
+Odds Ratio</a></li>
+</ul></li>
+<li><a href="#akaike-information-criterion-aic"
+id="toc-akaike-information-criterion-aic"><span
+class="toc-section-number">3.4</span> Akaike Information Criterion
+(AIC)</a></li>
+<li><a href="#mcfaddens-pseudo-r2" id="toc-mcfaddens-pseudo-r2"><span
+class="toc-section-number">3.5</span> McFadden’s Pseudo
+R<sup>2</sup></a></li>
+<li><a href="#fisher-scoring-iterations"
+id="toc-fisher-scoring-iterations"><span
+class="toc-section-number">3.6</span> Fisher Scoring Iterations</a></li>
+<li><a href="#model-fit-metrics" id="toc-model-fit-metrics"><span
+class="toc-section-number">3.7</span> Model Fit Metrics</a></li>
+</ul></li>
+<li><a href="#diagnostic-eda" id="toc-diagnostic-eda"><span
+class="toc-section-number">4</span> Diagnostic EDA</a>
+<ul>
+<li><a href="#test-of-linearity" id="toc-test-of-linearity"><span
+class="toc-section-number">4.1</span> Test of Linearity</a></li>
+<li><a href="#test-of-independence-of-errors"
+id="toc-test-of-independence-of-errors"><span
+class="toc-section-number">4.2</span> Test of Independence of
+Errors</a></li>
+<li><a href="#test-of-normality" id="toc-test-of-normality"><span
+class="toc-section-number">4.3</span> Test of Normality</a></li>
+<li><a href="#test-of-homoscedasticity"
+id="toc-test-of-homoscedasticity"><span
+class="toc-section-number">4.4</span> Test of Homoscedasticity</a></li>
+<li><a href="#test-of-multicollinearity"
+id="toc-test-of-multicollinearity"><span
+class="toc-section-number">4.5</span> Test of Multicollinearity</a></li>
+<li><a href="#test-of-outliers" id="toc-test-of-outliers"><span
+class="toc-section-number">4.6</span> Test of Outliers</a></li>
+</ul></li>
+<li><a href="#interpretation-of-the-results"
+id="toc-interpretation-of-the-results"><span
+class="toc-section-number">5</span> Interpretation of the Results</a>
+<ul>
+<li><a href="#academic-statement" id="toc-academic-statement"><span
+class="toc-section-number">5.1</span> Academic Statement</a></li>
+<li><a href="#business-analysis" id="toc-business-analysis"><span
+class="toc-section-number">5.2</span> Business Analysis</a></li>
+<li><a href="#limitations" id="toc-limitations"><span
+class="toc-section-number">5.3</span> Limitations</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="load-the-dataset" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Load the Dataset</h1>
+<p>The synthetic subscription churn dataset contains 1,000 observations
+and four variables:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>monthly_fee:</strong> The monthly subscription fee paid
+by the customer</p></li>
+<li><p><strong>customer_age:</strong> The age of the customer in
+years.</p></li>
+<li><p><strong>support_calls:</strong> The number of support calls the
+customer made in the last month</p></li>
+<li><p><strong>renew:</strong> This is the outcome (dependent) variable
+(1 = customer will not cancel; 0 = customer will cancel)</p></li>
+</ol>
+<pre class="r"><code>pacman::p_load(&quot;readr&quot;)
+
+subscription_churn_data &lt;- 
+  read_csv(&quot;data/subscription_churn.csv&quot;, col_types = cols(
+    monthly_fee = col_double(),
+    customer_age = col_double(),
+    support_calls = col_integer(),
+    renew = col_factor(levels = c(&quot;1&quot;, &quot;0&quot;))
+    )
+  )
+
+head(subscription_churn_data)</code></pre>
+<pre><code>## # A tibble: 6 × 4
+##   monthly_fee customer_age support_calls renew
+##         &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt; &lt;fct&gt;
+## 1        55.0         49               1 1    
+## 2        48.6         44.2             0 1    
+## 3        56.5         35.6             0 1    
+## 4        65.2         28.5             2 1    
+## 5        47.7         42               2 1    
+## 6        47.7         38.9             0 1</code></pre>
+</div>
+<div id="initial-eda" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Initial EDA</h1>
+<p><u><strong>View the Dimensions</strong></u></p>
+<p>The number of observations and the number of variables.</p>
+<pre class="r"><code>dim(subscription_churn_data)</code></pre>
+<pre><code>## [1] 1000    4</code></pre>
+<p><u><strong>View the Data Types</strong></u></p>
+<pre class="r"><code>sapply(subscription_churn_data, class)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls         renew 
+##     &quot;numeric&quot;     &quot;numeric&quot;     &quot;integer&quot;      &quot;factor&quot;</code></pre>
+<pre class="r"><code>str(subscription_churn_data)</code></pre>
+<pre><code>## spc_tbl_ [1,000 × 4] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ monthly_fee  : num [1:1000] 55 48.6 56.5 65.2 47.7 ...
+##  $ customer_age : num [1:1000] 49 44.2 35.6 28.5 42 38.9 44 41.4 45.5 29.6 ...
+##  $ support_calls: int [1:1000] 1 0 0 2 2 0 2 0 0 1 ...
+##  $ renew        : Factor w/ 2 levels &quot;1&quot;,&quot;0&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   monthly_fee = col_double(),
+##   ..   customer_age = col_double(),
+##   ..   support_calls = col_integer(),
+##   ..   renew = col_factor(levels = c(&quot;1&quot;, &quot;0&quot;), ordered = FALSE, include_na = FALSE)
+##   .. )
+##  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt;</code></pre>
+<p><u><strong>Descriptive Statistics</strong></u></p>
+<div id="measures-of-frequency" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Measures of
+Frequency</h2>
+<p>79.4% continue their subscription and 20.6% cancelled their
+subscription. It is not balanced.</p>
+<pre class="r"><code>subscription_churn_data_freq &lt;- subscription_churn_data$renew
+cbind(frequency = table(subscription_churn_data_freq),
+      percentage = prop.table(table(subscription_churn_data_freq)) * 100)</code></pre>
+<pre><code>##   frequency percentage
+## 1       794       79.4
+## 0       206       20.6</code></pre>
+</div>
+<div id="measures-of-central-tendency" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Measures of Central
+Tendency</h2>
+<p>The median and the mean of each numeric variable:</p>
+<pre class="r"><code>summary(subscription_churn_data)</code></pre>
+<pre><code>##   monthly_fee     customer_age   support_calls   renew  
+##  Min.   :17.59   Min.   : 5.60   Min.   :0.000   1:794  
+##  1st Qu.:43.52   1st Qu.:28.90   1st Qu.:0.000   0:206  
+##  Median :50.26   Median :35.60   Median :1.000          
+##  Mean   :50.19   Mean   :35.71   Mean   :0.946          
+##  3rd Qu.:56.48   3rd Qu.:42.30   3rd Qu.:1.000          
+##  Max.   :88.53   Max.   :66.90   Max.   :6.000</code></pre>
+</div>
+<div id="measures-of-distribution" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Measures of
+Distribution</h2>
+<p>Measuring the variability in the dataset is important because the
+amount of variability determines <strong>how well you can
+generalize</strong> results from the sample to a new observation in the
+population.</p>
+<p>Low variability is ideal because it means that you can better predict
+information about the population based on the sample data. High
+variability means that the values are less consistent, thus making it
+harder to make predictions.</p>
+<div id="variance" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Variance</h3>
+<pre class="r"><code>sapply(subscription_churn_data[, 1:3], var)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls 
+##    95.8872266    99.4621047     0.9680521</code></pre>
+</div>
+<div id="standard-deviation" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Standard
+Deviation</h3>
+<pre class="r"><code>sapply(subscription_churn_data[, 1:3], sd)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls 
+##     9.7922023     9.9730690     0.9838964</code></pre>
+</div>
+<div id="kurtosis" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Kurtosis</h3>
+<p>The Kurtosis informs us of how often outliers occur in the results.
+There are different formulas for calculating kurtosis. Specifying “type
+= 2” allows us to use the 2nd formula which is the same kurtosis formula
+used in other statistical software like SPSS and SAS.</p>
+<p>In “type = 2” (used in SPSS and SAS):</p>
+<ol style="list-style-type: decimal">
+<li><p>Kurtosis &lt; 3 implies a low number of outliers</p></li>
+<li><p>Kurtosis = 3 implies a medium number of outliers</p></li>
+<li><p>Kurtosis &gt; 3 implies a high number of outliers</p></li>
+</ol>
+<pre class="r"><code>pacman::p_load(&quot;e1071&quot;)
+sapply(subscription_churn_data[,],  kurtosis, type = 2)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls         renew 
+##    0.07253817    0.05797590    1.47690531            NA</code></pre>
+</div>
+<div id="skewness" class="section level3" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Skewness</h3>
+<p>The skewness is used to identify the asymmetry of the distribution of
+results. Similar to kurtosis, there are several ways of computing the
+skewness.</p>
+<p>Using “type = 2” (common in other statistical software like SPSS and
+SAS) can be interpreted as:</p>
+<ol style="list-style-type: decimal">
+<li><p>Skewness between -0.4 and 0.4 (inclusive) implies that there is
+no skew in the distribution of results; the distribution of results is
+symmetrical; it is a normal distribution; a Gaussian
+distribution.</p></li>
+<li><p>Skewness above 0.4 implies a positive skew; a right-skewed
+distribution.</p></li>
+<li><p>Skewness below -0.4 implies a negative skew; a left-skewed
+distribution.</p></li>
+</ol>
+<pre class="r"><code>sapply(subscription_churn_data[,], skewness, type = 2)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls         renew 
+##    0.11695309   -0.04915458    1.13818096            NA</code></pre>
+</div>
+</div>
+<div id="measures-of-relationship" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Measures of
+Relationship</h2>
+<div id="covariance" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Covariance</h3>
+<p>Covariance is a statistical measure that indicates the direction of
+the linear relationship between two variables. It assesses whether
+increases in one variable correspond to increases or decreases in
+another.​</p>
+<ul>
+<li><p><strong>Positive Covariance:</strong> When one variable
+increases, the other tends to increase as well.</p></li>
+<li><p><strong>Negative Covariance:</strong> When one variable
+increases, the other tends to decrease.</p></li>
+<li><p><strong>Zero Covariance:</strong> No linear relationship exists
+between the variables.</p></li>
+</ul>
+<p>While covariance indicates the direction of a relationship, it does
+not convey the strength or consistency of the relationship. The
+correlation coefficient is used to indicate the strength of the
+relationship.</p>
+<pre class="r"><code>cov(subscription_churn_data[,1:3], method = &quot;spearman&quot;)</code></pre>
+<pre><code>##               monthly_fee customer_age support_calls
+## monthly_fee    83416.5906    -5314.774      692.4687
+## customer_age   -5314.7743    83415.248    -1080.6076
+## support_calls    692.4687    -1080.608    73676.7613</code></pre>
+</div>
+<div id="correlation" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Correlation</h3>
+<p>A strong correlation between variables enables us to better predict
+the value of the dependent variable using the value of the independent
+variable. However, a weak correlation between two variables does not
+help us to predict the value of the dependent variable from the value of
+the independent variable. This is useful only if there is a linear
+association between the variables.</p>
+<p>We can measure the statistical significance of the correlation using
+Spearman’s rank correlation <em>rho</em>. This shows us if the variables
+are significantly monotonically related. A monotonic relationship
+between two variables implies that as one variable increases, the other
+variable either consistently increases or consistently decreases. The
+key characteristic is the preservation of the direction of change,
+though the rate of change may vary.</p>
+<p>To view the correlation of all variables at the same time</p>
+<pre class="r"><code>cor(subscription_churn_data[,1:3], method = &quot;spearman&quot;)</code></pre>
+<pre><code>##                monthly_fee customer_age support_calls
+## monthly_fee    1.000000000  -0.06371415   0.008833009
+## customer_age  -0.063714149   1.00000000  -0.013784151
+## support_calls  0.008833009  -0.01378415   1.000000000</code></pre>
+</div>
+</div>
+<div id="basic-visualizations" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Basic
+Visualizations</h2>
+<div id="histogram" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Histogram</h3>
+<pre class="r"><code>par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(subscription_churn_data[[i]])) {
+    hist(subscription_churn_data[[i]],
+         main = names(subscription_churn_data)[i],
+         xlab = names(subscription_churn_data)[i])
+  } else {
+    message(paste(&quot;Column&quot;, names(subscription_churn_data)[i],
+                  &quot;is not numeric and will be skipped.&quot;))
+  }
+}</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/visualization_histogram-1.png" /><!-- --><img
+src="3_logistic_regression_files/figure-html/visualization_histogram-2.png" /><!-- --></p>
+</div>
+<div id="box-and-whisker-plot" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Box and Whisker
+Plot</h3>
+<pre class="r"><code># `boxplot()` This is the function used to plot the box and whisker plot visualization
+par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(subscription_churn_data[[i]])) {
+    boxplot(subscription_churn_data[[i]], main = names(subscription_churn_data)[i])
+  } else {
+    message(paste(&quot;Column&quot;, names(subscription_churn_data)[i],
+                  &quot;is not numeric and will be skipped.&quot;))
+  }
+}</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/visualization_boxplot-1.png" /><!-- --><img
+src="3_logistic_regression_files/figure-html/visualization_boxplot-2.png" /><!-- --></p>
+</div>
+<div id="missing-data-plot" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Missing Data
+Plot</h3>
+<pre class="r"><code>pacman::p_load(&quot;Amelia&quot;)
+
+missmap(subscription_churn_data, col = c(&quot;red&quot;, &quot;grey&quot;), legend = TRUE)</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/missing_data_plot-1.png" /><!-- --></p>
+</div>
+<div id="correlation-plot" class="section level3" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Correlation
+Plot</h3>
+<pre class="r"><code>pacman::p_load(&quot;ggcorrplot&quot;)
+
+ggcorrplot(cor(subscription_churn_data[,1:3]))</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/correlation_plot-1.png" /><!-- --></p>
+</div>
+<div id="scatter-plot" class="section level3" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Scatter Plot</h3>
+<pre class="r"><code>pacman::p_load(&quot;corrplot&quot;)
+
+pairs(renew ~ ., data = subscription_churn_data, col = subscription_churn_data$renew)</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/scatter_plot_1-1.png" /><!-- --></p>
+<pre class="r"><code>pacman::p_load(&quot;ggplot2&quot;)
+ggplot(subscription_churn_data,
+       aes(x = customer_age, y = monthly_fee)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = &quot;Relationship between Monthly Fee and \nCustomer Age&quot;,
+    x = &quot;Customer Age&quot;,
+    y = &quot;Monthly Fee&quot;
+  )</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/scatter_plot_2-1.png" /><!-- --></p>
+<pre class="r"><code>pacman::p_load(&quot;ggplot2&quot;)
+ggplot(subscription_churn_data,
+       aes(x = customer_age, y = monthly_fee, color = renew)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = &quot;Relationship between Monthly Fee and \nCustomer Age for Each Renewal Status&quot;,
+    x = &quot;Customer Age&quot;,
+    y = &quot;Monthly Fee&quot;,
+    color = &quot;Renewal Status&quot;
+  ) +
+  scale_color_discrete(
+    labels = c(&quot;1&quot; = &quot;Renewed Subscription&quot;, &quot;0&quot; = &quot;Cancelled Subscription&quot;)
+  ) + 
+  theme_minimal()  # Optional: adds a cleaner theme</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/scatter_plot_3-1.png" /><!-- --></p>
+</div>
+</div>
+</div>
+<div id="statistical-test" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Statistical Test</h1>
+<p>We then apply a logistic regression as a statistical test for
+regression.</p>
+<p>View the summary of the model.</p>
+<pre class="r"><code>summary(log_test)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = renew ~ monthly_fee + customer_age + support_calls, 
+##     family = binomial, data = subscription_churn_data)
+## 
+## Coefficients:
+##                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)   -0.941778   0.545980  -1.725  0.08454 .  
+## monthly_fee   -0.043563   0.008934  -4.876 1.08e-06 ***
+## customer_age   0.026110   0.008451   3.089  0.00201 ** 
+## support_calls  0.697795   0.081536   8.558  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 1017.22  on 999  degrees of freedom
+## Residual deviance:  906.19  on 996  degrees of freedom
+## AIC: 914.19
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div id="p-value-of-the-chi2-statistic" class="section level2"
+number="3.1">
+<h2><span class="header-section-number">3.1</span> p-Value of the <span
+class="math inline">\(\chi^2\)</span> Statistic</h2>
+<p>To obtain the p-value of the <span
+class="math inline">\(\chi^2\)</span> statistic:</p>
+<pre class="r"><code># chi_2 &lt;- log_test$null.deviance/1 - log_test$residuals
+chi_2 &lt;- 1017.22 - 906.19
+
+print(chi_2)</code></pre>
+<pre><code>## [1] 111.03</code></pre>
+<pre class="r"><code>p &lt;- 1 - pchisq(chi_2, df = 3)
+# to format as a scientific notation with four digits after the decimal place
+# sprintf(&quot;%.4e&quot;, p)
+format.pval(p, eps = .Machine$double.eps, digits = 2)</code></pre>
+<pre><code>## [1] &quot;&lt;2e-16&quot;</code></pre>
+</div>
+<div id="confidence-interval-of-the-parameters" class="section level2"
+number="3.2">
+<h2><span class="header-section-number">3.2</span> 95% Confidence
+Interval of the Parameters</h2>
+<p>To obtain a 95% confidence interval for the parameters:</p>
+<pre class="r"><code>confint(log_test, level = 0.95)</code></pre>
+<pre><code>##                      2.5 %      97.5 %
+## (Intercept)   -2.018238039  0.12436807
+## monthly_fee   -0.061306856 -0.02624538
+## customer_age   0.009645052  0.04281132
+## support_calls  0.540327294  0.86041171</code></pre>
+</div>
+<div id="odds-ratio" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Odds Ratio</h2>
+<p>Exponentiating the coefficients yields odds ratios, which quantify
+the multiplicative change in odds for a one‑unit increase in the
+predictor.</p>
+<pre class="r"><code>exp(coef(log_test))</code></pre>
+<pre><code>##   (Intercept)   monthly_fee  customer_age support_calls 
+##     0.3899341     0.9573725     1.0264536     2.0093179</code></pre>
+<div id="confidence-interval-for-the-odds-ratio" class="section level3"
+number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> 95% Confidence
+Interval for the Odds Ratio</h3>
+<p>To obtain a 95% confidence interval for the Odds Ratio:</p>
+<pre class="r"><code>pacman::p_load(&quot;dplyr&quot;)
+confint(log_test) %&gt;% exp()</code></pre>
+<pre><code>##                   2.5 %   97.5 %
+## (Intercept)   0.1328894 1.132433
+## monthly_fee   0.9405346 0.974096
+## customer_age  1.0096917 1.043741
+## support_calls 1.7165686 2.364134</code></pre>
+</div>
+</div>
+<div id="akaike-information-criterion-aic" class="section level2"
+number="3.4">
+<h2><span class="header-section-number">3.4</span> Akaike Information
+Criterion (AIC)</h2>
+<p>AIC specifies how well a model fits the data from which it was
+generated. The AIC value is calculated using the number of predictor
+variables and also the estimate of the maximum likelihood of the model.
+AIC penalizes complexity, therefore, any model with a lesser AIC value
+is a more significant model. A lower AIC value means the complexity of
+the model is lower and the model better explains the variations. The
+model’s AIC value of 914.19 can be compared with the AIC value of
+alternative models, e.g., a logistic regression that has dropped one of
+the original predictors.</p>
+</div>
+<div id="mcfaddens-pseudo-r2" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> McFadden’s Pseudo
+R<sup>2</sup></h2>
+<p>Logistic regression does not use the traditional R², but we can
+compute a <strong>pseudo-R²</strong> (McFadden’s) as follows:</p>
+<pre class="r"><code>pseudo_r2 &lt;- 1 - (log_test$deviance / log_test$null.deviance)
+print(pseudo_r2)</code></pre>
+<pre><code>## [1] 0.1091487</code></pre>
+<p>A McFadden’s pseudo-R<sup>2</sup> of 0.109 suggests that the
+predictors explain approximately 10.91% of the variance in the outcome.
+pseudo-R<sup>2</sup> &gt; 0.2 are considered strong in logistic
+regression.</p>
+</div>
+<div id="fisher-scoring-iterations" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Fisher Scoring
+Iterations</h2>
+<p>There were 4 Fisher scoring iterations which indicates that the
+fitting routine required four iterative updates to reach convergence. A
+small number (&lt; 10) suggests that the algorithm found the
+maximum-likelihood estimates efficiently without convergence
+warnings.</p>
+</div>
+<div id="model-fit-metrics" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Model Fit
+Metrics</h2>
+<p>The ROC Curve and the AUC gives insight into how well the logistic
+regression model distinguishes between the two outcome classes (1 =
+renew and 0 = cancel).</p>
+<ul>
+<li><p>The x-axis shows the False Positive Rate (FPR), or
+specificity.</p></li>
+<li><p>The y-axis shows the True Positive Rate (TPR), or
+sensitivity.</p></li>
+<li><p>The curve shows how TPR and FPR change as the decision threshold
+changes from 0 to 1.</p></li>
+<li><p>A curve closer to the top-left corner indicates better model
+performance.</p></li>
+</ul>
+<pre class="r"><code>pacman::p_load(&quot;pROC&quot;)
+
+predicted_probs &lt;- predict(log_test, type = &quot;response&quot;)
+
+roc_obj &lt;- roc(subscription_churn_data$renew, predicted_probs)
+auc_value &lt;- auc(roc_obj)
+plot(roc_obj, col = &quot;blue&quot;, main = &quot;ROC Curve for Logistic Regression&quot;)</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/model_fit_a-1.png" /><!-- --></p>
+<pre class="r"><code>print(auc_value)</code></pre>
+<pre><code>## Area under the curve: 0.7167</code></pre>
+<table>
+<caption>AUC Value Interpretation</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>AUC Value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td>Using the logistic regression model is equivalent to randomly
+guessing</td>
+</tr>
+<tr class="even">
+<td>0.6 - 0.7</td>
+<td>Poor discrimination of the classes</td>
+</tr>
+<tr class="odd">
+<td>0.7 - 0.8</td>
+<td>Acceptable discrimination of the classes (fair)</td>
+</tr>
+<tr class="even">
+<td>0.8 - 0.9</td>
+<td>Good discrimination</td>
+</tr>
+<tr class="odd">
+<td>0.9 - 1.0</td>
+<td>Excellent discrimination</td>
+</tr>
+</tbody>
+</table>
+<p>With an AUC of 0.7167 indicates that the model has an acceptable
+ability to discriminate between the two classes.</p>
+</div>
+</div>
+<div id="diagnostic-eda" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Diagnostic EDA</h1>
+<p>Diagnostic EDA is performed to validate that the regression
+assumptions are true with respect to the statistical test. Validating
+the regression assumption in turn ensures that the statistical tests
+applied are appropriate for the data and helps to prevent incorrect
+conclusions.</p>
+<div id="test-of-linearity" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Test of
+Linearity</h2>
+<p>The test of linearity is necessary given that linearity is one of the
+key assumptions of statistical tests of regression and verifying it is
+crucial for ensuring the validity of the model’s estimates and
+predictions.</p>
+<p><strong>Component-Plus-Residual (Partial-Residual) Plots</strong></p>
+<p>Logistic regression assumes that the relationship between the logit
+(log-odds) of the outcome and the continuous predictors is linear. A
+logit is the natural logarithm of the odds of an event occurring, i.e.,
+if <em>p</em> is the probability of an event (where 0 &lt; <em>p</em>
+&lt; 1), the odds are <span class="math inline">\(\frac{p}{1 -
+p}\)</span> and the logit is:</p>
+<p><span class="math display">\[ \text{logit}(p) =
+\ln\left(\frac{p}{1-p}\right) \]</span></p>
+<p>A roughly straight line indicates the logit-predictor linearity
+assumption is met.</p>
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+
+crPlots(log_test)</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/test_of_linearity-1.png" /><!-- --></p>
+</div>
+<div id="test-of-independence-of-errors" class="section level2"
+number="4.2">
+<h2><span class="header-section-number">4.2</span> Test of Independence
+of Errors</h2>
+<p>This test is necessary to confirm that each observation is
+independent of the other. It helps to identify
+<strong>autocorrelation</strong> that is introduced when the data is
+collected over a close period of time or when one observation is related
+to another observation. Autocorrelation leads to underestimated standard
+errors and inflated t-statistics. It can also make findings appear more
+significant than they actually are.</p>
+<p>The “<strong>Durbin-Watson Test</strong>” can be used as a test of
+independence of errors (test of autocorrelation).</p>
+<ul>
+<li><p>The null hypothesis, H<sub>0</sub>, is that there is no
+autocorrelation</p></li>
+<li><p>The alternative hypothesis, H<sub>a</sub>, is that there is
+autocorrelation</p></li>
+</ul>
+<p>If the p-value is greater than 0.05 then there is no evidence to
+reject the null hypothesis that “there is no autocorrelation”. The
+results below show <em>p</em> &gt; 0.05, therefore, the test of
+independence of errors around the regression line passes.</p>
+<pre class="r"><code>pacman::p_load(&quot;lmtest&quot;)
+dwtest(log_test)</code></pre>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  log_test
+## DW = 2.0912, p-value = 0.9258
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+<div id="test-of-normality" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Test of
+Normality</h2>
+<p>Logistic regression does not assume normality of residuals or
+predictors.</p>
+</div>
+<div id="test-of-homoscedasticity" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Test of
+Homoscedasticity</h2>
+<p>The test of homoscedasticity is not relevant for logistic
+regression.</p>
+</div>
+<div id="test-of-multicollinearity" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Test of
+Multicollinearity</h2>
+<p>Multicollinearity arises when two or more independent variables
+(predictors) are highly intercorrelated. The <strong>Variance Inflation
+Factor (VIF)</strong> quantifies how much the variance of a coefficient
+estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no
+collinearity; values above 5 suggest problematic levels of collinearity.
+High VIF values (VIF &gt; 5) suggest that the coefficient estimates are
+less reliable due to the correlations between predictors.</p>
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+vif(log_test)</code></pre>
+<pre><code>##   monthly_fee  customer_age support_calls 
+##      1.017865      1.003913      1.020388</code></pre>
+</div>
+<div id="test-of-outliers" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Test of Outliers</h2>
+<p>The <code>influencePlot()</code> function in R combines 3 key
+diagnostic measures in to a single plot to identify influential
+observations.</p>
+<p>The plot displays:</p>
+<ul>
+<li><p>Y-axis: Studentized residuals (standardized residuals adjusted
+for leverage).</p></li>
+<li><p>X-axis: Leverage (hat values), measuring how “unusual” an
+observation is in terms of its predictor values.</p></li>
+<li><p>Bubble size: Cook’s distance, quantifying the influence of each
+observation on the model coefficients.</p></li>
+</ul>
+<p>Top-left/bottom-left:</p>
+<ul>
+<li><p>Indicates observations with high residuals but low leverage:
+Outliers in the outcome but not predictors.</p></li>
+<li><p>Possible next step: Investigate the observations for
+misclassified outcomes.</p></li>
+</ul>
+<p>Top-right/bottom-right:</p>
+<ul>
+<li><p>Indicates high residuals and high leverage: Influential outliers
+that distort the model.</p></li>
+<li><p>Possible next step: These are the most problematic observations.
+You need to check if they are valid data points or errors.</p></li>
+</ul>
+<p>Middle-right:</p>
+<ul>
+<li><p>High leverage but residuals near 0: Unusual predictor values but
+well-predicted outcomes.</p></li>
+<li><p>Possible next step: These observations are generally safe to
+keep.</p></li>
+</ul>
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+
+influencePlot(log_test, 
+              id = list(n = 5),  # Label top 5 influential points
+              main = &quot;Influence Plot&quot;,
+              sub = &quot;Circle size = Cook&#39;s Distance&quot;)</code></pre>
+<p><img
+src="3_logistic_regression_files/figure-html/outliers_plot-1.png" /><!-- --></p>
+<pre><code>##        StudRes         Hat       CookD
+## 66   2.5131733 0.002206220 0.012165628
+## 92   2.3329288 0.001942625 0.006822822
+## 184  2.4100283 0.002433914 0.010319622
+## 263  1.1669909 0.020141623 0.005015865
+## 294 -1.6986014 0.019738247 0.015927999
+## 347  2.1803805 0.007365365 0.017572966
+## 437 -1.1050303 0.018518805 0.003975203
+## 489  1.4311225 0.021496490 0.009721397
+## 592 -0.9163872 0.021272184 0.002849801
+## 631 -1.8366802 0.012990570 0.014176667
+## 708  2.2742892 0.005166374 0.015498587
+## 864  2.3828386 0.003736612 0.014686885
+## 894  2.3758317 0.002043544 0.007976687</code></pre>
+<p>The influential outliers can then be:</p>
+<ol style="list-style-type: decimal">
+<li><p>Corrected for data entry errors, e.g., an age of 240
+years</p></li>
+<li><p>Deleted so that the statistical test can be run again without
+them</p></li>
+</ol>
+<p>Print the observation numbers that have been identified as
+influential outliers</p>
+<pre class="r"><code>print(influential_points)</code></pre>
+<pre><code>## [1]  66 184 294 347 489 592</code></pre>
+<p>Print the influential observations’ predictor and outcome values.</p>
+<pre class="r"><code>head(subscription_churn_data_infl)</code></pre>
+<pre><code>## # A tibble: 6 × 4
+##   monthly_fee customer_age support_calls renew
+##         &lt;dbl&gt;        &lt;dbl&gt;         &lt;int&gt; &lt;fct&gt;
+## 1        63.6         23.8             0 0    
+## 2        54.8         19.3             0 0    
+## 3        58.5         43.4             5 1    
+## 4        35.5          9.5             0 0    
+## 5        66.9         19.7             4 0    
+## 6        45.2          5.8             3 1</code></pre>
+</div>
+</div>
+<div id="interpretation-of-the-results" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Interpretation of the
+Results</h1>
+<div id="academic-statement" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Academic
+Statement</h2>
+<p>A logistic regression analysis was conducted on data (N = 1,000) to
+examine whether monthly subscription fee paid by a customer, the
+customer’s age, and the number of support calls the customer made in the
+last month predicted the subscription renewal, where renew was coded 1
+for subscription renewal and 0 for subscription cancellation.</p>
+<p>Subtracting the residual deviance (906.19 on 996 df) from the null
+deviance (1,017.22 on 999 df) gave a <span
+class="math inline">\(\chi^2\)</span>(3, N = 1,000) = 111.03, <em>p</em>
+&lt; .001, thus showing that the model was statistically significant
+compared to the null model. The set of predictors reliably distinguished
+between renewals and cancellations.</p>
+<p>The results are reported in the table below:</p>
+<table>
+<caption>Regression Coefficients Predicting Renewal from Multiple
+Customer Features</caption>
+<colgroup>
+<col width="34%" />
+<col width="12%" />
+<col width="22%" />
+<col width="8%" />
+<col width="9%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Predictor</th>
+<th align="center"><span class="math inline">\(\beta\)</span></th>
+<th align="center">95% CI</th>
+<th align="center">SE</th>
+<th align="center"><em>z</em></th>
+<th align="center"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">(Intercept)</td>
+<td align="center">-0.94</td>
+<td align="center">[-2.02, 0.12]</td>
+<td align="center">0.55</td>
+<td align="center">-1.73</td>
+<td align="center">0.085</td>
+</tr>
+<tr class="even">
+<td align="center">Monthly Fee</td>
+<td align="center">-0.04</td>
+<td align="center">[-0.06, -0.03]</td>
+<td align="center">0.01</td>
+<td align="center">-4.88</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td align="center">Customer’s Age</td>
+<td align="center">0.03</td>
+<td align="center">[0.01, 0.04]</td>
+<td align="center">0.01</td>
+<td align="center">3.09</td>
+<td align="center">.002</td>
+</tr>
+<tr class="even">
+<td align="center">Number of Support Calls</td>
+<td align="center">0.70</td>
+<td align="center">[0.54, 0.86]</td>
+<td align="center">0.08</td>
+<td align="center">8.56</td>
+<td align="center">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Note.</em></strong> N = 1,000; SE = standard error;
+CI = confidence interval.</p>
+<p><strong>Predictor Effects</strong></p>
+<ul>
+<li><p>The monthly fee (<span class="math inline">\(\beta\)</span> =
+-0.04, 95% CI [-0.06, -0.03], SE = 0.01, <em>z</em> = -4.88, <em>p</em>
+&lt; .001) was the first predictor. For every unit increase in monthly
+fees, the odds of renewal decrease by 4% (<em>OR</em> = 0.96, 95% CI
+[0.94, 0.97], p&lt; .001).</p></li>
+<li><p>The customer age (<span class="math inline">\(\beta\)</span> =
+0.03, 95% CI [0.01, 0.04], SE = 0.01, <em>z</em> = 3.09, <em>p</em> =
+.002). For every unit increase in the customer’s age, the odds of
+renewal increased by 3% (<em>OR</em> = 1.03, 95% CI [1.01, 1.04],
+<em>p</em> = .002).</p></li>
+<li><p>The number of support calls (<span
+class="math inline">\(\beta\)</span> = 0.70, 95% CI [0.54, 0.86], SE =
+0.08, <em>z</em> = 8.56, <em>p</em> &lt; .001). For every unit increase
+in the number of support calls, the odds of renewal increased by 101%
+(<em>OR</em> = 2.01, 95% CI [1.72, 2.36], <em>p</em> &lt; .001)</p></li>
+<li><p>The intercept term was not statistically significant (<span
+class="math inline">\(\beta\)</span> = -0.94, 95 % CI [-2.02, 0.12], SE
+= 0.55, <em>z</em> = -1.73, <em>p</em> = 0.085) thus indicating no
+significant baseline odds of renewal when all predictors are
+zero.</p></li>
+</ul>
+</div>
+<div id="business-analysis" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Business
+Analysis</h2>
+<p>Key insights:</p>
+<ol style="list-style-type: decimal">
+<li><p>Monthly Fee:</p>
+<ul>
+<li><p>Finding: Higher monthly fees significantly reduce renewal odds
+(−4% per unit increase in monthly fee).</p></li>
+<li><p>Implication: Customers are price-sensitive; fee hikes risk
+cancellations.</p></li>
+<li><p>Recommendation: Avoid aggressive fee increases. Consider small,
+incremental fee adjustments for high-value customers.</p></li>
+</ul></li>
+<li><p>Customer Age:</p>
+<ul>
+<li><p>Finding: Older customers are more likely to renew (+3% odds per
+year of age).</p></li>
+<li><p>Implication: Younger customers may need targeted retention
+efforts.</p></li>
+<li><p>Recommendation: Launch engagement campaigns, e.g., personalized
+offers</p></li>
+</ul></li>
+<li><p>Support Calls:</p>
+<ul>
+<li><p>Finding: Each support call doubles renewal odds (+101% per unit
+increase in support calls).</p></li>
+<li><p>Implication: Proactive customer support drives loyalty and
+retention.</p></li>
+<li><p>Recommendations:</p>
+<ul>
+<li><p>Train customer care officers to resolve issues fully and to
+anticipate needs, e.g., follow-up calls after ticket closure</p></li>
+<li><p>Avoid over-reliance on support calls: High call volumes may
+indicate unresolved product issues.</p></li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="limitations" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Limitations</h2>
+<ol style="list-style-type: decimal">
+<li><p>Logistic regression performs poorly with small datasets or rare
+events (e.g., very few cancellations). Renewal rates are imbalanced,
+79.4% renewals, therefore, the coefficient estimates could be
+biased.</p></li>
+<li><p>Assumes no clustering (e.g., multiple subscriptions per customer)
+or autocorrelation (e.g., time-series trends).</p></li>
+<li><p>Stakeholders may struggle to interpret deviance or AIC
+values.</p></li>
+<li><p>Support Call Paradox: While <code>support_calls</code> had a
+strong positive effect, excessive calls could signal dissatisfaction
+(which is not captured by the model).</p></li>
+</ol>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
