@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="" />
+<meta name="author" content="Allan Omondi" />
 
-<meta name="date" content="2025-05-10" />
+<meta name="date" content="2025-05-07" />
 
 <title>Simple Linear Regression</title>
 
@@ -31,12 +31,8 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<link href="BCOM.3.1.D-1_simple_linear_regression_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="BCOM.3.1.D-1_simple_linear_regression_files/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="BCOM.3.1.D-1_simple_linear_regression_files/navigation-1.1/tabsets.js"></script>
-<script src="BCOM.3.1.D-1_simple_linear_regression_files/navigation-1.1/codefolding.js"></script>
-<script src="BCOM.3.1.D-1_simple_linear_regression_files/navigation-1.1/sourceembed.js"></script>
-<link href="BCOM.3.1.D-1_simple_linear_regression_files/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<link href="BCOM.3.1.D-1_simple_linear_regression_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="BCOM.3.1.D-1_simple_linear_regression_files/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">
@@ -62,11 +58,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-#rmd-source-code {
-  display: none;
-}
-</style>
 
 
 
@@ -101,30 +92,6 @@ pre code {
 }
 </style>
 
-<style type="text/css">
-.kable-table {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: auto;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-bottom: 20px;
-  max-height: 350px;
-}
-
-.kable-table table {
-  margin-bottom: 0px;
-}
-
-.kable-table table>thead>tr>th {
-  border: none;
-  border-bottom: 2px solid #dddddd;
-}
-
-.kable-table table>thead {
-  background-color: #fff;
-}
-</style>
 
 
 <!-- tabsets -->
@@ -177,9 +144,6 @@ pre code {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -196,29 +160,25 @@ pre code {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-<li role="separator" class="divider"></li>
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Simple Linear Regression</h1>
-<h4 class="author"><Type your Student ID and Name here></h4>
-<h4 class="date">2025-05-10</h4>
+<h4 class="author">Allan Omondi</h4>
+<h4 class="date">2025-05-07</h4>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#load-the-dataset" id="toc-load-the-dataset"><span
+class="toc-section-number">1</span> Load the Dataset</a></li>
+</ul>
+</div>
 
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
+<div id="load-the-dataset" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Load the Dataset</h1>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlNpbXBsZSBMaW5lYXIgUmVncmVzc2lvbiINCmF1dGhvcjogIjxUeXBlIHlvdXIgU3R1ZGVudCBJRCBhbmQgTmFtZSBoZXJlPiINCmRhdGU6ICJgciBTeXMuRGF0ZSgpYCINCm91dHB1dDoNCiAgd29yZF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDQNCiAgICBudW1iZXJfc2VjdGlvbnM6IHRydWUNCiAgICBmaWdfd2lkdGg6IDYNCiAgICBrZWVwX21kOiB0cnVlDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA2DQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogIHBkZl9kb2N1bWVudDogDQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA2DQogICAgZmlnX2hlaWdodDogNg0KICAgIGZpZ19jcm9wOiBmYWxzZQ0KICAgIGtlZXBfdGV4OiB0cnVlDQogICAgbGF0ZXhfZW5naW5lOiB4ZWxhdGV4DQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA2DQogICAgZmlnX2hlaWdodDogNg0KICAgIHNlbGZfY29udGFpbmVkOiBmYWxzZQ0KICAgIGtlZXBfbWQ6IHRydWUNCi0tLQ0K</div>
 
 
 
@@ -234,17 +194,6 @@ $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
-$(document).ready(function () {
-  $('.knitsql-table').addClass('kable-table');
-  var container = $('.kable-table');
-  container.each(function() {
-
-    // move the caption out of the table
-    var table = $(this).children('table');
-    var caption = table.children('caption').detach();
-    caption.insertBefore($(this)).css('display', 'inherit');
-  });
-});
 
 </script>
 
@@ -263,12 +212,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("BCOM.3.1.D-1_simple_linear_regression.Rmd");
-  window.initializeCodeFolding("show" === "show");
-});
-</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
