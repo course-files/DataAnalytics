@@ -474,7 +474,6 @@ To view the correlation of all variables at the same time
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# \textasciigrave{}boxplot()\textasciigrave{} This is the function used to plot the box and whisker plot visualization}
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{) \{}
   \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{is.numeric}\NormalTok{(subscription\_churn\_data[[i]])) \{}
@@ -602,8 +601,78 @@ View the summary of the model.
 ## Number of Fisher Scoring iterations: 4
 \end{verbatim}
 
-\subsection{\texorpdfstring{p-Value of the \(\chi^2\)
-Statistic}{p-Value of the \textbackslash chi\^{}2 Statistic}}\label{p-value-of-the-chi2-statistic}
+The logistic regression equation is in the following form:
+
+\[
+\text{log-odds(renew)} = \beta_0 + \beta_1 \cdot fee + \beta_2 \cdot age + \beta_3 \cdot calls
+\]
+
+Plugging in the coefficients from the output gives:
+
+\[
+\text{log-odds(renew)} = -0.941778 + -0.043563 \cdot fee + 0.026110 \cdot age + 0.697795 \cdot calls
+\]
+
+The log-odds is then converted into a probability using the logistic
+function as:
+
+\[
+P(\text{renew = 1}) = \frac{1}{1+e^{-\text{log-odds}}}
+\]
+
+\begin{itemize}
+\item
+  If P(renew=1)≥0.5, predict renewal of subscription(1).
+\item
+  If P(renew=1)\textless0.5, predict cancellation of subscription (0).
+\end{itemize}
+
+For example, a monthly fee of 50, customer age of 62, and 3 support
+calls in the past month is probably going to renew their subscription:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coefs }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(log\_test)}
+\NormalTok{log\_odds   }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\StringTok{"(Intercept)"}\NormalTok{] }\SpecialCharTok{+} 
+\NormalTok{  coefs[}\StringTok{"monthly\_fee"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{50} \SpecialCharTok{+}
+\NormalTok{  coefs[}\StringTok{"customer\_age"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{62} \SpecialCharTok{+}
+\NormalTok{  coefs[}\StringTok{"support\_calls"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{3}
+
+\NormalTok{p\_manual }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{log\_odds))}
+
+\FunctionTok{print}\NormalTok{(p\_manual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept) 
+##   0.6438873
+\end{verbatim}
+
+For example, a monthly fee of 50, customer age of 21, and 3 support
+calls in the past month is probably going to cancel their subscription:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coefs }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(log\_test)}
+\NormalTok{log\_odds   }\OtherTok{\textless{}{-}}\NormalTok{ coefs[}\StringTok{"(Intercept)"}\NormalTok{] }\SpecialCharTok{+} 
+\NormalTok{  coefs[}\StringTok{"monthly\_fee"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{50} \SpecialCharTok{+}
+\NormalTok{  coefs[}\StringTok{"customer\_age"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{21} \SpecialCharTok{+}
+\NormalTok{  coefs[}\StringTok{"support\_calls"}\NormalTok{] }\SpecialCharTok{*} \DecValTok{3}
+
+\NormalTok{p\_manual }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+} \FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{log\_odds))}
+
+\FunctionTok{print}\NormalTok{(p\_manual)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept) 
+##    0.382672
+\end{verbatim}
+
+\subsection{\texorpdfstring{The \(\chi^2\) Statistic and its
+p-Value}{The \textbackslash chi\^{}2 Statistic and its p-Value}}\label{the-chi2-statistic-and-its-p-value}
 
 To obtain the p-value of the \(\chi^2\) statistic:
 
@@ -803,8 +872,8 @@ guessing \\
 0.9 - 1.0 & Excellent discrimination \\
 \end{longtable}
 
-With an AUC of 0.7167 indicates that the model has an acceptable ability
-to discriminate between the two classes.
+An AUC of 0.7167 indicates that the model has an acceptable ability to
+discriminate between the two classes.
 
 \section{Diagnostic EDA}\label{diagnostic-eda}
 
@@ -920,7 +989,7 @@ estimates are less reliable due to the correlations between predictors.
 \subsection{Test of Outliers}\label{test-of-outliers}
 
 The \texttt{influencePlot()} function in R combines 3 key diagnostic
-measures in to a single plot to identify influential observations.
+measures into a single plot to identify influential observations.
 
 The plot displays:
 

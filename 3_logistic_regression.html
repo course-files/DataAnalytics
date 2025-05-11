@@ -222,10 +222,10 @@ class="toc-section-number">2.5.5</span> Scatter Plot</a></li>
 <li><a href="#statistical-test" id="toc-statistical-test"><span
 class="toc-section-number">3</span> Statistical Test</a>
 <ul>
-<li><a href="#p-value-of-the-chi2-statistic"
-id="toc-p-value-of-the-chi2-statistic"><span
-class="toc-section-number">3.1</span> p-Value of the <span
-class="math inline">\(\chi^2\)</span> Statistic</a></li>
+<li><a href="#the-chi2-statistic-and-its-p-value"
+id="toc-the-chi2-statistic-and-its-p-value"><span
+class="toc-section-number">3.1</span> The <span
+class="math inline">\(\chi^2\)</span> Statistic and its p-Value</a></li>
 <li><a href="#confidence-interval-of-the-parameters"
 id="toc-confidence-interval-of-the-parameters"><span
 class="toc-section-number">3.2</span> 95% Confidence Interval of the
@@ -508,8 +508,7 @@ src="3_logistic_regression_files/figure-html/visualization_histogram-2.png" /><!
 <div id="box-and-whisker-plot" class="section level3" number="2.5.2">
 <h3><span class="header-section-number">2.5.2</span> Box and Whisker
 Plot</h3>
-<pre class="r"><code># `boxplot()` This is the function used to plot the box and whisker plot visualization
-par(mfrow = c(1, 2))
+<pre class="r"><code>par(mfrow = c(1, 2))
 for (i in 1:4) {
   if (is.numeric(subscription_churn_data[[i]])) {
     boxplot(subscription_churn_data[[i]], main = names(subscription_churn_data)[i])
@@ -606,10 +605,58 @@ regression.</p>
 ## AIC: 914.19
 ## 
 ## Number of Fisher Scoring iterations: 4</code></pre>
-<div id="p-value-of-the-chi2-statistic" class="section level2"
+<p>The logistic regression equation is in the following form:</p>
+<p><span class="math display">\[
+\text{log-odds(renew)} = \beta_0 + \beta_1 \cdot fee + \beta_2 \cdot age
++ \beta_3 \cdot calls
+\]</span></p>
+<p>Plugging in the coefficients from the output gives:</p>
+<p><span class="math display">\[
+\text{log-odds(renew)} = -0.941778 + -0.043563 \cdot fee + 0.026110
+\cdot age + 0.697795 \cdot calls
+\]</span></p>
+<p>The log-odds is then converted into a probability using the logistic
+function as:</p>
+<p><span class="math display">\[
+P(\text{renew = 1}) = \frac{1}{1+e^{-\text{log-odds}}}
+\]</span></p>
+<ul>
+<li><p>If P(renew=1)≥0.5, predict renewal of subscription(1).</p></li>
+<li><p>If P(renew=1)&lt;0.5, predict cancellation of subscription
+(0).</p></li>
+</ul>
+<p>For example, a monthly fee of 50, customer age of 62, and 3 support
+calls in the past month is probably going to renew their
+subscription:</p>
+<pre class="r"><code>coefs &lt;- coef(log_test)
+log_odds   &lt;- coefs[&quot;(Intercept)&quot;] + 
+  coefs[&quot;monthly_fee&quot;] * 50 +
+  coefs[&quot;customer_age&quot;] * 62 +
+  coefs[&quot;support_calls&quot;] * 3
+
+p_manual &lt;- 1 / (1 + exp(-log_odds))
+
+print(p_manual)</code></pre>
+<pre><code>## (Intercept) 
+##   0.6438873</code></pre>
+<p>For example, a monthly fee of 50, customer age of 21, and 3 support
+calls in the past month is probably going to cancel their
+subscription:</p>
+<pre class="r"><code>coefs &lt;- coef(log_test)
+log_odds   &lt;- coefs[&quot;(Intercept)&quot;] + 
+  coefs[&quot;monthly_fee&quot;] * 50 +
+  coefs[&quot;customer_age&quot;] * 21 +
+  coefs[&quot;support_calls&quot;] * 3
+
+p_manual &lt;- 1 / (1 + exp(-log_odds))
+
+print(p_manual)</code></pre>
+<pre><code>## (Intercept) 
+##    0.382672</code></pre>
+<div id="the-chi2-statistic-and-its-p-value" class="section level2"
 number="3.1">
-<h2><span class="header-section-number">3.1</span> p-Value of the <span
-class="math inline">\(\chi^2\)</span> Statistic</h2>
+<h2><span class="header-section-number">3.1</span> The <span
+class="math inline">\(\chi^2\)</span> Statistic and its p-Value</h2>
 <p>To obtain the p-value of the <span
 class="math inline">\(\chi^2\)</span> statistic:</p>
 <pre class="r"><code># chi_2 &lt;- log_test$null.deviance/1 - log_test$residuals
@@ -756,8 +803,8 @@ guessing</td>
 </tr>
 </tbody>
 </table>
-<p>With an AUC of 0.7167 indicates that the model has an acceptable
-ability to discriminate between the two classes.</p>
+<p>An AUC of 0.7167 indicates that the model has an acceptable ability
+to discriminate between the two classes.</p>
 </div>
 </div>
 <div id="diagnostic-eda" class="section level1" number="4">
@@ -853,7 +900,7 @@ vif(log_test)</code></pre>
 <div id="test-of-outliers" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> Test of Outliers</h2>
 <p>The <code>influencePlot()</code> function in R combines 3 key
-diagnostic measures in to a single plot to identify influential
+diagnostic measures into a single plot to identify influential
 observations.</p>
 <p>The plot displays:</p>
 <ul>

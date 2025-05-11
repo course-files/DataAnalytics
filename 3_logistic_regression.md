@@ -9,12 +9,14 @@ output:
     number_sections: true
     fig_width: 5
     keep_md: true
-  html_notebook:
+  html_document:
     toc: true
     toc_depth: 4
     number_sections: true
-    fig_width: 5
+    fig_width: 4
+    fig_height: 4
     self_contained: false
+    keep_md: true
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -24,14 +26,12 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
-  html_document:
+  html_notebook:
     toc: true
     toc_depth: 4
     number_sections: true
-    fig_width: 5
-    fig_height: 5
+    fig_width: 4
     self_contained: false
-    keep_md: true
 ---
 
 
@@ -308,7 +308,6 @@ for (i in 1:4) {
 
 
 ``` r
-# `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
 for (i in 1:4) {
   if (is.numeric(subscription_churn_data[[i]])) {
@@ -429,7 +428,69 @@ summary(log_test)
 ## Number of Fisher Scoring iterations: 4
 ```
 
-## p-Value of the $\chi^2$ Statistic
+The logistic regression equation is in the following form:
+
+$$
+\text{log-odds(renew)} = \beta_0 + \beta_1 \cdot fee + \beta_2 \cdot age + \beta_3 \cdot calls
+$$
+
+Plugging in the coefficients from the output gives:
+
+$$
+\text{log-odds(renew)} = -0.941778 + -0.043563 \cdot fee + 0.026110 \cdot age + 0.697795 \cdot calls
+$$
+
+The log-odds is then converted into a probability using the logistic function as:
+
+$$
+P(\text{renew = 1}) = \frac{1}{1+e^{-\text{log-odds}}}
+$$
+
+-   If P(renew=1)≥0.5, predict renewal of subscription(1).
+
+-   If P(renew=1)\<0.5, predict cancellation of subscription (0).
+
+For example, a monthly fee of 50, customer age of 62, and 3 support calls in the past month is probably going to renew their subscription:
+
+
+``` r
+coefs <- coef(log_test)
+log_odds   <- coefs["(Intercept)"] + 
+  coefs["monthly_fee"] * 50 +
+  coefs["customer_age"] * 62 +
+  coefs["support_calls"] * 3
+
+p_manual <- 1 / (1 + exp(-log_odds))
+
+print(p_manual)
+```
+
+```
+## (Intercept) 
+##   0.6438873
+```
+
+For example, a monthly fee of 50, customer age of 21, and 3 support calls in the past month is probably going to cancel their subscription:
+
+
+``` r
+coefs <- coef(log_test)
+log_odds   <- coefs["(Intercept)"] + 
+  coefs["monthly_fee"] * 50 +
+  coefs["customer_age"] * 21 +
+  coefs["support_calls"] * 3
+
+p_manual <- 1 / (1 + exp(-log_odds))
+
+print(p_manual)
+```
+
+```
+## (Intercept) 
+##    0.382672
+```
+
+## The $\chi^2$ Statistic and its p-Value
 
 To obtain the p-value of the $\chi^2$ statistic:
 
@@ -573,7 +634,7 @@ print(auc_value)
 
 : AUC Value Interpretation
 
-With an AUC of 0.7167 indicates that the model has an acceptable ability to discriminate between the two classes.
+An AUC of 0.7167 indicates that the model has an acceptable ability to discriminate between the two classes.
 
 # Diagnostic EDA
 
@@ -652,7 +713,7 @@ vif(log_test)
 
 ## Test of Outliers
 
-The `influencePlot()` function in R combines 3 key diagnostic measures in to a single plot to identify influential observations.
+The `influencePlot()` function in R combines 3 key diagnostic measures into a single plot to identify influential observations.
 
 The plot displays:
 
