@@ -3,12 +3,15 @@ title: "Multiple Linear Regression"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
-  word_document:
+  pdf_document: 
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 5
-    keep_md: true
+    fig_height: 5
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
   html_notebook:
     toc: true
     toc_depth: 4
@@ -23,18 +26,16 @@ output:
     fig_height: 5
     self_contained: false
     keep_md: true
-  pdf_document: 
+  word_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 5
-    fig_height: 5
-    fig_crop: false
-    keep_tex: true
-    latex_engine: xelatex
+    keep_md: true
 ---
 
-```{r setup_chunk, message=FALSE, warning=FALSE, include=FALSE}
+```{r setup_chunk, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 if (!"pacman" %in% installed.packages()[, "Package"]) {
   install.packages("pacman", dependencies = TRUE)
   library("pacman", character.only = TRUE)
@@ -267,13 +268,13 @@ ggplot(advertising_data_composite,
 
 We then apply a simultaneous multiple linear regression as a statistical test for regression. The term "simultaneous" refers to how the predictor variables are entered and considered in the statistical test. It means that all the predictor variables included in the model are entered and evaluated at the same time.
 
-```{r statistical_test_SLR, message=FALSE, warning=FALSE, include=FALSE}
+```{r statistical_test_SLR, echo=TRUE, message=FALSE, warning=FALSE}
 mlr_test <- lm(Sales ~ YouTube + TikTok + Facebook, data = advertising_data)
 ```
 
 View the summary of the model.
 
-```{r statistical_test_interpretation, echo=TRUE, message=FALSE, warning=FALSE}
+```{r statistical_test_result, echo=TRUE, message=FALSE, warning=FALSE}
 summary(mlr_test)
 ```
 
@@ -297,17 +298,17 @@ A plot of the residuals versus the fitted values enables us to test for linearit
 plot(mlr_test, which = 1)
 ```
 
-## [**Test of Independence of Errors**]{.underline}
+## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
 This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are.
 
-The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation).
+The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
 -   The null hypothesis, H~0~, is that there is no autocorrelation
 
 -   The alternative hypothesis, H~a~, is that there is autocorrelation
 
-If the p-value is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.5316, therefore, the test of independence of errors around the regression line passes.
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.1573, therefore, the test of independence of errors around the regression line passes.
 
 ```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
@@ -318,7 +319,7 @@ dwtest(mlr_test)
 
 The test of normality assesses whether the residuals are normally distributed, i.e., most residuals (errors) are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
 
-A Q-Q plot is a scatterplot of the quantiles of the residuals against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+A Quantile-Quantile (Q-Q) plot is a scatterplot of the quantiles of the residuals against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
 
 If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
 
@@ -346,6 +347,17 @@ Points forming a cone shape that widens from left to right suggests heteroscedas
 
 ```{r test_of_homoscedasticity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 plot(mlr_test, which = 3)
+```
+
+**Breusch-Pagan Test**
+
+The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot
+
+**Interpretation:** If the p-value is less than 0.05, there is statistically significant evidence of heteroscedasticity in the residuals.
+
+```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("lmtest")
+lmtest::bptest(slr_test)
 ```
 
 ## [**Quantitative Validation of Assumptions**]{.underline}

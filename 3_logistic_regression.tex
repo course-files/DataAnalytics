@@ -89,15 +89,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \ifLuaTeX
@@ -110,9 +112,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -124,7 +123,7 @@
 
 \title{Logistic Regression}
 \author{Allan Omondi}
-\date{2025-05-11}
+\date{2025-05-28}
 
 \begin{document}
 \maketitle
@@ -133,6 +132,19 @@
 \setcounter{tocdepth}{4}
 \tableofcontents
 }
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\StringTok{"pacman"} \SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{()[, }\StringTok{"Package"}\NormalTok{]) \{}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{library}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(}\StringTok{"here"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_knit}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{root.dir =}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
 \section{Load the Dataset}\label{load-the-dataset}
 
 The synthetic subscription churn dataset contains 1,000 observations and
@@ -467,8 +479,8 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/visualization_histogram-1.pdf}
-\includegraphics{3_logistic_regression_files/figure-latex/visualization_histogram-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/visualization_histogram-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/visualization_histogram-2.pdf}}
 
 \subsubsection{Box and Whisker Plot}\label{box-and-whisker-plot}
 
@@ -486,8 +498,8 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/visualization_boxplot-1.pdf}
-\includegraphics{3_logistic_regression_files/figure-latex/visualization_boxplot-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/visualization_boxplot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/visualization_boxplot-2.pdf}}
 
 \subsubsection{Missing Data Plot}\label{missing-data-plot}
 
@@ -499,7 +511,7 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/missing_data_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/missing_data_plot-1.pdf}}
 
 \subsubsection{Correlation Plot}\label{correlation-plot}
 
@@ -511,7 +523,7 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/correlation_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/correlation_plot-1.pdf}}
 
 \subsubsection{Scatter Plot}\label{scatter-plot}
 
@@ -523,7 +535,7 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/scatter_plot_1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/scatter_plot_1-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -540,7 +552,7 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/scatter_plot_2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/scatter_plot_2-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -562,12 +574,22 @@ To view the correlation of all variables at the same time
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/scatter_plot_3-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/scatter_plot_3-1.pdf}}
 
 \section{Statistical Test}\label{statistical-test}
 
 We then apply a logistic regression as a statistical test for
 regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{log\_test }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(renew }\SpecialCharTok{\textasciitilde{}}\NormalTok{ monthly\_fee }\SpecialCharTok{+}\NormalTok{ customer\_age }\SpecialCharTok{+}\NormalTok{ support\_calls,}
+                \CommentTok{\# This specifies that the generalized linear model to use}
+                \CommentTok{\# is logistic regression}
+                \AttributeTok{family =}\NormalTok{ binomial,}
+                \AttributeTok{data =}\NormalTok{ subscription\_churn\_data)}
+\end{Highlighting}
+\end{Shaded}
 
 View the summary of the model.
 
@@ -830,7 +852,7 @@ renew and 0 = cancel).
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/model_fit_a-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/model_fit_a-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -843,8 +865,8 @@ renew and 0 = cancel).
 \end{verbatim}
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \caption{AUC Value Interpretation}\tabularnewline
 \toprule\noalign{}
 \begin{minipage}[b]{\linewidth}\raggedright
@@ -891,15 +913,19 @@ predictions.
 
 \textbf{Component-Plus-Residual (Partial-Residual) Plots}
 
-Logistic regression assumes that the relationship between the logit
-(log-odds) of the outcome and the continuous predictors is linear. A
-logit is the natural logarithm of the odds of an event occurring, i.e.,
-if \emph{p} is the probability of an event (where 0 \textless{} \emph{p}
-\textless{} 1), the odds are \(\frac{p}{1 - p}\) and the logit is:
+Logistic regression assumes that the relationship between the log-odds
+of the outcome and the continuous predictors is linear. A log-odds is
+the natural logarithm of the odds of an event occurring.
+
+If \emph{p} is the probability of an event (where 0 \textless{} \emph{p}
+\textless{} 1), the odds of the event occuring is the ratio of the
+probability that the event occurs to the probability that the event does
+not occur, i.e., \(\frac{p}{1 - p}\) and the log-odds (computed using
+the logit function) of the event, \emph{p}, is:
 
 \[ \text{logit}(p) = \ln\left(\frac{p}{1-p}\right) \]
 
-A roughly straight line indicates the logit-predictor linearity
+A roughly straight line indicates the ``log-odds - predictor'' linearity
 assumption is met.
 
 \begin{Shaded}
@@ -910,10 +936,10 @@ assumption is met.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/test_of_linearity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/test_of_linearity-1.pdf}}
 
-\subsection{Test of Independence of
-Errors}\label{test-of-independence-of-errors}
+\subsection{\texorpdfstring{\ul{\textbf{Test of Independence of Errors
+(Autocorrelation)}}}{Test of Independence of Errors (Autocorrelation)}}\label{test-of-independence-of-errors-autocorrelation}
 
 This test is necessary to confirm that each observation is independent
 of the other. It helps to identify \textbf{autocorrelation} that is
@@ -923,7 +949,10 @@ leads to underestimated standard errors and inflated t-statistics. It
 can also make findings appear more significant than they actually are.
 
 The ``\textbf{Durbin-Watson Test}'' can be used as a test of
-independence of errors (test of autocorrelation).
+independence of errors (test of autocorrelation). A Durbin-Watson
+statistic close to 2 suggests no autocorrelation, while values
+approaching 0 or 4 indicate positive or negative autocorrelation,
+respectively.
 
 \begin{itemize}
 \item
@@ -934,10 +963,11 @@ independence of errors (test of autocorrelation).
   autocorrelation
 \end{itemize}
 
-If the p-value is greater than 0.05 then there is no evidence to reject
-the null hypothesis that ``there is no autocorrelation''. The results
-below show \emph{p} \textgreater{} 0.05, therefore, the test of
-independence of errors around the regression line passes.
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then
+there is no evidence to reject the null hypothesis that ``there is no
+autocorrelation''. The results below show a p-value of 0.1573,
+therefore, the test of independence of errors around the regression line
+passes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -977,7 +1007,7 @@ estimates are less reliable due to the correlations between predictors.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(}\StringTok{"car"}\NormalTok{)}
-\FunctionTok{vif}\NormalTok{(log\_test)}
+\NormalTok{car}\SpecialCharTok{::}\FunctionTok{vif}\NormalTok{(log\_test)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -996,7 +1026,7 @@ The plot displays:
 \begin{itemize}
 \item
   Y-axis: Studentized residuals (standardized residuals adjusted for
-  leverage).
+  leverage). This measures ``outlierness'' in the outcome variable.
 \item
   X-axis: Leverage (hat values), measuring how ``unusual'' an
   observation is in terms of its predictor values.
@@ -1048,7 +1078,7 @@ Middle-right:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{3_logistic_regression_files/figure-latex/outliers_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/outliers_plot-1.pdf}}
 
 \begin{verbatim}
 ##        StudRes         Hat       CookD
@@ -1076,6 +1106,20 @@ The influential outliers can then be:
 \item
   Deleted so that the statistical test can be run again without them
 \end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{influential\_points }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{row.names}\NormalTok{(}\FunctionTok{influencePlot}\NormalTok{(log\_test)))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{3_logistic_regression_files/figure-latex/outliers_influencers_a-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{subscription\_churn\_data\_infl }\OtherTok{\textless{}{-}}\NormalTok{ subscription\_churn\_data[influential\_points, ]}
+\end{Highlighting}
+\end{Shaded}
 
 Print the observation numbers that have been identified as influential
 outliers
@@ -1130,12 +1174,12 @@ distinguished between renewals and cancellations.
 The results are reported in the table below:
 
 \begin{longtable}[]{@{}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.3472}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1250}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2222}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0833}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0972}}
-  >{\centering\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1250}}@{}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3472}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1250}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2222}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0833}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0972}}
+  >{\centering\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1250}}@{}}
 \caption{Regression Coefficients Predicting Renewal from Multiple
 Customer Features}\tabularnewline
 \toprule\noalign{}

@@ -1,0 +1,171 @@
+---
+title: "Simple Linear Regression"
+author: "<Type your Student ID and Name here>"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  pdf_document: 
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+# Load the Dataset
+
+```{r message=FALSE, warning=FALSE}
+pacman::p_load("readr")
+
+clv_data <- read_csv("./data/clv_data.csv")
+head(clv_data)
+
+```
+
+# Initial EDA
+
+```{r}
+dim(clv_data)
+```
+
+```{r}
+ sapply(clv_data, class)
+```
+
+```{r}
+str(clv_data)
+```
+
+[**Descriptive Statistics**]{.underline}
+
+## Measures of Frequency
+
+## Measures of Central Tendency
+
+```{r}
+summary(clv_data)
+```
+
+## Measures of Distribution
+
+```{r}
+sapply(clv_data[,], var)
+```
+
+```{r}
+ sapply(clv_data[,], sd)
+```
+
+```{r}
+pacman::p_load("e1071")
+sapply(clv_data[,], kurtosis, type = 2)
+```
+
+```{r}
+sapply(clv_data[,], skewness, type = 2)
+```
+
+```{r}
+cov(clv_data, method = "spearman")
+```
+
+```{r message=FALSE, warning=FALSE}
+cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = "spearman")
+```
+
+```{r}
+cor(clv_data, method = "spearman")
+```
+
+# Basic Visualization
+
+## Histograms
+
+```{r}
+ par(mfrow = c(1, 2))
+ for (i in 1:2) {
+ if (is.numeric(clv_data[[i]])) {
+ hist(clv_data[[i]],
+ main = names(clv_data)[i],
+ xlab = names(clv_data)[i])
+ } else {
+ message(paste("Column", names(clv_data)[i], "is not numeric and will be skipped."))
+ }
+ }
+```
+
+```{r}
+ par(mfrow = c(1, 2))
+ for (i in 1:2) {
+ if (is.numeric(clv_data[[i]])) {
+ boxplot(clv_data[[i]], main = names(clv_data)[i])
+ } else {
+ message(paste("Column", names(clv_data)[i], "is not numeric and will be skipped."))
+ }
+ }
+```
+
+```{r}
+pacman::p_load("Amelia")
+missmap(clv_data, col = c("red", "grey"), legend = TRUE)
+```
+
+```{r}
+ pacman::p_load("ggcorrplot")
+ ggcorrplot(cor(clv_data[,]))
+```
+
+```{r}
+ pacman::p_load("corrplot")
+  pairs(customer_lifetime_value ~ ., data = clv_data, col = clv_data$customer_lifetime_value)
+```
+
+```{r}
+pacman::p_load("ggplot2")
+ ggplot(clv_data,
+ aes(x= purchase_frequency, y= customer_lifetime_value)) +
+ geom_point()+
+ geom_smooth(method= lm)+
+ labs(
+ title= "RelationshipbetweenCustomerLifetimeValueandPurchaseFrequency",
+ x= "PurchaseFrequency",
+ y= "CustomerLifetimeValue"
+ )
+```
+
+```{r}
+summary(slr_test)
+```

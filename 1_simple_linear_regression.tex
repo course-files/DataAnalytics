@@ -79,15 +79,17 @@
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \ifLuaTeX
@@ -100,9 +102,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -114,7 +113,7 @@
 
 \title{Simple Linear Regression}
 \author{Allan Omondi}
-\date{2025-05-03}
+\date{2025-05-27}
 
 \begin{document}
 \maketitle
@@ -123,6 +122,27 @@
 \setcounter{tocdepth}{4}
 \tableofcontents
 }
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# \textasciigrave{}installed.packages()\textasciigrave{} retrieves a matrix of all installed packages}
+\CommentTok{\# \textasciigrave{}[, "Package"]\textasciigrave{} extracts on the "Package" column from the matrix of all packages}
+\CommentTok{\# The \%in\% operator is used to test if the specified package is in the matrix of all packages}
+\CommentTok{\# \textasciigrave{}character.only = TRUE\textasciigrave{} ensures that the quoted name of the package is not treated as a symbol}
+\CommentTok{\# \textasciigrave{}dependencies = TRUE\textasciigrave{} instructs R to install not only the specified package but also its dependencies}
+\CommentTok{\# \textasciigrave{}knitr::opts\_knit$set(root.dir = here::here())\textasciigrave{} is used to ensure that the "knitr" utility in R knows where to find the files required to create the HTML, Word, or PDF version of the notebook.}
+
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\StringTok{"pacman"} \SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{()[, }\StringTok{"Package"}\NormalTok{]) \{}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{library}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(}\StringTok{"here"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_knit}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{root.dir =}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
 \section{Load the Dataset}\label{load-the-dataset}
 
 The following synthetic dataset contains the estimated Customer Lifetime
@@ -472,8 +492,10 @@ Visualizations}}}{Basic Visualizations}}\label{basic-visualizations}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# \textasciigrave{}par(mfrow = c(1, 2))\textasciigrave{} This is used to divide the area used to plot the visualization into a 1 row by 2 columns grid}
-\CommentTok{\# \textasciigrave{}for (i in 1:2)\textasciigrave{} This is used to identify the variable (column) that is being processed}
+\CommentTok{\# \textasciigrave{}par(mfrow = c(1, 2))\textasciigrave{} This is used to divide the area used to plot}
+\CommentTok{\# the visualization into a 1 row by 2 columns grid}
+\CommentTok{\# \textasciigrave{}for (i in 1:2)\textasciigrave{} This is used to identify the variable (column) }
+\CommentTok{\# that is being processed}
 \CommentTok{\# \textasciigrave{}clv\_data[[i]]\textasciigrave{} This is used to extract the i{-}th column as a vector}
 \CommentTok{\# \textasciigrave{}hist()\textasciigrave{} This is the function used to plot the histogram}
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{))}
@@ -483,13 +505,14 @@ Visualizations}}}{Basic Visualizations}}\label{basic-visualizations}
          \AttributeTok{main =} \FunctionTok{names}\NormalTok{(clv\_data)[i],}
          \AttributeTok{xlab =} \FunctionTok{names}\NormalTok{(clv\_data)[i])}
 \NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{message}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Column"}\NormalTok{, }\FunctionTok{names}\NormalTok{(clv\_data)[i], }\StringTok{"is not numeric and will be skipped."}\NormalTok{))}
+    \FunctionTok{message}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Column"}\NormalTok{, }\FunctionTok{names}\NormalTok{(clv\_data)[i],}
+                  \StringTok{"is not numeric and will be skipped."}\NormalTok{))}
 \NormalTok{  \}}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/visualization_histogram-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/visualization_histogram-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Box and Whisker
 Plot}}{Box and Whisker Plot}}\label{box-and-whisker-plot}
@@ -508,7 +531,7 @@ Plot}}{Box and Whisker Plot}}\label{box-and-whisker-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/visualization_boxplot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/visualization_boxplot-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Missing Data
 Plot}}{Missing Data Plot}}\label{missing-data-plot}
@@ -521,7 +544,7 @@ Plot}}{Missing Data Plot}}\label{missing-data-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/missing_data_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/missing_data_plot-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Correlation
 Plot}}{Correlation Plot}}\label{correlation-plot}
@@ -534,7 +557,7 @@ Plot}}{Correlation Plot}}\label{correlation-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/correlation_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/correlation_plot-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Scatter
 Plot}}{Scatter Plot}}\label{scatter-plot}
@@ -543,11 +566,12 @@ Plot}}{Scatter Plot}}\label{scatter-plot}
 \begin{Highlighting}[]
 \NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(}\StringTok{"corrplot"}\NormalTok{)}
 
-\FunctionTok{pairs}\NormalTok{(clv\_data}\SpecialCharTok{$}\NormalTok{customer\_lifetime\_value }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ clv\_data, }\AttributeTok{col =}\NormalTok{ clv\_data}\SpecialCharTok{$}\NormalTok{customer\_lifetime\_value)}
+\FunctionTok{pairs}\NormalTok{(customer\_lifetime\_value }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ clv\_data,}
+      \AttributeTok{col =}\NormalTok{ clv\_data}\SpecialCharTok{$}\NormalTok{customer\_lifetime\_value)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/scatter_plot_1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/scatter_plot_1-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -564,12 +588,18 @@ Plot}}{Scatter Plot}}\label{scatter-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/scatter_plot_2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/scatter_plot_2-1.pdf}}
 
 \section{Statistical Test}\label{statistical-test}
 
 We then apply a simple linear regression as a statistical test for
 regression.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{slr\_test }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(customer\_lifetime\_value }\SpecialCharTok{\textasciitilde{}}\NormalTok{ purchase\_frequency, }\AttributeTok{data =}\NormalTok{ clv\_data)}
+\end{Highlighting}
+\end{Shaded}
 
 View the summary of the model.
 
@@ -642,7 +672,7 @@ randomly vary around the mean of the value of the response variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/test_of_linearity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/test_of_linearity-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Test of Independence of
 Errors}}}{Test of Independence of Errors}}\label{test-of-independence-of-errors}
@@ -714,7 +744,7 @@ satisfied.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/test_of_normality-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/test_of_normality-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Test of
 Homoscedasticity}}}{Test of Homoscedasticity}}\label{test-of-homoscedasticity}
@@ -752,7 +782,7 @@ heteroscedasticity with increasing variance for larger fitted values.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{1_simple_linear_regression_files/figure-latex/test_of_homoscedasticity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{1_simple_linear_regression_files/figure-latex/test_of_homoscedasticity-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Quantitative Validation of
 Assumptions}}}{Quantitative Validation of Assumptions}}\label{quantitative-validation-of-assumptions}

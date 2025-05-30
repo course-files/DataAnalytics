@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Allan Omondi, student ID, Group D" />
+
+<meta name="date" content="2025-05-20" />
+
+<title>Simple Linear Regression</title>
+
+<script src="temporary_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="temporary_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="temporary_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="temporary_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="temporary_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="temporary_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<link href="temporary_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="temporary_files/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="temporary_files/navigation-1.1/tabsets.js"></script>
+<script src="temporary_files/navigation-1.1/codefolding.js"></script>
+<script src="temporary_files/navigation-1.1/sourceembed.js"></script>
+<link href="temporary_files/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="temporary_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+<style type="text/css">
+.kable-table {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 20px;
+  max-height: 350px;
+}
+
+.kable-table table {
+  margin-bottom: 0px;
+}
+
+.kable-table table>thead>tr>th {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+}
+
+.kable-table table>thead {
+  background-color: #fff;
+}
+</style>
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Simple Linear Regression</h1>
+<h4 class="author">Allan Omondi, student ID, Group D</h4>
+<h4 class="date">2025-05-20</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#load-the-dataset" id="toc-load-the-dataset"><span
+class="toc-section-number">1</span> Load the Dataset</a></li>
+</ul>
+</div>
+
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhV1lnS0NGY0luQmhZMjFoYmx3aUlDVnBiaVVnYVc1emRHRnNiR1ZrTG5CaFkydGhaMlZ6S0NsYkxDQmNJbEJoWTJ0aFoyVmNJbDBwSUh0Y2JpQWdhVzV6ZEdGc2JDNXdZV05yWVdkbGN5aGNJbkJoWTIxaGJsd2lMQ0JrWlhCbGJtUmxibU5wWlhNZ1BTQlVVbFZGS1Z4dUlDQnNhV0p5WVhKNUtGd2ljR0ZqYldGdVhDSXNJR05vWVhKaFkzUmxjaTV2Ym14NUlEMGdWRkpWUlNsY2JuMWNibHh1Y0dGamJXRnVPanB3WDJ4dllXUW9YQ0pvWlhKbFhDSXBYRzVjYm10dWFYUnlPanB2Y0hSelgydHVhWFFrYzJWMEtISnZiM1F1WkdseUlEMGdhR1Z5WlRvNmFHVnlaU2dwS1Z4dVlHQmdJbjA9IC0tPlxuXG5gYGByXG5pZiAoIVwicGFjbWFuXCIgJWluJSBpbnN0YWxsZWQucGFja2FnZXMoKVssIFwiUGFja2FnZVwiXSkge1xuICBpbnN0YWxsLnBhY2thZ2VzKFwicGFjbWFuXCIsIGRlcGVuZGVuY2llcyA9IFRSVUUpXG4gIGxpYnJhcnkoXCJwYWNtYW5cIiwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxufVxuXG5wYWNtYW46OnBfbG9hZChcImhlcmVcIilcblxua25pdHI6Om9wdHNfa25pdCRzZXQocm9vdC5kaXIgPSBoZXJlOjpoZXJlKCkpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaWYgKCFcInBhY21hblwiICVpbiUgaW5zdGFsbGVkLnBhY2thZ2VzKClbLCBcIlBhY2thZ2VcIl0pIHtcbiAgaW5zdGFsbC5wYWNrYWdlcyhcInBhY21hblwiLCBkZXBlbmRlbmNpZXMgPSBUUlVFKVxuICBsaWJyYXJ5KFwicGFjbWFuXCIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbn1cblxucGFjbWFuOjpwX2xvYWQoXCJoZXJlXCIpXG5cbmtuaXRyOjpvcHRzX2tuaXQkc2V0KHJvb3QuZGlyID0gaGVyZTo6aGVyZSgpKVxuYGBgIn0= -->
+<pre class="r"><code>if (!&quot;pacman&quot; %in% installed.packages()[, &quot;Package&quot;]) {
+  install.packages(&quot;pacman&quot;, dependencies = TRUE)
+  library(&quot;pacman&quot;, character.only = TRUE)
+}
+
+pacman::p_load(&quot;here&quot;)
+
+knitr::opts_knit$set(root.dir = here::here())</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="load-the-dataset" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Load the Dataset</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSnlaV0ZrY2x3aUtWeHVYRzVqYkhaZlpHRjBZU0E4TFNCeVpXRmtYMk56ZGloY0lpNHZaR0YwWVM5amJIWmZaR0YwWVM1amMzWmNJaWxjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwicmVhZHJcIilcblxuY2x2X2RhdGEgPC0gcmVhZF9jc3YoXCIuL2RhdGEvY2x2X2RhdGEuY3N2XCIpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJyZWFkclwiKVxuXG5jbHZfZGF0YSA8LSByZWFkX2NzdihcIi4vZGF0YS9jbHZfZGF0YS5jc3ZcIilcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;readr&quot;)
+
+clv_data &lt;- read_csv(&quot;./data/clv_data.csv&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNTAwIENvbHVtbnM6IDJcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmRibCAoMik6IHB1cmNoYXNlX2ZyZXF1ZW5jeSwgY3VzdG9tZXJfbGlmZXRpbWVfdmFsdWVcblxu4oS5IFVzZSBgc3BlYygpYCB0byByZXRyaWV2ZSB0aGUgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbiBmb3IgdGhpcyBkYXRhLlxu4oS5IFNwZWNpZnkgdGhlIGNvbHVtbiB0eXBlcyBvciBzZXQgYHNob3dfY29sX3R5cGVzID0gRkFMU0VgIHRvIHF1aWV0IHRoaXMgbWVzc2FnZS5cbiJ9 -->
+<pre><code>Rows: 500 Columns: 2
+── Column specification ────────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+dbl (2): purchase_frequency, customer_lifetime_value
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR1ZoWkNoamJIWmZaR0YwWVNsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5oZWFkKGNsdl9kYXRhKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChjbHZfZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>head(clv_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1mcmFtZS1iZWdpbiBleUp0WlhSaFpHRjBZU0k2ZXlKamJHRnpjMlZ6SWpwYkluUmliRjlrWmlJc0luUmliQ0lzSW1SaGRHRXVabkpoYldVaVhTd2libkp2ZHlJNk5pd2libU52YkNJNk1pd2ljM1Z0YldGeWVTSTZleUpCSUhScFltSnNaU0k2V3lJMklNT1hJRElpWFgxOUxDSnlaR1lpT2lKSU5ITkpRVUZCUVVGQlFVRkNiREZSZGxVM1JFMUNReXR3YlRKbmExWnZjVkZKU1VKSlZqWm5WMXBCVVZsM1lVVlhSVVZuUzJwRlZUUjZhSFF4VGxGS2FteE5TMFYzZFZCM1FVRTNTM3BPZG5kRFRYZE5MMDFIUkVFemJuaEtZVkZVZW5Bdk5Tc3ZNRE5rTDFvd1dFUm1Sek52UVRCSlVsZEhNVGt3WjFCaVJpdG1TR2RGUzBSc05FdGpRa3hsWjI5WVIwSTJRWGRPUmpsMFJHUlpRbFZ4UXpOWk1HSnRjMFZxV0RKT1pUSkRjekZzTURrM016WmpMMnAzUmpRNEx6TjZXV1oyYXpSRFYwNVdOaXRMU0hOT2NuUXZjUzlRVTNJMGNURkNNbkI2VFZkSk5VSjJlSEZ0U25SbGVsRjBRVXA1Wkd0dlJYVjVNbGxLZW1VMk9IZFhURmhMV25wd1oxbEtXRWhGV2tSNGFtOTZiRXBEYlZwV04xbHFNSHBxWlZaMU5uSjVTWG8xYkZkbU4yRTNWMnhEWTNSUVpXdEdOVWxLVUVWcVoxaHlPRXhUTTBwVGNISktUMDlWYjJOMFVVSllWWFpqUlVKaGVGWnVRVEZUVkdsbmF6UktVRUozWkZkMWNHNTRjMlZ3V2xWaVZqRmtaWG9yYVRVeE5rTnhabFZqYkdaTVdHTmlTRTFYWkcxdVdWUmpjMDFTVlVSMGJHTm9lakk0VWpOVlQxQjRUWGhzTWxwUVdraE9abkJ3U1ZscFZXWlVlRVJFVmpWeVJEaEJMM1YxTVdNNVZrRm5RVUVpZlE9PSAtLT5cblxuPGRpdiBkYXRhLXBhZ2VkdGFibGU9XCJmYWxzZVwiPlxuICA8c2NyaXB0IGRhdGEtcGFnZWR0YWJsZS1zb3VyY2UgdHlwZT1cImFwcGxpY2F0aW9uL2pzb25cIj5cbntcImNvbHVtbnNcIjpbe1wibGFiZWxcIjpbXCJwdXJjaGFzZV9mcmVxdWVuY3lcIl0sXCJuYW1lXCI6WzFdLFwidHlwZVwiOltcImRibFwiXSxcImFsaWduXCI6W1wicmlnaHRcIl19LHtcImxhYmVsXCI6W1wiY3VzdG9tZXJfbGlmZXRpbWVfdmFsdWVcIl0sXCJuYW1lXCI6WzJdLFwidHlwZVwiOltcImRibFwiXSxcImFsaWduXCI6W1wicmlnaHRcIl19XSxcImRhdGFcIjpbe1wiMVwiOlwiM1wiLFwiMlwiOlwiMTEwLjMzXCJ9LHtcIjFcIjpcIjdcIixcIjJcIjpcIjE5MC4yNFwifSx7XCIxXCI6XCI2XCIsXCIyXCI6XCIxNTkuOTlcIn0se1wiMVwiOlwiMlwiLFwiMlwiOlwiOTQuNDBcIn0se1wiMVwiOlwiNFwiLFwiMlwiOlwiMTMzLjE2XCJ9LHtcIjFcIjpcIjhcIixcIjJcIjpcIjIyMi43NFwifV0sXCJvcHRpb25zXCI6e1wiY29sdW1uc1wiOntcIm1pblwiOnt9LFwibWF4XCI6WzEwXSxcInRvdGFsXCI6WzJdfSxcInJvd3NcIjp7XCJtaW5cIjpbMTBdLFwibWF4XCI6WzEwXSxcInRvdGFsXCI6WzZdfSxcInBhZ2VzXCI6e319fVxuICA8XC9zY3JpcHQ+XG48XC9kaXY+XG5cbjwhLS0gcm5iLWZyYW1lLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibnJvdyI6NiwibmNvbCI6Miwic3VtbWFyeSI6eyJBIHRpYmJsZSI6WyI2IMOXIDIiXX19LCJyZGYiOiJINHNJQUFBQUFBQUFCbDFRdlU3RE1CQytwbTJna1ZvcVFJSUJJVjZnV1pBUVl3YUVXRUVnS2pFVTR6aHQxTlFKamxNS0V3dVB3QUE3S3pOdndDTXdNL01HREEzbnhKYVFUenAvNSsvMDNkL1owWERmRzNvQTBJUldHMTkwZ1BiRitmSGdFS0RsNEtjQkxlZ29YR0I2QXdORjl0RGRZQlVxQzNZMGJtc0VqWDJOZTJDczFsMDk3MzZjL2p3RjQ4LzN6WWZ2azRDV05WNitLSHNOcnQvcS9QU3I0cTFCMnB6TVdJNUJ2eHFtSnRlelF0QUp5ZGtvRXV5MllKemU2OHdXTFhLWnpwZ1lKWEhFWkR4am96bEpDbVpWN1lqMHpqZVZ1NnJ5SXo1bFdmN2E3V2xDY3RQZWtGNUlKUEVqZ1hyOExTM0pTcHJKT09Vb2N0UUJYVXZjRUJheFZuQTFTVGlnazRKUEJ3ZFd1cG54c2VwWlViVjFkZXoraTUxNkNxZlVjbGZMWGNiSE1XZG1uWVRjc01SVUR0bGNoejI4UjNVT1B4TXhsMlpQWkhOZnBwSVlpVWZUeEREVjVyRDhBL3V1MWM5VkFnQUEifQ== -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["purchase_frequency"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["customer_lifetime_value"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"110.33"},{"1":"7","2":"190.24"},{"1":"6","2":"159.99"},{"1":"2","2":"94.40"},{"1":"4","2":"133.16"},{"1":"8","2":"222.74"}],"options":{"columns":{"min":{},"max":[10],"total":[2]},"rows":{"min":[10],"max":[10],"total":[6]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVUa0ZjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbk5BXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTkFcbmBgYCJ9 -->
+<pre class="r"><code>NA</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlNpbXBsZSBMaW5lYXIgUmVncmVzc2lvbiINCmF1dGhvcjogIkFsbGFuIE9tb25kaSwgc3R1ZGVudCBJRCwgR3JvdXAgRCINCmRhdGU6ICJgciBTeXMuRGF0ZSgpYCINCm91dHB1dDoNCiAgd29yZF9kb2N1bWVudDoNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDQNCiAgICBudW1iZXJfc2VjdGlvbnM6IHRydWUNCiAgICBmaWdfd2lkdGg6IDYNCiAgICBrZWVwX21kOiB0cnVlDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA2DQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQogIGh0bWxfZG9jdW1lbnQ6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA2DQogICAgZmlnX2hlaWdodDogNg0KICAgIHNlbGZfY29udGFpbmVkOiBmYWxzZQ0KICAgIGtlZXBfbWQ6IHRydWUNCiAgcGRmX2RvY3VtZW50OiANCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZGVwdGg6IDQNCiAgICBudW1iZXJfc2VjdGlvbnM6IHRydWUNCiAgICBmaWdfd2lkdGg6IDYNCiAgICBmaWdfaGVpZ2h0OiA2DQogICAgZmlnX2Nyb3A6IGZhbHNlDQogICAga2VlcF90ZXg6IHRydWUNCiAgICBsYXRleF9lbmdpbmU6IHhlbGF0ZXgNCi0tLQ0KDQpgYGB7cn0NCmlmICghInBhY21hbiIgJWluJSBpbnN0YWxsZWQucGFja2FnZXMoKVssICJQYWNrYWdlIl0pIHsNCiAgaW5zdGFsbC5wYWNrYWdlcygicGFjbWFuIiwgZGVwZW5kZW5jaWVzID0gVFJVRSkNCiAgbGlicmFyeSgicGFjbWFuIiwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKQ0KfQ0KDQpwYWNtYW46OnBfbG9hZCgiaGVyZSIpDQoNCmtuaXRyOjpvcHRzX2tuaXQkc2V0KHJvb3QuZGlyID0gaGVyZTo6aGVyZSgpKQ0KYGBgDQoNCiMgTG9hZCB0aGUgRGF0YXNldA0KDQpgYGB7cn0NCnBhY21hbjo6cF9sb2FkKCJyZWFkciIpDQoNCmNsdl9kYXRhIDwtIHJlYWRfY3N2KCIuL2RhdGEvY2x2X2RhdGEuY3N2IikNCmhlYWQoY2x2X2RhdGEpDQoNCmBgYA0K</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+$(document).ready(function () {
+  $('.knitsql-table').addClass('kable-table');
+  var container = $('.kable-table');
+  container.each(function() {
+
+    // move the caption out of the table
+    var table = $(this).children('table');
+    var caption = table.children('caption').detach();
+    caption.insertBefore($(this)).css('display', 'inherit');
+  });
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("temporary.Rmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

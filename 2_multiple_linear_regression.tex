@@ -89,15 +89,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \ifLuaTeX
@@ -110,9 +112,6 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -124,7 +123,7 @@
 
 \title{Multiple Linear Regression}
 \author{Allan Omondi}
-\date{2025-05-03}
+\date{2025-05-27}
 
 \begin{document}
 \maketitle
@@ -133,6 +132,20 @@
 \setcounter{tocdepth}{4}
 \tableofcontents
 }
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{echo =} \ConstantTok{TRUE}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\StringTok{"pacman"} \SpecialCharTok{\%in\%} \FunctionTok{installed.packages}\NormalTok{()[, }\StringTok{"Package"}\NormalTok{]) \{}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{dependencies =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{library}\NormalTok{(}\StringTok{"pacman"}\NormalTok{, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+
+\NormalTok{pacman}\SpecialCharTok{::}\FunctionTok{p\_load}\NormalTok{(}\StringTok{"here"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_knit}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{root.dir =}\NormalTok{ here}\SpecialCharTok{::}\FunctionTok{here}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
 \section{Load the Dataset}\label{load-the-dataset}
 
 \begin{Shaded}
@@ -491,8 +504,8 @@ Visualizations}}}{Basic Visualizations}}\label{basic-visualizations}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/visualization_histogram-1.pdf}
-\includegraphics{2_multiple_linear_regression_files/figure-latex/visualization_histogram-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/visualization_histogram-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/visualization_histogram-2.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Box and Whisker
 Plot}}{Box and Whisker Plot}}\label{box-and-whisker-plot}
@@ -511,8 +524,8 @@ Plot}}{Box and Whisker Plot}}\label{box-and-whisker-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/visualization_boxplot-1.pdf}
-\includegraphics{2_multiple_linear_regression_files/figure-latex/visualization_boxplot-2.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/visualization_boxplot-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/visualization_boxplot-2.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Missing Data
 Plot}}{Missing Data Plot}}\label{missing-data-plot}
@@ -525,7 +538,7 @@ Plot}}{Missing Data Plot}}\label{missing-data-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/missing_data_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/missing_data_plot-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Correlation
 Plot}}{Correlation Plot}}\label{correlation-plot}
@@ -538,7 +551,7 @@ Plot}}{Correlation Plot}}\label{correlation-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/correlation_plot-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/correlation_plot-1.pdf}}
 
 \subsubsection{\texorpdfstring{\textbf{Scatter
 Plot}}{Scatter Plot}}\label{scatter-plot}
@@ -551,7 +564,7 @@ Plot}}{Scatter Plot}}\label{scatter-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/scatter_plot_1-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/scatter_plot_1-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -568,7 +581,7 @@ Plot}}{Scatter Plot}}\label{scatter-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/scatter_plot_2-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/scatter_plot_2-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -588,7 +601,7 @@ Plot}}{Scatter Plot}}\label{scatter-plot}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/scatter_plot_3-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/scatter_plot_3-1.pdf}}
 
 \section{Statistical Test}\label{statistical-test}
 
@@ -597,6 +610,12 @@ test for regression. The term ``simultaneous'' refers to how the
 predictor variables are entered and considered in the statistical test.
 It means that all the predictor variables included in the model are
 entered and evaluated at the same time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mlr\_test }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sales }\SpecialCharTok{\textasciitilde{}}\NormalTok{ YouTube }\SpecialCharTok{+}\NormalTok{ TikTok }\SpecialCharTok{+}\NormalTok{ Facebook, }\AttributeTok{data =}\NormalTok{ advertising\_data)}
+\end{Highlighting}
+\end{Shaded}
 
 View the summary of the model.
 
@@ -671,7 +690,7 @@ randomly vary around the mean of the value of the response variable.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/test_of_linearity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/test_of_linearity-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Test of Independence of
 Errors}}}{Test of Independence of Errors}}\label{test-of-independence-of-errors}
@@ -743,7 +762,7 @@ satisfied.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/test_of_normality-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/test_of_normality-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Test of
 Homoscedasticity}}}{Test of Homoscedasticity}}\label{test-of-homoscedasticity}
@@ -781,7 +800,7 @@ heteroscedasticity with increasing variance for larger fitted values.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{2_multiple_linear_regression_files/figure-latex/test_of_homoscedasticity-1.pdf}
+\pandocbounded{\includegraphics[keepaspectratio]{2_multiple_linear_regression_files/figure-latex/test_of_homoscedasticity-1.pdf}}
 
 \subsection{\texorpdfstring{\ul{\textbf{Quantitative Validation of
 Assumptions}}}{Quantitative Validation of Assumptions}}\label{quantitative-validation-of-assumptions}

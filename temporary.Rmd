@@ -1,15 +1,13 @@
 ---
 title: "Simple Linear Regression"
-author: "Allan Omondi"
-date: "2025-05-07"
+author: "Allan Omondi, student ID, Group D"
+date: "`r Sys.Date()`"
 output:
-  html_document:
+  word_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 6
-    fig_height: 6
-    self_contained: false
     keep_md: true
   html_notebook:
     toc: true
@@ -17,11 +15,13 @@ output:
     number_sections: true
     fig_width: 6
     self_contained: false
-  word_document:
+  html_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 6
+    fig_height: 6
+    self_contained: false
     keep_md: true
   pdf_document: 
     toc: true
@@ -34,4 +34,23 @@ output:
     latex_engine: xelatex
 ---
 
+```{r}
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
 # Load the Dataset
+
+```{r}
+pacman::p_load("readr")
+
+clv_data <- read_csv("./data/clv_data.csv")
+head(clv_data)
+
+```
