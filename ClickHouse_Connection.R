@@ -13,8 +13,11 @@ con <- DBI::dbConnect(
 
 # Example query
 payment_dataset_from_ClickHouse <- dbGetQuery(con, "
-  SELECT *
-  FROM payments;
+SELECT *
+FROM payments FINAL
+INNER JOIN customers
+ON payments.customerNumber = customers.customerNumber
+ORDER BY payments.paymentDate DESC
 ")
 
 # Print results

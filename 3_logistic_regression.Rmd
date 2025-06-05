@@ -359,7 +359,12 @@ To obtain the p-value of the $\chi^2$ statistic:
 chi_2 <- 1017.22 - 906.19
 
 print(chi_2)
-p <- 1 - pchisq(chi_2, df = 3)
+
+# To get the degrees of freedom:
+calculated_df = length(coef(log_test)) - 1  # Subtract 1 for intercept
+
+
+p <- 1 - pchisq(chi_2, df = calculated_df)
 # to format as a scientific notation with four digits after the decimal place
 # sprintf("%.4e", p)
 format.pval(p, eps = .Machine$double.eps, digits = 2)
@@ -553,6 +558,7 @@ The influential outliers can then be:
 
 ```{r outliers_influencers_a, echo=TRUE, message=FALSE, warning=FALSE}
 influential_points <- as.numeric(row.names(influencePlot(log_test)))
+
 subscription_churn_data_infl <- subscription_churn_data[influential_points, ]
 ```
 

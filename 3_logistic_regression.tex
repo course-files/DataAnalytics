@@ -123,7 +123,7 @@
 
 \title{Logistic Regression}
 \author{Allan Omondi}
-\date{2025-05-28}
+\date{2025-06-04}
 
 \begin{document}
 \maketitle
@@ -713,7 +713,11 @@ To obtain the p-value of the \(\chi^2\) statistic:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pchisq}\NormalTok{(chi\_2, }\AttributeTok{df =} \DecValTok{3}\NormalTok{)}
+\CommentTok{\# To get the degrees of freedom:}
+\NormalTok{calculated\_df }\OtherTok{=} \FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(log\_test)) }\SpecialCharTok{{-}} \DecValTok{1}  \CommentTok{\# Subtract 1 for intercept}
+
+
+\NormalTok{p }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pchisq}\NormalTok{(chi\_2, }\AttributeTok{df =}\NormalTok{ calculated\_df)}
 \CommentTok{\# to format as a scientific notation with four digits after the decimal place}
 \CommentTok{\# sprintf("\%.4e", p)}
 \FunctionTok{format.pval}\NormalTok{(p, }\AttributeTok{eps =}\NormalTok{ .Machine}\SpecialCharTok{$}\NormalTok{double.eps, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
