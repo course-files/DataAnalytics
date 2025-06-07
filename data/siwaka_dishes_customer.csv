@@ -1,771 +1,771 @@
-customerNumber,customerName,contactFirstName,contactLastName,phone,addressLine1,addressLine2,postalCode,county,subCounty,status
-1,[Business] Boma Retreat,Marie,Munywe,0771783390,484 Riverside Dr,Apt 1,77738,Embu,Moiben,0
-2,Alaine Adan,Alaine,Adan,0711588602,165 Mbagathi Way,Apt 25,5025,Mombasa,Eldoret West,0
-3,Patricia Mohammed,Patricia,Mohammed,0728933207,264 Waiyaki Way,Apt 96,46312,Meru,Changamwe,1
-4,[Business] Severin Resort,Michelle,Mohammed,0779686207,272 Jogoo Rd,Apt 41,43324,Eldoret,Kisauni,0
-5,[Business] Leopard Beach Hotel,Alaine,Wanyama,0702708065,1 Uhuru Hwy,Apt 81,6057,Garissa,Nakuru Town,0
-6,[Business] Tamarind Residences,Jean,Omar,0743338504,592 Haile Selassie Ave,Apt 46,41540,Marsabit,Naivasha,1
-7,[Business] InterContinental Suites,Claude,Mohammed,0771965541,353 Langata Rd,Apt 40,48488,Laikipia,Naivasha,1
-8,Mwangi Mandela,Mwangi,Mandela,0772204254,205 Riverside Dr,Apt 90,44982,Kitui,Turbo,1
-9,[Business] Serena Lodge,Felicite,Mbeki,0715351503,130 Nairobi St,Apt 96,90210,Mombasa,Nyando,1
-10,[Business] InterContinental Palace,Joseph,Munyui,0732713945,70 Kilimani Rd,Apt 100,83015,Mandera,Eldoret East,1
-11,Felix Munyui,Felix,Munyui,0765343018,656 Kimathi St,Apt 98,37588,Marsabit,Molo,0
-12,Claudine Munyao,Claudine,Munyao,0737658094,11 Langata Rd,Apt 65,19098,Kiambu,Gilgil,1
-13,Mwangi Abdullahi,Mwangi,Abdullahi,0701218945,634 Mbagathi Way,Apt 21,46981,Mandera,Eldoret West,1
-14,[Business] Ole Sereni Residences,Jean,Malema,0772390377,442 Kiambu Rd,Apt 80,50861,Isiolo,Changamwe,1
-15,[Business] Hilton Hotel,Josephine,Muthoni,0762151824,797 Koinange St,Apt 60,6388,Mandera,Dagoretti,0
-16,Emmanuelle Ndayishimiye,Emmanuelle,Ndayishimiye,0796181102,810 Kiambu Rd,Apt 9,14820,Eldoret,Nyando,1
-17,Marie Muthoni,Marie,Muthoni,0721983783,803 Westlands Rd,Apt 23,32523,Nairobi,Nyali,1
-18,[Business] Hilton Suites,Claudine,Nkurunziza,0738490519,395 Kilimani Rd,Apt 21,16179,Wajir,Nakuru Town,1
-19,[Business] Voyager Resort,Mutiso,Osman,0764551266,366 Moi Ave,Apt 39,4037,Kisumu,Westlands,0
-20,[Business] Neptune Palace,Felicite,Ibrahim,0769037870,691 Westlands Rd,Apt 26,80309,Kisumu,Nyali,1
-21,Emmanuelle Bizimana,Emmanuelle,Bizimana,0707321668,167 Kiambu Rd,Apt 79,88516,Meru,Nakuru Town,0
-22,Mutiso Mukasa,Mutiso,Mukasa,0796644359,158 Thika Rd,Apt 84,9598,Marsabit,Eldoret East,1
-23,[Business] Neptune Palace,Paul,Munee,0789434251,174 Kimathi St,Apt 27,69497,Laikipia,Moiben,1
-24,[Business] Hemingways Manor,Emmanuel,Munee,0762567911,156 Lavington Rd,Apt 94,31497,Meru,Nyali,0
-25,[Business] Voyager Resort,Otieno,Kabongo,0702914397,696 Limuru Rd,Apt 26,49542,Marsabit,Naivasha,0
-26,[Business] PrideInn Inn,Claudine,Zuma,0783089151,552 Parklands Rd,Apt 47,2124,Muranga,Westlands,1
-27,Claude Munywe,Claude,Munywe,0759805069,742 Donholm Rd,Apt 1,81333,Nairobi,Changamwe,1
-28,[Business] Voyager Inn,Wambui,Muthoni,0753659680,506 Ngong Rd,Apt 82,61999,Muranga,Westlands,1
-29,Wanjiku Mandela,Wanjiku,Mandela,0731504691,31 Runda Dr,Apt 9,24395,Nyeri,Turbo,1
-30,Felix Ibrahim,Felix,Ibrahim,0738005133,245 Limuru Rd,Apt 47,61320,Wajir,Likoni,1
-31,[Business] Sarova Manor,Paul,Abdi,0767935521,676 James Gichuru Rd,Apt 5,37352,Tharaka-Nithi,Embakasi,0
-32,[Business] Neptune Retreat,Josephine,Munzala,0797308901,973 Parklands Rd,Apt 65,34895,Embu,Muhoroni,1
-33,[Business] Baobab Resort,Wanjiku,Osman,0761564574,8 Kisumu Ave,Apt 61,5433,Mombasa,Kasarani,1
-34,Paul Malema,Paul,Malema,0736098563,755 Westlands Rd,Apt 96,87560,Laikipia,Westlands,1
-35,[Business] Serena Haven,Jeanne,Bizimana,0715019764,664 Eastleigh Rd,Apt 94,48232,Kiambu,Moiben,0
-36,[Business] Tamarind Hotel,Emmanuelle,Odhiambo,0739720174,853 Thika Rd,Apt 71,52329,Isiolo,Eldoret East,0
-37,Njeri Mugisha,Njeri,Mugisha,0703143371,127 South C Rd,Apt 6,31941,Mombasa,Embakasi,1
-38,Kiptoo Hussein,Kiptoo,Hussein,0747346437,698 Tom Mboya St,Apt 96,62789,Tharaka-Nithi,Nyando,0
-39,[Business] Serena Palace,Jacqueline,Munyao,0742583102,47 Dennis Pritt Rd,Apt 29,40695,Mandera,Westlands,1
-40,[Business] PrideInn Inn,Marie,Yusuf,0754759274,85 Dennis Pritt Rd,Apt 49,68775,Machakos,Moiben,0
-41,Felicite Munyuli,Felicite,Munyuli,0785045272,836 Limuru Rd,Apt 56,38176,Eldoret,Langata,0
-42,Michelle Mwangi,Michelle,Mwangi,0757052704,314 Westlands Rd,Apt 25,17725,Laikipia,Turbo,1
-43,[Business] Baobab Manor,Claude,Abdi,0738561066,612 Lavington Rd,Apt 61,5404,Nakuru,Eldoret East,0
-44,Kiptoo Munyoki,Kiptoo,Munyoki,0769619847,161 Kilimani Rd,Apt 17,8269,Baringo,Subukia,1
-45,Kiptoo Munyao,Kiptoo,Munyao,0797410997,602 Langata Rd,Apt 99,34866,Kiambu,Nakuru Town,1
-46,[Business] Safari Residences,Pierre,Nkurunziza,0762166581,939 Koinange St,Apt 41,31294,Nyeri,Embakasi,0
-47,Felix Ibrahim,Felix,Ibrahim,0766727159,102 Nakuru Blvd,Apt 55,40896,Mombasa,Dagoretti,0
-48,Wambui Abdullahi,Wambui,Abdullahi,0779750372,947 Dennis Pritt Rd,Apt 18,75775,Baringo,Nakuru Town,0
-49,[Business] InterContinental Lodge,Wanjiku,Mugabe,0733341526,864 Nakuru Blvd,Apt 29,67628,Embu,Dagoretti,1
-50,Wanjiku Abdullahi,Wanjiku,Abdullahi,0786995487,895 State House Rd,Apt 62,89734,Nyeri,Naivasha,0
-51,[Business] Baobab Palace,Marie,Mutua,0757667103,979 Kisumu Ave,Apt 22,79041,Garissa,Nyando,0
-52,[Business] Severin Suites,Pierrette,Osman,0773850675,720 Dennis Pritt Rd,Apt 16,31468,Isiolo,Eldoret East,1
-53,Achieng Mugisha,Achieng,Mugisha,0706688015,758 Uhuru Hwy,Apt 12,15730,Tharaka-Nithi,Kesses,1
-54,[Business] Villa Rosa Haven,Achieng,Hussein,0798882155,712 Jogoo Rd,Apt 72,45643,Meru,Subukia,0
-55,Wambui Ahmed,Wambui,Ahmed,0764823789,798 Buruburu Rd,Apt 19,78547,Kiambu,Molo,1
-56,Joseph Munzala,Joseph,Munzala,0704999338,768 Gigiri Rd,Apt 26,78354,Eldoret,Kisumu East,1
-57,Emmanuel Mandela,Emmanuel,Mandela,0793730865,665 South C Rd,Apt 35,1965,Nyeri,Nyali,1
-58,[Business] Swahili Manor,Paul,Abdi,0706715680,753 Kenyatta Ave,Apt 56,77441,Machakos,Turbo,1
-59,[Business] Nyali Inn,Amina,Munzala,0715827541,42 Buruburu Rd,Apt 44,67165,Kitui,Eldoret East,0
-60,Marie Munee,Marie,Munee,0770534732,121 Buruburu Rd,Apt 77,63128,Muranga,Westlands,0
-61,Pauline Nkurunziza,Pauline,Nkurunziza,0724021842,664 Donholm Rd,Apt 68,79477,Marsabit,Molo,1
-62,[Business] Leopard Beach Haven,Pierrette,Ndayishimiye,0773118627,255 Nakuru Blvd,Apt 8,79365,Marsabit,Dagoretti,0
-63,[Business] Voyager Suites,Marie,Abdullahi,0738342164,590 Jogoo Rd,Apt 17,79069,Kiambu,Nakuru Town,1
-64,[Business] Severin Resort,Josephine,Zuma,0794370947,58 Koinange St,Apt 100,25350,Laikipia,Likoni,0
-65,[Business] Tamarind Resort,Pierrette,Mbeki,0770832782,455 Ngong Rd,Apt 32,34175,Wajir,Turbo,1
-66,Wambui Kabongo,Wambui,Kabongo,0707618853,696 Dennis Pritt Rd,Apt 77,28414,Isiolo,Kisumu Central,1
-67,[Business] Serena Residences,Achieng,Wanyama,0787857341,11 Runda Dr,Apt 22,66450,Kiambu,Moiben,1
-68,Felicite Abdi,Felicite,Abdi,0729899053,441 Haile Selassie Ave,Apt 44,54279,Machakos,Moiben,1
-69,Otieno Munyua,Otieno,Munyua,0759101053,623 Kileleshwa Rd,Apt 73,56266,Tharaka-Nithi,Kesses,0
-70,Pierrette Munywe,Pierrette,Munywe,0793246108,826 Embakasi Rd,Apt 41,84890,Eldoret,Moiben,1
-71,[Business] PrideInn Manor,Patrick,Ndayishimiye,0701321992,213 Thika Rd,Apt 2,84589,Tharaka-Nithi,Eldoret West,0
-72,[Business] Boma Retreat,Claudine,Munee,0792013203,43 Mbagathi Way,Apt 68,66355,Baringo,Eldoret East,0
-73,[Business] Boma Haven,Pauline,Ochieng,0789016672,850 Ngong Rd,Apt 78,71100,Nakuru,Nyando,1
-74,Marie Yusuf,Marie,Yusuf,0789846655,640 Embakasi Rd,Apt 98,28611,Kitui,Turbo,0
-75,[Business] Swahili Residences,Emmanuel,Mugisha,0747830192,889 Thika Rd,Apt 10,26091,Nyeri,Subukia,1
-76,[Business] Baobab Suites,Mutiso,Munzala,0767646869,782 Kimathi St,Apt 39,6326,Garissa,Kisumu East,1
-77,Wanjiku Zuma,Wanjiku,Zuma,0714157179,624 Gigiri Rd,Apt 89,8611,Mandera,Naivasha,1
-78,[Business] InterContinental Residences,Njeri,Malema,0732878560,297 Haile Selassie Ave,Apt 56,42397,Baringo,Kisauni,1
-79,[Business] Ole Sereni Suites,Paul,Mohammed,0723159788,485 Kileleshwa Rd,Apt 31,73525,Kiambu,Eldoret West,1
-80,[Business] Safari Retreat,Joseph,Munyao,0704083767,3 Eldoret Ln,Apt 3,50403,Nyeri,Muhoroni,1
-81,[Business] Severin Hotel,Kamau,Mutua,0775431392,984 Kimathi St,Apt 65,35698,Marsabit,Langata,1
-82,Joseph Mbeki,Joseph,Mbeki,0762527921,987 Tom Mboya St,Apt 43,34845,Meru,Kasarani,1
-83,Paul Mbeki,Paul,Mbeki,0780454971,318 Moi Ave,Apt 11,33094,Machakos,Nakuru Town,0
-84,Alaine Munzala,Alaine,Munzala,0725082408,902 South C Rd,Apt 43,26706,Mandera,Nakuru Town,1
-85,Alaine Munzala,Alaine,Munzala,0770655619,447 Runda Dr,Apt 32,32954,Nakuru,Dagoretti,1
-86,[Business] Voyager Suites,Michelle,Ibrahim,0798587026,922 Eastleigh Rd,Apt 39,69076,Isiolo,Nyali,0
-87,Marie Mbeki,Marie,Mbeki,0701282980,367 Haile Selassie Ave,Apt 75,78004,Nairobi,Nyali,1
-88,[Business] Fairmont Inn,Claude,Abdullahi,0747590572,111 State House Rd,Apt 13,24958,Baringo,Kisumu Central,1
-89,[Business] Nyali Lodge,Marie,Mandela,0766734565,598 South C Rd,Apt 15,88235,Laikipia,Turbo,1
-90,[Business] Neptune Retreat,Wanjiku,Kiplagat,0758562328,732 Westlands Rd,Apt 90,56677,Marsabit,Jomvu,0
-91,[Business] Severin Inn,Emmanuelle,Munzala,0734265799,902 State House Rd,Apt 77,2526,Nairobi,Kasarani,1
-92,Kiptoo Ndayishimiye,Kiptoo,Ndayishimiye,0724800617,566 Dennis Pritt Rd,Apt 71,47799,Eldoret,Gilgil,1
-93,[Business] Severin Resort,Mutiso,Munyuli,0731925871,699 Nakuru Blvd,Apt 49,37721,Meru,Kisumu Central,1
-94,Emmanuelle Zuma,Emmanuelle,Zuma,0708109461,474 Parklands Rd,Apt 23,72346,Isiolo,Jomvu,0
-95,Joseph Ibrahim,Joseph,Ibrahim,0710928470,941 Eldoret Ln,Apt 48,40399,Nakuru,Gilgil,1
-96,Emmanuel Munywe,Emmanuel,Munywe,0787659076,957 Dennis Pritt Rd,Apt 9,61355,Tharaka-Nithi,Turbo,0
-97,Jean Munyuli,Jean,Munyuli,0770767887,219 Mombasa Rd,Apt 34,78611,Kisumu,Kisumu West,0
-98,Njeri Kabongo,Njeri,Kabongo,0753619073,107 Riverside Dr,Apt 33,26774,Nairobi,Jomvu,0
-99,Wanjiku Njoroge,Wanjiku,Njoroge,0726632718,599 Mama Ngina St,Apt 67,69333,Kisumu,Kisumu Central,0
-100,Claudine Ndayishimiye,Claudine,Ndayishimiye,0743730695,319 Kiambu Rd,Apt 66,88070,Laikipia,Turbo,1
-101,Michel Munyoki,Michel,Munyoki,0799061041,765 Riverside Dr,Apt 64,46958,Machakos,Moiben,0
-102,Pierrette Ndayishimiye,Pierrette,Ndayishimiye,0755257540,258 Mama Ngina St,Apt 26,50442,Kisumu,Kisauni,1
-103,[Business] InterContinental Resort,Wanjiku,Mutua,0720419980,327 Jogoo Rd,Apt 51,84352,Isiolo,Turbo,1
-104,[Business] Safari Suites,Wanjiku,Muthoni,0706093688,522 Westlands Rd,Apt 99,51887,Nyeri,Nakuru Town,0
-105,[Business] Tamarind Inn,Jeanne,Mwangi,0725503421,721 Kenyatta Ave,Apt 38,1058,Wajir,Gilgil,0
-106,[Business] Diani Manor,Joseph,Kabila,0790023704,599 Kileleshwa Rd,Apt 99,24720,Kiambu,Eldoret East,1
-107,Emmanuel Munee,Emmanuel,Munee,0751604715,170 Parklands Rd,Apt 73,44908,Baringo,Kasarani,0
-108,[Business] Boma Residences,Josephine,Zuma,0741645704,52 Ngong Rd,Apt 89,65181,Kisumu,Muhoroni,1
-109,Felix Hussein,Felix,Hussein,0708190843,221 Eldoret Ln,Apt 27,40282,Garissa,Jomvu,1
-110,[Business] Voyager Lodge,Jeanne,Yusuf,0776723683,839 Tom Mboya St,Apt 26,77680,Mombasa,Kesses,1
-111,[Business] Diani Manor,Joseph,Mbeki,0728086769,653 Mama Ngina St,Apt 79,58032,Mombasa,Nakuru Town,1
-112,[Business] Swahili Resort,Mwangi,Osman,0745227615,82 State House Rd,Apt 7,55723,Garissa,Embakasi,0
-113,Otieno Malema,Otieno,Malema,0749588337,187 Eldoret Ln,Apt 21,21395,Meru,Dagoretti,1
-114,Paul Munyua,Paul,Munyua,0781935097,447 Kiambu Rd,Apt 29,48107,Embu,Gilgil,1
-115,[Business] Neptune Retreat,Paul,Mbeki,0702997558,499 Jogoo Rd,Apt 25,52697,Mandera,Nyando,1
-116,Marie Hussein,Marie,Hussein,0711531148,147 Uhuru Hwy,Apt 25,64338,Tharaka-Nithi,Gilgil,1
-117,[Business] Diani Manor,Alain,Zuma,0777829596,516 Langata Rd,Apt 34,16646,Garissa,Gilgil,0
-118,[Business] Swahili Manor,Kamau,Kiplagat,0760053855,933 State House Rd,Apt 5,421,Garissa,Likoni,1
-119,[Business] Tamarind Retreat,Michel,Mbeki,0711448851,149 Runda Dr,Apt 97,68279,Garissa,Eldoret West,0
-120,Joseph Munyoki,Joseph,Munyoki,0724061569,628 Runda Dr,Apt 16,26743,Meru,Langata,1
-121,Wanjiku Munee,Wanjiku,Munee,0709218780,206 Riverside Dr,Apt 95,7627,Nakuru,Langata,1
-122,[Business] Severin Palace,Kiptoo,Wanyama,0768536431,859 Ngong Rd,Apt 62,85114,Tharaka-Nithi,Dagoretti,1
-123,[Business] Sarova Residences,Claudine,Ochieng,0774845761,796 Nakuru Blvd,Apt 45,13394,Nairobi,Muhoroni,1
-124,[Business] Nyali Palace,Jacques,Mutombo,0785260527,677 Limuru Rd,Apt 71,20185,Nakuru,Westlands,0
-125,Kamau Ali,Kamau,Ali,0797514034,662 Runda Dr,Apt 17,26068,Baringo,Likoni,1
-126,Jacqueline Ahmed,Jacqueline,Ahmed,0713523522,698 Mbagathi Way,Apt 58,31858,Baringo,Nyali,0
-127,Josephine Mukasa,Josephine,Mukasa,0743558820,863 Buruburu Rd,Apt 59,12015,Garissa,Muhoroni,1
-128,[Business] Hemingways Resort,Pierrette,Mandela,0718021431,24 Haile Selassie Ave,Apt 52,86724,Machakos,Kesses,1
-129,Marie Malema,Marie,Malema,0731382325,726 Thika Rd,Apt 10,51038,Marsabit,Kisumu East,1
-130,Jeanne Mugisha,Jeanne,Mugisha,0726502419,214 Kisumu Ave,Apt 34,49520,Kitui,Nakuru Town,1
-131,Wanjiku Munywe,Wanjiku,Munywe,0759441363,680 Nakuru Blvd,Apt 53,73923,Muranga,Dagoretti,0
-132,Kiptoo Munyoki,Kiptoo,Munyoki,0785722694,531 Kimathi St,Apt 8,64806,Tharaka-Nithi,Changamwe,1
-133,[Business] Hemingways Inn,Josephine,Muthoni,0771697135,171 Koinange St,Apt 99,85475,Kisumu,Kisauni,1
-134,Patricia Mbeki,Patricia,Mbeki,0781372657,910 Kilimani Rd,Apt 40,37875,Meru,Kesses,0
-135,Felicite Mbeki,Felicite,Mbeki,0750741522,138 Nakuru Blvd,Apt 2,49089,Mandera,Dagoretti,1
-136,Michelle Kabila,Michelle,Kabila,0718563801,346 Donholm Rd,Apt 31,14561,Embu,Turbo,0
-137,Kamau Mbeki,Kamau,Mbeki,0798860892,329 Nairobi St,Apt 55,87670,Mombasa,Kisumu Central,1
-138,[Business] Severin Suites,Amina,Munzala,0768035786,921 Limuru Rd,Apt 9,17211,Kisumu,Embakasi,0
-139,Achieng Ahmed,Achieng,Ahmed,0715608862,40 James Gichuru Rd,Apt 22,50602,Mandera,Kisauni,1
-140,[Business] Baobab Manor,Jeanne,Njoroge,0723884410,516 Mbagathi Way,Apt 83,23101,Baringo,Kesses,0
-141,Mwangi Omondi,Mwangi,Omondi,0762422629,295 South C Rd,Apt 97,2246,Mombasa,Subukia,0
-142,[Business] Serena Haven,Marie,Osman,0742491718,755 Tom Mboya St,Apt 43,36585,Tharaka-Nithi,Kisumu Central,0
-143,Jacqueline Mugabe,Jacqueline,Mugabe,0783032135,337 Uhuru Hwy,Apt 36,11265,Nyeri,Embakasi,1
-144,[Business] Sarova Haven,Paul,Mugabe,0793382468,164 Eastleigh Rd,Apt 56,56548,Tharaka-Nithi,Nyali,1
-145,[Business] PrideInn Manor,Felicite,Yusuf,0721347820,588 Dennis Pritt Rd,Apt 12,57950,Isiolo,Turbo,1
-146,[Business] Diani Palace,Jacqueline,Mutua,0708349042,332 Nakuru Blvd,Apt 14,18535,Mombasa,Kisumu West,0
-147,Alain Mbeki,Alain,Mbeki,0771358721,553 Kimathi St,Apt 30,48028,Machakos,Kisumu East,1
-148,Josephine Yusuf,Josephine,Yusuf,0718389151,219 Kileleshwa Rd,Apt 37,8916,Eldoret,Kisauni,1
-149,[Business] Neptune Lodge,Patricia,Munyua,0755732848,730 Nairobi St,Apt 89,83291,Kiambu,Langata,1
-150,[Business] Baobab Palace,Emmanuel,Ahmed,0723272232,777 Limuru Rd,Apt 60,80818,Kisumu,Westlands,1
-151,[Business] Leopard Beach Retreat,Paul,Yusuf,0759911403,569 Jogoo Rd,Apt 16,30112,Isiolo,Muhoroni,1
-152,Emmanuelle Omondi,Emmanuelle,Omondi,0744239069,359 Lavington Rd,Apt 84,29068,Nairobi,Eldoret West,0
-153,Pierrette Mugabe,Pierrette,Mugabe,0773059264,364 Kenyatta Ave,Apt 40,72571,Marsabit,Nyali,1
-154,[Business] Swahili Retreat,Pierre,Ali,0715196602,222 Mama Ngina St,Apt 92,61264,Baringo,Kesses,0
-155,[Business] Swahili Retreat,Emmanuelle,Muthoni,0725288215,342 Riverside Dr,Apt 5,42927,Meru,Nyali,1
-156,Emmanuelle Nkurunziza,Emmanuelle,Nkurunziza,0756659211,456 Karen Rd,Apt 81,86389,Garissa,Changamwe,1
-157,Pierrette Nkurunziza,Pierrette,Nkurunziza,0751692295,396 Koinange St,Apt 72,10355,Kiambu,Kisumu East,0
-158,[Business] Voyager Suites,Jean,Ibrahim,0705963515,780 Kiambu Rd,Apt 43,51995,Kitui,Kisumu West,0
-159,Joseph Munyua,Joseph,Munyua,0728266622,521 Waiyaki Way,Apt 66,66092,Tharaka-Nithi,Gilgil,1
-160,[Business] Voyager Hotel,Marie,Yusuf,0782600918,469 Limuru Rd,Apt 45,54818,Kitui,Changamwe,0
-161,[Business] Serena Inn,Felix,Lumumba,0736238229,558 Ngong Rd,Apt 40,26946,Kiambu,Likoni,1
-162,Pauline Nkurunziza,Pauline,Nkurunziza,0768321437,265 Waiyaki Way,Apt 19,21704,Mandera,Naivasha,0
-163,[Business] Fairmont Manor,Kiptoo,Munywe,0771400762,142 Haile Selassie Ave,Apt 21,12880,Marsabit,Embakasi,0
-164,[Business] Tamarind Retreat,Marie,Zuma,0763466221,241 Mombasa Rd,Apt 68,70210,Nairobi,Kisumu East,1
-165,Alain Hassan,Alain,Hassan,0729186252,203 Limuru Rd,Apt 2,83574,Kisumu,Nyando,0
-166,[Business] Hilton Resort,Michelle,Wanyama,0788029637,705 Riverside Dr,Apt 25,26263,Nyeri,Nyando,1
-167,Jacqueline Munywe,Jacqueline,Munywe,0722299578,740 Mombasa Rd,Apt 10,26402,Mandera,Kisumu East,1
-168,Michel Mandela,Michel,Mandela,0703580492,623 Jogoo Rd,Apt 82,50994,Marsabit,Kisumu East,1
-169,[Business] Nyali Residences,Marie,Malema,0725046922,396 Karen Rd,Apt 15,13800,Eldoret,Naivasha,0
-170,[Business] Ole Sereni Suites,Pauline,Mukasa,0726872787,893 Kenyatta Ave,Apt 76,78681,Eldoret,Likoni,0
-171,Joseph Kiplagat,Joseph,Kiplagat,0723812730,299 Ngong Rd,Apt 26,63154,Embu,Turbo,0
-172,[Business] Baobab Hotel,Claude,Abdullahi,0714210113,223 Runda Dr,Apt 63,59994,Garissa,Kasarani,0
-173,Michel Ahmed,Michel,Ahmed,0781163597,553 Thika Rd,Apt 92,72123,Kisumu,Changamwe,1
-174,[Business] Safari Haven,Emmanuelle,Ndayishimiye,0790811625,373 Thika Rd,Apt 2,88163,Wajir,Kisumu West,1
-175,Patricia Mugabe,Patricia,Mugabe,0777332989,530 South C Rd,Apt 33,28878,Garissa,Westlands,1
-176,Michel Lumumba,Michel,Lumumba,0790630262,330 State House Rd,Apt 78,63166,Machakos,Kasarani,1
-177,Otieno Mandela,Otieno,Mandela,0792307378,43 Kilimani Rd,Apt 80,89883,Tharaka-Nithi,Nyando,1
-178,[Business] Baobab Inn,Claude,Omar,0731557500,767 Buruburu Rd,Apt 41,26922,Isiolo,Embakasi,0
-179,[Business] Villa Rosa Palace,Marie,Mbeki,0708832051,926 Westlands Rd,Apt 39,45612,Garissa,Naivasha,1
-180,Patrick Wanyama,Patrick,Wanyama,0761058090,58 Limuru Rd,Apt 98,85277,Kisumu,Turbo,1
-181,Kiptoo Lumumba,Kiptoo,Lumumba,0720878853,771 Kiambu Rd,Apt 92,51241,Baringo,Gilgil,0
-182,[Business] Hemingways Lodge,Wambui,Mandela,0759432985,669 Kiambu Rd,Apt 26,73199,Mandera,Muhoroni,1
-183,Josephine Ndayishimiye,Josephine,Ndayishimiye,0782288139,118 South C Rd,Apt 17,19915,Mandera,Subukia,1
-184,Njeri Malema,Njeri,Malema,0708747646,594 Westlands Rd,Apt 25,74022,Garissa,Changamwe,1
-185,Emmanuel Osman,Emmanuel,Osman,0706396606,220 Koinange St,Apt 29,27640,Muranga,Dagoretti,1
-186,Claudine Muthoni,Claudine,Muthoni,0701538991,750 Kilimani Rd,Apt 90,4526,Laikipia,Molo,0
-187,Wambui Ibrahim,Wambui,Ibrahim,0731936727,109 Uhuru Hwy,Apt 85,88963,Muranga,Likoni,1
-188,Jacques Kabongo,Jacques,Kabongo,0782977056,210 Tom Mboya St,Apt 53,64129,Garissa,Likoni,1
-189,Felix Osman,Felix,Osman,0729698814,317 Eastleigh Rd,Apt 64,66182,Muranga,Turbo,0
-190,Michel Mutombo,Michel,Mutombo,0759219700,582 Limuru Rd,Apt 15,58746,Isiolo,Changamwe,1
-191,Felicite Mugisha,Felicite,Mugisha,0749491063,738 Moi Ave,Apt 21,62039,Eldoret,Naivasha,1
-192,[Business] Baobab Manor,Pierre,Mbeki,0757160712,555 Runda Dr,Apt 38,41034,Garissa,Nyali,1
-193,Emmanuelle Abdullahi,Emmanuelle,Abdullahi,0729567409,127 Runda Dr,Apt 9,69080,Garissa,Kisauni,1
-194,Jeanne Mutua,Jeanne,Mutua,0732137150,74 Thika Rd,Apt 47,59623,Isiolo,Dagoretti,1
-195,[Business] Serena Retreat,Kiptoo,Mwangi,0719361104,253 Kiambu Rd,Apt 79,90323,Kisumu,Moiben,0
-196,[Business] Villa Rosa Retreat,Pierrette,Bizimana,0774630040,195 Koinange St,Apt 50,50290,Meru,Moiben,1
-197,[Business] Safari Palace,Emmanuelle,Mohammed,0755850055,710 Eastleigh Rd,Apt 53,56554,Nakuru,Langata,1
-198,Njeri Munyua,Njeri,Munyua,0759348746,218 Eastleigh Rd,Apt 40,79876,Nakuru,Subukia,0
-199,Kiptoo Munyoki,Kiptoo,Munyoki,0740985506,167 Thika Rd,Apt 52,75134,Garissa,Moiben,0
-200,[Business] InterContinental Haven,Amina,Mutua,0754265421,917 Nairobi St,Apt 37,66649,Kiambu,Kisumu East,1
-201,[Business] Nyali Residences,Njeri,Mandela,0761592973,57 Embakasi Rd,Apt 4,23448,Mombasa,Molo,1
-202,Paul Malema,Paul,Malema,0774933189,375 South C Rd,Apt 70,64724,Kitui,Subukia,1
-203,Wanjiku Mugisha,Wanjiku,Mugisha,0750712281,516 Mbagathi Way,Apt 65,81903,Mombasa,Langata,1
-204,Claudine Mukasa,Claudine,Mukasa,0762712857,115 Lavington Rd,Apt 33,22301,Kisumu,Changamwe,1
-205,[Business] InterContinental Hotel,Otieno,Mutua,0704641998,237 Uhuru Hwy,Apt 83,10824,Kiambu,Kisumu East,1
-206,[Business] Leopard Beach Retreat,Kiptoo,Abdullahi,0715537964,343 Donholm Rd,Apt 73,9752,Meru,Kisumu West,0
-207,[Business] Leopard Beach Suites,Jacques,Adan,0798925210,270 Donholm Rd,Apt 84,7161,Garissa,Kasarani,1
-208,[Business] Voyager Inn,Achieng,Mugisha,0705272302,883 Langata Rd,Apt 45,26692,Machakos,Embakasi,0
-209,[Business] Fairmont Haven,Alain,Kabila,0790002785,205 Kenyatta Ave,Apt 96,14845,Garissa,Dagoretti,1
-210,Jacqueline Mandela,Jacqueline,Mandela,0722658781,496 Waiyaki Way,Apt 13,2366,Eldoret,Muhoroni,1
-211,[Business] Hemingways Inn,Otieno,Mbeki,0790734872,144 Parklands Rd,Apt 22,47415,Laikipia,Kisumu East,1
-212,[Business] InterContinental Resort,Wanjiku,Omondi,0743444489,715 Kiambu Rd,Apt 25,5454,Nairobi,Kisumu West,1
-213,[Business] Fairmont Lodge,Patricia,Nkurunziza,0736996077,311 Dennis Pritt Rd,Apt 83,42407,Eldoret,Nyali,1
-214,[Business] Swahili Residences,Pauline,Omondi,0741155515,854 Kileleshwa Rd,Apt 56,11613,Marsabit,Kisumu West,1
-215,Josephine Bizimana,Josephine,Bizimana,0732932506,361 Riverside Dr,Apt 81,4320,Kitui,Turbo,0
-216,[Business] Boma Palace,Patrick,Mandela,0746540185,10 Haile Selassie Ave,Apt 70,68570,Meru,Naivasha,1
-217,Felix Mbeki,Felix,Mbeki,0767415673,163 Uhuru Hwy,Apt 44,65136,Nakuru,Likoni,0
-218,[Business] PrideInn Hotel,Jeanne,Yusuf,0704430093,509 Eastleigh Rd,Apt 33,17689,Kiambu,Kisumu West,1
-219,[Business] Nyali Suites,Njeri,Munzala,0791721837,632 Kiambu Rd,Apt 52,67647,Nyeri,Moiben,1
-220,Mutiso Adan,Mutiso,Adan,0767445037,475 Donholm Rd,Apt 27,27049,Eldoret,Kisumu East,1
-221,Paul Zuma,Paul,Zuma,0787294626,702 Lavington Rd,Apt 12,5107,Embu,Dagoretti,1
-222,[Business] Leopard Beach Suites,Achieng,Lumumba,0721152902,932 Runda Dr,Apt 13,23438,Wajir,Nyali,0
-223,[Business] InterContinental Haven,Jeanne,Munzala,0749639593,858 Moi Ave,Apt 70,14698,Mombasa,Subukia,1
-224,Felicite Mwangi,Felicite,Mwangi,0714266425,801 Uhuru Hwy,Apt 31,8646,Nyeri,Eldoret East,1
-225,[Business] Safari Resort,Marie,Munyuli,0796922484,684 Moi Ave,Apt 85,78854,Marsabit,Kisauni,0
-226,Patrick Kagame,Patrick,Kagame,0732288073,851 Riverside Dr,Apt 73,30350,Marsabit,Naivasha,0
-227,[Business] Sarova Haven,Mwangi,Mbeki,0734983100,272 Waiyaki Way,Apt 89,69290,Tharaka-Nithi,Dagoretti,1
-228,Patrick Ali,Patrick,Ali,0797185596,243 Langata Rd,Apt 69,30222,Marsabit,Kisumu West,1
-229,[Business] Sarova Palace,Jean,Kariuki,0722782553,389 Koinange St,Apt 50,50585,Machakos,Changamwe,1
-230,[Business] Leopard Beach Retreat,Pauline,Kagame,0721960756,336 Koinange St,Apt 60,51124,Kiambu,Kisumu Central,1
-231,Emmanuelle Mandela,Emmanuelle,Mandela,0779669874,16 South C Rd,Apt 35,77082,Embu,Turbo,0
-232,Felicite Omar,Felicite,Omar,0777865624,366 Nakuru Blvd,Apt 65,70048,Muranga,Likoni,1
-233,[Business] Boma Retreat,Joseph,Munyao,0743736190,490 James Gichuru Rd,Apt 34,49935,Mandera,Kisumu East,0
-234,Alaine Kabongo,Alaine,Kabongo,0730971068,853 Tom Mboya St,Apt 58,63487,Eldoret,Nyali,1
-235,Otieno Kabila,Otieno,Kabila,0787326040,60 Donholm Rd,Apt 56,58283,Isiolo,Muhoroni,1
-236,[Business] Neptune Haven,Emmanuelle,Ahmed,0742511530,871 Tom Mboya St,Apt 69,48290,Garissa,Dagoretti,0
-237,[Business] Neptune Manor,Pierre,Zuma,0705960237,552 Mbagathi Way,Apt 50,9702,Eldoret,Moiben,1
-238,[Business] PrideInn Hotel,Otieno,Abdullahi,0741444887,614 Runda Dr,Apt 34,73123,Baringo,Westlands,1
-239,Felix Adan,Felix,Adan,0720945182,910 Mama Ngina St,Apt 83,68171,Tharaka-Nithi,Kasarani,0
-240,Wanjiku Kiplagat,Wanjiku,Kiplagat,0743451485,737 Limuru Rd,Apt 50,30417,Laikipia,Gilgil,0
-241,Marie Kabongo,Marie,Kabongo,0746849834,140 James Gichuru Rd,Apt 54,8250,Nairobi,Kisauni,1
-242,Achieng Mukasa,Achieng,Mukasa,0793720482,560 James Gichuru Rd,Apt 43,31391,Kitui,Kasarani,1
-243,Marie Mugisha,Marie,Mugisha,0717500503,235 Runda Dr,Apt 61,52507,Laikipia,Kisumu West,0
-244,[Business] Tamarind Manor,Marie,Mohammed,0739768205,511 Kilimani Rd,Apt 96,90184,Eldoret,Changamwe,1
-245,[Business] Tamarind Palace,Emmanuelle,Hussein,0706383077,40 Waiyaki Way,Apt 28,51408,Eldoret,Embakasi,0
-246,Felix Osman,Felix,Osman,0748657301,293 Karen Rd,Apt 76,59995,Laikipia,Changamwe,1
-247,Alaine Wanyama,Alaine,Wanyama,0738902793,853 Limuru Rd,Apt 51,88667,Isiolo,Naivasha,0
-248,[Business] Hilton Residences,Michelle,Hussein,0741279537,884 Kimathi St,Apt 58,75677,Kisumu,Eldoret West,1
-249,Patrick Kagame,Patrick,Kagame,0709897726,944 Gigiri Rd,Apt 86,58163,Kisumu,Jomvu,1
-250,Patricia Wanyama,Patricia,Wanyama,0772791437,955 Kiambu Rd,Apt 18,22751,Meru,Jomvu,1
-251,[Business] Voyager Manor,Patricia,Mwangi,0772281875,935 Buruburu Rd,Apt 5,42708,Eldoret,Kesses,0
-252,[Business] Tamarind Haven,Pierre,Ahmed,0761706382,213 James Gichuru Rd,Apt 1,12682,Meru,Moiben,1
-253,[Business] Serena Lodge,Felicite,Ibrahim,0702260989,995 Kiambu Rd,Apt 50,49282,Mandera,Moiben,1
-254,Emmanuelle Ndayishimiye,Emmanuelle,Ndayishimiye,0774880847,869 James Gichuru Rd,Apt 22,72821,Mombasa,Eldoret West,1
-255,[Business] Severin Inn,Joseph,Omondi,0757689282,869 Haile Selassie Ave,Apt 35,34116,Eldoret,Langata,0
-256,Felicite Muthoni,Felicite,Muthoni,0754109221,724 Limuru Rd,Apt 95,45010,Laikipia,Nyali,0
-257,Claudine Omondi,Claudine,Omondi,0778493362,153 Nakuru Blvd,Apt 77,18946,Nyeri,Gilgil,1
-258,Claude Nkurunziza,Claude,Nkurunziza,0726471783,894 Nakuru Blvd,Apt 76,64251,Nyeri,Kisumu Central,1
-259,[Business] Leopard Beach Manor,Jean,Omondi,0723833376,919 Langata Rd,Apt 53,22036,Eldoret,Jomvu,1
-260,[Business] Hilton Palace,Alaine,Malema,0722920190,259 Donholm Rd,Apt 65,15269,Embu,Langata,0
-261,Michelle Munzala,Michelle,Munzala,0769146589,635 Tom Mboya St,Apt 3,89660,Muranga,Kesses,1
-262,Kiptoo Yusuf,Kiptoo,Yusuf,0719000714,325 Embakasi Rd,Apt 30,10002,Laikipia,Muhoroni,1
-263,[Business] Baobab Haven,Pierrette,Ibrahim,0718884359,335 Nairobi St,Apt 53,78605,Mombasa,Nyando,0
-264,Achieng Ahmed,Achieng,Ahmed,0787318372,983 South C Rd,Apt 83,76125,Nyeri,Langata,0
-265,[Business] Boma Lodge,Pierrette,Nkurunziza,0750388912,422 Moi Ave,Apt 35,19456,Kitui,Turbo,0
-266,[Business] Fairmont Residences,Mutiso,Ibrahim,0744592182,23 Jogoo Rd,Apt 63,43187,Garissa,Langata,0
-267,Pierre Kiplagat,Pierre,Kiplagat,0753826178,645 Tom Mboya St,Apt 68,68307,Marsabit,Naivasha,1
-268,Michelle Mugisha,Michelle,Mugisha,0721457932,423 Lavington Rd,Apt 21,72281,Meru,Gilgil,1
-269,Claude Yusuf,Claude,Yusuf,0707969312,127 Runda Dr,Apt 52,24486,Machakos,Nyando,0
-270,Njeri Mandela,Njeri,Mandela,0769445778,96 South C Rd,Apt 87,61271,Laikipia,Kisauni,1
-271,[Business] Baobab Residences,Kiptoo,Lumumba,0756909143,286 Dennis Pritt Rd,Apt 58,50243,Mandera,Likoni,0
-272,Michel Munee,Michel,Munee,0761592371,223 Thika Rd,Apt 41,26579,Nakuru,Dagoretti,1
-273,[Business] Fairmont Suites,Felicite,Omondi,0764600294,460 Waiyaki Way,Apt 86,62748,Garissa,Molo,0
-274,Michelle Mugisha,Michelle,Mugisha,0723205433,656 Tom Mboya St,Apt 27,29002,Baringo,Embakasi,0
-275,Achieng Mandela,Achieng,Mandela,0768971726,688 Limuru Rd,Apt 17,66812,Mandera,Nyando,1
-276,Claudine Osman,Claudine,Osman,0705621270,435 Kenyatta Ave,Apt 20,9984,Baringo,Gilgil,1
-277,[Business] Safari Resort,Wanjiku,Osman,0738637302,587 Riverside Dr,Apt 86,88616,Tharaka-Nithi,Naivasha,0
-278,Pierre Lumumba,Pierre,Lumumba,0701898250,210 Koinange St,Apt 40,73690,Kiambu,Eldoret West,0
-279,[Business] InterContinental Manor,Njeri,Kabongo,0786690990,688 Westlands Rd,Apt 99,54326,Muranga,Turbo,1
-280,Michel Malema,Michel,Malema,0735201795,678 Westlands Rd,Apt 98,39800,Kitui,Kisumu East,1
-281,Claudine Ochieng,Claudine,Ochieng,0799754975,815 Langata Rd,Apt 21,67629,Nyeri,Dagoretti,1
-282,[Business] Swahili Hotel,Claudine,Munzala,0726226411,613 Nairobi St,Apt 71,18919,Kisumu,Kisumu Central,1
-283,Jeanne Ibrahim,Jeanne,Ibrahim,0701377557,553 Mbagathi Way,Apt 88,77629,Mombasa,Likoni,1
-284,[Business] Nyali Manor,Jacques,Nkurunziza,0778698041,674 Nakuru Blvd,Apt 85,88359,Marsabit,Kesses,1
-285,[Business] Tamarind Manor,Pauline,Omondi,0722036728,766 Gigiri Rd,Apt 44,90391,Marsabit,Subukia,0
-286,[Business] Nyali Resort,Kamau,Hassan,0762189564,639 Mbagathi Way,Apt 39,85102,Wajir,Moiben,1
-287,[Business] Nyali Lodge,Jean,Mukasa,0741400563,442 James Gichuru Rd,Apt 27,8894,Baringo,Turbo,0
-288,Josephine Ochieng,Josephine,Ochieng,0745039523,121 Jogoo Rd,Apt 9,73797,Garissa,Likoni,0
-289,Kamau Mbeki,Kamau,Mbeki,0766317047,685 Nairobi St,Apt 30,61121,Machakos,Muhoroni,1
-290,Pierre Kagame,Pierre,Kagame,0702641367,216 Limuru Rd,Apt 88,76597,Eldoret,Subukia,1
-291,Otieno Abdullahi,Otieno,Abdullahi,0743062881,395 Mama Ngina St,Apt 8,83008,Tharaka-Nithi,Langata,0
-292,Marie Ochieng,Marie,Ochieng,0712316863,756 Jogoo Rd,Apt 72,86428,Isiolo,Kisumu East,0
-293,Njeri Wanyama,Njeri,Wanyama,0711692019,922 Donholm Rd,Apt 22,65825,Meru,Langata,1
-294,[Business] Severin Inn,Josephine,Munyui,0721785245,678 Mama Ngina St,Apt 89,37535,Kitui,Nyali,0
-295,[Business] Serena Palace,Jean,Odhiambo,0794777891,915 Embakasi Rd,Apt 90,442,Wajir,Embakasi,1
-296,Emmanuel Munyuli,Emmanuel,Munyuli,0733424664,973 Riverside Dr,Apt 52,40275,Laikipia,Eldoret West,1
-297,Felicite Yusuf,Felicite,Yusuf,0763974162,183 Kisumu Ave,Apt 54,82958,Machakos,Eldoret East,0
-298,[Business] Sarova Inn,Jacques,Njoroge,0720003784,496 Kisumu Ave,Apt 38,4410,Nakuru,Gilgil,0
-299,[Business] Serena Residences,Achieng,Munzala,0787347487,248 Karen Rd,Apt 90,30004,Mandera,Changamwe,1
-300,[Business] Hemingways Retreat,Joseph,Kabila,0749346263,529 Mombasa Rd,Apt 29,60200,Nairobi,Kisumu East,0
-301,Mutiso Omondi,Mutiso,Omondi,0788357709,600 Thika Rd,Apt 58,38760,Kitui,Kesses,1
-302,Felicite Mugisha,Felicite,Mugisha,0769016776,479 Nakuru Blvd,Apt 27,18950,Marsabit,Kasarani,0
-303,[Business] InterContinental Hotel,Claudine,Kiplagat,0722544488,920 Kisumu Ave,Apt 40,90062,Isiolo,Likoni,1
-304,Wanjiku Omar,Wanjiku,Omar,0798823954,402 James Gichuru Rd,Apt 50,52427,Tharaka-Nithi,Muhoroni,1
-305,[Business] Safari Palace,Kiptoo,Mandela,0705297099,854 Jogoo Rd,Apt 84,16120,Nyeri,Turbo,0
-306,Kamau Munzala,Kamau,Munzala,0786004967,61 Buruburu Rd,Apt 24,9701,Nyeri,Naivasha,1
-307,[Business] Villa Rosa Residences,Pierre,Munyao,0781448739,467 Mama Ngina St,Apt 1,29489,Machakos,Eldoret East,1
-308,Felicite Mbeki,Felicite,Mbeki,0784168751,127 Gigiri Rd,Apt 83,88639,Embu,Muhoroni,1
-309,[Business] Baobab Resort,Joseph,Ochieng,0764462394,795 Kileleshwa Rd,Apt 67,77862,Kitui,Eldoret East,1
-310,[Business] Serena Inn,Mwangi,Osman,0797312280,512 Mama Ngina St,Apt 79,80076,Isiolo,Westlands,0
-311,[Business] Ole Sereni Resort,Alaine,Kabongo,0762589279,847 Kiambu Rd,Apt 76,73208,Kisumu,Kisumu West,1
-312,Amina Ochieng,Amina,Ochieng,0764498597,293 Runda Dr,Apt 61,57295,Wajir,Kisumu Central,1
-313,Kamau Malema,Kamau,Malema,0762460833,71 Runda Dr,Apt 7,59067,Embu,Turbo,0
-314,[Business] Baobab Haven,Emmanuel,Mutombo,0741032264,913 Haile Selassie Ave,Apt 98,1156,Nyeri,Eldoret East,0
-315,[Business] Hemingways Manor,Joseph,Mandela,0718306559,446 Tom Mboya St,Apt 55,18819,Kisumu,Embakasi,1
-316,Marie Ndayishimiye,Marie,Ndayishimiye,0747062769,991 Kenyatta Ave,Apt 95,73021,Baringo,Kesses,1
-317,[Business] Serena Hotel,Pauline,Kagame,0714652577,913 Langata Rd,Apt 23,54513,Mandera,Westlands,1
-318,[Business] Sarova Resort,Michelle,Munyua,0792996772,370 Waiyaki Way,Apt 98,52886,Tharaka-Nithi,Turbo,0
-319,[Business] Nyali Retreat,Jeanne,Mutua,0744976694,907 Mbagathi Way,Apt 62,23803,Embu,Dagoretti,1
-320,Michelle Hussein,Michelle,Hussein,0735496039,379 Parklands Rd,Apt 9,12182,Baringo,Kasarani,1
-321,[Business] InterContinental Palace,Kiptoo,Munzala,0746978448,278 Tom Mboya St,Apt 9,55769,Garissa,Muhoroni,1
-322,Jean Hussein,Jean,Hussein,0797687312,746 Karen Rd,Apt 37,40837,Tharaka-Nithi,Muhoroni,0
-323,Jeanne Munyoki,Jeanne,Munyoki,0770067469,440 Eldoret Ln,Apt 76,19433,Tharaka-Nithi,Moiben,1
-324,Mwangi Mugabe,Mwangi,Mugabe,0707335397,894 Westlands Rd,Apt 36,35513,Marsabit,Nyando,1
-325,[Business] Baobab Lodge,Patricia,Malema,0713233497,82 Haile Selassie Ave,Apt 69,48781,Marsabit,Molo,0
-326,[Business] Villa Rosa Haven,Pauline,Mbeki,0717451770,872 Buruburu Rd,Apt 61,69580,Wajir,Gilgil,0
-327,[Business] Leopard Beach Palace,Jacqueline,Mugabe,0760252799,488 Kimathi St,Apt 16,57079,Isiolo,Langata,1
-328,[Business] Nyali Inn,Claude,Zuma,0740086525,612 Dennis Pritt Rd,Apt 33,28324,Machakos,Changamwe,0
-329,[Business] Tamarind Retreat,Jeanne,Mohammed,0773324825,121 Embakasi Rd,Apt 32,82972,Garissa,Kisauni,1
-330,Kamau Odhiambo,Kamau,Odhiambo,0753808259,350 Karen Rd,Apt 80,75333,Mandera,Moiben,1
-331,[Business] Sarova Haven,Jean,Zuma,0724594431,353 Tom Mboya St,Apt 29,11090,Nakuru,Jomvu,1
-332,Josephine Bizimana,Josephine,Bizimana,0771584776,398 Nairobi St,Apt 58,80568,Tharaka-Nithi,Kisumu West,1
-333,[Business] Leopard Beach Haven,Jacqueline,Mandela,0759567624,259 Riverside Dr,Apt 7,57596,Nyeri,Westlands,1
-334,Amina Mugisha,Amina,Mugisha,0763301951,763 James Gichuru Rd,Apt 56,49504,Kiambu,Eldoret East,0
-335,Emmanuelle Bizimana,Emmanuelle,Bizimana,0722541373,430 Jogoo Rd,Apt 81,84399,Eldoret,Jomvu,0
-336,Amina Malema,Amina,Malema,0781422536,453 Kileleshwa Rd,Apt 74,22260,Nakuru,Kesses,1
-337,Jacques Mandela,Jacques,Mandela,0758034339,511 Dennis Pritt Rd,Apt 98,49624,Wajir,Eldoret West,0
-338,[Business] Hemingways Palace,Joseph,Mandela,0755751878,18 Westlands Rd,Apt 67,43409,Marsabit,Kasarani,0
-339,Emmanuel Yusuf,Emmanuel,Yusuf,0780479246,576 Dennis Pritt Rd,Apt 21,65840,Machakos,Nyando,1
-340,Pierrette Kiplagat,Pierrette,Kiplagat,0780213314,368 Jogoo Rd,Apt 100,84434,Mandera,Kisumu East,0
-341,Marie Hassan,Marie,Hassan,0783069723,861 Mombasa Rd,Apt 86,66459,Tharaka-Nithi,Kisauni,1
-342,Wanjiku Abdullahi,Wanjiku,Abdullahi,0716388326,600 Nakuru Blvd,Apt 47,32412,Baringo,Kasarani,0
-343,[Business] Serena Hotel,Kiptoo,Odhiambo,0794601529,393 South C Rd,Apt 17,84143,Isiolo,Changamwe,1
-344,Kiptoo Mbeki,Kiptoo,Mbeki,0750528118,601 Ngong Rd,Apt 15,10851,Kiambu,Gilgil,1
-345,[Business] Tamarind Hotel,Jean,Njoroge,0776477088,217 Haile Selassie Ave,Apt 52,31674,Baringo,Embakasi,0
-346,Michel Mandela,Michel,Mandela,0768403485,294 Dennis Pritt Rd,Apt 15,465,Tharaka-Nithi,Kesses,1
-347,[Business] Severin Haven,Felix,Muthoni,0714316993,994 Eastleigh Rd,Apt 71,41237,Marsabit,Eldoret East,0
-348,Jacqueline Mbeki,Jacqueline,Mbeki,0760025809,600 Eastleigh Rd,Apt 24,88118,Mombasa,Kisumu East,1
-349,Njeri Lumumba,Njeri,Lumumba,0783771424,832 Kiambu Rd,Apt 74,439,Kisumu,Kisumu Central,1
-350,[Business] Nyali Hotel,Njeri,Mutua,0784004440,823 Westlands Rd,Apt 11,88556,Mombasa,Naivasha,1
-351,[Business] Fairmont Manor,Wambui,Hussein,0732901211,191 Kisumu Ave,Apt 63,13903,Kitui,Dagoretti,1
-352,Claudine Zuma,Claudine,Zuma,0745229808,608 Dennis Pritt Rd,Apt 53,30749,Kiambu,Moiben,1
-353,Mutiso Omar,Mutiso,Omar,0764346886,756 Eldoret Ln,Apt 89,19028,Marsabit,Kisumu Central,0
-354,Kiptoo Zuma,Kiptoo,Zuma,0725957512,80 Eldoret Ln,Apt 51,75593,Kisumu,Changamwe,1
-355,Jacqueline Mugabe,Jacqueline,Mugabe,0789548331,239 Nakuru Blvd,Apt 75,57130,Mombasa,Muhoroni,1
-356,Alaine Ahmed,Alaine,Ahmed,0761188271,528 James Gichuru Rd,Apt 49,6122,Isiolo,Kasarani,1
-357,Marie Mbeki,Marie,Mbeki,0769854911,899 Mombasa Rd,Apt 3,13393,Garissa,Gilgil,1
-358,Jeanne Osman,Jeanne,Osman,0718170761,783 Jogoo Rd,Apt 97,83709,Kiambu,Embakasi,1
-359,Pauline Ibrahim,Pauline,Ibrahim,0799599540,756 Kiambu Rd,Apt 14,86525,Mombasa,Jomvu,0
-360,[Business] Neptune Lodge,Jean,Odhiambo,0717909403,360 James Gichuru Rd,Apt 90,84164,Tharaka-Nithi,Subukia,1
-361,[Business] Boma Retreat,Michel,Hussein,0701680140,698 Moi Ave,Apt 86,16820,Machakos,Kasarani,1
-362,[Business] Nyali Hotel,Felicite,Nkurunziza,0708162882,468 Uhuru Hwy,Apt 60,48408,Muranga,Muhoroni,1
-363,[Business] Sarova Hotel,Felicite,Ali,0701321887,231 Kenyatta Ave,Apt 55,3103,Nyeri,Subukia,1
-364,Pierrette Mandela,Pierrette,Mandela,0712736670,828 Donholm Rd,Apt 65,58819,Nyeri,Jomvu,1
-365,Patrick Ochieng,Patrick,Ochieng,0783021729,697 Riverside Dr,Apt 13,82453,Baringo,Nyando,0
-366,Marie Munzala,Marie,Munzala,0797631973,457 Haile Selassie Ave,Apt 52,84951,Mombasa,Kesses,1
-367,Paul Mbeki,Paul,Mbeki,0721890407,616 Nakuru Blvd,Apt 40,83502,Meru,Kisauni,1
-368,Michelle Mbeki,Michelle,Mbeki,0790589492,200 Moi Ave,Apt 32,13566,Mandera,Kisumu Central,1
-369,Patricia Ali,Patricia,Ali,0782136551,403 Mama Ngina St,Apt 81,61294,Baringo,Kisumu West,0
-370,[Business] Nyali Lodge,Jean,Lumumba,0716273538,116 Nairobi St,Apt 7,57005,Baringo,Subukia,1
-371,Patricia Yusuf,Patricia,Yusuf,0778627971,262 James Gichuru Rd,Apt 16,38627,Garissa,Kesses,1
-372,[Business] Safari Inn,Jeanne,Munyuli,0793462507,213 Westlands Rd,Apt 62,20972,Kitui,Nyali,1
-373,[Business] Leopard Beach Hotel,Wambui,Omondi,0756415899,708 Riverside Dr,Apt 23,14010,Isiolo,Kasarani,0
-374,[Business] Nyali Suites,Otieno,Mutua,0764511263,255 Donholm Rd,Apt 88,53206,Machakos,Muhoroni,1
-375,[Business] Ole Sereni Palace,Achieng,Kariuki,0755347786,866 Kisumu Ave,Apt 23,83914,Tharaka-Nithi,Embakasi,1
-376,[Business] Sarova Hotel,Michel,Wanyama,0748692075,885 South C Rd,Apt 69,53810,Tharaka-Nithi,Likoni,1
-377,[Business] Serena Inn,Michelle,Bizimana,0737891441,493 Runda Dr,Apt 91,85995,Garissa,Kisumu Central,0
-378,Patricia Mukasa,Patricia,Mukasa,0789692449,640 Langata Rd,Apt 10,2738,Embu,Eldoret West,1
-379,Jeanne Kariuki,Jeanne,Kariuki,0704381371,408 Buruburu Rd,Apt 90,85177,Laikipia,Likoni,1
-380,Kamau Munyua,Kamau,Munyua,0712149939,356 Thika Rd,Apt 49,87997,Embu,Moiben,0
-381,[Business] Neptune Resort,Pierre,Lumumba,0730954112,799 Eastleigh Rd,Apt 86,84842,Garissa,Kisumu Central,1
-382,Michel Nkurunziza,Michel,Nkurunziza,0762095795,695 Mombasa Rd,Apt 99,87949,Isiolo,Kisauni,1
-383,[Business] Ole Sereni Inn,Michelle,Mandela,0775795397,388 Haile Selassie Ave,Apt 6,14490,Kiambu,Subukia,1
-384,[Business] Swahili Manor,Emmanuelle,Osman,0792590467,368 Buruburu Rd,Apt 56,84181,Isiolo,Embakasi,0
-385,[Business] Voyager Retreat,Achieng,Munee,0730395340,706 Moi Ave,Apt 92,78177,Kitui,Muhoroni,1
-386,[Business] Hilton Retreat,Marie,Munzala,0773847762,648 James Gichuru Rd,Apt 37,50111,Nairobi,Eldoret West,1
-387,Patricia Lumumba,Patricia,Lumumba,0702559888,770 Gigiri Rd,Apt 33,29234,Kitui,Nyando,0
-388,[Business] Voyager Inn,Pierre,Omondi,0723446971,88 Langata Rd,Apt 72,81015,Garissa,Kisumu West,1
-389,[Business] Leopard Beach Retreat,Jacqueline,Ochieng,0798739041,446 Riverside Dr,Apt 55,11286,Kitui,Muhoroni,1
-390,[Business] Hemingways Hotel,Felix,Kiplagat,0758824012,960 Nakuru Blvd,Apt 84,61869,Tharaka-Nithi,Westlands,1
-391,Michelle Munyoki,Michelle,Munyoki,0773922675,893 Kimathi St,Apt 90,57907,Nairobi,Eldoret East,1
-392,Pierrette Mandela,Pierrette,Mandela,0795998432,906 Runda Dr,Apt 78,16300,Mandera,Molo,1
-393,[Business] Voyager Hotel,Pierrette,Muthoni,0765551782,699 Nairobi St,Apt 12,47939,Garissa,Kisumu West,0
-394,Michelle Mutua,Michelle,Mutua,0713201602,277 Kileleshwa Rd,Apt 52,74327,Tharaka-Nithi,Kesses,0
-395,Patricia Yusuf,Patricia,Yusuf,0787332511,678 Mbagathi Way,Apt 44,82483,Meru,Kisauni,0
-396,[Business] Swahili Palace,Pierrette,Mugabe,0727717827,793 Embakasi Rd,Apt 48,61383,Mandera,Embakasi,1
-397,Jeanne Mbeki,Jeanne,Mbeki,0778246248,420 Kisumu Ave,Apt 79,2078,Wajir,Embakasi,1
-398,Joseph Kabongo,Joseph,Kabongo,0761934053,343 Kisumu Ave,Apt 99,63363,Garissa,Kisumu Central,0
-399,Njeri Muthoni,Njeri,Muthoni,0719275342,89 Runda Dr,Apt 86,78383,Machakos,Naivasha,0
-400,Kiptoo Kabongo,Kiptoo,Kabongo,0790781170,343 Ngong Rd,Apt 22,80498,Nakuru,Muhoroni,0
-401,Marie Wanyama,Marie,Wanyama,0709411512,961 State House Rd,Apt 71,11073,Isiolo,Jomvu,1
-402,[Business] Diani Manor,Mwangi,Odhiambo,0772098398,660 Donholm Rd,Apt 78,32212,Machakos,Kisumu East,1
-403,[Business] Diani Haven,Mwangi,Njoroge,0713446233,183 James Gichuru Rd,Apt 96,12336,Eldoret,Langata,1
-404,[Business] Tamarind Palace,Amina,Mugabe,0793736399,578 Kilimani Rd,Apt 9,11467,Mombasa,Muhoroni,1
-405,Michel Muthoni,Michel,Muthoni,0711550570,461 Uhuru Hwy,Apt 29,44736,Mandera,Naivasha,0
-406,Emmanuelle Yusuf,Emmanuelle,Yusuf,0704848200,321 Runda Dr,Apt 46,9047,Baringo,Subukia,1
-407,Paul Mukasa,Paul,Mukasa,0788337680,677 Jogoo Rd,Apt 92,29901,Marsabit,Subukia,1
-408,Emmanuel Kabila,Emmanuel,Kabila,0724583618,221 Parklands Rd,Apt 27,10065,Eldoret,Muhoroni,1
-409,Alaine Mugisha,Alaine,Mugisha,0765573905,239 South C Rd,Apt 2,57065,Eldoret,Kasarani,1
-410,[Business] PrideInn Manor,Michelle,Ndayishimiye,0708267171,686 Kilimani Rd,Apt 22,52406,Muranga,Likoni,1
-411,[Business] Sarova Lodge,Jean,Mutombo,0742907421,441 State House Rd,Apt 19,52362,Kiambu,Subukia,1
-412,[Business] Hemingways Retreat,Jacques,Omondi,0766360427,499 Kenyatta Ave,Apt 97,38878,Mombasa,Eldoret East,0
-413,[Business] Severin Manor,Pierrette,Ndayishimiye,0725379091,127 Nairobi St,Apt 41,60895,Meru,Kesses,1
-414,[Business] Sarova Palace,Pauline,Munyuli,0762468201,4 Kenyatta Ave,Apt 89,11505,Baringo,Nyali,0
-415,Alain Munyoki,Alain,Munyoki,0737325861,553 Mombasa Rd,Apt 11,43334,Mandera,Jomvu,1
-416,[Business] Sarova Suites,Jacqueline,Zuma,0710929661,911 Nakuru Blvd,Apt 19,38843,Nyeri,Kisumu Central,1
-417,[Business] Leopard Beach Suites,Jeanne,Ochieng,0786417928,654 Riverside Dr,Apt 91,14835,Mombasa,Gilgil,0
-418,[Business] Voyager Residences,Patricia,Mugisha,0721194421,912 Kilimani Rd,Apt 13,1514,Marsabit,Turbo,1
-419,Jean Mbeki,Jean,Mbeki,0717024471,722 Kileleshwa Rd,Apt 81,80741,Nairobi,Kisumu East,1
-420,Claude Kiplagat,Claude,Kiplagat,0780481136,281 Mama Ngina St,Apt 65,36412,Nyeri,Moiben,0
-421,[Business] Serena Palace,Josephine,Mugabe,0703901266,548 Parklands Rd,Apt 67,79160,Meru,Kasarani,0
-422,[Business] Sarova Inn,Jacques,Mugisha,0726650790,836 Runda Dr,Apt 28,10992,Eldoret,Kisumu East,1
-423,Claudine Nkurunziza,Claudine,Nkurunziza,0776305659,154 Langata Rd,Apt 7,51841,Embu,Moiben,0
-424,[Business] Fairmont Lodge,Claude,Ibrahim,0744487160,90 Kiambu Rd,Apt 49,74514,Kisumu,Likoni,1
-425,Amina Munyui,Amina,Munyui,0701905269,616 South C Rd,Apt 70,67011,Nakuru,Langata,1
-426,[Business] Villa Rosa Inn,Wanjiku,Bizimana,0781351630,915 Kenyatta Ave,Apt 63,46142,Garissa,Jomvu,0
-427,Alain Mukasa,Alain,Mukasa,0710428428,116 Eastleigh Rd,Apt 7,6286,Kiambu,Gilgil,1
-428,Alain Munyoki,Alain,Munyoki,0749851370,705 South C Rd,Apt 85,8471,Nyeri,Kisauni,0
-429,Michelle Mbeki,Michelle,Mbeki,0703862679,865 Dennis Pritt Rd,Apt 40,2035,Mombasa,Nyando,0
-430,[Business] PrideInn Residences,Patrick,Munyua,0721239719,391 South C Rd,Apt 42,41501,Kitui,Kisumu East,1
-431,Claudine Zuma,Claudine,Zuma,0714969121,805 Waiyaki Way,Apt 37,49668,Nakuru,Jomvu,1
-432,Claude Lumumba,Claude,Lumumba,0780901888,324 Thika Rd,Apt 74,80380,Nairobi,Jomvu,0
-433,[Business] Ole Sereni Manor,Mutiso,Zuma,0744794287,6 Parklands Rd,Apt 64,85116,Garissa,Naivasha,1
-434,[Business] Serena Haven,Njeri,Malema,0771493121,620 Runda Dr,Apt 22,79052,Nakuru,Likoni,1
-435,Patricia Munyui,Patricia,Munyui,0729290647,883 South B Rd,Apt 95,17545,Mandera,Moiben,1
-436,[Business] Nyali Lodge,Pierrette,Wanyama,0778260026,365 South B Rd,Apt 80,7545,Marsabit,Nyali,0
-437,Wambui Kiplagat,Wambui,Kiplagat,0799703325,443 Karen Rd,Apt 25,60499,Nairobi,Langata,1
-438,[Business] Nyali Haven,Jacqueline,Munywe,0739964814,70 Nairobi St,Apt 22,34279,Machakos,Kasarani,1
-439,[Business] Hilton Retreat,Alaine,Mbeki,0737475946,399 Kimathi St,Apt 70,28289,Meru,Kisumu East,1
-440,Josephine Hussein,Josephine,Hussein,0780659312,176 Tom Mboya St,Apt 93,28697,Nyeri,Molo,1
-441,[Business] Villa Rosa Resort,Wambui,Mbeki,0715013944,670 Uhuru Hwy,Apt 83,19326,Laikipia,Nyando,1
-442,Felicite Ochieng,Felicite,Ochieng,0769876503,489 Kimathi St,Apt 20,27707,Tharaka-Nithi,Kisumu East,0
-443,Mwangi Mutua,Mwangi,Mutua,0775456021,169 Eldoret Ln,Apt 22,3496,Mandera,Eldoret West,1
-444,Njeri Omondi,Njeri,Omondi,0750642291,616 Tom Mboya St,Apt 18,38720,Garissa,Muhoroni,1
-445,Pierrette Ibrahim,Pierrette,Ibrahim,0740839819,355 Runda Dr,Apt 8,35021,Marsabit,Kisumu West,1
-446,[Business] Sarova Suites,Kamau,Omar,0758580141,76 Langata Rd,Apt 2,47081,Kitui,Kisumu Central,0
-447,[Business] Severin Suites,Jean,Malema,0739164847,585 Karen Rd,Apt 24,30504,Mandera,Naivasha,1
-448,Patrick Omondi,Patrick,Omondi,0741387816,445 Langata Rd,Apt 79,82808,Mombasa,Kisumu East,1
-449,[Business] Nyali Hotel,Pauline,Wanyama,0730630857,666 Thika Rd,Apt 17,42010,Garissa,Kisauni,1
-450,Jacques Malema,Jacques,Malema,0776944634,506 Karen Rd,Apt 87,16361,Tharaka-Nithi,Embakasi,1
-451,[Business] Hilton Palace,Alaine,Munywe,0792278871,392 Dennis Pritt Rd,Apt 32,47422,Machakos,Moiben,0
-452,Claude Mugabe,Claude,Mugabe,0790793398,991 Riverside Dr,Apt 1,34942,Mombasa,Nyali,0
-453,[Business] Safari Lodge,Paul,Hassan,0756152035,652 Moi Ave,Apt 52,87169,Nyeri,Kisauni,1
-454,[Business] Swahili Resort,Otieno,Mandela,0722860703,146 Haile Selassie Ave,Apt 83,11282,Garissa,Turbo,0
-455,[Business] Hilton Inn,Kiptoo,Odhiambo,0772851789,120 Dennis Pritt Rd,Apt 29,15823,Tharaka-Nithi,Nyando,0
-456,[Business] PrideInn Retreat,Pauline,Kariuki,0780158437,484 Langata Rd,Apt 74,34997,Kisumu,Turbo,1
-457,Pauline Mutua,Pauline,Mutua,0721376930,852 Donholm Rd,Apt 76,44718,Muranga,Eldoret East,1
-458,[Business] Swahili Resort,Josephine,Mohammed,0709813333,556 Kilimani Rd,Apt 65,49954,Laikipia,Kesses,1
-459,[Business] Diani Haven,Emmanuelle,Mandela,0705199914,765 Eastleigh Rd,Apt 84,69778,Marsabit,Gilgil,1
-460,Wanjiku Omar,Wanjiku,Omar,0772170278,522 Jogoo Rd,Apt 86,83970,Mombasa,Changamwe,1
-461,Pierrette Ali,Pierrette,Ali,0788143774,745 Lavington Rd,Apt 62,31690,Mombasa,Likoni,0
-462,Josephine Bizimana,Josephine,Bizimana,0782327261,28 Mombasa Rd,Apt 62,76829,Isiolo,Kisumu West,1
-463,Wanjiku Munzala,Wanjiku,Munzala,0704417305,602 Nairobi St,Apt 97,85484,Embu,Nakuru Town,1
-464,[Business] InterContinental Haven,Emmanuelle,Ibrahim,0791768382,987 Lavington Rd,Apt 61,54311,Meru,Molo,0
-465,[Business] Sarova Residences,Wambui,Mbeki,0742664913,989 Embakasi Rd,Apt 6,67296,Tharaka-Nithi,Kisumu Central,0
-466,[Business] Nyali Hotel,Joseph,Njoroge,0792387917,310 Mombasa Rd,Apt 72,41751,Laikipia,Gilgil,0
-467,[Business] Tamarind Resort,Patricia,Ochieng,0767550868,165 Buruburu Rd,Apt 49,88699,Kisumu,Molo,0
-468,[Business] Severin Resort,Achieng,Malema,0778040354,913 Kileleshwa Rd,Apt 76,89347,Muranga,Eldoret East,1
-469,[Business] Tamarind Haven,Alaine,Kabongo,0709097887,588 Haile Selassie Ave,Apt 84,17408,Eldoret,Likoni,0
-470,[Business] Hemingways Palace,Wambui,Njoroge,0747176839,745 Riverside Dr,Apt 75,11377,Machakos,Westlands,0
-471,Wanjiku Nkurunziza,Wanjiku,Nkurunziza,0725819552,324 Runda Dr,Apt 57,58867,Isiolo,Eldoret West,0
-472,[Business] Tamarind Residences,Marie,Muthoni,0741524123,185 Mbagathi Way,Apt 37,37025,Marsabit,Subukia,1
-473,[Business] PrideInn Resort,Njeri,Osman,0732280169,529 Nairobi St,Apt 19,24559,Machakos,Nakuru Town,0
-474,[Business] Baobab Inn,Wambui,Odhiambo,0709806775,279 South C Rd,Apt 6,54657,Mandera,Nyali,1
-475,Amina Mukasa,Amina,Mukasa,0712931077,592 Nakuru Blvd,Apt 5,17777,Meru,Dagoretti,0
-476,Jeanne Mbeki,Jeanne,Mbeki,0716394766,93 Haile Selassie Ave,Apt 48,46158,Kitui,Changamwe,1
-477,Michelle Kiplagat,Michelle,Kiplagat,0724391469,920 Kenyatta Ave,Apt 10,16226,Tharaka-Nithi,Molo,1
-478,Jean Ibrahim,Jean,Ibrahim,0746110278,471 Kilimani Rd,Apt 80,42177,Laikipia,Eldoret East,1
-479,Wambui Mwangi,Wambui,Mwangi,0745488351,673 Mombasa Rd,Apt 30,15317,Nyeri,Kisauni,0
-480,[Business] Hemingways Inn,Patricia,Ochieng,0731453881,966 Parklands Rd,Apt 69,40827,Garissa,Moiben,0
-481,Pierre Mbeki,Pierre,Mbeki,0793248286,68 Kileleshwa Rd,Apt 9,79671,Nairobi,Likoni,0
-482,Jean Mbeki,Jean,Mbeki,0724471191,950 Moi Ave,Apt 76,11833,Baringo,Kesses,1
-483,[Business] Hemingways Haven,Felicite,Nkurunziza,0704413190,350 Thika Rd,Apt 43,25440,Kiambu,Naivasha,0
-484,Michelle Ndayishimiye,Michelle,Ndayishimiye,0791558484,364 Thika Rd,Apt 45,75049,Isiolo,Moiben,0
-485,[Business] Safari Resort,Otieno,Adan,0707097784,244 Tom Mboya St,Apt 39,46066,Muranga,Turbo,1
-486,Kamau Mbeki,Kamau,Mbeki,0716755726,270 Haile Selassie Ave,Apt 87,6407,Laikipia,Nyali,1
-487,[Business] Serena Manor,Paul,Omondi,0700278808,655 Buruburu Rd,Apt 3,49641,Nairobi,Eldoret West,0
-488,Njeri Mugabe,Njeri,Mugabe,0790321378,622 Nakuru Blvd,Apt 46,37849,Baringo,Kasarani,1
-489,Marie Abdi,Marie,Abdi,0783582350,15 Mombasa Rd,Apt 79,28582,Eldoret,Kisauni,1
-490,[Business] Severin Resort,Alain,Abdi,0706719449,81 South C Rd,Apt 84,5430,Kiambu,Kisumu East,0
-491,[Business] Neptune Inn,Jeanne,Munyoki,0764986740,935 Karen Rd,Apt 37,82193,Muranga,Kisumu West,0
-492,Pauline Odhiambo,Pauline,Odhiambo,0740147209,476 Waiyaki Way,Apt 93,45654,Meru,Kasarani,0
-493,[Business] Leopard Beach Palace,Kiptoo,Mbeki,0722241101,433 Kileleshwa Rd,Apt 67,86588,Kitui,Embakasi,1
-494,Pierrette Odhiambo,Pierrette,Odhiambo,0787629645,61 Karen Rd,Apt 5,77323,Isiolo,Nakuru Town,0
-495,Marie Munywe,Marie,Munywe,0744767233,760 State House Rd,Apt 17,11131,Embu,Kasarani,0
-496,Alain Mutombo,Alain,Mutombo,0726452259,623 Kiambu Rd,Apt 69,11762,Mombasa,Eldoret East,1
-497,Claude Kagame,Claude,Kagame,0754121337,433 Nakuru Blvd,Apt 9,2469,Wajir,Molo,0
-498,[Business] Boma Inn,Kamau,Mugabe,0746972151,685 Waiyaki Way,Apt 45,2363,Muranga,Nyando,1
-499,[Business] Sarova Hotel,Marie,Munyoki,0743458830,536 Kimathi St,Apt 82,84059,Marsabit,Jomvu,0
-500,Njeri Mutombo,Njeri,Mutombo,0773248456,583 Runda Dr,Apt 58,11552,Marsabit,Gilgil,1
-501,[Business] Neptune Hotel,Jacques,Mbeki,0780367070,811 Moi Ave,Apt 48,16306,Isiolo,Kisauni,1
-502,[Business] Ole Sereni Lodge,Marie,Mutombo,0787147205,393 Parklands Rd,Apt 69,67888,Mombasa,Kisauni,1
-503,Kiptoo Mugisha,Kiptoo,Mugisha,0727316789,81 Jogoo Rd,Apt 39,84088,Kitui,Jomvu,1
-504,[Business] Voyager Retreat,Achieng,Bizimana,0741100952,897 Haile Selassie Ave,Apt 15,24093,Isiolo,Jomvu,1
-505,[Business] Villa Rosa Retreat,Pierre,Mbeki,0767533686,233 Westlands Rd,Apt 43,9234,Kiambu,Westlands,0
-506,[Business] Voyager Retreat,Paul,Omar,0773096502,144 Jogoo Rd,Apt 34,62669,Kisumu,Nyando,1
-507,[Business] Hilton Palace,Mwangi,Omar,0799741965,318 Buruburu Rd,Apt 60,90564,Meru,Kasarani,1
-508,[Business] Sarova Residences,Pierrette,Ahmed,0776801184,69 Haile Selassie Ave,Apt 15,6751,Laikipia,Kisumu East,0
-509,[Business] Villa Rosa Manor,Claudine,Adan,0796023491,627 Lavington Rd,Apt 11,83929,Kiambu,Eldoret West,1
-510,Pierrette Mbeki,Pierrette,Mbeki,0788663695,892 Embakasi Rd,Apt 59,19359,Marsabit,Gilgil,1
-511,Claudine Mugisha,Claudine,Mugisha,0780400549,691 Embakasi Rd,Apt 58,6269,Meru,Kisumu West,1
-512,Michelle Kabila,Michelle,Kabila,0713824030,87 Waiyaki Way,Apt 100,50639,Kitui,Kesses,1
-513,Josephine Mutua,Josephine,Mutua,0770126974,54 Jogoo Rd,Apt 88,44395,Laikipia,Kasarani,0
-514,Kamau Malema,Kamau,Malema,0792007015,580 Mbagathi Way,Apt 19,56536,Muranga,Westlands,1
-515,Claude Mutua,Claude,Mutua,0717461340,412 Thika Rd,Apt 12,82691,Kitui,Kisumu East,1
-516,[Business] Tamarind Residences,Jacques,Munyua,0789941230,703 Moi Ave,Apt 18,85807,Mombasa,Embakasi,1
-517,[Business] PrideInn Suites,Kiptoo,Munyao,0715017490,211 Kileleshwa Rd,Apt 95,9043,Nakuru,Moiben,1
-518,Achieng Munyua,Achieng,Munyua,0787873529,290 Karen Rd,Apt 65,73811,Machakos,Kisauni,1
-519,[Business] Diani Hotel,Patricia,Ahmed,0785944593,863 Tom Mboya St,Apt 81,58782,Marsabit,Turbo,1
-520,[Business] Fairmont Resort,Wambui,Kabongo,0703631895,718 Runda Dr,Apt 26,54065,Tharaka-Nithi,Subukia,1
-521,[Business] InterContinental Haven,Michelle,Lumumba,0761195209,483 South C Rd,Apt 45,51242,Wajir,Muhoroni,0
-522,Paul Mbeki,Paul,Mbeki,0746619102,244 Moi Ave,Apt 42,4895,Mombasa,Subukia,1
-523,Otieno Ibrahim,Otieno,Ibrahim,0739535348,415 Nairobi St,Apt 16,59682,Nyeri,Eldoret West,1
-524,Njeri Kagame,Njeri,Kagame,0799213503,889 State House Rd,Apt 89,16549,Nakuru,Nakuru Town,1
-525,[Business] Safari Retreat,Felicite,Zuma,0773523966,273 Jogoo Rd,Apt 90,84691,Kitui,Nyando,1
-526,Otieno Ahmed,Otieno,Ahmed,0791206508,812 Kilimani Rd,Apt 69,47258,Machakos,Nyando,1
-527,Njeri Malema,Njeri,Malema,0792084011,283 Mbagathi Way,Apt 100,71501,Muranga,Eldoret West,0
-528,Njeri Wanyama,Njeri,Wanyama,0799891406,926 South C Rd,Apt 92,62807,Nyeri,Eldoret West,0
-529,Mwangi Ahmed,Mwangi,Ahmed,0771239814,590 Embakasi Rd,Apt 75,67218,Kitui,Jomvu,1
-530,[Business] Serena Lodge,Mwangi,Munee,0719258580,147 Eastleigh Rd,Apt 38,57939,Baringo,Westlands,1
-531,Patricia Abdullahi,Patricia,Abdullahi,0795212760,48 Ngong Rd,Apt 55,20481,Wajir,Kisumu Central,1
-532,[Business] InterContinental Hotel,Wanjiku,Malema,0759278416,971 Kilimani Rd,Apt 55,66672,Eldoret,Kisumu Central,1
-533,[Business] Serena Haven,Emmanuel,Munyua,0728139353,808 Westlands Rd,Apt 86,80088,Marsabit,Westlands,1
-534,[Business] Nyali Manor,Mwangi,Munyuli,0770142831,741 Thika Rd,Apt 23,85852,Meru,Westlands,0
-535,Alain Munyao,Alain,Munyao,0768336218,129 Limuru Rd,Apt 49,20795,Laikipia,Nakuru Town,0
-536,Michelle Mandela,Michelle,Mandela,0706266697,8 Jogoo Rd,Apt 84,44967,Laikipia,Kisumu West,0
-537,Pierre Munee,Pierre,Munee,0774643918,287 Embakasi Rd,Apt 58,88346,Baringo,Muhoroni,1
-538,[Business] Boma Residences,Achieng,Kabongo,0779723245,830 Kiambu Rd,Apt 23,30070,Kiambu,Kisauni,1
-539,Michel Kiplagat,Michel,Kiplagat,0716321337,275 Nakuru Blvd,Apt 85,81710,Laikipia,Nyali,0
-540,[Business] Safari Retreat,Achieng,Mandela,0744183841,680 Westlands Rd,Apt 52,78360,Embu,Gilgil,1
-541,[Business] Safari Suites,Emmanuel,Ochieng,0715949748,635 Dennis Pritt Rd,Apt 3,12037,Tharaka-Nithi,Kisumu East,1
-542,Joseph Munyoki,Joseph,Munyoki,0744443818,57 Embakasi Rd,Apt 71,85390,Nakuru,Likoni,0
-543,[Business] Hilton Hotel,Michelle,Kariuki,0779513949,35 Limuru Rd,Apt 90,75737,Kisumu,Subukia,0
-544,Michel Munee,Michel,Munee,0722768420,848 Eldoret Ln,Apt 50,83202,Meru,Likoni,1
-545,[Business] PrideInn Suites,Wanjiku,Kiplagat,0745670866,268 Buruburu Rd,Apt 13,76103,Nyeri,Moiben,1
-546,[Business] Fairmont Manor,Joseph,Mbeki,0710228643,719 Koinange St,Apt 51,58542,Mombasa,Eldoret East,1
-547,Alain Hussein,Alain,Hussein,0756302765,589 Mombasa Rd,Apt 20,13304,Mandera,Moiben,1
-548,[Business] Swahili Retreat,Paul,Adan,0789671630,669 South C Rd,Apt 40,58638,Isiolo,Changamwe,1
-549,Mutiso Kariuki,Mutiso,Kariuki,0762224990,904 Buruburu Rd,Apt 63,84196,Baringo,Nyando,0
-550,Wambui Ibrahim,Wambui,Ibrahim,0744104586,442 Gigiri Rd,Apt 90,85717,Wajir,Eldoret West,0
-551,Jeanne Munzala,Jeanne,Munzala,0738508976,197 Mbagathi Way,Apt 21,33301,Isiolo,Gilgil,0
-552,[Business] PrideInn Lodge,Njeri,Zuma,0709343019,653 Ngong Rd,Apt 31,37269,Embu,Langata,0
-553,[Business] Hemingways Palace,Jean,Ahmed,0725372252,542 Donholm Rd,Apt 36,55571,Garissa,Kesses,1
-554,Pierrette Mukasa,Pierrette,Mukasa,0724166950,868 Westlands Rd,Apt 79,86889,Baringo,Eldoret East,1
-555,Kamau Munyui,Kamau,Munyui,0732097986,760 Kilimani Rd,Apt 31,48868,Tharaka-Nithi,Westlands,0
-556,Njeri Ahmed,Njeri,Ahmed,0788757783,688 Kileleshwa Rd,Apt 74,54349,Kisumu,Muhoroni,1
-557,Alaine Abdi,Alaine,Abdi,0725526740,350 Kimathi St,Apt 68,70079,Embu,Nakuru Town,0
-558,[Business] Diani Inn,Alain,Munyoki,0794987345,834 Donholm Rd,Apt 5,1499,Isiolo,Kesses,1
-559,Mwangi Malema,Mwangi,Malema,0743437100,100 Ngong Rd,Apt 51,69998,Baringo,Kisumu Central,1
-560,Amina Njoroge,Amina,Njoroge,0704280864,23 Lavington Rd,Apt 48,3088,Mandera,Nakuru Town,0
-561,Njeri Osman,Njeri,Osman,0765774877,555 Waiyaki Way,Apt 29,29845,Baringo,Langata,0
-562,[Business] Ole Sereni Manor,Pierre,Mandela,0792693295,481 Lavington Rd,Apt 97,69251,Wajir,Kisumu West,0
-563,[Business] Villa Rosa Inn,Emmanuelle,Munyuli,0746312970,998 Jogoo Rd,Apt 12,58156,Kitui,Kisauni,0
-564,[Business] PrideInn Retreat,Mutiso,Osman,0736500799,960 Karen Rd,Apt 51,80365,Eldoret,Nyali,0
-565,Wambui Munyao,Wambui,Munyao,0752285301,213 Mbagathi Way,Apt 91,13437,Eldoret,Langata,1
-566,[Business] Neptune Lodge,Emmanuel,Yusuf,0768982964,770 Mama Ngina St,Apt 100,76817,Muranga,Eldoret West,1
-567,Pierre Adan,Pierre,Adan,0750688480,378 Gigiri Rd,Apt 27,47045,Meru,Jomvu,0
-568,[Business] Ole Sereni Residences,Pierrette,Zuma,0781882599,585 Eldoret Ln,Apt 23,81158,Garissa,Molo,0
-569,Mwangi Kabila,Mwangi,Kabila,0726945953,622 Langata Rd,Apt 61,11409,Baringo,Kisumu Central,1
-570,[Business] Tamarind Hotel,Mutiso,Munyao,0740579762,794 Nairobi St,Apt 34,89582,Tharaka-Nithi,Kisumu Central,0
-571,[Business] Neptune Palace,Patricia,Abdi,0727801482,946 Westlands Rd,Apt 2,78694,Mombasa,Nyando,1
-572,[Business] Boma Residences,Josephine,Mutua,0797080689,551 Buruburu Rd,Apt 84,24164,Marsabit,Jomvu,1
-573,Paul Munee,Paul,Munee,0787286298,519 Mombasa Rd,Apt 8,78198,Tharaka-Nithi,Turbo,1
-574,[Business] Safari Lodge,Kamau,Ibrahim,0709380220,190 Nakuru Blvd,Apt 60,51475,Tharaka-Nithi,Naivasha,1
-575,Claudine Abdullahi,Claudine,Abdullahi,0713330398,649 Kenyatta Ave,Apt 27,37817,Mandera,Turbo,0
-576,Wanjiku Ndayishimiye,Wanjiku,Ndayishimiye,0711047415,945 Riverside Dr,Apt 22,74909,Embu,Langata,0
-577,[Business] Boma Residences,Josephine,Mandela,0798835289,286 Thika Rd,Apt 56,53057,Embu,Changamwe,0
-578,Claudine Munzala,Claudine,Munzala,0712878831,3 Dennis Pritt Rd,Apt 71,57554,Mombasa,Embakasi,0
-579,Amina Mbeki,Amina,Mbeki,0746759057,141 Gigiri Rd,Apt 90,7063,Nyeri,Likoni,1
-580,[Business] Diani Lodge,Jeanne,Hassan,0738129645,76 Karen Rd,Apt 52,66611,Mandera,Moiben,1
-581,Alain Mohammed,Alain,Mohammed,0763582315,554 Kenyatta Ave,Apt 60,56948,Marsabit,Molo,1
-582,Jean Ibrahim,Jean,Ibrahim,0766200870,700 Kisumu Ave,Apt 38,55512,Muranga,Kisauni,1
-583,[Business] Sarova Manor,Pierrette,Bizimana,0754193379,937 Uhuru Hwy,Apt 73,53856,Machakos,Likoni,0
-584,Achieng Munyui,Achieng,Munyui,0700843594,840 Runda Dr,Apt 3,31097,Tharaka-Nithi,Gilgil,1
-585,Kiptoo Munee,Kiptoo,Munee,0763861731,215 South B Rd,Apt 69,59963,Garissa,Westlands,1
-586,[Business] Diani Hotel,Patrick,Lumumba,0776691086,550 Thika Rd,Apt 85,22684,Tharaka-Nithi,Naivasha,0
-587,Claudine Munyui,Claudine,Munyui,0734331606,651 Karen Rd,Apt 46,73471,Embu,Gilgil,1
-588,Felix Kabongo,Felix,Kabongo,0793577825,958 Embakasi Rd,Apt 77,37540,Muranga,Changamwe,1
-589,Emmanuelle Hussein,Emmanuelle,Hussein,0778108739,615 Kiambu Rd,Apt 16,70832,Mandera,Changamwe,0
-590,[Business] Ole Sereni Hotel,Jean,Ochieng,0721944845,959 Koinange St,Apt 20,12631,Baringo,Kasarani,1
-591,[Business] Leopard Beach Resort,Marie,Wanyama,0776830581,595 Kisumu Ave,Apt 96,63596,Eldoret,Kesses,1
-592,Jeanne Njoroge,Jeanne,Njoroge,0773822529,649 Waiyaki Way,Apt 96,77902,Tharaka-Nithi,Jomvu,0
-593,Claudine Ndayishimiye,Claudine,Ndayishimiye,0786312774,703 South C Rd,Apt 91,67983,Tharaka-Nithi,Muhoroni,1
-594,[Business] Fairmont Inn,Alaine,Mandela,0717931594,527 Parklands Rd,Apt 42,63826,Kisumu,Kisumu West,1
-595,[Business] Baobab Manor,Felix,Kabila,0709723951,582 Kimathi St,Apt 80,32626,Machakos,Kisumu West,0
-596,[Business] InterContinental Hotel,Otieno,Wanyama,0796478012,720 Kilimani Rd,Apt 24,37711,Eldoret,Westlands,1
-597,[Business] Diani Suites,Njeri,Ahmed,0770435882,516 Kenyatta Ave,Apt 36,42105,Garissa,Eldoret East,1
-598,[Business] Boma Hotel,Joseph,Mbeki,0749977080,505 Buruburu Rd,Apt 67,77925,Kitui,Dagoretti,1
-599,[Business] Boma Lodge,Michelle,Munzala,0755441099,274 Waiyaki Way,Apt 13,80905,Garissa,Muhoroni,1
-600,Mutiso Ahmed,Mutiso,Ahmed,0730125374,492 Riverside Dr,Apt 51,22838,Kitui,Embakasi,1
-601,[Business] Leopard Beach Palace,Claude,Zuma,0737372888,264 Ngong Rd,Apt 80,68659,Nyeri,Nakuru Town,1
-602,[Business] Serena Haven,Jacqueline,Ibrahim,0718469564,762 Karen Rd,Apt 37,81942,Nakuru,Nyando,1
-603,[Business] PrideInn Lodge,Michelle,Wanyama,0783243994,261 Eastleigh Rd,Apt 15,23457,Baringo,Subukia,1
-604,Michelle Munyua,Michelle,Munyua,0793803015,550 Uhuru Hwy,Apt 83,56357,Nairobi,Jomvu,0
-605,[Business] Swahili Suites,Jacqueline,Adan,0778315770,133 Donholm Rd,Apt 60,56831,Mombasa,Nyando,1
-606,[Business] Hilton Residences,Claude,Muthoni,0786594615,839 Westlands Rd,Apt 86,22636,Mandera,Nyando,0
-607,[Business] Safari Residences,Alaine,Odhiambo,0700192082,103 Parklands Rd,Apt 99,82522,Kisumu,Westlands,1
-608,Mwangi Munyua,Mwangi,Munyua,0732056036,252 Kimathi St,Apt 76,16981,Mombasa,Likoni,0
-609,[Business] Sarova Retreat,Emmanuelle,Kiplagat,0790719560,416 Langata Rd,Apt 36,52163,Wajir,Dagoretti,0
-610,Njeri Ndayishimiye,Njeri,Ndayishimiye,0779537575,954 Tom Mboya St,Apt 88,82977,Tharaka-Nithi,Muhoroni,0
-611,[Business] Sarova Inn,Alain,Mbeki,0704341259,283 Donholm Rd,Apt 38,10528,Kitui,Jomvu,1
-612,Njeri Munyui,Njeri,Munyui,0747332450,298 Kisumu Ave,Apt 92,6575,Nakuru,Kisumu Central,0
-613,[Business] Voyager Residences,Michel,Omondi,0799225152,604 Westlands Rd,Apt 96,9361,Baringo,Kasarani,0
-614,Kamau Ali,Kamau,Ali,0789294749,635 Jogoo Rd,Apt 11,83495,Baringo,Changamwe,0
-615,[Business] Swahili Haven,Alaine,Omar,0720347075,439 Eastleigh Rd,Apt 88,86939,Tharaka-Nithi,Turbo,1
-616,[Business] Tamarind Suites,Amina,Munywe,0771666205,384 Buruburu Rd,Apt 90,60150,Nakuru,Kisumu East,1
-617,[Business] Voyager Resort,Marie,Abdullahi,0782640590,223 Kisumu Ave,Apt 17,6955,Eldoret,Nakuru Town,1
-618,[Business] Leopard Beach Residences,Claude,Mutombo,0744089129,685 Mama Ngina St,Apt 70,56773,Meru,Changamwe,1
-619,[Business] Nyali Manor,Kamau,Yusuf,0770768943,498 Waiyaki Way,Apt 18,19696,Marsabit,Muhoroni,0
-620,Paul Zuma,Paul,Zuma,0742446369,437 Donholm Rd,Apt 7,30215,Nyeri,Dagoretti,1
-621,Jacqueline Mandela,Jacqueline,Mandela,0715591046,369 Kileleshwa Rd,Apt 73,63136,Nyeri,Langata,0
-622,Njeri Ahmed,Njeri,Ahmed,0709463976,419 Limuru Rd,Apt 79,7776,Meru,Kisumu Central,1
-623,[Business] Diani Resort,Marie,Malema,0729268222,33 James Gichuru Rd,Apt 26,40741,Mandera,Molo,0
-624,Achieng Mbeki,Achieng,Mbeki,0704879754,852 Kenyatta Ave,Apt 65,34871,Laikipia,Westlands,1
-625,[Business] Hilton Retreat,Mwangi,Ochieng,0756206231,575 Runda Dr,Apt 50,10261,Nakuru,Dagoretti,1
-626,[Business] Leopard Beach Resort,Joseph,Munyoki,0776710026,867 Uhuru Hwy,Apt 44,85502,Nyeri,Kisumu East,1
-627,Jean Mugabe,Jean,Mugabe,0727772137,858 Mombasa Rd,Apt 85,50939,Muranga,Turbo,0
-628,[Business] Villa Rosa Inn,Emmanuelle,Ali,0754125590,481 Uhuru Hwy,Apt 91,15880,Muranga,Changamwe,1
-629,Kamau Kiplagat,Kamau,Kiplagat,0778585392,512 Karen Rd,Apt 62,8646,Muranga,Kasarani,1
-630,Jacques Mutombo,Jacques,Mutombo,0766213150,884 Gigiri Rd,Apt 89,41052,Mombasa,Nyando,1
-631,Pierre Abdullahi,Pierre,Abdullahi,0755194203,202 Kenyatta Ave,Apt 81,26517,Kiambu,Naivasha,1
-632,[Business] Leopard Beach Resort,Kiptoo,Malema,0735005338,662 Riverside Dr,Apt 62,48414,Laikipia,Turbo,0
-633,[Business] Ole Sereni Resort,Jeanne,Mandela,0733393923,830 Kimathi St,Apt 93,13426,Eldoret,Turbo,0
-634,Felix Omar,Felix,Omar,0737015230,179 Mbagathi Way,Apt 13,20675,Kiambu,Changamwe,1
-635,[Business] Diani Manor,Wambui,Zuma,0703697031,121 Karen Rd,Apt 63,63416,Kisumu,Muhoroni,1
-636,Wanjiku Yusuf,Wanjiku,Yusuf,0798902334,155 Mbagathi Way,Apt 74,46322,Mombasa,Muhoroni,0
-637,Kamau Nkurunziza,Kamau,Nkurunziza,0770865923,874 Riverside Dr,Apt 69,88092,Meru,Likoni,1
-638,Patrick Hassan,Patrick,Hassan,0758465128,288 Kileleshwa Rd,Apt 32,63514,Laikipia,Molo,1
-639,Alaine Ahmed,Alaine,Ahmed,0771524109,297 Nairobi St,Apt 83,48226,Garissa,Kesses,0
-640,Mwangi Bizimana,Mwangi,Bizimana,0703736252,925 Limuru Rd,Apt 70,38985,Wajir,Kasarani,0
-641,Kamau Abdi,Kamau,Abdi,0723642331,760 Runda Dr,Apt 11,65497,Baringo,Eldoret East,0
-642,[Business] Swahili Haven,Kiptoo,Munee,0731948538,133 Mbagathi Way,Apt 42,52148,Isiolo,Subukia,1
-643,[Business] Boma Suites,Marie,Mandela,0756884058,879 Donholm Rd,Apt 58,64086,Nakuru,Nyando,1
-644,[Business] Serena Manor,Kamau,Munee,0761218449,165 Nakuru Blvd,Apt 84,43282,Tharaka-Nithi,Kisumu Central,1
-645,[Business] Fairmont Retreat,Amina,Munee,0792781189,903 Mama Ngina St,Apt 33,4987,Tharaka-Nithi,Eldoret East,1
-646,Claude Zuma,Claude,Zuma,0785401485,215 James Gichuru Rd,Apt 52,59335,Kiambu,Molo,1
-647,Wanjiku Ibrahim,Wanjiku,Ibrahim,0705155710,464 Westlands Rd,Apt 35,50355,Baringo,Jomvu,1
-648,Felix Kabongo,Felix,Kabongo,0799738396,648 James Gichuru Rd,Apt 42,72775,Kiambu,Nyali,0
-649,[Business] Severin Hotel,Alain,Munyuli,0729580953,595 Kimathi St,Apt 31,20805,Kisumu,Langata,1
-650,Alaine Ali,Alaine,Ali,0743637614,350 Embakasi Rd,Apt 24,81257,Kiambu,Kesses,1
-651,Alaine Mukasa,Alaine,Mukasa,0730932966,593 Mombasa Rd,Apt 41,47084,Wajir,Likoni,0
-652,[Business] Severin Manor,Marie,Mutua,0745719420,367 Ngong Rd,Apt 97,29771,Nakuru,Changamwe,1
-653,[Business] Safari Retreat,Wanjiku,Kagame,0794909964,825 Parklands Rd,Apt 82,19819,Marsabit,Kasarani,1
-654,Patricia Munzala,Patricia,Munzala,0741591968,777 Lavington Rd,Apt 8,76396,Isiolo,Nyando,0
-655,[Business] Villa Rosa Residences,Wanjiku,Njoroge,0732581158,677 Mama Ngina St,Apt 91,24469,Nyeri,Kasarani,1
-656,Amina Omar,Amina,Omar,0741971218,194 James Gichuru Rd,Apt 29,62825,Wajir,Molo,1
-657,Claudine Osman,Claudine,Osman,0767985951,859 Moi Ave,Apt 55,9511,Eldoret,Moiben,1
-658,[Business] Safari Inn,Alaine,Mbeki,0748728830,469 Ngong Rd,Apt 20,74441,Nairobi,Kisumu East,0
-659,[Business] Safari Inn,Pierre,Mugisha,0760830477,227 Koinange St,Apt 54,4144,Marsabit,Dagoretti,0
-660,[Business] Baobab Resort,Mwangi,Osman,0799268823,280 Lavington Rd,Apt 93,4348,Marsabit,Jomvu,1
-661,[Business] Boma Residences,Claudine,Munyao,0781467247,456 Haile Selassie Ave,Apt 32,6156,Garissa,Moiben,1
-662,Jean Mandela,Jean,Mandela,0730552415,697 Kilimani Rd,Apt 52,52075,Kitui,Jomvu,1
-663,[Business] Nyali Residences,Jacques,Adan,0775867462,921 Nairobi St,Apt 42,74041,Kisumu,Jomvu,0
-664,[Business] Baobab Residences,Michel,Kabongo,0784165821,951 Runda Dr,Apt 27,27413,Mombasa,Molo,1
-665,[Business] Diani Residences,Emmanuel,Bizimana,0701730384,985 Kisumu Ave,Apt 22,53139,Isiolo,Kasarani,0
-666,[Business] Villa Rosa Resort,Jacqueline,Munyui,0722979098,168 Eastleigh Rd,Apt 70,13967,Embu,Kesses,0
-667,[Business] Hemingways Suites,Emmanuel,Kariuki,0738214973,496 Eldoret Ln,Apt 84,25537,Nyeri,Dagoretti,1
-668,Emmanuelle Wanyama,Emmanuelle,Wanyama,0766554336,998 Mbagathi Way,Apt 51,54038,Mombasa,Westlands,1
-669,Michelle Odhiambo,Michelle,Odhiambo,0732356213,109 Buruburu Rd,Apt 58,58087,Marsabit,Kisumu West,1
-670,Josephine Malema,Josephine,Malema,0797075302,869 Ngong Rd,Apt 46,88445,Wajir,Nyali,0
-671,[Business] PrideInn Inn,Patricia,Ali,0701344992,377 Kiambu Rd,Apt 12,13242,Isiolo,Jomvu,0
-672,[Business] Leopard Beach Haven,Paul,Omar,0774981674,965 Westlands Rd,Apt 81,47979,Muranga,Subukia,1
-673,[Business] Sarova Lodge,Mwangi,Osman,0706888014,179 Kilimani Rd,Apt 45,85454,Marsabit,Langata,1
-674,Felicite Ahmed,Felicite,Ahmed,0729482050,150 Eastleigh Rd,Apt 92,10173,Nakuru,Turbo,0
-675,[Business] Safari Lodge,Alaine,Wanyama,0715162539,696 Kilimani Rd,Apt 92,63511,Nyeri,Changamwe,0
-676,Njeri Adan,Njeri,Adan,0748034120,451 Dennis Pritt Rd,Apt 67,27218,Baringo,Nyali,1
-677,[Business] Boma Retreat,Marie,Muthoni,0795908355,552 Karen Rd,Apt 48,77701,Muranga,Changamwe,1
-678,[Business] Baobab Haven,Otieno,Ali,0791330653,427 Eldoret Ln,Apt 56,75366,Marsabit,Kesses,1
-679,Patrick Mandela,Patrick,Mandela,0713526156,505 Mama Ngina St,Apt 80,84878,Kitui,Moiben,0
-680,[Business] Boma Hotel,Pierre,Lumumba,0769460639,911 Kiambu Rd,Apt 51,68557,Isiolo,Naivasha,1
-681,[Business] Nyali Resort,Josephine,Munywe,0775891747,315 Nakuru Blvd,Apt 51,76452,Machakos,Embakasi,0
-682,Michelle Mugisha,Michelle,Mugisha,0799555557,786 Koinange St,Apt 50,2340,Eldoret,Dagoretti,0
-683,[Business] Severin Residences,Achieng,Ibrahim,0746614777,281 Buruburu Rd,Apt 54,59218,Meru,Eldoret West,1
-684,[Business] Villa Rosa Retreat,Paul,Mbeki,0721344670,520 South B Rd,Apt 26,5376,Laikipia,Kesses,1
-685,[Business] Severin Lodge,Michelle,Mugabe,0741135042,423 Koinange St,Apt 32,35270,Mombasa,Nyando,1
-686,[Business] Ole Sereni Manor,Pierrette,Osman,0769595361,102 Ngong Rd,Apt 70,61119,Eldoret,Turbo,0
-687,Jeanne Abdullahi,Jeanne,Abdullahi,0707776934,597 Moi Ave,Apt 63,1011,Baringo,Gilgil,0
-688,[Business] Voyager Hotel,Patrick,Ochieng,0780933873,310 Haile Selassie Ave,Apt 56,46874,Nairobi,Eldoret East,0
-689,[Business] Diani Hotel,Njeri,Yusuf,0745566169,527 Kileleshwa Rd,Apt 3,11581,Isiolo,Molo,0
-690,Patricia Munyao,Patricia,Munyao,0775137705,821 Buruburu Rd,Apt 14,68118,Embu,Kisumu East,1
-691,[Business] Leopard Beach Inn,Njeri,Munyoki,0754607647,689 Kiambu Rd,Apt 48,48129,Marsabit,Kisumu West,0
-692,[Business] Safari Manor,Jeanne,Ahmed,0754886252,110 Lavington Rd,Apt 11,14902,Nakuru,Gilgil,1
-693,Pauline Mbeki,Pauline,Mbeki,0732265151,576 Dennis Pritt Rd,Apt 93,71710,Muranga,Gilgil,0
-694,Patricia Ali,Patricia,Ali,0780068863,192 Buruburu Rd,Apt 24,49742,Nakuru,Embakasi,1
-695,[Business] Serena Inn,Patricia,Kagame,0769200202,489 Kimathi St,Apt 60,29071,Kitui,Naivasha,0
-696,[Business] PrideInn Inn,Pierre,Omondi,0775761408,767 Limuru Rd,Apt 91,46571,Nairobi,Dagoretti,0
-697,[Business] Severin Lodge,Paul,Ali,0765126464,24 Donholm Rd,Apt 41,59461,Laikipia,Jomvu,1
-698,[Business] InterContinental Resort,Pauline,Malema,0799467416,394 Runda Dr,Apt 16,83121,Meru,Gilgil,0
-699,[Business] Sarova Lodge,Mwangi,Mohammed,0762907834,290 Eldoret Ln,Apt 45,23093,Laikipia,Kesses,1
-700,Claude Mandela,Claude,Mandela,0749992029,220 Lavington Rd,Apt 80,62503,Embu,Nyali,0
-701,Felix Kabongo,Felix,Kabongo,0732322622,318 Riverside Dr,Apt 44,46853,Kisumu,Nyando,0
-702,[Business] InterContinental Inn,Paul,Omar,0798188124,113 Nakuru Blvd,Apt 62,10397,Eldoret,Kisumu West,1
-703,[Business] Ole Sereni Suites,Amina,Nkurunziza,0765129096,138 Kilimani Rd,Apt 69,21509,Nairobi,Moiben,0
-704,[Business] Hemingways Retreat,Achieng,Munyoki,0789226052,634 Gigiri Rd,Apt 27,79391,Laikipia,Kisumu Central,0
-705,[Business] Leopard Beach Palace,Pauline,Munyao,0731289035,473 Langata Rd,Apt 79,19332,Marsabit,Kesses,1
-706,[Business] PrideInn Palace,Alaine,Wanyama,0780011970,434 Mama Ngina St,Apt 59,73118,Nyeri,Embakasi,0
-707,[Business] Fairmont Hotel,Wanjiku,Omar,0752413157,356 South C Rd,Apt 63,4436,Nakuru,Nakuru Town,1
-708,Pierre Adan,Pierre,Adan,0791494047,768 Uhuru Hwy,Apt 69,50617,Nairobi,Westlands,1
-709,[Business] Neptune Resort,Marie,Lumumba,0738449646,718 Westlands Rd,Apt 10,7718,Meru,Kesses,0
-710,[Business] Fairmont Haven,Alain,Abdi,0718562666,223 Mbagathi Way,Apt 99,65148,Embu,Gilgil,1
-711,Kamau Munzala,Kamau,Munzala,0794602008,921 Eldoret Ln,Apt 74,7057,Machakos,Kesses,1
-712,Jacqueline Njoroge,Jacqueline,Njoroge,0789584085,760 Jogoo Rd,Apt 40,73289,Marsabit,Changamwe,1
-713,Jacques Zuma,Jacques,Zuma,0758172866,668 Haile Selassie Ave,Apt 25,85636,Muranga,Muhoroni,1
-714,Pierre Adan,Pierre,Adan,0750977549,478 Parklands Rd,Apt 32,51999,Nyeri,Kisumu East,0
-715,[Business] InterContinental Manor,Michelle,Munzala,0755961637,653 Nairobi St,Apt 18,28377,Meru,Muhoroni,1
-716,Michel Bizimana,Michel,Bizimana,0769055826,977 Karen Rd,Apt 32,36835,Tharaka-Nithi,Turbo,0
-717,[Business] Swahili Retreat,Wambui,Mutua,0793676026,330 Karen Rd,Apt 30,11728,Nakuru,Kisumu East,1
-718,[Business] Nyali Lodge,Jean,Kabila,0744973681,662 Nairobi St,Apt 31,64247,Laikipia,Likoni,1
-719,Mutiso Kiplagat,Mutiso,Kiplagat,0759604092,293 Langata Rd,Apt 93,28022,Laikipia,Kesses,0
-720,[Business] Fairmont Palace,Mutiso,Malema,0795824263,635 Kileleshwa Rd,Apt 100,88406,Baringo,Naivasha,1
-721,Emmanuel Yusuf,Emmanuel,Yusuf,0729096656,999 Limuru Rd,Apt 53,16701,Laikipia,Embakasi,0
-722,Alain Nkurunziza,Alain,Nkurunziza,0796129346,412 Kenyatta Ave,Apt 23,29675,Muranga,Nyali,0
-723,[Business] Sarova Hotel,Jeanne,Munzala,0767666587,818 Limuru Rd,Apt 72,48567,Eldoret,Langata,0
-724,Wambui Odhiambo,Wambui,Odhiambo,0709567795,703 Kilimani Rd,Apt 43,24796,Meru,Nakuru Town,0
-725,[Business] Serena Suites,Michelle,Mbeki,0705856437,114 Parklands Rd,Apt 61,73890,Kisumu,Dagoretti,1
-726,[Business] InterContinental Inn,Otieno,Ali,0773547916,898 Langata Rd,Apt 7,11912,Kiambu,Dagoretti,1
-727,Wanjiku Zuma,Wanjiku,Zuma,0787639010,864 Mbagathi Way,Apt 58,59281,Baringo,Langata,1
-728,Mutiso Kiplagat,Mutiso,Kiplagat,0784234003,738 Kimathi St,Apt 19,67961,Mombasa,Nyando,1
-729,[Business] Villa Rosa Retreat,Michel,Kiplagat,0741222372,406 Tom Mboya St,Apt 68,55298,Marsabit,Moiben,0
-730,Pauline Muthoni,Pauline,Muthoni,0712110626,541 Eldoret Ln,Apt 78,70857,Isiolo,Kisumu Central,1
-731,[Business] Ole Sereni Retreat,Michelle,Ali,0780339372,158 Donholm Rd,Apt 11,82574,Baringo,Kesses,0
-732,Marie Munywe,Marie,Munywe,0739178748,562 Kiambu Rd,Apt 52,43505,Marsabit,Changamwe,0
-733,Mwangi Mohammed,Mwangi,Mohammed,0793719903,548 Westlands Rd,Apt 94,66396,Mandera,Changamwe,1
-734,[Business] Voyager Inn,Claude,Nkurunziza,0785373594,599 Nakuru Blvd,Apt 50,79747,Mandera,Turbo,1
-735,Otieno Ndayishimiye,Otieno,Ndayishimiye,0747697817,239 Gigiri Rd,Apt 59,19174,Embu,Nyando,1
-736,[Business] Sarova Palace,Jeanne,Adan,0766591574,349 Kisumu Ave,Apt 61,13583,Garissa,Gilgil,0
-737,Emmanuel Bizimana,Emmanuel,Bizimana,0707382348,460 Jogoo Rd,Apt 4,83042,Nairobi,Muhoroni,1
-738,[Business] Villa Rosa Hotel,Pierre,Kabongo,0728112998,231 Langata Rd,Apt 97,22163,Mombasa,Kisauni,0
-739,Joseph Ndayishimiye,Joseph,Ndayishimiye,0754581712,974 Kimathi St,Apt 46,36750,Kisumu,Jomvu,0
-740,[Business] Fairmont Haven,Felicite,Omondi,0776236145,491 Donholm Rd,Apt 33,57944,Muranga,Westlands,1
-741,Pauline Mbeki,Pauline,Mbeki,0708855282,299 Eastleigh Rd,Apt 72,63921,Eldoret,Kisumu East,1
-742,[Business] Nyali Suites,Otieno,Mbeki,0749071006,605 Koinange St,Apt 48,10774,Nairobi,Kesses,1
-743,Pierre Malema,Pierre,Malema,0783103262,938 Waiyaki Way,Apt 70,21941,Mandera,Naivasha,0
-744,[Business] Ole Sereni Lodge,Claude,Ahmed,0710248510,64 Eldoret Ln,Apt 60,15244,Tharaka-Nithi,Embakasi,0
-745,Michel Odhiambo,Michel,Odhiambo,0744594578,298 Waiyaki Way,Apt 37,44954,Kisumu,Kasarani,0
-746,Mwangi Malema,Mwangi,Malema,0729808024,4 Kimathi St,Apt 94,55212,Nairobi,Nyando,1
-747,[Business] Hilton Haven,Mwangi,Ibrahim,0790824391,493 Mombasa Rd,Apt 84,82566,Kitui,Changamwe,1
-748,[Business] Hemingways Manor,Njeri,Nkurunziza,0774841488,760 Mbagathi Way,Apt 13,25262,Embu,Nyali,1
-749,[Business] Hemingways Resort,Claudine,Ndayishimiye,0709070499,797 Uhuru Hwy,Apt 76,30255,Muranga,Nakuru Town,1
-750,[Business] Leopard Beach Haven,Emmanuelle,Kagame,0766564276,714 Kilimani Rd,Apt 90,70572,Laikipia,Kisauni,1
-751,Pierrette Ibrahim,Pierrette,Ibrahim,0773827880,364 Donholm Rd,Apt 90,53109,Eldoret,Eldoret West,0
-752,Paul Wanyama,Paul,Wanyama,0708721047,227 Nakuru Blvd,Apt 22,78706,Nakuru,Eldoret West,0
-753,[Business] Baobab Inn,Jeanne,Mutua,0780066628,768 Nairobi St,Apt 84,17935,Isiolo,Gilgil,1
-754,[Business] Hilton Palace,Pierrette,Mwangi,0773368588,216 Tom Mboya St,Apt 35,60574,Meru,Westlands,1
-755,Wanjiku Njoroge,Wanjiku,Njoroge,0749566174,247 Kimathi St,Apt 26,86033,Embu,Jomvu,1
-756,[Business] Leopard Beach Resort,Amina,Njoroge,0713485419,838 Kiambu Rd,Apt 40,51413,Wajir,Nyando,1
-757,[Business] Sarova Haven,Alain,Abdullahi,0708178332,646 Mama Ngina St,Apt 99,53125,Wajir,Nakuru Town,1
-758,[Business] Ole Sereni Manor,Kamau,Mbeki,0780882170,782 Donholm Rd,Apt 44,21517,Kiambu,Kisumu East,1
-759,Alaine Nkurunziza,Alaine,Nkurunziza,0797116674,359 Uhuru Hwy,Apt 11,15375,Garissa,Muhoroni,1
-760,[Business] Safari Resort,Emmanuel,Munywe,0712793729,908 Jogoo Rd,Apt 43,33318,Marsabit,Eldoret East,0
-761,[Business] Safari Inn,Claudine,Mugisha,0768408362,170 State House Rd,Apt 55,69871,Isiolo,Embakasi,0
-762,Patricia Ibrahim,Patricia,Ibrahim,0735609016,743 Lavington Rd,Apt 25,29878,Mandera,Moiben,1
-763,[Business] Fairmont Suites,Emmanuel,Mugisha,0774140700,719 Ngong Rd,Apt 19,14829,Machakos,Naivasha,1
-764,[Business] Tamarind Retreat,Josephine,Mandela,0724698989,259 Moi Ave,Apt 4,77637,Mandera,Gilgil,0
-765,Joseph Abdi,Joseph,Abdi,0765411258,515 Ngong Rd,Apt 69,22480,Mandera,Kisumu West,0
-766,[Business] Safari Palace,Josephine,Mandela,0719075349,126 South B Rd,Apt 52,12457,Eldoret,Nyali,1
-767,Joseph Zuma,Joseph,Zuma,0788323567,975 Thika Rd,Apt 97,60512,Isiolo,Naivasha,0
-768,Marie Kabongo,Marie,Kabongo,0775298356,750 Gigiri Rd,Apt 88,81123,Wajir,Muhoroni,1
-769,[Business] Fairmont Suites,Pierrette,Adan,0759754367,508 Parklands Rd,Apt 31,10597,Machakos,Kasarani,1
-770,[Business] Diani Inn,Pauline,Mwangi,0706275832,425 Mombasa Rd,Apt 97,50896,Baringo,Likoni,1
+customer_customerNumber,customer_customerName,customer_customerType,customer_contactFirstName,customer_contactLastName,customer_phone,customer_addressLine1,customer_addressLine2,customer_postalCode,customer_county,customer_subCounty,customer_customerLocation,customer_status,customer_statusText
+1,[Business] Boma Retreat,Business,Marie,Munywe,0771783390,484 Riverside Dr,Apt 1,77738,Embu,Moiben,"Embu, Kenya",0,Dormant
+2,Alaine Adan,Individual,Alaine,Adan,0711588602,165 Mbagathi Way,Apt 25,5025,Mombasa,Eldoret West,"Mombasa, Kenya",0,Dormant
+3,Patricia Mohammed,Individual,Patricia,Mohammed,0728933207,264 Waiyaki Way,Apt 96,46312,Meru,Changamwe,"Meru, Kenya",1,Active
+4,[Business] Severin Resort,Business,Michelle,Mohammed,0779686207,272 Jogoo Rd,Apt 41,43324,Eldoret,Kisauni,"Eldoret, Kenya",0,Dormant
+5,[Business] Leopard Beach Hotel,Business,Alaine,Wanyama,0702708065,1 Uhuru Hwy,Apt 81,6057,Garissa,Nakuru Town,"Garissa, Kenya",0,Dormant
+6,[Business] Tamarind Residences,Business,Jean,Omar,0743338504,592 Haile Selassie Ave,Apt 46,41540,Marsabit,Naivasha,"Marsabit, Kenya",1,Active
+7,[Business] InterContinental Suites,Business,Claude,Mohammed,0771965541,353 Langata Rd,Apt 40,48488,Laikipia,Naivasha,"Laikipia, Kenya",1,Active
+8,Mwangi Mandela,Individual,Mwangi,Mandela,0772204254,205 Riverside Dr,Apt 90,44982,Kitui,Turbo,"Kitui, Kenya",1,Active
+9,[Business] Serena Lodge,Business,Felicite,Mbeki,0715351503,130 Nairobi St,Apt 96,90210,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+10,[Business] InterContinental Palace,Business,Joseph,Munyui,0732713945,70 Kilimani Rd,Apt 100,83015,Mandera,Eldoret East,"Mandera, Kenya",1,Active
+11,Felix Munyui,Individual,Felix,Munyui,0765343018,656 Kimathi St,Apt 98,37588,Marsabit,Molo,"Marsabit, Kenya",0,Dormant
+12,Claudine Munyao,Individual,Claudine,Munyao,0737658094,11 Langata Rd,Apt 65,19098,Kiambu,Gilgil,"Kiambu, Kenya",1,Active
+13,Mwangi Abdullahi,Individual,Mwangi,Abdullahi,0701218945,634 Mbagathi Way,Apt 21,46981,Mandera,Eldoret West,"Mandera, Kenya",1,Active
+14,[Business] Ole Sereni Residences,Business,Jean,Malema,0772390377,442 Kiambu Rd,Apt 80,50861,Isiolo,Changamwe,"Isiolo, Kenya",1,Active
+15,[Business] Hilton Hotel,Business,Josephine,Muthoni,0762151824,797 Koinange St,Apt 60,6388,Mandera,Dagoretti,"Mandera, Kenya",0,Dormant
+16,Emmanuelle Ndayishimiye,Individual,Emmanuelle,Ndayishimiye,0796181102,810 Kiambu Rd,Apt 9,14820,Eldoret,Nyando,"Eldoret, Kenya",1,Active
+17,Marie Muthoni,Individual,Marie,Muthoni,0721983783,803 Westlands Rd,Apt 23,32523,Nairobi,Nyali,"Nairobi, Kenya",1,Active
+18,[Business] Hilton Suites,Business,Claudine,Nkurunziza,0738490519,395 Kilimani Rd,Apt 21,16179,Wajir,Nakuru Town,"Wajir, Kenya",1,Active
+19,[Business] Voyager Resort,Business,Mutiso,Osman,0764551266,366 Moi Ave,Apt 39,4037,Kisumu,Westlands,"Kisumu, Kenya",0,Dormant
+20,[Business] Neptune Palace,Business,Felicite,Ibrahim,0769037870,691 Westlands Rd,Apt 26,80309,Kisumu,Nyali,"Kisumu, Kenya",1,Active
+21,Emmanuelle Bizimana,Individual,Emmanuelle,Bizimana,0707321668,167 Kiambu Rd,Apt 79,88516,Meru,Nakuru Town,"Meru, Kenya",0,Dormant
+22,Mutiso Mukasa,Individual,Mutiso,Mukasa,0796644359,158 Thika Rd,Apt 84,9598,Marsabit,Eldoret East,"Marsabit, Kenya",1,Active
+23,[Business] Neptune Palace,Business,Paul,Munee,0789434251,174 Kimathi St,Apt 27,69497,Laikipia,Moiben,"Laikipia, Kenya",1,Active
+24,[Business] Hemingways Manor,Business,Emmanuel,Munee,0762567911,156 Lavington Rd,Apt 94,31497,Meru,Nyali,"Meru, Kenya",0,Dormant
+25,[Business] Voyager Resort,Business,Otieno,Kabongo,0702914397,696 Limuru Rd,Apt 26,49542,Marsabit,Naivasha,"Marsabit, Kenya",0,Dormant
+26,[Business] PrideInn Inn,Business,Claudine,Zuma,0783089151,552 Parklands Rd,Apt 47,2124,Muranga,Westlands,"Muranga, Kenya",1,Active
+27,Claude Munywe,Individual,Claude,Munywe,0759805069,742 Donholm Rd,Apt 1,81333,Nairobi,Changamwe,"Nairobi, Kenya",1,Active
+28,[Business] Voyager Inn,Business,Wambui,Muthoni,0753659680,506 Ngong Rd,Apt 82,61999,Muranga,Westlands,"Muranga, Kenya",1,Active
+29,Wanjiku Mandela,Individual,Wanjiku,Mandela,0731504691,31 Runda Dr,Apt 9,24395,Nyeri,Turbo,"Nyeri, Kenya",1,Active
+30,Felix Ibrahim,Individual,Felix,Ibrahim,0738005133,245 Limuru Rd,Apt 47,61320,Wajir,Likoni,"Wajir, Kenya",1,Active
+31,[Business] Sarova Manor,Business,Paul,Abdi,0767935521,676 James Gichuru Rd,Apt 5,37352,Tharaka-Nithi,Embakasi,"Tharaka-Nithi, Kenya",0,Dormant
+32,[Business] Neptune Retreat,Business,Josephine,Munzala,0797308901,973 Parklands Rd,Apt 65,34895,Embu,Muhoroni,"Embu, Kenya",1,Active
+33,[Business] Baobab Resort,Business,Wanjiku,Osman,0761564574,8 Kisumu Ave,Apt 61,5433,Mombasa,Kasarani,"Mombasa, Kenya",1,Active
+34,Paul Malema,Individual,Paul,Malema,0736098563,755 Westlands Rd,Apt 96,87560,Laikipia,Westlands,"Laikipia, Kenya",1,Active
+35,[Business] Serena Haven,Business,Jeanne,Bizimana,0715019764,664 Eastleigh Rd,Apt 94,48232,Kiambu,Moiben,"Kiambu, Kenya",0,Dormant
+36,[Business] Tamarind Hotel,Business,Emmanuelle,Odhiambo,0739720174,853 Thika Rd,Apt 71,52329,Isiolo,Eldoret East,"Isiolo, Kenya",0,Dormant
+37,Njeri Mugisha,Individual,Njeri,Mugisha,0703143371,127 South C Rd,Apt 6,31941,Mombasa,Embakasi,"Mombasa, Kenya",1,Active
+38,Kiptoo Hussein,Individual,Kiptoo,Hussein,0747346437,698 Tom Mboya St,Apt 96,62789,Tharaka-Nithi,Nyando,"Tharaka-Nithi, Kenya",0,Dormant
+39,[Business] Serena Palace,Business,Jacqueline,Munyao,0742583102,47 Dennis Pritt Rd,Apt 29,40695,Mandera,Westlands,"Mandera, Kenya",1,Active
+40,[Business] PrideInn Inn,Business,Marie,Yusuf,0754759274,85 Dennis Pritt Rd,Apt 49,68775,Machakos,Moiben,"Machakos, Kenya",0,Dormant
+41,Felicite Munyuli,Individual,Felicite,Munyuli,0785045272,836 Limuru Rd,Apt 56,38176,Eldoret,Langata,"Eldoret, Kenya",0,Dormant
+42,Michelle Mwangi,Individual,Michelle,Mwangi,0757052704,314 Westlands Rd,Apt 25,17725,Laikipia,Turbo,"Laikipia, Kenya",1,Active
+43,[Business] Baobab Manor,Business,Claude,Abdi,0738561066,612 Lavington Rd,Apt 61,5404,Nakuru,Eldoret East,"Nakuru, Kenya",0,Dormant
+44,Kiptoo Munyoki,Individual,Kiptoo,Munyoki,0769619847,161 Kilimani Rd,Apt 17,8269,Baringo,Subukia,"Baringo, Kenya",1,Active
+45,Kiptoo Munyao,Individual,Kiptoo,Munyao,0797410997,602 Langata Rd,Apt 99,34866,Kiambu,Nakuru Town,"Kiambu, Kenya",1,Active
+46,[Business] Safari Residences,Business,Pierre,Nkurunziza,0762166581,939 Koinange St,Apt 41,31294,Nyeri,Embakasi,"Nyeri, Kenya",0,Dormant
+47,Felix Ibrahim,Individual,Felix,Ibrahim,0766727159,102 Nakuru Blvd,Apt 55,40896,Mombasa,Dagoretti,"Mombasa, Kenya",0,Dormant
+48,Wambui Abdullahi,Individual,Wambui,Abdullahi,0779750372,947 Dennis Pritt Rd,Apt 18,75775,Baringo,Nakuru Town,"Baringo, Kenya",0,Dormant
+49,[Business] InterContinental Lodge,Business,Wanjiku,Mugabe,0733341526,864 Nakuru Blvd,Apt 29,67628,Embu,Dagoretti,"Embu, Kenya",1,Active
+50,Wanjiku Abdullahi,Individual,Wanjiku,Abdullahi,0786995487,895 State House Rd,Apt 62,89734,Nyeri,Naivasha,"Nyeri, Kenya",0,Dormant
+51,[Business] Baobab Palace,Business,Marie,Mutua,0757667103,979 Kisumu Ave,Apt 22,79041,Garissa,Nyando,"Garissa, Kenya",0,Dormant
+52,[Business] Severin Suites,Business,Pierrette,Osman,0773850675,720 Dennis Pritt Rd,Apt 16,31468,Isiolo,Eldoret East,"Isiolo, Kenya",1,Active
+53,Achieng Mugisha,Individual,Achieng,Mugisha,0706688015,758 Uhuru Hwy,Apt 12,15730,Tharaka-Nithi,Kesses,"Tharaka-Nithi, Kenya",1,Active
+54,[Business] Villa Rosa Haven,Business,Achieng,Hussein,0798882155,712 Jogoo Rd,Apt 72,45643,Meru,Subukia,"Meru, Kenya",0,Dormant
+55,Wambui Ahmed,Individual,Wambui,Ahmed,0764823789,798 Buruburu Rd,Apt 19,78547,Kiambu,Molo,"Kiambu, Kenya",1,Active
+56,Joseph Munzala,Individual,Joseph,Munzala,0704999338,768 Gigiri Rd,Apt 26,78354,Eldoret,Kisumu East,"Eldoret, Kenya",1,Active
+57,Emmanuel Mandela,Individual,Emmanuel,Mandela,0793730865,665 South C Rd,Apt 35,1965,Nyeri,Nyali,"Nyeri, Kenya",1,Active
+58,[Business] Swahili Manor,Business,Paul,Abdi,0706715680,753 Kenyatta Ave,Apt 56,77441,Machakos,Turbo,"Machakos, Kenya",1,Active
+59,[Business] Nyali Inn,Business,Amina,Munzala,0715827541,42 Buruburu Rd,Apt 44,67165,Kitui,Eldoret East,"Kitui, Kenya",0,Dormant
+60,Marie Munee,Individual,Marie,Munee,0770534732,121 Buruburu Rd,Apt 77,63128,Muranga,Westlands,"Muranga, Kenya",0,Dormant
+61,Pauline Nkurunziza,Individual,Pauline,Nkurunziza,0724021842,664 Donholm Rd,Apt 68,79477,Marsabit,Molo,"Marsabit, Kenya",1,Active
+62,[Business] Leopard Beach Haven,Business,Pierrette,Ndayishimiye,0773118627,255 Nakuru Blvd,Apt 8,79365,Marsabit,Dagoretti,"Marsabit, Kenya",0,Dormant
+63,[Business] Voyager Suites,Business,Marie,Abdullahi,0738342164,590 Jogoo Rd,Apt 17,79069,Kiambu,Nakuru Town,"Kiambu, Kenya",1,Active
+64,[Business] Severin Resort,Business,Josephine,Zuma,0794370947,58 Koinange St,Apt 100,25350,Laikipia,Likoni,"Laikipia, Kenya",0,Dormant
+65,[Business] Tamarind Resort,Business,Pierrette,Mbeki,0770832782,455 Ngong Rd,Apt 32,34175,Wajir,Turbo,"Wajir, Kenya",1,Active
+66,Wambui Kabongo,Individual,Wambui,Kabongo,0707618853,696 Dennis Pritt Rd,Apt 77,28414,Isiolo,Kisumu Central,"Isiolo, Kenya",1,Active
+67,[Business] Serena Residences,Business,Achieng,Wanyama,0787857341,11 Runda Dr,Apt 22,66450,Kiambu,Moiben,"Kiambu, Kenya",1,Active
+68,Felicite Abdi,Individual,Felicite,Abdi,0729899053,441 Haile Selassie Ave,Apt 44,54279,Machakos,Moiben,"Machakos, Kenya",1,Active
+69,Otieno Munyua,Individual,Otieno,Munyua,0759101053,623 Kileleshwa Rd,Apt 73,56266,Tharaka-Nithi,Kesses,"Tharaka-Nithi, Kenya",0,Dormant
+70,Pierrette Munywe,Individual,Pierrette,Munywe,0793246108,826 Embakasi Rd,Apt 41,84890,Eldoret,Moiben,"Eldoret, Kenya",1,Active
+71,[Business] PrideInn Manor,Business,Patrick,Ndayishimiye,0701321992,213 Thika Rd,Apt 2,84589,Tharaka-Nithi,Eldoret West,"Tharaka-Nithi, Kenya",0,Dormant
+72,[Business] Boma Retreat,Business,Claudine,Munee,0792013203,43 Mbagathi Way,Apt 68,66355,Baringo,Eldoret East,"Baringo, Kenya",0,Dormant
+73,[Business] Boma Haven,Business,Pauline,Ochieng,0789016672,850 Ngong Rd,Apt 78,71100,Nakuru,Nyando,"Nakuru, Kenya",1,Active
+74,Marie Yusuf,Individual,Marie,Yusuf,0789846655,640 Embakasi Rd,Apt 98,28611,Kitui,Turbo,"Kitui, Kenya",0,Dormant
+75,[Business] Swahili Residences,Business,Emmanuel,Mugisha,0747830192,889 Thika Rd,Apt 10,26091,Nyeri,Subukia,"Nyeri, Kenya",1,Active
+76,[Business] Baobab Suites,Business,Mutiso,Munzala,0767646869,782 Kimathi St,Apt 39,6326,Garissa,Kisumu East,"Garissa, Kenya",1,Active
+77,Wanjiku Zuma,Individual,Wanjiku,Zuma,0714157179,624 Gigiri Rd,Apt 89,8611,Mandera,Naivasha,"Mandera, Kenya",1,Active
+78,[Business] InterContinental Residences,Business,Njeri,Malema,0732878560,297 Haile Selassie Ave,Apt 56,42397,Baringo,Kisauni,"Baringo, Kenya",1,Active
+79,[Business] Ole Sereni Suites,Business,Paul,Mohammed,0723159788,485 Kileleshwa Rd,Apt 31,73525,Kiambu,Eldoret West,"Kiambu, Kenya",1,Active
+80,[Business] Safari Retreat,Business,Joseph,Munyao,0704083767,3 Eldoret Ln,Apt 3,50403,Nyeri,Muhoroni,"Nyeri, Kenya",1,Active
+81,[Business] Severin Hotel,Business,Kamau,Mutua,0775431392,984 Kimathi St,Apt 65,35698,Marsabit,Langata,"Marsabit, Kenya",1,Active
+82,Joseph Mbeki,Individual,Joseph,Mbeki,0762527921,987 Tom Mboya St,Apt 43,34845,Meru,Kasarani,"Meru, Kenya",1,Active
+83,Paul Mbeki,Individual,Paul,Mbeki,0780454971,318 Moi Ave,Apt 11,33094,Machakos,Nakuru Town,"Machakos, Kenya",0,Dormant
+84,Alaine Munzala,Individual,Alaine,Munzala,0725082408,902 South C Rd,Apt 43,26706,Mandera,Nakuru Town,"Mandera, Kenya",1,Active
+85,Alaine Munzala,Individual,Alaine,Munzala,0770655619,447 Runda Dr,Apt 32,32954,Nakuru,Dagoretti,"Nakuru, Kenya",1,Active
+86,[Business] Voyager Suites,Business,Michelle,Ibrahim,0798587026,922 Eastleigh Rd,Apt 39,69076,Isiolo,Nyali,"Isiolo, Kenya",0,Dormant
+87,Marie Mbeki,Individual,Marie,Mbeki,0701282980,367 Haile Selassie Ave,Apt 75,78004,Nairobi,Nyali,"Nairobi, Kenya",1,Active
+88,[Business] Fairmont Inn,Business,Claude,Abdullahi,0747590572,111 State House Rd,Apt 13,24958,Baringo,Kisumu Central,"Baringo, Kenya",1,Active
+89,[Business] Nyali Lodge,Business,Marie,Mandela,0766734565,598 South C Rd,Apt 15,88235,Laikipia,Turbo,"Laikipia, Kenya",1,Active
+90,[Business] Neptune Retreat,Business,Wanjiku,Kiplagat,0758562328,732 Westlands Rd,Apt 90,56677,Marsabit,Jomvu,"Marsabit, Kenya",0,Dormant
+91,[Business] Severin Inn,Business,Emmanuelle,Munzala,0734265799,902 State House Rd,Apt 77,2526,Nairobi,Kasarani,"Nairobi, Kenya",1,Active
+92,Kiptoo Ndayishimiye,Individual,Kiptoo,Ndayishimiye,0724800617,566 Dennis Pritt Rd,Apt 71,47799,Eldoret,Gilgil,"Eldoret, Kenya",1,Active
+93,[Business] Severin Resort,Business,Mutiso,Munyuli,0731925871,699 Nakuru Blvd,Apt 49,37721,Meru,Kisumu Central,"Meru, Kenya",1,Active
+94,Emmanuelle Zuma,Individual,Emmanuelle,Zuma,0708109461,474 Parklands Rd,Apt 23,72346,Isiolo,Jomvu,"Isiolo, Kenya",0,Dormant
+95,Joseph Ibrahim,Individual,Joseph,Ibrahim,0710928470,941 Eldoret Ln,Apt 48,40399,Nakuru,Gilgil,"Nakuru, Kenya",1,Active
+96,Emmanuel Munywe,Individual,Emmanuel,Munywe,0787659076,957 Dennis Pritt Rd,Apt 9,61355,Tharaka-Nithi,Turbo,"Tharaka-Nithi, Kenya",0,Dormant
+97,Jean Munyuli,Individual,Jean,Munyuli,0770767887,219 Mombasa Rd,Apt 34,78611,Kisumu,Kisumu West,"Kisumu, Kenya",0,Dormant
+98,Njeri Kabongo,Individual,Njeri,Kabongo,0753619073,107 Riverside Dr,Apt 33,26774,Nairobi,Jomvu,"Nairobi, Kenya",0,Dormant
+99,Wanjiku Njoroge,Individual,Wanjiku,Njoroge,0726632718,599 Mama Ngina St,Apt 67,69333,Kisumu,Kisumu Central,"Kisumu, Kenya",0,Dormant
+100,Claudine Ndayishimiye,Individual,Claudine,Ndayishimiye,0743730695,319 Kiambu Rd,Apt 66,88070,Laikipia,Turbo,"Laikipia, Kenya",1,Active
+101,Michel Munyoki,Individual,Michel,Munyoki,0799061041,765 Riverside Dr,Apt 64,46958,Machakos,Moiben,"Machakos, Kenya",0,Dormant
+102,Pierrette Ndayishimiye,Individual,Pierrette,Ndayishimiye,0755257540,258 Mama Ngina St,Apt 26,50442,Kisumu,Kisauni,"Kisumu, Kenya",1,Active
+103,[Business] InterContinental Resort,Business,Wanjiku,Mutua,0720419980,327 Jogoo Rd,Apt 51,84352,Isiolo,Turbo,"Isiolo, Kenya",1,Active
+104,[Business] Safari Suites,Business,Wanjiku,Muthoni,0706093688,522 Westlands Rd,Apt 99,51887,Nyeri,Nakuru Town,"Nyeri, Kenya",0,Dormant
+105,[Business] Tamarind Inn,Business,Jeanne,Mwangi,0725503421,721 Kenyatta Ave,Apt 38,1058,Wajir,Gilgil,"Wajir, Kenya",0,Dormant
+106,[Business] Diani Manor,Business,Joseph,Kabila,0790023704,599 Kileleshwa Rd,Apt 99,24720,Kiambu,Eldoret East,"Kiambu, Kenya",1,Active
+107,Emmanuel Munee,Individual,Emmanuel,Munee,0751604715,170 Parklands Rd,Apt 73,44908,Baringo,Kasarani,"Baringo, Kenya",0,Dormant
+108,[Business] Boma Residences,Business,Josephine,Zuma,0741645704,52 Ngong Rd,Apt 89,65181,Kisumu,Muhoroni,"Kisumu, Kenya",1,Active
+109,Felix Hussein,Individual,Felix,Hussein,0708190843,221 Eldoret Ln,Apt 27,40282,Garissa,Jomvu,"Garissa, Kenya",1,Active
+110,[Business] Voyager Lodge,Business,Jeanne,Yusuf,0776723683,839 Tom Mboya St,Apt 26,77680,Mombasa,Kesses,"Mombasa, Kenya",1,Active
+111,[Business] Diani Manor,Business,Joseph,Mbeki,0728086769,653 Mama Ngina St,Apt 79,58032,Mombasa,Nakuru Town,"Mombasa, Kenya",1,Active
+112,[Business] Swahili Resort,Business,Mwangi,Osman,0745227615,82 State House Rd,Apt 7,55723,Garissa,Embakasi,"Garissa, Kenya",0,Dormant
+113,Otieno Malema,Individual,Otieno,Malema,0749588337,187 Eldoret Ln,Apt 21,21395,Meru,Dagoretti,"Meru, Kenya",1,Active
+114,Paul Munyua,Individual,Paul,Munyua,0781935097,447 Kiambu Rd,Apt 29,48107,Embu,Gilgil,"Embu, Kenya",1,Active
+115,[Business] Neptune Retreat,Business,Paul,Mbeki,0702997558,499 Jogoo Rd,Apt 25,52697,Mandera,Nyando,"Mandera, Kenya",1,Active
+116,Marie Hussein,Individual,Marie,Hussein,0711531148,147 Uhuru Hwy,Apt 25,64338,Tharaka-Nithi,Gilgil,"Tharaka-Nithi, Kenya",1,Active
+117,[Business] Diani Manor,Business,Alain,Zuma,0777829596,516 Langata Rd,Apt 34,16646,Garissa,Gilgil,"Garissa, Kenya",0,Dormant
+118,[Business] Swahili Manor,Business,Kamau,Kiplagat,0760053855,933 State House Rd,Apt 5,421,Garissa,Likoni,"Garissa, Kenya",1,Active
+119,[Business] Tamarind Retreat,Business,Michel,Mbeki,0711448851,149 Runda Dr,Apt 97,68279,Garissa,Eldoret West,"Garissa, Kenya",0,Dormant
+120,Joseph Munyoki,Individual,Joseph,Munyoki,0724061569,628 Runda Dr,Apt 16,26743,Meru,Langata,"Meru, Kenya",1,Active
+121,Wanjiku Munee,Individual,Wanjiku,Munee,0709218780,206 Riverside Dr,Apt 95,7627,Nakuru,Langata,"Nakuru, Kenya",1,Active
+122,[Business] Severin Palace,Business,Kiptoo,Wanyama,0768536431,859 Ngong Rd,Apt 62,85114,Tharaka-Nithi,Dagoretti,"Tharaka-Nithi, Kenya",1,Active
+123,[Business] Sarova Residences,Business,Claudine,Ochieng,0774845761,796 Nakuru Blvd,Apt 45,13394,Nairobi,Muhoroni,"Nairobi, Kenya",1,Active
+124,[Business] Nyali Palace,Business,Jacques,Mutombo,0785260527,677 Limuru Rd,Apt 71,20185,Nakuru,Westlands,"Nakuru, Kenya",0,Dormant
+125,Kamau Ali,Individual,Kamau,Ali,0797514034,662 Runda Dr,Apt 17,26068,Baringo,Likoni,"Baringo, Kenya",1,Active
+126,Jacqueline Ahmed,Individual,Jacqueline,Ahmed,0713523522,698 Mbagathi Way,Apt 58,31858,Baringo,Nyali,"Baringo, Kenya",0,Dormant
+127,Josephine Mukasa,Individual,Josephine,Mukasa,0743558820,863 Buruburu Rd,Apt 59,12015,Garissa,Muhoroni,"Garissa, Kenya",1,Active
+128,[Business] Hemingways Resort,Business,Pierrette,Mandela,0718021431,24 Haile Selassie Ave,Apt 52,86724,Machakos,Kesses,"Machakos, Kenya",1,Active
+129,Marie Malema,Individual,Marie,Malema,0731382325,726 Thika Rd,Apt 10,51038,Marsabit,Kisumu East,"Marsabit, Kenya",1,Active
+130,Jeanne Mugisha,Individual,Jeanne,Mugisha,0726502419,214 Kisumu Ave,Apt 34,49520,Kitui,Nakuru Town,"Kitui, Kenya",1,Active
+131,Wanjiku Munywe,Individual,Wanjiku,Munywe,0759441363,680 Nakuru Blvd,Apt 53,73923,Muranga,Dagoretti,"Muranga, Kenya",0,Dormant
+132,Kiptoo Munyoki,Individual,Kiptoo,Munyoki,0785722694,531 Kimathi St,Apt 8,64806,Tharaka-Nithi,Changamwe,"Tharaka-Nithi, Kenya",1,Active
+133,[Business] Hemingways Inn,Business,Josephine,Muthoni,0771697135,171 Koinange St,Apt 99,85475,Kisumu,Kisauni,"Kisumu, Kenya",1,Active
+134,Patricia Mbeki,Individual,Patricia,Mbeki,0781372657,910 Kilimani Rd,Apt 40,37875,Meru,Kesses,"Meru, Kenya",0,Dormant
+135,Felicite Mbeki,Individual,Felicite,Mbeki,0750741522,138 Nakuru Blvd,Apt 2,49089,Mandera,Dagoretti,"Mandera, Kenya",1,Active
+136,Michelle Kabila,Individual,Michelle,Kabila,0718563801,346 Donholm Rd,Apt 31,14561,Embu,Turbo,"Embu, Kenya",0,Dormant
+137,Kamau Mbeki,Individual,Kamau,Mbeki,0798860892,329 Nairobi St,Apt 55,87670,Mombasa,Kisumu Central,"Mombasa, Kenya",1,Active
+138,[Business] Severin Suites,Business,Amina,Munzala,0768035786,921 Limuru Rd,Apt 9,17211,Kisumu,Embakasi,"Kisumu, Kenya",0,Dormant
+139,Achieng Ahmed,Individual,Achieng,Ahmed,0715608862,40 James Gichuru Rd,Apt 22,50602,Mandera,Kisauni,"Mandera, Kenya",1,Active
+140,[Business] Baobab Manor,Business,Jeanne,Njoroge,0723884410,516 Mbagathi Way,Apt 83,23101,Baringo,Kesses,"Baringo, Kenya",0,Dormant
+141,Mwangi Omondi,Individual,Mwangi,Omondi,0762422629,295 South C Rd,Apt 97,2246,Mombasa,Subukia,"Mombasa, Kenya",0,Dormant
+142,[Business] Serena Haven,Business,Marie,Osman,0742491718,755 Tom Mboya St,Apt 43,36585,Tharaka-Nithi,Kisumu Central,"Tharaka-Nithi, Kenya",0,Dormant
+143,Jacqueline Mugabe,Individual,Jacqueline,Mugabe,0783032135,337 Uhuru Hwy,Apt 36,11265,Nyeri,Embakasi,"Nyeri, Kenya",1,Active
+144,[Business] Sarova Haven,Business,Paul,Mugabe,0793382468,164 Eastleigh Rd,Apt 56,56548,Tharaka-Nithi,Nyali,"Tharaka-Nithi, Kenya",1,Active
+145,[Business] PrideInn Manor,Business,Felicite,Yusuf,0721347820,588 Dennis Pritt Rd,Apt 12,57950,Isiolo,Turbo,"Isiolo, Kenya",1,Active
+146,[Business] Diani Palace,Business,Jacqueline,Mutua,0708349042,332 Nakuru Blvd,Apt 14,18535,Mombasa,Kisumu West,"Mombasa, Kenya",0,Dormant
+147,Alain Mbeki,Individual,Alain,Mbeki,0771358721,553 Kimathi St,Apt 30,48028,Machakos,Kisumu East,"Machakos, Kenya",1,Active
+148,Josephine Yusuf,Individual,Josephine,Yusuf,0718389151,219 Kileleshwa Rd,Apt 37,8916,Eldoret,Kisauni,"Eldoret, Kenya",1,Active
+149,[Business] Neptune Lodge,Business,Patricia,Munyua,0755732848,730 Nairobi St,Apt 89,83291,Kiambu,Langata,"Kiambu, Kenya",1,Active
+150,[Business] Baobab Palace,Business,Emmanuel,Ahmed,0723272232,777 Limuru Rd,Apt 60,80818,Kisumu,Westlands,"Kisumu, Kenya",1,Active
+151,[Business] Leopard Beach Retreat,Business,Paul,Yusuf,0759911403,569 Jogoo Rd,Apt 16,30112,Isiolo,Muhoroni,"Isiolo, Kenya",1,Active
+152,Emmanuelle Omondi,Individual,Emmanuelle,Omondi,0744239069,359 Lavington Rd,Apt 84,29068,Nairobi,Eldoret West,"Nairobi, Kenya",0,Dormant
+153,Pierrette Mugabe,Individual,Pierrette,Mugabe,0773059264,364 Kenyatta Ave,Apt 40,72571,Marsabit,Nyali,"Marsabit, Kenya",1,Active
+154,[Business] Swahili Retreat,Business,Pierre,Ali,0715196602,222 Mama Ngina St,Apt 92,61264,Baringo,Kesses,"Baringo, Kenya",0,Dormant
+155,[Business] Swahili Retreat,Business,Emmanuelle,Muthoni,0725288215,342 Riverside Dr,Apt 5,42927,Meru,Nyali,"Meru, Kenya",1,Active
+156,Emmanuelle Nkurunziza,Individual,Emmanuelle,Nkurunziza,0756659211,456 Karen Rd,Apt 81,86389,Garissa,Changamwe,"Garissa, Kenya",1,Active
+157,Pierrette Nkurunziza,Individual,Pierrette,Nkurunziza,0751692295,396 Koinange St,Apt 72,10355,Kiambu,Kisumu East,"Kiambu, Kenya",0,Dormant
+158,[Business] Voyager Suites,Business,Jean,Ibrahim,0705963515,780 Kiambu Rd,Apt 43,51995,Kitui,Kisumu West,"Kitui, Kenya",0,Dormant
+159,Joseph Munyua,Individual,Joseph,Munyua,0728266622,521 Waiyaki Way,Apt 66,66092,Tharaka-Nithi,Gilgil,"Tharaka-Nithi, Kenya",1,Active
+160,[Business] Voyager Hotel,Business,Marie,Yusuf,0782600918,469 Limuru Rd,Apt 45,54818,Kitui,Changamwe,"Kitui, Kenya",0,Dormant
+161,[Business] Serena Inn,Business,Felix,Lumumba,0736238229,558 Ngong Rd,Apt 40,26946,Kiambu,Likoni,"Kiambu, Kenya",1,Active
+162,Pauline Nkurunziza,Individual,Pauline,Nkurunziza,0768321437,265 Waiyaki Way,Apt 19,21704,Mandera,Naivasha,"Mandera, Kenya",0,Dormant
+163,[Business] Fairmont Manor,Business,Kiptoo,Munywe,0771400762,142 Haile Selassie Ave,Apt 21,12880,Marsabit,Embakasi,"Marsabit, Kenya",0,Dormant
+164,[Business] Tamarind Retreat,Business,Marie,Zuma,0763466221,241 Mombasa Rd,Apt 68,70210,Nairobi,Kisumu East,"Nairobi, Kenya",1,Active
+165,Alain Hassan,Individual,Alain,Hassan,0729186252,203 Limuru Rd,Apt 2,83574,Kisumu,Nyando,"Kisumu, Kenya",0,Dormant
+166,[Business] Hilton Resort,Business,Michelle,Wanyama,0788029637,705 Riverside Dr,Apt 25,26263,Nyeri,Nyando,"Nyeri, Kenya",1,Active
+167,Jacqueline Munywe,Individual,Jacqueline,Munywe,0722299578,740 Mombasa Rd,Apt 10,26402,Mandera,Kisumu East,"Mandera, Kenya",1,Active
+168,Michel Mandela,Individual,Michel,Mandela,0703580492,623 Jogoo Rd,Apt 82,50994,Marsabit,Kisumu East,"Marsabit, Kenya",1,Active
+169,[Business] Nyali Residences,Business,Marie,Malema,0725046922,396 Karen Rd,Apt 15,13800,Eldoret,Naivasha,"Eldoret, Kenya",0,Dormant
+170,[Business] Ole Sereni Suites,Business,Pauline,Mukasa,0726872787,893 Kenyatta Ave,Apt 76,78681,Eldoret,Likoni,"Eldoret, Kenya",0,Dormant
+171,Joseph Kiplagat,Individual,Joseph,Kiplagat,0723812730,299 Ngong Rd,Apt 26,63154,Embu,Turbo,"Embu, Kenya",0,Dormant
+172,[Business] Baobab Hotel,Business,Claude,Abdullahi,0714210113,223 Runda Dr,Apt 63,59994,Garissa,Kasarani,"Garissa, Kenya",0,Dormant
+173,Michel Ahmed,Individual,Michel,Ahmed,0781163597,553 Thika Rd,Apt 92,72123,Kisumu,Changamwe,"Kisumu, Kenya",1,Active
+174,[Business] Safari Haven,Business,Emmanuelle,Ndayishimiye,0790811625,373 Thika Rd,Apt 2,88163,Wajir,Kisumu West,"Wajir, Kenya",1,Active
+175,Patricia Mugabe,Individual,Patricia,Mugabe,0777332989,530 South C Rd,Apt 33,28878,Garissa,Westlands,"Garissa, Kenya",1,Active
+176,Michel Lumumba,Individual,Michel,Lumumba,0790630262,330 State House Rd,Apt 78,63166,Machakos,Kasarani,"Machakos, Kenya",1,Active
+177,Otieno Mandela,Individual,Otieno,Mandela,0792307378,43 Kilimani Rd,Apt 80,89883,Tharaka-Nithi,Nyando,"Tharaka-Nithi, Kenya",1,Active
+178,[Business] Baobab Inn,Business,Claude,Omar,0731557500,767 Buruburu Rd,Apt 41,26922,Isiolo,Embakasi,"Isiolo, Kenya",0,Dormant
+179,[Business] Villa Rosa Palace,Business,Marie,Mbeki,0708832051,926 Westlands Rd,Apt 39,45612,Garissa,Naivasha,"Garissa, Kenya",1,Active
+180,Patrick Wanyama,Individual,Patrick,Wanyama,0761058090,58 Limuru Rd,Apt 98,85277,Kisumu,Turbo,"Kisumu, Kenya",1,Active
+181,Kiptoo Lumumba,Individual,Kiptoo,Lumumba,0720878853,771 Kiambu Rd,Apt 92,51241,Baringo,Gilgil,"Baringo, Kenya",0,Dormant
+182,[Business] Hemingways Lodge,Business,Wambui,Mandela,0759432985,669 Kiambu Rd,Apt 26,73199,Mandera,Muhoroni,"Mandera, Kenya",1,Active
+183,Josephine Ndayishimiye,Individual,Josephine,Ndayishimiye,0782288139,118 South C Rd,Apt 17,19915,Mandera,Subukia,"Mandera, Kenya",1,Active
+184,Njeri Malema,Individual,Njeri,Malema,0708747646,594 Westlands Rd,Apt 25,74022,Garissa,Changamwe,"Garissa, Kenya",1,Active
+185,Emmanuel Osman,Individual,Emmanuel,Osman,0706396606,220 Koinange St,Apt 29,27640,Muranga,Dagoretti,"Muranga, Kenya",1,Active
+186,Claudine Muthoni,Individual,Claudine,Muthoni,0701538991,750 Kilimani Rd,Apt 90,4526,Laikipia,Molo,"Laikipia, Kenya",0,Dormant
+187,Wambui Ibrahim,Individual,Wambui,Ibrahim,0731936727,109 Uhuru Hwy,Apt 85,88963,Muranga,Likoni,"Muranga, Kenya",1,Active
+188,Jacques Kabongo,Individual,Jacques,Kabongo,0782977056,210 Tom Mboya St,Apt 53,64129,Garissa,Likoni,"Garissa, Kenya",1,Active
+189,Felix Osman,Individual,Felix,Osman,0729698814,317 Eastleigh Rd,Apt 64,66182,Muranga,Turbo,"Muranga, Kenya",0,Dormant
+190,Michel Mutombo,Individual,Michel,Mutombo,0759219700,582 Limuru Rd,Apt 15,58746,Isiolo,Changamwe,"Isiolo, Kenya",1,Active
+191,Felicite Mugisha,Individual,Felicite,Mugisha,0749491063,738 Moi Ave,Apt 21,62039,Eldoret,Naivasha,"Eldoret, Kenya",1,Active
+192,[Business] Baobab Manor,Business,Pierre,Mbeki,0757160712,555 Runda Dr,Apt 38,41034,Garissa,Nyali,"Garissa, Kenya",1,Active
+193,Emmanuelle Abdullahi,Individual,Emmanuelle,Abdullahi,0729567409,127 Runda Dr,Apt 9,69080,Garissa,Kisauni,"Garissa, Kenya",1,Active
+194,Jeanne Mutua,Individual,Jeanne,Mutua,0732137150,74 Thika Rd,Apt 47,59623,Isiolo,Dagoretti,"Isiolo, Kenya",1,Active
+195,[Business] Serena Retreat,Business,Kiptoo,Mwangi,0719361104,253 Kiambu Rd,Apt 79,90323,Kisumu,Moiben,"Kisumu, Kenya",0,Dormant
+196,[Business] Villa Rosa Retreat,Business,Pierrette,Bizimana,0774630040,195 Koinange St,Apt 50,50290,Meru,Moiben,"Meru, Kenya",1,Active
+197,[Business] Safari Palace,Business,Emmanuelle,Mohammed,0755850055,710 Eastleigh Rd,Apt 53,56554,Nakuru,Langata,"Nakuru, Kenya",1,Active
+198,Njeri Munyua,Individual,Njeri,Munyua,0759348746,218 Eastleigh Rd,Apt 40,79876,Nakuru,Subukia,"Nakuru, Kenya",0,Dormant
+199,Kiptoo Munyoki,Individual,Kiptoo,Munyoki,0740985506,167 Thika Rd,Apt 52,75134,Garissa,Moiben,"Garissa, Kenya",0,Dormant
+200,[Business] InterContinental Haven,Business,Amina,Mutua,0754265421,917 Nairobi St,Apt 37,66649,Kiambu,Kisumu East,"Kiambu, Kenya",1,Active
+201,[Business] Nyali Residences,Business,Njeri,Mandela,0761592973,57 Embakasi Rd,Apt 4,23448,Mombasa,Molo,"Mombasa, Kenya",1,Active
+202,Paul Malema,Individual,Paul,Malema,0774933189,375 South C Rd,Apt 70,64724,Kitui,Subukia,"Kitui, Kenya",1,Active
+203,Wanjiku Mugisha,Individual,Wanjiku,Mugisha,0750712281,516 Mbagathi Way,Apt 65,81903,Mombasa,Langata,"Mombasa, Kenya",1,Active
+204,Claudine Mukasa,Individual,Claudine,Mukasa,0762712857,115 Lavington Rd,Apt 33,22301,Kisumu,Changamwe,"Kisumu, Kenya",1,Active
+205,[Business] InterContinental Hotel,Business,Otieno,Mutua,0704641998,237 Uhuru Hwy,Apt 83,10824,Kiambu,Kisumu East,"Kiambu, Kenya",1,Active
+206,[Business] Leopard Beach Retreat,Business,Kiptoo,Abdullahi,0715537964,343 Donholm Rd,Apt 73,9752,Meru,Kisumu West,"Meru, Kenya",0,Dormant
+207,[Business] Leopard Beach Suites,Business,Jacques,Adan,0798925210,270 Donholm Rd,Apt 84,7161,Garissa,Kasarani,"Garissa, Kenya",1,Active
+208,[Business] Voyager Inn,Business,Achieng,Mugisha,0705272302,883 Langata Rd,Apt 45,26692,Machakos,Embakasi,"Machakos, Kenya",0,Dormant
+209,[Business] Fairmont Haven,Business,Alain,Kabila,0790002785,205 Kenyatta Ave,Apt 96,14845,Garissa,Dagoretti,"Garissa, Kenya",1,Active
+210,Jacqueline Mandela,Individual,Jacqueline,Mandela,0722658781,496 Waiyaki Way,Apt 13,2366,Eldoret,Muhoroni,"Eldoret, Kenya",1,Active
+211,[Business] Hemingways Inn,Business,Otieno,Mbeki,0790734872,144 Parklands Rd,Apt 22,47415,Laikipia,Kisumu East,"Laikipia, Kenya",1,Active
+212,[Business] InterContinental Resort,Business,Wanjiku,Omondi,0743444489,715 Kiambu Rd,Apt 25,5454,Nairobi,Kisumu West,"Nairobi, Kenya",1,Active
+213,[Business] Fairmont Lodge,Business,Patricia,Nkurunziza,0736996077,311 Dennis Pritt Rd,Apt 83,42407,Eldoret,Nyali,"Eldoret, Kenya",1,Active
+214,[Business] Swahili Residences,Business,Pauline,Omondi,0741155515,854 Kileleshwa Rd,Apt 56,11613,Marsabit,Kisumu West,"Marsabit, Kenya",1,Active
+215,Josephine Bizimana,Individual,Josephine,Bizimana,0732932506,361 Riverside Dr,Apt 81,4320,Kitui,Turbo,"Kitui, Kenya",0,Dormant
+216,[Business] Boma Palace,Business,Patrick,Mandela,0746540185,10 Haile Selassie Ave,Apt 70,68570,Meru,Naivasha,"Meru, Kenya",1,Active
+217,Felix Mbeki,Individual,Felix,Mbeki,0767415673,163 Uhuru Hwy,Apt 44,65136,Nakuru,Likoni,"Nakuru, Kenya",0,Dormant
+218,[Business] PrideInn Hotel,Business,Jeanne,Yusuf,0704430093,509 Eastleigh Rd,Apt 33,17689,Kiambu,Kisumu West,"Kiambu, Kenya",1,Active
+219,[Business] Nyali Suites,Business,Njeri,Munzala,0791721837,632 Kiambu Rd,Apt 52,67647,Nyeri,Moiben,"Nyeri, Kenya",1,Active
+220,Mutiso Adan,Individual,Mutiso,Adan,0767445037,475 Donholm Rd,Apt 27,27049,Eldoret,Kisumu East,"Eldoret, Kenya",1,Active
+221,Paul Zuma,Individual,Paul,Zuma,0787294626,702 Lavington Rd,Apt 12,5107,Embu,Dagoretti,"Embu, Kenya",1,Active
+222,[Business] Leopard Beach Suites,Business,Achieng,Lumumba,0721152902,932 Runda Dr,Apt 13,23438,Wajir,Nyali,"Wajir, Kenya",0,Dormant
+223,[Business] InterContinental Haven,Business,Jeanne,Munzala,0749639593,858 Moi Ave,Apt 70,14698,Mombasa,Subukia,"Mombasa, Kenya",1,Active
+224,Felicite Mwangi,Individual,Felicite,Mwangi,0714266425,801 Uhuru Hwy,Apt 31,8646,Nyeri,Eldoret East,"Nyeri, Kenya",1,Active
+225,[Business] Safari Resort,Business,Marie,Munyuli,0796922484,684 Moi Ave,Apt 85,78854,Marsabit,Kisauni,"Marsabit, Kenya",0,Dormant
+226,Patrick Kagame,Individual,Patrick,Kagame,0732288073,851 Riverside Dr,Apt 73,30350,Marsabit,Naivasha,"Marsabit, Kenya",0,Dormant
+227,[Business] Sarova Haven,Business,Mwangi,Mbeki,0734983100,272 Waiyaki Way,Apt 89,69290,Tharaka-Nithi,Dagoretti,"Tharaka-Nithi, Kenya",1,Active
+228,Patrick Ali,Individual,Patrick,Ali,0797185596,243 Langata Rd,Apt 69,30222,Marsabit,Kisumu West,"Marsabit, Kenya",1,Active
+229,[Business] Sarova Palace,Business,Jean,Kariuki,0722782553,389 Koinange St,Apt 50,50585,Machakos,Changamwe,"Machakos, Kenya",1,Active
+230,[Business] Leopard Beach Retreat,Business,Pauline,Kagame,0721960756,336 Koinange St,Apt 60,51124,Kiambu,Kisumu Central,"Kiambu, Kenya",1,Active
+231,Emmanuelle Mandela,Individual,Emmanuelle,Mandela,0779669874,16 South C Rd,Apt 35,77082,Embu,Turbo,"Embu, Kenya",0,Dormant
+232,Felicite Omar,Individual,Felicite,Omar,0777865624,366 Nakuru Blvd,Apt 65,70048,Muranga,Likoni,"Muranga, Kenya",1,Active
+233,[Business] Boma Retreat,Business,Joseph,Munyao,0743736190,490 James Gichuru Rd,Apt 34,49935,Mandera,Kisumu East,"Mandera, Kenya",0,Dormant
+234,Alaine Kabongo,Individual,Alaine,Kabongo,0730971068,853 Tom Mboya St,Apt 58,63487,Eldoret,Nyali,"Eldoret, Kenya",1,Active
+235,Otieno Kabila,Individual,Otieno,Kabila,0787326040,60 Donholm Rd,Apt 56,58283,Isiolo,Muhoroni,"Isiolo, Kenya",1,Active
+236,[Business] Neptune Haven,Business,Emmanuelle,Ahmed,0742511530,871 Tom Mboya St,Apt 69,48290,Garissa,Dagoretti,"Garissa, Kenya",0,Dormant
+237,[Business] Neptune Manor,Business,Pierre,Zuma,0705960237,552 Mbagathi Way,Apt 50,9702,Eldoret,Moiben,"Eldoret, Kenya",1,Active
+238,[Business] PrideInn Hotel,Business,Otieno,Abdullahi,0741444887,614 Runda Dr,Apt 34,73123,Baringo,Westlands,"Baringo, Kenya",1,Active
+239,Felix Adan,Individual,Felix,Adan,0720945182,910 Mama Ngina St,Apt 83,68171,Tharaka-Nithi,Kasarani,"Tharaka-Nithi, Kenya",0,Dormant
+240,Wanjiku Kiplagat,Individual,Wanjiku,Kiplagat,0743451485,737 Limuru Rd,Apt 50,30417,Laikipia,Gilgil,"Laikipia, Kenya",0,Dormant
+241,Marie Kabongo,Individual,Marie,Kabongo,0746849834,140 James Gichuru Rd,Apt 54,8250,Nairobi,Kisauni,"Nairobi, Kenya",1,Active
+242,Achieng Mukasa,Individual,Achieng,Mukasa,0793720482,560 James Gichuru Rd,Apt 43,31391,Kitui,Kasarani,"Kitui, Kenya",1,Active
+243,Marie Mugisha,Individual,Marie,Mugisha,0717500503,235 Runda Dr,Apt 61,52507,Laikipia,Kisumu West,"Laikipia, Kenya",0,Dormant
+244,[Business] Tamarind Manor,Business,Marie,Mohammed,0739768205,511 Kilimani Rd,Apt 96,90184,Eldoret,Changamwe,"Eldoret, Kenya",1,Active
+245,[Business] Tamarind Palace,Business,Emmanuelle,Hussein,0706383077,40 Waiyaki Way,Apt 28,51408,Eldoret,Embakasi,"Eldoret, Kenya",0,Dormant
+246,Felix Osman,Individual,Felix,Osman,0748657301,293 Karen Rd,Apt 76,59995,Laikipia,Changamwe,"Laikipia, Kenya",1,Active
+247,Alaine Wanyama,Individual,Alaine,Wanyama,0738902793,853 Limuru Rd,Apt 51,88667,Isiolo,Naivasha,"Isiolo, Kenya",0,Dormant
+248,[Business] Hilton Residences,Business,Michelle,Hussein,0741279537,884 Kimathi St,Apt 58,75677,Kisumu,Eldoret West,"Kisumu, Kenya",1,Active
+249,Patrick Kagame,Individual,Patrick,Kagame,0709897726,944 Gigiri Rd,Apt 86,58163,Kisumu,Jomvu,"Kisumu, Kenya",1,Active
+250,Patricia Wanyama,Individual,Patricia,Wanyama,0772791437,955 Kiambu Rd,Apt 18,22751,Meru,Jomvu,"Meru, Kenya",1,Active
+251,[Business] Voyager Manor,Business,Patricia,Mwangi,0772281875,935 Buruburu Rd,Apt 5,42708,Eldoret,Kesses,"Eldoret, Kenya",0,Dormant
+252,[Business] Tamarind Haven,Business,Pierre,Ahmed,0761706382,213 James Gichuru Rd,Apt 1,12682,Meru,Moiben,"Meru, Kenya",1,Active
+253,[Business] Serena Lodge,Business,Felicite,Ibrahim,0702260989,995 Kiambu Rd,Apt 50,49282,Mandera,Moiben,"Mandera, Kenya",1,Active
+254,Emmanuelle Ndayishimiye,Individual,Emmanuelle,Ndayishimiye,0774880847,869 James Gichuru Rd,Apt 22,72821,Mombasa,Eldoret West,"Mombasa, Kenya",1,Active
+255,[Business] Severin Inn,Business,Joseph,Omondi,0757689282,869 Haile Selassie Ave,Apt 35,34116,Eldoret,Langata,"Eldoret, Kenya",0,Dormant
+256,Felicite Muthoni,Individual,Felicite,Muthoni,0754109221,724 Limuru Rd,Apt 95,45010,Laikipia,Nyali,"Laikipia, Kenya",0,Dormant
+257,Claudine Omondi,Individual,Claudine,Omondi,0778493362,153 Nakuru Blvd,Apt 77,18946,Nyeri,Gilgil,"Nyeri, Kenya",1,Active
+258,Claude Nkurunziza,Individual,Claude,Nkurunziza,0726471783,894 Nakuru Blvd,Apt 76,64251,Nyeri,Kisumu Central,"Nyeri, Kenya",1,Active
+259,[Business] Leopard Beach Manor,Business,Jean,Omondi,0723833376,919 Langata Rd,Apt 53,22036,Eldoret,Jomvu,"Eldoret, Kenya",1,Active
+260,[Business] Hilton Palace,Business,Alaine,Malema,0722920190,259 Donholm Rd,Apt 65,15269,Embu,Langata,"Embu, Kenya",0,Dormant
+261,Michelle Munzala,Individual,Michelle,Munzala,0769146589,635 Tom Mboya St,Apt 3,89660,Muranga,Kesses,"Muranga, Kenya",1,Active
+262,Kiptoo Yusuf,Individual,Kiptoo,Yusuf,0719000714,325 Embakasi Rd,Apt 30,10002,Laikipia,Muhoroni,"Laikipia, Kenya",1,Active
+263,[Business] Baobab Haven,Business,Pierrette,Ibrahim,0718884359,335 Nairobi St,Apt 53,78605,Mombasa,Nyando,"Mombasa, Kenya",0,Dormant
+264,Achieng Ahmed,Individual,Achieng,Ahmed,0787318372,983 South C Rd,Apt 83,76125,Nyeri,Langata,"Nyeri, Kenya",0,Dormant
+265,[Business] Boma Lodge,Business,Pierrette,Nkurunziza,0750388912,422 Moi Ave,Apt 35,19456,Kitui,Turbo,"Kitui, Kenya",0,Dormant
+266,[Business] Fairmont Residences,Business,Mutiso,Ibrahim,0744592182,23 Jogoo Rd,Apt 63,43187,Garissa,Langata,"Garissa, Kenya",0,Dormant
+267,Pierre Kiplagat,Individual,Pierre,Kiplagat,0753826178,645 Tom Mboya St,Apt 68,68307,Marsabit,Naivasha,"Marsabit, Kenya",1,Active
+268,Michelle Mugisha,Individual,Michelle,Mugisha,0721457932,423 Lavington Rd,Apt 21,72281,Meru,Gilgil,"Meru, Kenya",1,Active
+269,Claude Yusuf,Individual,Claude,Yusuf,0707969312,127 Runda Dr,Apt 52,24486,Machakos,Nyando,"Machakos, Kenya",0,Dormant
+270,Njeri Mandela,Individual,Njeri,Mandela,0769445778,96 South C Rd,Apt 87,61271,Laikipia,Kisauni,"Laikipia, Kenya",1,Active
+271,[Business] Baobab Residences,Business,Kiptoo,Lumumba,0756909143,286 Dennis Pritt Rd,Apt 58,50243,Mandera,Likoni,"Mandera, Kenya",0,Dormant
+272,Michel Munee,Individual,Michel,Munee,0761592371,223 Thika Rd,Apt 41,26579,Nakuru,Dagoretti,"Nakuru, Kenya",1,Active
+273,[Business] Fairmont Suites,Business,Felicite,Omondi,0764600294,460 Waiyaki Way,Apt 86,62748,Garissa,Molo,"Garissa, Kenya",0,Dormant
+274,Michelle Mugisha,Individual,Michelle,Mugisha,0723205433,656 Tom Mboya St,Apt 27,29002,Baringo,Embakasi,"Baringo, Kenya",0,Dormant
+275,Achieng Mandela,Individual,Achieng,Mandela,0768971726,688 Limuru Rd,Apt 17,66812,Mandera,Nyando,"Mandera, Kenya",1,Active
+276,Claudine Osman,Individual,Claudine,Osman,0705621270,435 Kenyatta Ave,Apt 20,9984,Baringo,Gilgil,"Baringo, Kenya",1,Active
+277,[Business] Safari Resort,Business,Wanjiku,Osman,0738637302,587 Riverside Dr,Apt 86,88616,Tharaka-Nithi,Naivasha,"Tharaka-Nithi, Kenya",0,Dormant
+278,Pierre Lumumba,Individual,Pierre,Lumumba,0701898250,210 Koinange St,Apt 40,73690,Kiambu,Eldoret West,"Kiambu, Kenya",0,Dormant
+279,[Business] InterContinental Manor,Business,Njeri,Kabongo,0786690990,688 Westlands Rd,Apt 99,54326,Muranga,Turbo,"Muranga, Kenya",1,Active
+280,Michel Malema,Individual,Michel,Malema,0735201795,678 Westlands Rd,Apt 98,39800,Kitui,Kisumu East,"Kitui, Kenya",1,Active
+281,Claudine Ochieng,Individual,Claudine,Ochieng,0799754975,815 Langata Rd,Apt 21,67629,Nyeri,Dagoretti,"Nyeri, Kenya",1,Active
+282,[Business] Swahili Hotel,Business,Claudine,Munzala,0726226411,613 Nairobi St,Apt 71,18919,Kisumu,Kisumu Central,"Kisumu, Kenya",1,Active
+283,Jeanne Ibrahim,Individual,Jeanne,Ibrahim,0701377557,553 Mbagathi Way,Apt 88,77629,Mombasa,Likoni,"Mombasa, Kenya",1,Active
+284,[Business] Nyali Manor,Business,Jacques,Nkurunziza,0778698041,674 Nakuru Blvd,Apt 85,88359,Marsabit,Kesses,"Marsabit, Kenya",1,Active
+285,[Business] Tamarind Manor,Business,Pauline,Omondi,0722036728,766 Gigiri Rd,Apt 44,90391,Marsabit,Subukia,"Marsabit, Kenya",0,Dormant
+286,[Business] Nyali Resort,Business,Kamau,Hassan,0762189564,639 Mbagathi Way,Apt 39,85102,Wajir,Moiben,"Wajir, Kenya",1,Active
+287,[Business] Nyali Lodge,Business,Jean,Mukasa,0741400563,442 James Gichuru Rd,Apt 27,8894,Baringo,Turbo,"Baringo, Kenya",0,Dormant
+288,Josephine Ochieng,Individual,Josephine,Ochieng,0745039523,121 Jogoo Rd,Apt 9,73797,Garissa,Likoni,"Garissa, Kenya",0,Dormant
+289,Kamau Mbeki,Individual,Kamau,Mbeki,0766317047,685 Nairobi St,Apt 30,61121,Machakos,Muhoroni,"Machakos, Kenya",1,Active
+290,Pierre Kagame,Individual,Pierre,Kagame,0702641367,216 Limuru Rd,Apt 88,76597,Eldoret,Subukia,"Eldoret, Kenya",1,Active
+291,Otieno Abdullahi,Individual,Otieno,Abdullahi,0743062881,395 Mama Ngina St,Apt 8,83008,Tharaka-Nithi,Langata,"Tharaka-Nithi, Kenya",0,Dormant
+292,Marie Ochieng,Individual,Marie,Ochieng,0712316863,756 Jogoo Rd,Apt 72,86428,Isiolo,Kisumu East,"Isiolo, Kenya",0,Dormant
+293,Njeri Wanyama,Individual,Njeri,Wanyama,0711692019,922 Donholm Rd,Apt 22,65825,Meru,Langata,"Meru, Kenya",1,Active
+294,[Business] Severin Inn,Business,Josephine,Munyui,0721785245,678 Mama Ngina St,Apt 89,37535,Kitui,Nyali,"Kitui, Kenya",0,Dormant
+295,[Business] Serena Palace,Business,Jean,Odhiambo,0794777891,915 Embakasi Rd,Apt 90,442,Wajir,Embakasi,"Wajir, Kenya",1,Active
+296,Emmanuel Munyuli,Individual,Emmanuel,Munyuli,0733424664,973 Riverside Dr,Apt 52,40275,Laikipia,Eldoret West,"Laikipia, Kenya",1,Active
+297,Felicite Yusuf,Individual,Felicite,Yusuf,0763974162,183 Kisumu Ave,Apt 54,82958,Machakos,Eldoret East,"Machakos, Kenya",0,Dormant
+298,[Business] Sarova Inn,Business,Jacques,Njoroge,0720003784,496 Kisumu Ave,Apt 38,4410,Nakuru,Gilgil,"Nakuru, Kenya",0,Dormant
+299,[Business] Serena Residences,Business,Achieng,Munzala,0787347487,248 Karen Rd,Apt 90,30004,Mandera,Changamwe,"Mandera, Kenya",1,Active
+300,[Business] Hemingways Retreat,Business,Joseph,Kabila,0749346263,529 Mombasa Rd,Apt 29,60200,Nairobi,Kisumu East,"Nairobi, Kenya",0,Dormant
+301,Mutiso Omondi,Individual,Mutiso,Omondi,0788357709,600 Thika Rd,Apt 58,38760,Kitui,Kesses,"Kitui, Kenya",1,Active
+302,Felicite Mugisha,Individual,Felicite,Mugisha,0769016776,479 Nakuru Blvd,Apt 27,18950,Marsabit,Kasarani,"Marsabit, Kenya",0,Dormant
+303,[Business] InterContinental Hotel,Business,Claudine,Kiplagat,0722544488,920 Kisumu Ave,Apt 40,90062,Isiolo,Likoni,"Isiolo, Kenya",1,Active
+304,Wanjiku Omar,Individual,Wanjiku,Omar,0798823954,402 James Gichuru Rd,Apt 50,52427,Tharaka-Nithi,Muhoroni,"Tharaka-Nithi, Kenya",1,Active
+305,[Business] Safari Palace,Business,Kiptoo,Mandela,0705297099,854 Jogoo Rd,Apt 84,16120,Nyeri,Turbo,"Nyeri, Kenya",0,Dormant
+306,Kamau Munzala,Individual,Kamau,Munzala,0786004967,61 Buruburu Rd,Apt 24,9701,Nyeri,Naivasha,"Nyeri, Kenya",1,Active
+307,[Business] Villa Rosa Residences,Business,Pierre,Munyao,0781448739,467 Mama Ngina St,Apt 1,29489,Machakos,Eldoret East,"Machakos, Kenya",1,Active
+308,Felicite Mbeki,Individual,Felicite,Mbeki,0784168751,127 Gigiri Rd,Apt 83,88639,Embu,Muhoroni,"Embu, Kenya",1,Active
+309,[Business] Baobab Resort,Business,Joseph,Ochieng,0764462394,795 Kileleshwa Rd,Apt 67,77862,Kitui,Eldoret East,"Kitui, Kenya",1,Active
+310,[Business] Serena Inn,Business,Mwangi,Osman,0797312280,512 Mama Ngina St,Apt 79,80076,Isiolo,Westlands,"Isiolo, Kenya",0,Dormant
+311,[Business] Ole Sereni Resort,Business,Alaine,Kabongo,0762589279,847 Kiambu Rd,Apt 76,73208,Kisumu,Kisumu West,"Kisumu, Kenya",1,Active
+312,Amina Ochieng,Individual,Amina,Ochieng,0764498597,293 Runda Dr,Apt 61,57295,Wajir,Kisumu Central,"Wajir, Kenya",1,Active
+313,Kamau Malema,Individual,Kamau,Malema,0762460833,71 Runda Dr,Apt 7,59067,Embu,Turbo,"Embu, Kenya",0,Dormant
+314,[Business] Baobab Haven,Business,Emmanuel,Mutombo,0741032264,913 Haile Selassie Ave,Apt 98,1156,Nyeri,Eldoret East,"Nyeri, Kenya",0,Dormant
+315,[Business] Hemingways Manor,Business,Joseph,Mandela,0718306559,446 Tom Mboya St,Apt 55,18819,Kisumu,Embakasi,"Kisumu, Kenya",1,Active
+316,Marie Ndayishimiye,Individual,Marie,Ndayishimiye,0747062769,991 Kenyatta Ave,Apt 95,73021,Baringo,Kesses,"Baringo, Kenya",1,Active
+317,[Business] Serena Hotel,Business,Pauline,Kagame,0714652577,913 Langata Rd,Apt 23,54513,Mandera,Westlands,"Mandera, Kenya",1,Active
+318,[Business] Sarova Resort,Business,Michelle,Munyua,0792996772,370 Waiyaki Way,Apt 98,52886,Tharaka-Nithi,Turbo,"Tharaka-Nithi, Kenya",0,Dormant
+319,[Business] Nyali Retreat,Business,Jeanne,Mutua,0744976694,907 Mbagathi Way,Apt 62,23803,Embu,Dagoretti,"Embu, Kenya",1,Active
+320,Michelle Hussein,Individual,Michelle,Hussein,0735496039,379 Parklands Rd,Apt 9,12182,Baringo,Kasarani,"Baringo, Kenya",1,Active
+321,[Business] InterContinental Palace,Business,Kiptoo,Munzala,0746978448,278 Tom Mboya St,Apt 9,55769,Garissa,Muhoroni,"Garissa, Kenya",1,Active
+322,Jean Hussein,Individual,Jean,Hussein,0797687312,746 Karen Rd,Apt 37,40837,Tharaka-Nithi,Muhoroni,"Tharaka-Nithi, Kenya",0,Dormant
+323,Jeanne Munyoki,Individual,Jeanne,Munyoki,0770067469,440 Eldoret Ln,Apt 76,19433,Tharaka-Nithi,Moiben,"Tharaka-Nithi, Kenya",1,Active
+324,Mwangi Mugabe,Individual,Mwangi,Mugabe,0707335397,894 Westlands Rd,Apt 36,35513,Marsabit,Nyando,"Marsabit, Kenya",1,Active
+325,[Business] Baobab Lodge,Business,Patricia,Malema,0713233497,82 Haile Selassie Ave,Apt 69,48781,Marsabit,Molo,"Marsabit, Kenya",0,Dormant
+326,[Business] Villa Rosa Haven,Business,Pauline,Mbeki,0717451770,872 Buruburu Rd,Apt 61,69580,Wajir,Gilgil,"Wajir, Kenya",0,Dormant
+327,[Business] Leopard Beach Palace,Business,Jacqueline,Mugabe,0760252799,488 Kimathi St,Apt 16,57079,Isiolo,Langata,"Isiolo, Kenya",1,Active
+328,[Business] Nyali Inn,Business,Claude,Zuma,0740086525,612 Dennis Pritt Rd,Apt 33,28324,Machakos,Changamwe,"Machakos, Kenya",0,Dormant
+329,[Business] Tamarind Retreat,Business,Jeanne,Mohammed,0773324825,121 Embakasi Rd,Apt 32,82972,Garissa,Kisauni,"Garissa, Kenya",1,Active
+330,Kamau Odhiambo,Individual,Kamau,Odhiambo,0753808259,350 Karen Rd,Apt 80,75333,Mandera,Moiben,"Mandera, Kenya",1,Active
+331,[Business] Sarova Haven,Business,Jean,Zuma,0724594431,353 Tom Mboya St,Apt 29,11090,Nakuru,Jomvu,"Nakuru, Kenya",1,Active
+332,Josephine Bizimana,Individual,Josephine,Bizimana,0771584776,398 Nairobi St,Apt 58,80568,Tharaka-Nithi,Kisumu West,"Tharaka-Nithi, Kenya",1,Active
+333,[Business] Leopard Beach Haven,Business,Jacqueline,Mandela,0759567624,259 Riverside Dr,Apt 7,57596,Nyeri,Westlands,"Nyeri, Kenya",1,Active
+334,Amina Mugisha,Individual,Amina,Mugisha,0763301951,763 James Gichuru Rd,Apt 56,49504,Kiambu,Eldoret East,"Kiambu, Kenya",0,Dormant
+335,Emmanuelle Bizimana,Individual,Emmanuelle,Bizimana,0722541373,430 Jogoo Rd,Apt 81,84399,Eldoret,Jomvu,"Eldoret, Kenya",0,Dormant
+336,Amina Malema,Individual,Amina,Malema,0781422536,453 Kileleshwa Rd,Apt 74,22260,Nakuru,Kesses,"Nakuru, Kenya",1,Active
+337,Jacques Mandela,Individual,Jacques,Mandela,0758034339,511 Dennis Pritt Rd,Apt 98,49624,Wajir,Eldoret West,"Wajir, Kenya",0,Dormant
+338,[Business] Hemingways Palace,Business,Joseph,Mandela,0755751878,18 Westlands Rd,Apt 67,43409,Marsabit,Kasarani,"Marsabit, Kenya",0,Dormant
+339,Emmanuel Yusuf,Individual,Emmanuel,Yusuf,0780479246,576 Dennis Pritt Rd,Apt 21,65840,Machakos,Nyando,"Machakos, Kenya",1,Active
+340,Pierrette Kiplagat,Individual,Pierrette,Kiplagat,0780213314,368 Jogoo Rd,Apt 100,84434,Mandera,Kisumu East,"Mandera, Kenya",0,Dormant
+341,Marie Hassan,Individual,Marie,Hassan,0783069723,861 Mombasa Rd,Apt 86,66459,Tharaka-Nithi,Kisauni,"Tharaka-Nithi, Kenya",1,Active
+342,Wanjiku Abdullahi,Individual,Wanjiku,Abdullahi,0716388326,600 Nakuru Blvd,Apt 47,32412,Baringo,Kasarani,"Baringo, Kenya",0,Dormant
+343,[Business] Serena Hotel,Business,Kiptoo,Odhiambo,0794601529,393 South C Rd,Apt 17,84143,Isiolo,Changamwe,"Isiolo, Kenya",1,Active
+344,Kiptoo Mbeki,Individual,Kiptoo,Mbeki,0750528118,601 Ngong Rd,Apt 15,10851,Kiambu,Gilgil,"Kiambu, Kenya",1,Active
+345,[Business] Tamarind Hotel,Business,Jean,Njoroge,0776477088,217 Haile Selassie Ave,Apt 52,31674,Baringo,Embakasi,"Baringo, Kenya",0,Dormant
+346,Michel Mandela,Individual,Michel,Mandela,0768403485,294 Dennis Pritt Rd,Apt 15,465,Tharaka-Nithi,Kesses,"Tharaka-Nithi, Kenya",1,Active
+347,[Business] Severin Haven,Business,Felix,Muthoni,0714316993,994 Eastleigh Rd,Apt 71,41237,Marsabit,Eldoret East,"Marsabit, Kenya",0,Dormant
+348,Jacqueline Mbeki,Individual,Jacqueline,Mbeki,0760025809,600 Eastleigh Rd,Apt 24,88118,Mombasa,Kisumu East,"Mombasa, Kenya",1,Active
+349,Njeri Lumumba,Individual,Njeri,Lumumba,0783771424,832 Kiambu Rd,Apt 74,439,Kisumu,Kisumu Central,"Kisumu, Kenya",1,Active
+350,[Business] Nyali Hotel,Business,Njeri,Mutua,0784004440,823 Westlands Rd,Apt 11,88556,Mombasa,Naivasha,"Mombasa, Kenya",1,Active
+351,[Business] Fairmont Manor,Business,Wambui,Hussein,0732901211,191 Kisumu Ave,Apt 63,13903,Kitui,Dagoretti,"Kitui, Kenya",1,Active
+352,Claudine Zuma,Individual,Claudine,Zuma,0745229808,608 Dennis Pritt Rd,Apt 53,30749,Kiambu,Moiben,"Kiambu, Kenya",1,Active
+353,Mutiso Omar,Individual,Mutiso,Omar,0764346886,756 Eldoret Ln,Apt 89,19028,Marsabit,Kisumu Central,"Marsabit, Kenya",0,Dormant
+354,Kiptoo Zuma,Individual,Kiptoo,Zuma,0725957512,80 Eldoret Ln,Apt 51,75593,Kisumu,Changamwe,"Kisumu, Kenya",1,Active
+355,Jacqueline Mugabe,Individual,Jacqueline,Mugabe,0789548331,239 Nakuru Blvd,Apt 75,57130,Mombasa,Muhoroni,"Mombasa, Kenya",1,Active
+356,Alaine Ahmed,Individual,Alaine,Ahmed,0761188271,528 James Gichuru Rd,Apt 49,6122,Isiolo,Kasarani,"Isiolo, Kenya",1,Active
+357,Marie Mbeki,Individual,Marie,Mbeki,0769854911,899 Mombasa Rd,Apt 3,13393,Garissa,Gilgil,"Garissa, Kenya",1,Active
+358,Jeanne Osman,Individual,Jeanne,Osman,0718170761,783 Jogoo Rd,Apt 97,83709,Kiambu,Embakasi,"Kiambu, Kenya",1,Active
+359,Pauline Ibrahim,Individual,Pauline,Ibrahim,0799599540,756 Kiambu Rd,Apt 14,86525,Mombasa,Jomvu,"Mombasa, Kenya",0,Dormant
+360,[Business] Neptune Lodge,Business,Jean,Odhiambo,0717909403,360 James Gichuru Rd,Apt 90,84164,Tharaka-Nithi,Subukia,"Tharaka-Nithi, Kenya",1,Active
+361,[Business] Boma Retreat,Business,Michel,Hussein,0701680140,698 Moi Ave,Apt 86,16820,Machakos,Kasarani,"Machakos, Kenya",1,Active
+362,[Business] Nyali Hotel,Business,Felicite,Nkurunziza,0708162882,468 Uhuru Hwy,Apt 60,48408,Muranga,Muhoroni,"Muranga, Kenya",1,Active
+363,[Business] Sarova Hotel,Business,Felicite,Ali,0701321887,231 Kenyatta Ave,Apt 55,3103,Nyeri,Subukia,"Nyeri, Kenya",1,Active
+364,Pierrette Mandela,Individual,Pierrette,Mandela,0712736670,828 Donholm Rd,Apt 65,58819,Nyeri,Jomvu,"Nyeri, Kenya",1,Active
+365,Patrick Ochieng,Individual,Patrick,Ochieng,0783021729,697 Riverside Dr,Apt 13,82453,Baringo,Nyando,"Baringo, Kenya",0,Dormant
+366,Marie Munzala,Individual,Marie,Munzala,0797631973,457 Haile Selassie Ave,Apt 52,84951,Mombasa,Kesses,"Mombasa, Kenya",1,Active
+367,Paul Mbeki,Individual,Paul,Mbeki,0721890407,616 Nakuru Blvd,Apt 40,83502,Meru,Kisauni,"Meru, Kenya",1,Active
+368,Michelle Mbeki,Individual,Michelle,Mbeki,0790589492,200 Moi Ave,Apt 32,13566,Mandera,Kisumu Central,"Mandera, Kenya",1,Active
+369,Patricia Ali,Individual,Patricia,Ali,0782136551,403 Mama Ngina St,Apt 81,61294,Baringo,Kisumu West,"Baringo, Kenya",0,Dormant
+370,[Business] Nyali Lodge,Business,Jean,Lumumba,0716273538,116 Nairobi St,Apt 7,57005,Baringo,Subukia,"Baringo, Kenya",1,Active
+371,Patricia Yusuf,Individual,Patricia,Yusuf,0778627971,262 James Gichuru Rd,Apt 16,38627,Garissa,Kesses,"Garissa, Kenya",1,Active
+372,[Business] Safari Inn,Business,Jeanne,Munyuli,0793462507,213 Westlands Rd,Apt 62,20972,Kitui,Nyali,"Kitui, Kenya",1,Active
+373,[Business] Leopard Beach Hotel,Business,Wambui,Omondi,0756415899,708 Riverside Dr,Apt 23,14010,Isiolo,Kasarani,"Isiolo, Kenya",0,Dormant
+374,[Business] Nyali Suites,Business,Otieno,Mutua,0764511263,255 Donholm Rd,Apt 88,53206,Machakos,Muhoroni,"Machakos, Kenya",1,Active
+375,[Business] Ole Sereni Palace,Business,Achieng,Kariuki,0755347786,866 Kisumu Ave,Apt 23,83914,Tharaka-Nithi,Embakasi,"Tharaka-Nithi, Kenya",1,Active
+376,[Business] Sarova Hotel,Business,Michel,Wanyama,0748692075,885 South C Rd,Apt 69,53810,Tharaka-Nithi,Likoni,"Tharaka-Nithi, Kenya",1,Active
+377,[Business] Serena Inn,Business,Michelle,Bizimana,0737891441,493 Runda Dr,Apt 91,85995,Garissa,Kisumu Central,"Garissa, Kenya",0,Dormant
+378,Patricia Mukasa,Individual,Patricia,Mukasa,0789692449,640 Langata Rd,Apt 10,2738,Embu,Eldoret West,"Embu, Kenya",1,Active
+379,Jeanne Kariuki,Individual,Jeanne,Kariuki,0704381371,408 Buruburu Rd,Apt 90,85177,Laikipia,Likoni,"Laikipia, Kenya",1,Active
+380,Kamau Munyua,Individual,Kamau,Munyua,0712149939,356 Thika Rd,Apt 49,87997,Embu,Moiben,"Embu, Kenya",0,Dormant
+381,[Business] Neptune Resort,Business,Pierre,Lumumba,0730954112,799 Eastleigh Rd,Apt 86,84842,Garissa,Kisumu Central,"Garissa, Kenya",1,Active
+382,Michel Nkurunziza,Individual,Michel,Nkurunziza,0762095795,695 Mombasa Rd,Apt 99,87949,Isiolo,Kisauni,"Isiolo, Kenya",1,Active
+383,[Business] Ole Sereni Inn,Business,Michelle,Mandela,0775795397,388 Haile Selassie Ave,Apt 6,14490,Kiambu,Subukia,"Kiambu, Kenya",1,Active
+384,[Business] Swahili Manor,Business,Emmanuelle,Osman,0792590467,368 Buruburu Rd,Apt 56,84181,Isiolo,Embakasi,"Isiolo, Kenya",0,Dormant
+385,[Business] Voyager Retreat,Business,Achieng,Munee,0730395340,706 Moi Ave,Apt 92,78177,Kitui,Muhoroni,"Kitui, Kenya",1,Active
+386,[Business] Hilton Retreat,Business,Marie,Munzala,0773847762,648 James Gichuru Rd,Apt 37,50111,Nairobi,Eldoret West,"Nairobi, Kenya",1,Active
+387,Patricia Lumumba,Individual,Patricia,Lumumba,0702559888,770 Gigiri Rd,Apt 33,29234,Kitui,Nyando,"Kitui, Kenya",0,Dormant
+388,[Business] Voyager Inn,Business,Pierre,Omondi,0723446971,88 Langata Rd,Apt 72,81015,Garissa,Kisumu West,"Garissa, Kenya",1,Active
+389,[Business] Leopard Beach Retreat,Business,Jacqueline,Ochieng,0798739041,446 Riverside Dr,Apt 55,11286,Kitui,Muhoroni,"Kitui, Kenya",1,Active
+390,[Business] Hemingways Hotel,Business,Felix,Kiplagat,0758824012,960 Nakuru Blvd,Apt 84,61869,Tharaka-Nithi,Westlands,"Tharaka-Nithi, Kenya",1,Active
+391,Michelle Munyoki,Individual,Michelle,Munyoki,0773922675,893 Kimathi St,Apt 90,57907,Nairobi,Eldoret East,"Nairobi, Kenya",1,Active
+392,Pierrette Mandela,Individual,Pierrette,Mandela,0795998432,906 Runda Dr,Apt 78,16300,Mandera,Molo,"Mandera, Kenya",1,Active
+393,[Business] Voyager Hotel,Business,Pierrette,Muthoni,0765551782,699 Nairobi St,Apt 12,47939,Garissa,Kisumu West,"Garissa, Kenya",0,Dormant
+394,Michelle Mutua,Individual,Michelle,Mutua,0713201602,277 Kileleshwa Rd,Apt 52,74327,Tharaka-Nithi,Kesses,"Tharaka-Nithi, Kenya",0,Dormant
+395,Patricia Yusuf,Individual,Patricia,Yusuf,0787332511,678 Mbagathi Way,Apt 44,82483,Meru,Kisauni,"Meru, Kenya",0,Dormant
+396,[Business] Swahili Palace,Business,Pierrette,Mugabe,0727717827,793 Embakasi Rd,Apt 48,61383,Mandera,Embakasi,"Mandera, Kenya",1,Active
+397,Jeanne Mbeki,Individual,Jeanne,Mbeki,0778246248,420 Kisumu Ave,Apt 79,2078,Wajir,Embakasi,"Wajir, Kenya",1,Active
+398,Joseph Kabongo,Individual,Joseph,Kabongo,0761934053,343 Kisumu Ave,Apt 99,63363,Garissa,Kisumu Central,"Garissa, Kenya",0,Dormant
+399,Njeri Muthoni,Individual,Njeri,Muthoni,0719275342,89 Runda Dr,Apt 86,78383,Machakos,Naivasha,"Machakos, Kenya",0,Dormant
+400,Kiptoo Kabongo,Individual,Kiptoo,Kabongo,0790781170,343 Ngong Rd,Apt 22,80498,Nakuru,Muhoroni,"Nakuru, Kenya",0,Dormant
+401,Marie Wanyama,Individual,Marie,Wanyama,0709411512,961 State House Rd,Apt 71,11073,Isiolo,Jomvu,"Isiolo, Kenya",1,Active
+402,[Business] Diani Manor,Business,Mwangi,Odhiambo,0772098398,660 Donholm Rd,Apt 78,32212,Machakos,Kisumu East,"Machakos, Kenya",1,Active
+403,[Business] Diani Haven,Business,Mwangi,Njoroge,0713446233,183 James Gichuru Rd,Apt 96,12336,Eldoret,Langata,"Eldoret, Kenya",1,Active
+404,[Business] Tamarind Palace,Business,Amina,Mugabe,0793736399,578 Kilimani Rd,Apt 9,11467,Mombasa,Muhoroni,"Mombasa, Kenya",1,Active
+405,Michel Muthoni,Individual,Michel,Muthoni,0711550570,461 Uhuru Hwy,Apt 29,44736,Mandera,Naivasha,"Mandera, Kenya",0,Dormant
+406,Emmanuelle Yusuf,Individual,Emmanuelle,Yusuf,0704848200,321 Runda Dr,Apt 46,9047,Baringo,Subukia,"Baringo, Kenya",1,Active
+407,Paul Mukasa,Individual,Paul,Mukasa,0788337680,677 Jogoo Rd,Apt 92,29901,Marsabit,Subukia,"Marsabit, Kenya",1,Active
+408,Emmanuel Kabila,Individual,Emmanuel,Kabila,0724583618,221 Parklands Rd,Apt 27,10065,Eldoret,Muhoroni,"Eldoret, Kenya",1,Active
+409,Alaine Mugisha,Individual,Alaine,Mugisha,0765573905,239 South C Rd,Apt 2,57065,Eldoret,Kasarani,"Eldoret, Kenya",1,Active
+410,[Business] PrideInn Manor,Business,Michelle,Ndayishimiye,0708267171,686 Kilimani Rd,Apt 22,52406,Muranga,Likoni,"Muranga, Kenya",1,Active
+411,[Business] Sarova Lodge,Business,Jean,Mutombo,0742907421,441 State House Rd,Apt 19,52362,Kiambu,Subukia,"Kiambu, Kenya",1,Active
+412,[Business] Hemingways Retreat,Business,Jacques,Omondi,0766360427,499 Kenyatta Ave,Apt 97,38878,Mombasa,Eldoret East,"Mombasa, Kenya",0,Dormant
+413,[Business] Severin Manor,Business,Pierrette,Ndayishimiye,0725379091,127 Nairobi St,Apt 41,60895,Meru,Kesses,"Meru, Kenya",1,Active
+414,[Business] Sarova Palace,Business,Pauline,Munyuli,0762468201,4 Kenyatta Ave,Apt 89,11505,Baringo,Nyali,"Baringo, Kenya",0,Dormant
+415,Alain Munyoki,Individual,Alain,Munyoki,0737325861,553 Mombasa Rd,Apt 11,43334,Mandera,Jomvu,"Mandera, Kenya",1,Active
+416,[Business] Sarova Suites,Business,Jacqueline,Zuma,0710929661,911 Nakuru Blvd,Apt 19,38843,Nyeri,Kisumu Central,"Nyeri, Kenya",1,Active
+417,[Business] Leopard Beach Suites,Business,Jeanne,Ochieng,0786417928,654 Riverside Dr,Apt 91,14835,Mombasa,Gilgil,"Mombasa, Kenya",0,Dormant
+418,[Business] Voyager Residences,Business,Patricia,Mugisha,0721194421,912 Kilimani Rd,Apt 13,1514,Marsabit,Turbo,"Marsabit, Kenya",1,Active
+419,Jean Mbeki,Individual,Jean,Mbeki,0717024471,722 Kileleshwa Rd,Apt 81,80741,Nairobi,Kisumu East,"Nairobi, Kenya",1,Active
+420,Claude Kiplagat,Individual,Claude,Kiplagat,0780481136,281 Mama Ngina St,Apt 65,36412,Nyeri,Moiben,"Nyeri, Kenya",0,Dormant
+421,[Business] Serena Palace,Business,Josephine,Mugabe,0703901266,548 Parklands Rd,Apt 67,79160,Meru,Kasarani,"Meru, Kenya",0,Dormant
+422,[Business] Sarova Inn,Business,Jacques,Mugisha,0726650790,836 Runda Dr,Apt 28,10992,Eldoret,Kisumu East,"Eldoret, Kenya",1,Active
+423,Claudine Nkurunziza,Individual,Claudine,Nkurunziza,0776305659,154 Langata Rd,Apt 7,51841,Embu,Moiben,"Embu, Kenya",0,Dormant
+424,[Business] Fairmont Lodge,Business,Claude,Ibrahim,0744487160,90 Kiambu Rd,Apt 49,74514,Kisumu,Likoni,"Kisumu, Kenya",1,Active
+425,Amina Munyui,Individual,Amina,Munyui,0701905269,616 South C Rd,Apt 70,67011,Nakuru,Langata,"Nakuru, Kenya",1,Active
+426,[Business] Villa Rosa Inn,Business,Wanjiku,Bizimana,0781351630,915 Kenyatta Ave,Apt 63,46142,Garissa,Jomvu,"Garissa, Kenya",0,Dormant
+427,Alain Mukasa,Individual,Alain,Mukasa,0710428428,116 Eastleigh Rd,Apt 7,6286,Kiambu,Gilgil,"Kiambu, Kenya",1,Active
+428,Alain Munyoki,Individual,Alain,Munyoki,0749851370,705 South C Rd,Apt 85,8471,Nyeri,Kisauni,"Nyeri, Kenya",0,Dormant
+429,Michelle Mbeki,Individual,Michelle,Mbeki,0703862679,865 Dennis Pritt Rd,Apt 40,2035,Mombasa,Nyando,"Mombasa, Kenya",0,Dormant
+430,[Business] PrideInn Residences,Business,Patrick,Munyua,0721239719,391 South C Rd,Apt 42,41501,Kitui,Kisumu East,"Kitui, Kenya",1,Active
+431,Claudine Zuma,Individual,Claudine,Zuma,0714969121,805 Waiyaki Way,Apt 37,49668,Nakuru,Jomvu,"Nakuru, Kenya",1,Active
+432,Claude Lumumba,Individual,Claude,Lumumba,0780901888,324 Thika Rd,Apt 74,80380,Nairobi,Jomvu,"Nairobi, Kenya",0,Dormant
+433,[Business] Ole Sereni Manor,Business,Mutiso,Zuma,0744794287,6 Parklands Rd,Apt 64,85116,Garissa,Naivasha,"Garissa, Kenya",1,Active
+434,[Business] Serena Haven,Business,Njeri,Malema,0771493121,620 Runda Dr,Apt 22,79052,Nakuru,Likoni,"Nakuru, Kenya",1,Active
+435,Patricia Munyui,Individual,Patricia,Munyui,0729290647,883 South B Rd,Apt 95,17545,Mandera,Moiben,"Mandera, Kenya",1,Active
+436,[Business] Nyali Lodge,Business,Pierrette,Wanyama,0778260026,365 South B Rd,Apt 80,7545,Marsabit,Nyali,"Marsabit, Kenya",0,Dormant
+437,Wambui Kiplagat,Individual,Wambui,Kiplagat,0799703325,443 Karen Rd,Apt 25,60499,Nairobi,Langata,"Nairobi, Kenya",1,Active
+438,[Business] Nyali Haven,Business,Jacqueline,Munywe,0739964814,70 Nairobi St,Apt 22,34279,Machakos,Kasarani,"Machakos, Kenya",1,Active
+439,[Business] Hilton Retreat,Business,Alaine,Mbeki,0737475946,399 Kimathi St,Apt 70,28289,Meru,Kisumu East,"Meru, Kenya",1,Active
+440,Josephine Hussein,Individual,Josephine,Hussein,0780659312,176 Tom Mboya St,Apt 93,28697,Nyeri,Molo,"Nyeri, Kenya",1,Active
+441,[Business] Villa Rosa Resort,Business,Wambui,Mbeki,0715013944,670 Uhuru Hwy,Apt 83,19326,Laikipia,Nyando,"Laikipia, Kenya",1,Active
+442,Felicite Ochieng,Individual,Felicite,Ochieng,0769876503,489 Kimathi St,Apt 20,27707,Tharaka-Nithi,Kisumu East,"Tharaka-Nithi, Kenya",0,Dormant
+443,Mwangi Mutua,Individual,Mwangi,Mutua,0775456021,169 Eldoret Ln,Apt 22,3496,Mandera,Eldoret West,"Mandera, Kenya",1,Active
+444,Njeri Omondi,Individual,Njeri,Omondi,0750642291,616 Tom Mboya St,Apt 18,38720,Garissa,Muhoroni,"Garissa, Kenya",1,Active
+445,Pierrette Ibrahim,Individual,Pierrette,Ibrahim,0740839819,355 Runda Dr,Apt 8,35021,Marsabit,Kisumu West,"Marsabit, Kenya",1,Active
+446,[Business] Sarova Suites,Business,Kamau,Omar,0758580141,76 Langata Rd,Apt 2,47081,Kitui,Kisumu Central,"Kitui, Kenya",0,Dormant
+447,[Business] Severin Suites,Business,Jean,Malema,0739164847,585 Karen Rd,Apt 24,30504,Mandera,Naivasha,"Mandera, Kenya",1,Active
+448,Patrick Omondi,Individual,Patrick,Omondi,0741387816,445 Langata Rd,Apt 79,82808,Mombasa,Kisumu East,"Mombasa, Kenya",1,Active
+449,[Business] Nyali Hotel,Business,Pauline,Wanyama,0730630857,666 Thika Rd,Apt 17,42010,Garissa,Kisauni,"Garissa, Kenya",1,Active
+450,Jacques Malema,Individual,Jacques,Malema,0776944634,506 Karen Rd,Apt 87,16361,Tharaka-Nithi,Embakasi,"Tharaka-Nithi, Kenya",1,Active
+451,[Business] Hilton Palace,Business,Alaine,Munywe,0792278871,392 Dennis Pritt Rd,Apt 32,47422,Machakos,Moiben,"Machakos, Kenya",0,Dormant
+452,Claude Mugabe,Individual,Claude,Mugabe,0790793398,991 Riverside Dr,Apt 1,34942,Mombasa,Nyali,"Mombasa, Kenya",0,Dormant
+453,[Business] Safari Lodge,Business,Paul,Hassan,0756152035,652 Moi Ave,Apt 52,87169,Nyeri,Kisauni,"Nyeri, Kenya",1,Active
+454,[Business] Swahili Resort,Business,Otieno,Mandela,0722860703,146 Haile Selassie Ave,Apt 83,11282,Garissa,Turbo,"Garissa, Kenya",0,Dormant
+455,[Business] Hilton Inn,Business,Kiptoo,Odhiambo,0772851789,120 Dennis Pritt Rd,Apt 29,15823,Tharaka-Nithi,Nyando,"Tharaka-Nithi, Kenya",0,Dormant
+456,[Business] PrideInn Retreat,Business,Pauline,Kariuki,0780158437,484 Langata Rd,Apt 74,34997,Kisumu,Turbo,"Kisumu, Kenya",1,Active
+457,Pauline Mutua,Individual,Pauline,Mutua,0721376930,852 Donholm Rd,Apt 76,44718,Muranga,Eldoret East,"Muranga, Kenya",1,Active
+458,[Business] Swahili Resort,Business,Josephine,Mohammed,0709813333,556 Kilimani Rd,Apt 65,49954,Laikipia,Kesses,"Laikipia, Kenya",1,Active
+459,[Business] Diani Haven,Business,Emmanuelle,Mandela,0705199914,765 Eastleigh Rd,Apt 84,69778,Marsabit,Gilgil,"Marsabit, Kenya",1,Active
+460,Wanjiku Omar,Individual,Wanjiku,Omar,0772170278,522 Jogoo Rd,Apt 86,83970,Mombasa,Changamwe,"Mombasa, Kenya",1,Active
+461,Pierrette Ali,Individual,Pierrette,Ali,0788143774,745 Lavington Rd,Apt 62,31690,Mombasa,Likoni,"Mombasa, Kenya",0,Dormant
+462,Josephine Bizimana,Individual,Josephine,Bizimana,0782327261,28 Mombasa Rd,Apt 62,76829,Isiolo,Kisumu West,"Isiolo, Kenya",1,Active
+463,Wanjiku Munzala,Individual,Wanjiku,Munzala,0704417305,602 Nairobi St,Apt 97,85484,Embu,Nakuru Town,"Embu, Kenya",1,Active
+464,[Business] InterContinental Haven,Business,Emmanuelle,Ibrahim,0791768382,987 Lavington Rd,Apt 61,54311,Meru,Molo,"Meru, Kenya",0,Dormant
+465,[Business] Sarova Residences,Business,Wambui,Mbeki,0742664913,989 Embakasi Rd,Apt 6,67296,Tharaka-Nithi,Kisumu Central,"Tharaka-Nithi, Kenya",0,Dormant
+466,[Business] Nyali Hotel,Business,Joseph,Njoroge,0792387917,310 Mombasa Rd,Apt 72,41751,Laikipia,Gilgil,"Laikipia, Kenya",0,Dormant
+467,[Business] Tamarind Resort,Business,Patricia,Ochieng,0767550868,165 Buruburu Rd,Apt 49,88699,Kisumu,Molo,"Kisumu, Kenya",0,Dormant
+468,[Business] Severin Resort,Business,Achieng,Malema,0778040354,913 Kileleshwa Rd,Apt 76,89347,Muranga,Eldoret East,"Muranga, Kenya",1,Active
+469,[Business] Tamarind Haven,Business,Alaine,Kabongo,0709097887,588 Haile Selassie Ave,Apt 84,17408,Eldoret,Likoni,"Eldoret, Kenya",0,Dormant
+470,[Business] Hemingways Palace,Business,Wambui,Njoroge,0747176839,745 Riverside Dr,Apt 75,11377,Machakos,Westlands,"Machakos, Kenya",0,Dormant
+471,Wanjiku Nkurunziza,Individual,Wanjiku,Nkurunziza,0725819552,324 Runda Dr,Apt 57,58867,Isiolo,Eldoret West,"Isiolo, Kenya",0,Dormant
+472,[Business] Tamarind Residences,Business,Marie,Muthoni,0741524123,185 Mbagathi Way,Apt 37,37025,Marsabit,Subukia,"Marsabit, Kenya",1,Active
+473,[Business] PrideInn Resort,Business,Njeri,Osman,0732280169,529 Nairobi St,Apt 19,24559,Machakos,Nakuru Town,"Machakos, Kenya",0,Dormant
+474,[Business] Baobab Inn,Business,Wambui,Odhiambo,0709806775,279 South C Rd,Apt 6,54657,Mandera,Nyali,"Mandera, Kenya",1,Active
+475,Amina Mukasa,Individual,Amina,Mukasa,0712931077,592 Nakuru Blvd,Apt 5,17777,Meru,Dagoretti,"Meru, Kenya",0,Dormant
+476,Jeanne Mbeki,Individual,Jeanne,Mbeki,0716394766,93 Haile Selassie Ave,Apt 48,46158,Kitui,Changamwe,"Kitui, Kenya",1,Active
+477,Michelle Kiplagat,Individual,Michelle,Kiplagat,0724391469,920 Kenyatta Ave,Apt 10,16226,Tharaka-Nithi,Molo,"Tharaka-Nithi, Kenya",1,Active
+478,Jean Ibrahim,Individual,Jean,Ibrahim,0746110278,471 Kilimani Rd,Apt 80,42177,Laikipia,Eldoret East,"Laikipia, Kenya",1,Active
+479,Wambui Mwangi,Individual,Wambui,Mwangi,0745488351,673 Mombasa Rd,Apt 30,15317,Nyeri,Kisauni,"Nyeri, Kenya",0,Dormant
+480,[Business] Hemingways Inn,Business,Patricia,Ochieng,0731453881,966 Parklands Rd,Apt 69,40827,Garissa,Moiben,"Garissa, Kenya",0,Dormant
+481,Pierre Mbeki,Individual,Pierre,Mbeki,0793248286,68 Kileleshwa Rd,Apt 9,79671,Nairobi,Likoni,"Nairobi, Kenya",0,Dormant
+482,Jean Mbeki,Individual,Jean,Mbeki,0724471191,950 Moi Ave,Apt 76,11833,Baringo,Kesses,"Baringo, Kenya",1,Active
+483,[Business] Hemingways Haven,Business,Felicite,Nkurunziza,0704413190,350 Thika Rd,Apt 43,25440,Kiambu,Naivasha,"Kiambu, Kenya",0,Dormant
+484,Michelle Ndayishimiye,Individual,Michelle,Ndayishimiye,0791558484,364 Thika Rd,Apt 45,75049,Isiolo,Moiben,"Isiolo, Kenya",0,Dormant
+485,[Business] Safari Resort,Business,Otieno,Adan,0707097784,244 Tom Mboya St,Apt 39,46066,Muranga,Turbo,"Muranga, Kenya",1,Active
+486,Kamau Mbeki,Individual,Kamau,Mbeki,0716755726,270 Haile Selassie Ave,Apt 87,6407,Laikipia,Nyali,"Laikipia, Kenya",1,Active
+487,[Business] Serena Manor,Business,Paul,Omondi,0700278808,655 Buruburu Rd,Apt 3,49641,Nairobi,Eldoret West,"Nairobi, Kenya",0,Dormant
+488,Njeri Mugabe,Individual,Njeri,Mugabe,0790321378,622 Nakuru Blvd,Apt 46,37849,Baringo,Kasarani,"Baringo, Kenya",1,Active
+489,Marie Abdi,Individual,Marie,Abdi,0783582350,15 Mombasa Rd,Apt 79,28582,Eldoret,Kisauni,"Eldoret, Kenya",1,Active
+490,[Business] Severin Resort,Business,Alain,Abdi,0706719449,81 South C Rd,Apt 84,5430,Kiambu,Kisumu East,"Kiambu, Kenya",0,Dormant
+491,[Business] Neptune Inn,Business,Jeanne,Munyoki,0764986740,935 Karen Rd,Apt 37,82193,Muranga,Kisumu West,"Muranga, Kenya",0,Dormant
+492,Pauline Odhiambo,Individual,Pauline,Odhiambo,0740147209,476 Waiyaki Way,Apt 93,45654,Meru,Kasarani,"Meru, Kenya",0,Dormant
+493,[Business] Leopard Beach Palace,Business,Kiptoo,Mbeki,0722241101,433 Kileleshwa Rd,Apt 67,86588,Kitui,Embakasi,"Kitui, Kenya",1,Active
+494,Pierrette Odhiambo,Individual,Pierrette,Odhiambo,0787629645,61 Karen Rd,Apt 5,77323,Isiolo,Nakuru Town,"Isiolo, Kenya",0,Dormant
+495,Marie Munywe,Individual,Marie,Munywe,0744767233,760 State House Rd,Apt 17,11131,Embu,Kasarani,"Embu, Kenya",0,Dormant
+496,Alain Mutombo,Individual,Alain,Mutombo,0726452259,623 Kiambu Rd,Apt 69,11762,Mombasa,Eldoret East,"Mombasa, Kenya",1,Active
+497,Claude Kagame,Individual,Claude,Kagame,0754121337,433 Nakuru Blvd,Apt 9,2469,Wajir,Molo,"Wajir, Kenya",0,Dormant
+498,[Business] Boma Inn,Business,Kamau,Mugabe,0746972151,685 Waiyaki Way,Apt 45,2363,Muranga,Nyando,"Muranga, Kenya",1,Active
+499,[Business] Sarova Hotel,Business,Marie,Munyoki,0743458830,536 Kimathi St,Apt 82,84059,Marsabit,Jomvu,"Marsabit, Kenya",0,Dormant
+500,Njeri Mutombo,Individual,Njeri,Mutombo,0773248456,583 Runda Dr,Apt 58,11552,Marsabit,Gilgil,"Marsabit, Kenya",1,Active
+501,[Business] Neptune Hotel,Business,Jacques,Mbeki,0780367070,811 Moi Ave,Apt 48,16306,Isiolo,Kisauni,"Isiolo, Kenya",1,Active
+502,[Business] Ole Sereni Lodge,Business,Marie,Mutombo,0787147205,393 Parklands Rd,Apt 69,67888,Mombasa,Kisauni,"Mombasa, Kenya",1,Active
+503,Kiptoo Mugisha,Individual,Kiptoo,Mugisha,0727316789,81 Jogoo Rd,Apt 39,84088,Kitui,Jomvu,"Kitui, Kenya",1,Active
+504,[Business] Voyager Retreat,Business,Achieng,Bizimana,0741100952,897 Haile Selassie Ave,Apt 15,24093,Isiolo,Jomvu,"Isiolo, Kenya",1,Active
+505,[Business] Villa Rosa Retreat,Business,Pierre,Mbeki,0767533686,233 Westlands Rd,Apt 43,9234,Kiambu,Westlands,"Kiambu, Kenya",0,Dormant
+506,[Business] Voyager Retreat,Business,Paul,Omar,0773096502,144 Jogoo Rd,Apt 34,62669,Kisumu,Nyando,"Kisumu, Kenya",1,Active
+507,[Business] Hilton Palace,Business,Mwangi,Omar,0799741965,318 Buruburu Rd,Apt 60,90564,Meru,Kasarani,"Meru, Kenya",1,Active
+508,[Business] Sarova Residences,Business,Pierrette,Ahmed,0776801184,69 Haile Selassie Ave,Apt 15,6751,Laikipia,Kisumu East,"Laikipia, Kenya",0,Dormant
+509,[Business] Villa Rosa Manor,Business,Claudine,Adan,0796023491,627 Lavington Rd,Apt 11,83929,Kiambu,Eldoret West,"Kiambu, Kenya",1,Active
+510,Pierrette Mbeki,Individual,Pierrette,Mbeki,0788663695,892 Embakasi Rd,Apt 59,19359,Marsabit,Gilgil,"Marsabit, Kenya",1,Active
+511,Claudine Mugisha,Individual,Claudine,Mugisha,0780400549,691 Embakasi Rd,Apt 58,6269,Meru,Kisumu West,"Meru, Kenya",1,Active
+512,Michelle Kabila,Individual,Michelle,Kabila,0713824030,87 Waiyaki Way,Apt 100,50639,Kitui,Kesses,"Kitui, Kenya",1,Active
+513,Josephine Mutua,Individual,Josephine,Mutua,0770126974,54 Jogoo Rd,Apt 88,44395,Laikipia,Kasarani,"Laikipia, Kenya",0,Dormant
+514,Kamau Malema,Individual,Kamau,Malema,0792007015,580 Mbagathi Way,Apt 19,56536,Muranga,Westlands,"Muranga, Kenya",1,Active
+515,Claude Mutua,Individual,Claude,Mutua,0717461340,412 Thika Rd,Apt 12,82691,Kitui,Kisumu East,"Kitui, Kenya",1,Active
+516,[Business] Tamarind Residences,Business,Jacques,Munyua,0789941230,703 Moi Ave,Apt 18,85807,Mombasa,Embakasi,"Mombasa, Kenya",1,Active
+517,[Business] PrideInn Suites,Business,Kiptoo,Munyao,0715017490,211 Kileleshwa Rd,Apt 95,9043,Nakuru,Moiben,"Nakuru, Kenya",1,Active
+518,Achieng Munyua,Individual,Achieng,Munyua,0787873529,290 Karen Rd,Apt 65,73811,Machakos,Kisauni,"Machakos, Kenya",1,Active
+519,[Business] Diani Hotel,Business,Patricia,Ahmed,0785944593,863 Tom Mboya St,Apt 81,58782,Marsabit,Turbo,"Marsabit, Kenya",1,Active
+520,[Business] Fairmont Resort,Business,Wambui,Kabongo,0703631895,718 Runda Dr,Apt 26,54065,Tharaka-Nithi,Subukia,"Tharaka-Nithi, Kenya",1,Active
+521,[Business] InterContinental Haven,Business,Michelle,Lumumba,0761195209,483 South C Rd,Apt 45,51242,Wajir,Muhoroni,"Wajir, Kenya",0,Dormant
+522,Paul Mbeki,Individual,Paul,Mbeki,0746619102,244 Moi Ave,Apt 42,4895,Mombasa,Subukia,"Mombasa, Kenya",1,Active
+523,Otieno Ibrahim,Individual,Otieno,Ibrahim,0739535348,415 Nairobi St,Apt 16,59682,Nyeri,Eldoret West,"Nyeri, Kenya",1,Active
+524,Njeri Kagame,Individual,Njeri,Kagame,0799213503,889 State House Rd,Apt 89,16549,Nakuru,Nakuru Town,"Nakuru, Kenya",1,Active
+525,[Business] Safari Retreat,Business,Felicite,Zuma,0773523966,273 Jogoo Rd,Apt 90,84691,Kitui,Nyando,"Kitui, Kenya",1,Active
+526,Otieno Ahmed,Individual,Otieno,Ahmed,0791206508,812 Kilimani Rd,Apt 69,47258,Machakos,Nyando,"Machakos, Kenya",1,Active
+527,Njeri Malema,Individual,Njeri,Malema,0792084011,283 Mbagathi Way,Apt 100,71501,Muranga,Eldoret West,"Muranga, Kenya",0,Dormant
+528,Njeri Wanyama,Individual,Njeri,Wanyama,0799891406,926 South C Rd,Apt 92,62807,Nyeri,Eldoret West,"Nyeri, Kenya",0,Dormant
+529,Mwangi Ahmed,Individual,Mwangi,Ahmed,0771239814,590 Embakasi Rd,Apt 75,67218,Kitui,Jomvu,"Kitui, Kenya",1,Active
+530,[Business] Serena Lodge,Business,Mwangi,Munee,0719258580,147 Eastleigh Rd,Apt 38,57939,Baringo,Westlands,"Baringo, Kenya",1,Active
+531,Patricia Abdullahi,Individual,Patricia,Abdullahi,0795212760,48 Ngong Rd,Apt 55,20481,Wajir,Kisumu Central,"Wajir, Kenya",1,Active
+532,[Business] InterContinental Hotel,Business,Wanjiku,Malema,0759278416,971 Kilimani Rd,Apt 55,66672,Eldoret,Kisumu Central,"Eldoret, Kenya",1,Active
+533,[Business] Serena Haven,Business,Emmanuel,Munyua,0728139353,808 Westlands Rd,Apt 86,80088,Marsabit,Westlands,"Marsabit, Kenya",1,Active
+534,[Business] Nyali Manor,Business,Mwangi,Munyuli,0770142831,741 Thika Rd,Apt 23,85852,Meru,Westlands,"Meru, Kenya",0,Dormant
+535,Alain Munyao,Individual,Alain,Munyao,0768336218,129 Limuru Rd,Apt 49,20795,Laikipia,Nakuru Town,"Laikipia, Kenya",0,Dormant
+536,Michelle Mandela,Individual,Michelle,Mandela,0706266697,8 Jogoo Rd,Apt 84,44967,Laikipia,Kisumu West,"Laikipia, Kenya",0,Dormant
+537,Pierre Munee,Individual,Pierre,Munee,0774643918,287 Embakasi Rd,Apt 58,88346,Baringo,Muhoroni,"Baringo, Kenya",1,Active
+538,[Business] Boma Residences,Business,Achieng,Kabongo,0779723245,830 Kiambu Rd,Apt 23,30070,Kiambu,Kisauni,"Kiambu, Kenya",1,Active
+539,Michel Kiplagat,Individual,Michel,Kiplagat,0716321337,275 Nakuru Blvd,Apt 85,81710,Laikipia,Nyali,"Laikipia, Kenya",0,Dormant
+540,[Business] Safari Retreat,Business,Achieng,Mandela,0744183841,680 Westlands Rd,Apt 52,78360,Embu,Gilgil,"Embu, Kenya",1,Active
+541,[Business] Safari Suites,Business,Emmanuel,Ochieng,0715949748,635 Dennis Pritt Rd,Apt 3,12037,Tharaka-Nithi,Kisumu East,"Tharaka-Nithi, Kenya",1,Active
+542,Joseph Munyoki,Individual,Joseph,Munyoki,0744443818,57 Embakasi Rd,Apt 71,85390,Nakuru,Likoni,"Nakuru, Kenya",0,Dormant
+543,[Business] Hilton Hotel,Business,Michelle,Kariuki,0779513949,35 Limuru Rd,Apt 90,75737,Kisumu,Subukia,"Kisumu, Kenya",0,Dormant
+544,Michel Munee,Individual,Michel,Munee,0722768420,848 Eldoret Ln,Apt 50,83202,Meru,Likoni,"Meru, Kenya",1,Active
+545,[Business] PrideInn Suites,Business,Wanjiku,Kiplagat,0745670866,268 Buruburu Rd,Apt 13,76103,Nyeri,Moiben,"Nyeri, Kenya",1,Active
+546,[Business] Fairmont Manor,Business,Joseph,Mbeki,0710228643,719 Koinange St,Apt 51,58542,Mombasa,Eldoret East,"Mombasa, Kenya",1,Active
+547,Alain Hussein,Individual,Alain,Hussein,0756302765,589 Mombasa Rd,Apt 20,13304,Mandera,Moiben,"Mandera, Kenya",1,Active
+548,[Business] Swahili Retreat,Business,Paul,Adan,0789671630,669 South C Rd,Apt 40,58638,Isiolo,Changamwe,"Isiolo, Kenya",1,Active
+549,Mutiso Kariuki,Individual,Mutiso,Kariuki,0762224990,904 Buruburu Rd,Apt 63,84196,Baringo,Nyando,"Baringo, Kenya",0,Dormant
+550,Wambui Ibrahim,Individual,Wambui,Ibrahim,0744104586,442 Gigiri Rd,Apt 90,85717,Wajir,Eldoret West,"Wajir, Kenya",0,Dormant
+551,Jeanne Munzala,Individual,Jeanne,Munzala,0738508976,197 Mbagathi Way,Apt 21,33301,Isiolo,Gilgil,"Isiolo, Kenya",0,Dormant
+552,[Business] PrideInn Lodge,Business,Njeri,Zuma,0709343019,653 Ngong Rd,Apt 31,37269,Embu,Langata,"Embu, Kenya",0,Dormant
+553,[Business] Hemingways Palace,Business,Jean,Ahmed,0725372252,542 Donholm Rd,Apt 36,55571,Garissa,Kesses,"Garissa, Kenya",1,Active
+554,Pierrette Mukasa,Individual,Pierrette,Mukasa,0724166950,868 Westlands Rd,Apt 79,86889,Baringo,Eldoret East,"Baringo, Kenya",1,Active
+555,Kamau Munyui,Individual,Kamau,Munyui,0732097986,760 Kilimani Rd,Apt 31,48868,Tharaka-Nithi,Westlands,"Tharaka-Nithi, Kenya",0,Dormant
+556,Njeri Ahmed,Individual,Njeri,Ahmed,0788757783,688 Kileleshwa Rd,Apt 74,54349,Kisumu,Muhoroni,"Kisumu, Kenya",1,Active
+557,Alaine Abdi,Individual,Alaine,Abdi,0725526740,350 Kimathi St,Apt 68,70079,Embu,Nakuru Town,"Embu, Kenya",0,Dormant
+558,[Business] Diani Inn,Business,Alain,Munyoki,0794987345,834 Donholm Rd,Apt 5,1499,Isiolo,Kesses,"Isiolo, Kenya",1,Active
+559,Mwangi Malema,Individual,Mwangi,Malema,0743437100,100 Ngong Rd,Apt 51,69998,Baringo,Kisumu Central,"Baringo, Kenya",1,Active
+560,Amina Njoroge,Individual,Amina,Njoroge,0704280864,23 Lavington Rd,Apt 48,3088,Mandera,Nakuru Town,"Mandera, Kenya",0,Dormant
+561,Njeri Osman,Individual,Njeri,Osman,0765774877,555 Waiyaki Way,Apt 29,29845,Baringo,Langata,"Baringo, Kenya",0,Dormant
+562,[Business] Ole Sereni Manor,Business,Pierre,Mandela,0792693295,481 Lavington Rd,Apt 97,69251,Wajir,Kisumu West,"Wajir, Kenya",0,Dormant
+563,[Business] Villa Rosa Inn,Business,Emmanuelle,Munyuli,0746312970,998 Jogoo Rd,Apt 12,58156,Kitui,Kisauni,"Kitui, Kenya",0,Dormant
+564,[Business] PrideInn Retreat,Business,Mutiso,Osman,0736500799,960 Karen Rd,Apt 51,80365,Eldoret,Nyali,"Eldoret, Kenya",0,Dormant
+565,Wambui Munyao,Individual,Wambui,Munyao,0752285301,213 Mbagathi Way,Apt 91,13437,Eldoret,Langata,"Eldoret, Kenya",1,Active
+566,[Business] Neptune Lodge,Business,Emmanuel,Yusuf,0768982964,770 Mama Ngina St,Apt 100,76817,Muranga,Eldoret West,"Muranga, Kenya",1,Active
+567,Pierre Adan,Individual,Pierre,Adan,0750688480,378 Gigiri Rd,Apt 27,47045,Meru,Jomvu,"Meru, Kenya",0,Dormant
+568,[Business] Ole Sereni Residences,Business,Pierrette,Zuma,0781882599,585 Eldoret Ln,Apt 23,81158,Garissa,Molo,"Garissa, Kenya",0,Dormant
+569,Mwangi Kabila,Individual,Mwangi,Kabila,0726945953,622 Langata Rd,Apt 61,11409,Baringo,Kisumu Central,"Baringo, Kenya",1,Active
+570,[Business] Tamarind Hotel,Business,Mutiso,Munyao,0740579762,794 Nairobi St,Apt 34,89582,Tharaka-Nithi,Kisumu Central,"Tharaka-Nithi, Kenya",0,Dormant
+571,[Business] Neptune Palace,Business,Patricia,Abdi,0727801482,946 Westlands Rd,Apt 2,78694,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+572,[Business] Boma Residences,Business,Josephine,Mutua,0797080689,551 Buruburu Rd,Apt 84,24164,Marsabit,Jomvu,"Marsabit, Kenya",1,Active
+573,Paul Munee,Individual,Paul,Munee,0787286298,519 Mombasa Rd,Apt 8,78198,Tharaka-Nithi,Turbo,"Tharaka-Nithi, Kenya",1,Active
+574,[Business] Safari Lodge,Business,Kamau,Ibrahim,0709380220,190 Nakuru Blvd,Apt 60,51475,Tharaka-Nithi,Naivasha,"Tharaka-Nithi, Kenya",1,Active
+575,Claudine Abdullahi,Individual,Claudine,Abdullahi,0713330398,649 Kenyatta Ave,Apt 27,37817,Mandera,Turbo,"Mandera, Kenya",0,Dormant
+576,Wanjiku Ndayishimiye,Individual,Wanjiku,Ndayishimiye,0711047415,945 Riverside Dr,Apt 22,74909,Embu,Langata,"Embu, Kenya",0,Dormant
+577,[Business] Boma Residences,Business,Josephine,Mandela,0798835289,286 Thika Rd,Apt 56,53057,Embu,Changamwe,"Embu, Kenya",0,Dormant
+578,Claudine Munzala,Individual,Claudine,Munzala,0712878831,3 Dennis Pritt Rd,Apt 71,57554,Mombasa,Embakasi,"Mombasa, Kenya",0,Dormant
+579,Amina Mbeki,Individual,Amina,Mbeki,0746759057,141 Gigiri Rd,Apt 90,7063,Nyeri,Likoni,"Nyeri, Kenya",1,Active
+580,[Business] Diani Lodge,Business,Jeanne,Hassan,0738129645,76 Karen Rd,Apt 52,66611,Mandera,Moiben,"Mandera, Kenya",1,Active
+581,Alain Mohammed,Individual,Alain,Mohammed,0763582315,554 Kenyatta Ave,Apt 60,56948,Marsabit,Molo,"Marsabit, Kenya",1,Active
+582,Jean Ibrahim,Individual,Jean,Ibrahim,0766200870,700 Kisumu Ave,Apt 38,55512,Muranga,Kisauni,"Muranga, Kenya",1,Active
+583,[Business] Sarova Manor,Business,Pierrette,Bizimana,0754193379,937 Uhuru Hwy,Apt 73,53856,Machakos,Likoni,"Machakos, Kenya",0,Dormant
+584,Achieng Munyui,Individual,Achieng,Munyui,0700843594,840 Runda Dr,Apt 3,31097,Tharaka-Nithi,Gilgil,"Tharaka-Nithi, Kenya",1,Active
+585,Kiptoo Munee,Individual,Kiptoo,Munee,0763861731,215 South B Rd,Apt 69,59963,Garissa,Westlands,"Garissa, Kenya",1,Active
+586,[Business] Diani Hotel,Business,Patrick,Lumumba,0776691086,550 Thika Rd,Apt 85,22684,Tharaka-Nithi,Naivasha,"Tharaka-Nithi, Kenya",0,Dormant
+587,Claudine Munyui,Individual,Claudine,Munyui,0734331606,651 Karen Rd,Apt 46,73471,Embu,Gilgil,"Embu, Kenya",1,Active
+588,Felix Kabongo,Individual,Felix,Kabongo,0793577825,958 Embakasi Rd,Apt 77,37540,Muranga,Changamwe,"Muranga, Kenya",1,Active
+589,Emmanuelle Hussein,Individual,Emmanuelle,Hussein,0778108739,615 Kiambu Rd,Apt 16,70832,Mandera,Changamwe,"Mandera, Kenya",0,Dormant
+590,[Business] Ole Sereni Hotel,Business,Jean,Ochieng,0721944845,959 Koinange St,Apt 20,12631,Baringo,Kasarani,"Baringo, Kenya",1,Active
+591,[Business] Leopard Beach Resort,Business,Marie,Wanyama,0776830581,595 Kisumu Ave,Apt 96,63596,Eldoret,Kesses,"Eldoret, Kenya",1,Active
+592,Jeanne Njoroge,Individual,Jeanne,Njoroge,0773822529,649 Waiyaki Way,Apt 96,77902,Tharaka-Nithi,Jomvu,"Tharaka-Nithi, Kenya",0,Dormant
+593,Claudine Ndayishimiye,Individual,Claudine,Ndayishimiye,0786312774,703 South C Rd,Apt 91,67983,Tharaka-Nithi,Muhoroni,"Tharaka-Nithi, Kenya",1,Active
+594,[Business] Fairmont Inn,Business,Alaine,Mandela,0717931594,527 Parklands Rd,Apt 42,63826,Kisumu,Kisumu West,"Kisumu, Kenya",1,Active
+595,[Business] Baobab Manor,Business,Felix,Kabila,0709723951,582 Kimathi St,Apt 80,32626,Machakos,Kisumu West,"Machakos, Kenya",0,Dormant
+596,[Business] InterContinental Hotel,Business,Otieno,Wanyama,0796478012,720 Kilimani Rd,Apt 24,37711,Eldoret,Westlands,"Eldoret, Kenya",1,Active
+597,[Business] Diani Suites,Business,Njeri,Ahmed,0770435882,516 Kenyatta Ave,Apt 36,42105,Garissa,Eldoret East,"Garissa, Kenya",1,Active
+598,[Business] Boma Hotel,Business,Joseph,Mbeki,0749977080,505 Buruburu Rd,Apt 67,77925,Kitui,Dagoretti,"Kitui, Kenya",1,Active
+599,[Business] Boma Lodge,Business,Michelle,Munzala,0755441099,274 Waiyaki Way,Apt 13,80905,Garissa,Muhoroni,"Garissa, Kenya",1,Active
+600,Mutiso Ahmed,Individual,Mutiso,Ahmed,0730125374,492 Riverside Dr,Apt 51,22838,Kitui,Embakasi,"Kitui, Kenya",1,Active
+601,[Business] Leopard Beach Palace,Business,Claude,Zuma,0737372888,264 Ngong Rd,Apt 80,68659,Nyeri,Nakuru Town,"Nyeri, Kenya",1,Active
+602,[Business] Serena Haven,Business,Jacqueline,Ibrahim,0718469564,762 Karen Rd,Apt 37,81942,Nakuru,Nyando,"Nakuru, Kenya",1,Active
+603,[Business] PrideInn Lodge,Business,Michelle,Wanyama,0783243994,261 Eastleigh Rd,Apt 15,23457,Baringo,Subukia,"Baringo, Kenya",1,Active
+604,Michelle Munyua,Individual,Michelle,Munyua,0793803015,550 Uhuru Hwy,Apt 83,56357,Nairobi,Jomvu,"Nairobi, Kenya",0,Dormant
+605,[Business] Swahili Suites,Business,Jacqueline,Adan,0778315770,133 Donholm Rd,Apt 60,56831,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+606,[Business] Hilton Residences,Business,Claude,Muthoni,0786594615,839 Westlands Rd,Apt 86,22636,Mandera,Nyando,"Mandera, Kenya",0,Dormant
+607,[Business] Safari Residences,Business,Alaine,Odhiambo,0700192082,103 Parklands Rd,Apt 99,82522,Kisumu,Westlands,"Kisumu, Kenya",1,Active
+608,Mwangi Munyua,Individual,Mwangi,Munyua,0732056036,252 Kimathi St,Apt 76,16981,Mombasa,Likoni,"Mombasa, Kenya",0,Dormant
+609,[Business] Sarova Retreat,Business,Emmanuelle,Kiplagat,0790719560,416 Langata Rd,Apt 36,52163,Wajir,Dagoretti,"Wajir, Kenya",0,Dormant
+610,Njeri Ndayishimiye,Individual,Njeri,Ndayishimiye,0779537575,954 Tom Mboya St,Apt 88,82977,Tharaka-Nithi,Muhoroni,"Tharaka-Nithi, Kenya",0,Dormant
+611,[Business] Sarova Inn,Business,Alain,Mbeki,0704341259,283 Donholm Rd,Apt 38,10528,Kitui,Jomvu,"Kitui, Kenya",1,Active
+612,Njeri Munyui,Individual,Njeri,Munyui,0747332450,298 Kisumu Ave,Apt 92,6575,Nakuru,Kisumu Central,"Nakuru, Kenya",0,Dormant
+613,[Business] Voyager Residences,Business,Michel,Omondi,0799225152,604 Westlands Rd,Apt 96,9361,Baringo,Kasarani,"Baringo, Kenya",0,Dormant
+614,Kamau Ali,Individual,Kamau,Ali,0789294749,635 Jogoo Rd,Apt 11,83495,Baringo,Changamwe,"Baringo, Kenya",0,Dormant
+615,[Business] Swahili Haven,Business,Alaine,Omar,0720347075,439 Eastleigh Rd,Apt 88,86939,Tharaka-Nithi,Turbo,"Tharaka-Nithi, Kenya",1,Active
+616,[Business] Tamarind Suites,Business,Amina,Munywe,0771666205,384 Buruburu Rd,Apt 90,60150,Nakuru,Kisumu East,"Nakuru, Kenya",1,Active
+617,[Business] Voyager Resort,Business,Marie,Abdullahi,0782640590,223 Kisumu Ave,Apt 17,6955,Eldoret,Nakuru Town,"Eldoret, Kenya",1,Active
+618,[Business] Leopard Beach Residences,Business,Claude,Mutombo,0744089129,685 Mama Ngina St,Apt 70,56773,Meru,Changamwe,"Meru, Kenya",1,Active
+619,[Business] Nyali Manor,Business,Kamau,Yusuf,0770768943,498 Waiyaki Way,Apt 18,19696,Marsabit,Muhoroni,"Marsabit, Kenya",0,Dormant
+620,Paul Zuma,Individual,Paul,Zuma,0742446369,437 Donholm Rd,Apt 7,30215,Nyeri,Dagoretti,"Nyeri, Kenya",1,Active
+621,Jacqueline Mandela,Individual,Jacqueline,Mandela,0715591046,369 Kileleshwa Rd,Apt 73,63136,Nyeri,Langata,"Nyeri, Kenya",0,Dormant
+622,Njeri Ahmed,Individual,Njeri,Ahmed,0709463976,419 Limuru Rd,Apt 79,7776,Meru,Kisumu Central,"Meru, Kenya",1,Active
+623,[Business] Diani Resort,Business,Marie,Malema,0729268222,33 James Gichuru Rd,Apt 26,40741,Mandera,Molo,"Mandera, Kenya",0,Dormant
+624,Achieng Mbeki,Individual,Achieng,Mbeki,0704879754,852 Kenyatta Ave,Apt 65,34871,Laikipia,Westlands,"Laikipia, Kenya",1,Active
+625,[Business] Hilton Retreat,Business,Mwangi,Ochieng,0756206231,575 Runda Dr,Apt 50,10261,Nakuru,Dagoretti,"Nakuru, Kenya",1,Active
+626,[Business] Leopard Beach Resort,Business,Joseph,Munyoki,0776710026,867 Uhuru Hwy,Apt 44,85502,Nyeri,Kisumu East,"Nyeri, Kenya",1,Active
+627,Jean Mugabe,Individual,Jean,Mugabe,0727772137,858 Mombasa Rd,Apt 85,50939,Muranga,Turbo,"Muranga, Kenya",0,Dormant
+628,[Business] Villa Rosa Inn,Business,Emmanuelle,Ali,0754125590,481 Uhuru Hwy,Apt 91,15880,Muranga,Changamwe,"Muranga, Kenya",1,Active
+629,Kamau Kiplagat,Individual,Kamau,Kiplagat,0778585392,512 Karen Rd,Apt 62,8646,Muranga,Kasarani,"Muranga, Kenya",1,Active
+630,Jacques Mutombo,Individual,Jacques,Mutombo,0766213150,884 Gigiri Rd,Apt 89,41052,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+631,Pierre Abdullahi,Individual,Pierre,Abdullahi,0755194203,202 Kenyatta Ave,Apt 81,26517,Kiambu,Naivasha,"Kiambu, Kenya",1,Active
+632,[Business] Leopard Beach Resort,Business,Kiptoo,Malema,0735005338,662 Riverside Dr,Apt 62,48414,Laikipia,Turbo,"Laikipia, Kenya",0,Dormant
+633,[Business] Ole Sereni Resort,Business,Jeanne,Mandela,0733393923,830 Kimathi St,Apt 93,13426,Eldoret,Turbo,"Eldoret, Kenya",0,Dormant
+634,Felix Omar,Individual,Felix,Omar,0737015230,179 Mbagathi Way,Apt 13,20675,Kiambu,Changamwe,"Kiambu, Kenya",1,Active
+635,[Business] Diani Manor,Business,Wambui,Zuma,0703697031,121 Karen Rd,Apt 63,63416,Kisumu,Muhoroni,"Kisumu, Kenya",1,Active
+636,Wanjiku Yusuf,Individual,Wanjiku,Yusuf,0798902334,155 Mbagathi Way,Apt 74,46322,Mombasa,Muhoroni,"Mombasa, Kenya",0,Dormant
+637,Kamau Nkurunziza,Individual,Kamau,Nkurunziza,0770865923,874 Riverside Dr,Apt 69,88092,Meru,Likoni,"Meru, Kenya",1,Active
+638,Patrick Hassan,Individual,Patrick,Hassan,0758465128,288 Kileleshwa Rd,Apt 32,63514,Laikipia,Molo,"Laikipia, Kenya",1,Active
+639,Alaine Ahmed,Individual,Alaine,Ahmed,0771524109,297 Nairobi St,Apt 83,48226,Garissa,Kesses,"Garissa, Kenya",0,Dormant
+640,Mwangi Bizimana,Individual,Mwangi,Bizimana,0703736252,925 Limuru Rd,Apt 70,38985,Wajir,Kasarani,"Wajir, Kenya",0,Dormant
+641,Kamau Abdi,Individual,Kamau,Abdi,0723642331,760 Runda Dr,Apt 11,65497,Baringo,Eldoret East,"Baringo, Kenya",0,Dormant
+642,[Business] Swahili Haven,Business,Kiptoo,Munee,0731948538,133 Mbagathi Way,Apt 42,52148,Isiolo,Subukia,"Isiolo, Kenya",1,Active
+643,[Business] Boma Suites,Business,Marie,Mandela,0756884058,879 Donholm Rd,Apt 58,64086,Nakuru,Nyando,"Nakuru, Kenya",1,Active
+644,[Business] Serena Manor,Business,Kamau,Munee,0761218449,165 Nakuru Blvd,Apt 84,43282,Tharaka-Nithi,Kisumu Central,"Tharaka-Nithi, Kenya",1,Active
+645,[Business] Fairmont Retreat,Business,Amina,Munee,0792781189,903 Mama Ngina St,Apt 33,4987,Tharaka-Nithi,Eldoret East,"Tharaka-Nithi, Kenya",1,Active
+646,Claude Zuma,Individual,Claude,Zuma,0785401485,215 James Gichuru Rd,Apt 52,59335,Kiambu,Molo,"Kiambu, Kenya",1,Active
+647,Wanjiku Ibrahim,Individual,Wanjiku,Ibrahim,0705155710,464 Westlands Rd,Apt 35,50355,Baringo,Jomvu,"Baringo, Kenya",1,Active
+648,Felix Kabongo,Individual,Felix,Kabongo,0799738396,648 James Gichuru Rd,Apt 42,72775,Kiambu,Nyali,"Kiambu, Kenya",0,Dormant
+649,[Business] Severin Hotel,Business,Alain,Munyuli,0729580953,595 Kimathi St,Apt 31,20805,Kisumu,Langata,"Kisumu, Kenya",1,Active
+650,Alaine Ali,Individual,Alaine,Ali,0743637614,350 Embakasi Rd,Apt 24,81257,Kiambu,Kesses,"Kiambu, Kenya",1,Active
+651,Alaine Mukasa,Individual,Alaine,Mukasa,0730932966,593 Mombasa Rd,Apt 41,47084,Wajir,Likoni,"Wajir, Kenya",0,Dormant
+652,[Business] Severin Manor,Business,Marie,Mutua,0745719420,367 Ngong Rd,Apt 97,29771,Nakuru,Changamwe,"Nakuru, Kenya",1,Active
+653,[Business] Safari Retreat,Business,Wanjiku,Kagame,0794909964,825 Parklands Rd,Apt 82,19819,Marsabit,Kasarani,"Marsabit, Kenya",1,Active
+654,Patricia Munzala,Individual,Patricia,Munzala,0741591968,777 Lavington Rd,Apt 8,76396,Isiolo,Nyando,"Isiolo, Kenya",0,Dormant
+655,[Business] Villa Rosa Residences,Business,Wanjiku,Njoroge,0732581158,677 Mama Ngina St,Apt 91,24469,Nyeri,Kasarani,"Nyeri, Kenya",1,Active
+656,Amina Omar,Individual,Amina,Omar,0741971218,194 James Gichuru Rd,Apt 29,62825,Wajir,Molo,"Wajir, Kenya",1,Active
+657,Claudine Osman,Individual,Claudine,Osman,0767985951,859 Moi Ave,Apt 55,9511,Eldoret,Moiben,"Eldoret, Kenya",1,Active
+658,[Business] Safari Inn,Business,Alaine,Mbeki,0748728830,469 Ngong Rd,Apt 20,74441,Nairobi,Kisumu East,"Nairobi, Kenya",0,Dormant
+659,[Business] Safari Inn,Business,Pierre,Mugisha,0760830477,227 Koinange St,Apt 54,4144,Marsabit,Dagoretti,"Marsabit, Kenya",0,Dormant
+660,[Business] Baobab Resort,Business,Mwangi,Osman,0799268823,280 Lavington Rd,Apt 93,4348,Marsabit,Jomvu,"Marsabit, Kenya",1,Active
+661,[Business] Boma Residences,Business,Claudine,Munyao,0781467247,456 Haile Selassie Ave,Apt 32,6156,Garissa,Moiben,"Garissa, Kenya",1,Active
+662,Jean Mandela,Individual,Jean,Mandela,0730552415,697 Kilimani Rd,Apt 52,52075,Kitui,Jomvu,"Kitui, Kenya",1,Active
+663,[Business] Nyali Residences,Business,Jacques,Adan,0775867462,921 Nairobi St,Apt 42,74041,Kisumu,Jomvu,"Kisumu, Kenya",0,Dormant
+664,[Business] Baobab Residences,Business,Michel,Kabongo,0784165821,951 Runda Dr,Apt 27,27413,Mombasa,Molo,"Mombasa, Kenya",1,Active
+665,[Business] Diani Residences,Business,Emmanuel,Bizimana,0701730384,985 Kisumu Ave,Apt 22,53139,Isiolo,Kasarani,"Isiolo, Kenya",0,Dormant
+666,[Business] Villa Rosa Resort,Business,Jacqueline,Munyui,0722979098,168 Eastleigh Rd,Apt 70,13967,Embu,Kesses,"Embu, Kenya",0,Dormant
+667,[Business] Hemingways Suites,Business,Emmanuel,Kariuki,0738214973,496 Eldoret Ln,Apt 84,25537,Nyeri,Dagoretti,"Nyeri, Kenya",1,Active
+668,Emmanuelle Wanyama,Individual,Emmanuelle,Wanyama,0766554336,998 Mbagathi Way,Apt 51,54038,Mombasa,Westlands,"Mombasa, Kenya",1,Active
+669,Michelle Odhiambo,Individual,Michelle,Odhiambo,0732356213,109 Buruburu Rd,Apt 58,58087,Marsabit,Kisumu West,"Marsabit, Kenya",1,Active
+670,Josephine Malema,Individual,Josephine,Malema,0797075302,869 Ngong Rd,Apt 46,88445,Wajir,Nyali,"Wajir, Kenya",0,Dormant
+671,[Business] PrideInn Inn,Business,Patricia,Ali,0701344992,377 Kiambu Rd,Apt 12,13242,Isiolo,Jomvu,"Isiolo, Kenya",0,Dormant
+672,[Business] Leopard Beach Haven,Business,Paul,Omar,0774981674,965 Westlands Rd,Apt 81,47979,Muranga,Subukia,"Muranga, Kenya",1,Active
+673,[Business] Sarova Lodge,Business,Mwangi,Osman,0706888014,179 Kilimani Rd,Apt 45,85454,Marsabit,Langata,"Marsabit, Kenya",1,Active
+674,Felicite Ahmed,Individual,Felicite,Ahmed,0729482050,150 Eastleigh Rd,Apt 92,10173,Nakuru,Turbo,"Nakuru, Kenya",0,Dormant
+675,[Business] Safari Lodge,Business,Alaine,Wanyama,0715162539,696 Kilimani Rd,Apt 92,63511,Nyeri,Changamwe,"Nyeri, Kenya",0,Dormant
+676,Njeri Adan,Individual,Njeri,Adan,0748034120,451 Dennis Pritt Rd,Apt 67,27218,Baringo,Nyali,"Baringo, Kenya",1,Active
+677,[Business] Boma Retreat,Business,Marie,Muthoni,0795908355,552 Karen Rd,Apt 48,77701,Muranga,Changamwe,"Muranga, Kenya",1,Active
+678,[Business] Baobab Haven,Business,Otieno,Ali,0791330653,427 Eldoret Ln,Apt 56,75366,Marsabit,Kesses,"Marsabit, Kenya",1,Active
+679,Patrick Mandela,Individual,Patrick,Mandela,0713526156,505 Mama Ngina St,Apt 80,84878,Kitui,Moiben,"Kitui, Kenya",0,Dormant
+680,[Business] Boma Hotel,Business,Pierre,Lumumba,0769460639,911 Kiambu Rd,Apt 51,68557,Isiolo,Naivasha,"Isiolo, Kenya",1,Active
+681,[Business] Nyali Resort,Business,Josephine,Munywe,0775891747,315 Nakuru Blvd,Apt 51,76452,Machakos,Embakasi,"Machakos, Kenya",0,Dormant
+682,Michelle Mugisha,Individual,Michelle,Mugisha,0799555557,786 Koinange St,Apt 50,2340,Eldoret,Dagoretti,"Eldoret, Kenya",0,Dormant
+683,[Business] Severin Residences,Business,Achieng,Ibrahim,0746614777,281 Buruburu Rd,Apt 54,59218,Meru,Eldoret West,"Meru, Kenya",1,Active
+684,[Business] Villa Rosa Retreat,Business,Paul,Mbeki,0721344670,520 South B Rd,Apt 26,5376,Laikipia,Kesses,"Laikipia, Kenya",1,Active
+685,[Business] Severin Lodge,Business,Michelle,Mugabe,0741135042,423 Koinange St,Apt 32,35270,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+686,[Business] Ole Sereni Manor,Business,Pierrette,Osman,0769595361,102 Ngong Rd,Apt 70,61119,Eldoret,Turbo,"Eldoret, Kenya",0,Dormant
+687,Jeanne Abdullahi,Individual,Jeanne,Abdullahi,0707776934,597 Moi Ave,Apt 63,1011,Baringo,Gilgil,"Baringo, Kenya",0,Dormant
+688,[Business] Voyager Hotel,Business,Patrick,Ochieng,0780933873,310 Haile Selassie Ave,Apt 56,46874,Nairobi,Eldoret East,"Nairobi, Kenya",0,Dormant
+689,[Business] Diani Hotel,Business,Njeri,Yusuf,0745566169,527 Kileleshwa Rd,Apt 3,11581,Isiolo,Molo,"Isiolo, Kenya",0,Dormant
+690,Patricia Munyao,Individual,Patricia,Munyao,0775137705,821 Buruburu Rd,Apt 14,68118,Embu,Kisumu East,"Embu, Kenya",1,Active
+691,[Business] Leopard Beach Inn,Business,Njeri,Munyoki,0754607647,689 Kiambu Rd,Apt 48,48129,Marsabit,Kisumu West,"Marsabit, Kenya",0,Dormant
+692,[Business] Safari Manor,Business,Jeanne,Ahmed,0754886252,110 Lavington Rd,Apt 11,14902,Nakuru,Gilgil,"Nakuru, Kenya",1,Active
+693,Pauline Mbeki,Individual,Pauline,Mbeki,0732265151,576 Dennis Pritt Rd,Apt 93,71710,Muranga,Gilgil,"Muranga, Kenya",0,Dormant
+694,Patricia Ali,Individual,Patricia,Ali,0780068863,192 Buruburu Rd,Apt 24,49742,Nakuru,Embakasi,"Nakuru, Kenya",1,Active
+695,[Business] Serena Inn,Business,Patricia,Kagame,0769200202,489 Kimathi St,Apt 60,29071,Kitui,Naivasha,"Kitui, Kenya",0,Dormant
+696,[Business] PrideInn Inn,Business,Pierre,Omondi,0775761408,767 Limuru Rd,Apt 91,46571,Nairobi,Dagoretti,"Nairobi, Kenya",0,Dormant
+697,[Business] Severin Lodge,Business,Paul,Ali,0765126464,24 Donholm Rd,Apt 41,59461,Laikipia,Jomvu,"Laikipia, Kenya",1,Active
+698,[Business] InterContinental Resort,Business,Pauline,Malema,0799467416,394 Runda Dr,Apt 16,83121,Meru,Gilgil,"Meru, Kenya",0,Dormant
+699,[Business] Sarova Lodge,Business,Mwangi,Mohammed,0762907834,290 Eldoret Ln,Apt 45,23093,Laikipia,Kesses,"Laikipia, Kenya",1,Active
+700,Claude Mandela,Individual,Claude,Mandela,0749992029,220 Lavington Rd,Apt 80,62503,Embu,Nyali,"Embu, Kenya",0,Dormant
+701,Felix Kabongo,Individual,Felix,Kabongo,0732322622,318 Riverside Dr,Apt 44,46853,Kisumu,Nyando,"Kisumu, Kenya",0,Dormant
+702,[Business] InterContinental Inn,Business,Paul,Omar,0798188124,113 Nakuru Blvd,Apt 62,10397,Eldoret,Kisumu West,"Eldoret, Kenya",1,Active
+703,[Business] Ole Sereni Suites,Business,Amina,Nkurunziza,0765129096,138 Kilimani Rd,Apt 69,21509,Nairobi,Moiben,"Nairobi, Kenya",0,Dormant
+704,[Business] Hemingways Retreat,Business,Achieng,Munyoki,0789226052,634 Gigiri Rd,Apt 27,79391,Laikipia,Kisumu Central,"Laikipia, Kenya",0,Dormant
+705,[Business] Leopard Beach Palace,Business,Pauline,Munyao,0731289035,473 Langata Rd,Apt 79,19332,Marsabit,Kesses,"Marsabit, Kenya",1,Active
+706,[Business] PrideInn Palace,Business,Alaine,Wanyama,0780011970,434 Mama Ngina St,Apt 59,73118,Nyeri,Embakasi,"Nyeri, Kenya",0,Dormant
+707,[Business] Fairmont Hotel,Business,Wanjiku,Omar,0752413157,356 South C Rd,Apt 63,4436,Nakuru,Nakuru Town,"Nakuru, Kenya",1,Active
+708,Pierre Adan,Individual,Pierre,Adan,0791494047,768 Uhuru Hwy,Apt 69,50617,Nairobi,Westlands,"Nairobi, Kenya",1,Active
+709,[Business] Neptune Resort,Business,Marie,Lumumba,0738449646,718 Westlands Rd,Apt 10,7718,Meru,Kesses,"Meru, Kenya",0,Dormant
+710,[Business] Fairmont Haven,Business,Alain,Abdi,0718562666,223 Mbagathi Way,Apt 99,65148,Embu,Gilgil,"Embu, Kenya",1,Active
+711,Kamau Munzala,Individual,Kamau,Munzala,0794602008,921 Eldoret Ln,Apt 74,7057,Machakos,Kesses,"Machakos, Kenya",1,Active
+712,Jacqueline Njoroge,Individual,Jacqueline,Njoroge,0789584085,760 Jogoo Rd,Apt 40,73289,Marsabit,Changamwe,"Marsabit, Kenya",1,Active
+713,Jacques Zuma,Individual,Jacques,Zuma,0758172866,668 Haile Selassie Ave,Apt 25,85636,Muranga,Muhoroni,"Muranga, Kenya",1,Active
+714,Pierre Adan,Individual,Pierre,Adan,0750977549,478 Parklands Rd,Apt 32,51999,Nyeri,Kisumu East,"Nyeri, Kenya",0,Dormant
+715,[Business] InterContinental Manor,Business,Michelle,Munzala,0755961637,653 Nairobi St,Apt 18,28377,Meru,Muhoroni,"Meru, Kenya",1,Active
+716,Michel Bizimana,Individual,Michel,Bizimana,0769055826,977 Karen Rd,Apt 32,36835,Tharaka-Nithi,Turbo,"Tharaka-Nithi, Kenya",0,Dormant
+717,[Business] Swahili Retreat,Business,Wambui,Mutua,0793676026,330 Karen Rd,Apt 30,11728,Nakuru,Kisumu East,"Nakuru, Kenya",1,Active
+718,[Business] Nyali Lodge,Business,Jean,Kabila,0744973681,662 Nairobi St,Apt 31,64247,Laikipia,Likoni,"Laikipia, Kenya",1,Active
+719,Mutiso Kiplagat,Individual,Mutiso,Kiplagat,0759604092,293 Langata Rd,Apt 93,28022,Laikipia,Kesses,"Laikipia, Kenya",0,Dormant
+720,[Business] Fairmont Palace,Business,Mutiso,Malema,0795824263,635 Kileleshwa Rd,Apt 100,88406,Baringo,Naivasha,"Baringo, Kenya",1,Active
+721,Emmanuel Yusuf,Individual,Emmanuel,Yusuf,0729096656,999 Limuru Rd,Apt 53,16701,Laikipia,Embakasi,"Laikipia, Kenya",0,Dormant
+722,Alain Nkurunziza,Individual,Alain,Nkurunziza,0796129346,412 Kenyatta Ave,Apt 23,29675,Muranga,Nyali,"Muranga, Kenya",0,Dormant
+723,[Business] Sarova Hotel,Business,Jeanne,Munzala,0767666587,818 Limuru Rd,Apt 72,48567,Eldoret,Langata,"Eldoret, Kenya",0,Dormant
+724,Wambui Odhiambo,Individual,Wambui,Odhiambo,0709567795,703 Kilimani Rd,Apt 43,24796,Meru,Nakuru Town,"Meru, Kenya",0,Dormant
+725,[Business] Serena Suites,Business,Michelle,Mbeki,0705856437,114 Parklands Rd,Apt 61,73890,Kisumu,Dagoretti,"Kisumu, Kenya",1,Active
+726,[Business] InterContinental Inn,Business,Otieno,Ali,0773547916,898 Langata Rd,Apt 7,11912,Kiambu,Dagoretti,"Kiambu, Kenya",1,Active
+727,Wanjiku Zuma,Individual,Wanjiku,Zuma,0787639010,864 Mbagathi Way,Apt 58,59281,Baringo,Langata,"Baringo, Kenya",1,Active
+728,Mutiso Kiplagat,Individual,Mutiso,Kiplagat,0784234003,738 Kimathi St,Apt 19,67961,Mombasa,Nyando,"Mombasa, Kenya",1,Active
+729,[Business] Villa Rosa Retreat,Business,Michel,Kiplagat,0741222372,406 Tom Mboya St,Apt 68,55298,Marsabit,Moiben,"Marsabit, Kenya",0,Dormant
+730,Pauline Muthoni,Individual,Pauline,Muthoni,0712110626,541 Eldoret Ln,Apt 78,70857,Isiolo,Kisumu Central,"Isiolo, Kenya",1,Active
+731,[Business] Ole Sereni Retreat,Business,Michelle,Ali,0780339372,158 Donholm Rd,Apt 11,82574,Baringo,Kesses,"Baringo, Kenya",0,Dormant
+732,Marie Munywe,Individual,Marie,Munywe,0739178748,562 Kiambu Rd,Apt 52,43505,Marsabit,Changamwe,"Marsabit, Kenya",0,Dormant
+733,Mwangi Mohammed,Individual,Mwangi,Mohammed,0793719903,548 Westlands Rd,Apt 94,66396,Mandera,Changamwe,"Mandera, Kenya",1,Active
+734,[Business] Voyager Inn,Business,Claude,Nkurunziza,0785373594,599 Nakuru Blvd,Apt 50,79747,Mandera,Turbo,"Mandera, Kenya",1,Active
+735,Otieno Ndayishimiye,Individual,Otieno,Ndayishimiye,0747697817,239 Gigiri Rd,Apt 59,19174,Embu,Nyando,"Embu, Kenya",1,Active
+736,[Business] Sarova Palace,Business,Jeanne,Adan,0766591574,349 Kisumu Ave,Apt 61,13583,Garissa,Gilgil,"Garissa, Kenya",0,Dormant
+737,Emmanuel Bizimana,Individual,Emmanuel,Bizimana,0707382348,460 Jogoo Rd,Apt 4,83042,Nairobi,Muhoroni,"Nairobi, Kenya",1,Active
+738,[Business] Villa Rosa Hotel,Business,Pierre,Kabongo,0728112998,231 Langata Rd,Apt 97,22163,Mombasa,Kisauni,"Mombasa, Kenya",0,Dormant
+739,Joseph Ndayishimiye,Individual,Joseph,Ndayishimiye,0754581712,974 Kimathi St,Apt 46,36750,Kisumu,Jomvu,"Kisumu, Kenya",0,Dormant
+740,[Business] Fairmont Haven,Business,Felicite,Omondi,0776236145,491 Donholm Rd,Apt 33,57944,Muranga,Westlands,"Muranga, Kenya",1,Active
+741,Pauline Mbeki,Individual,Pauline,Mbeki,0708855282,299 Eastleigh Rd,Apt 72,63921,Eldoret,Kisumu East,"Eldoret, Kenya",1,Active
+742,[Business] Nyali Suites,Business,Otieno,Mbeki,0749071006,605 Koinange St,Apt 48,10774,Nairobi,Kesses,"Nairobi, Kenya",1,Active
+743,Pierre Malema,Individual,Pierre,Malema,0783103262,938 Waiyaki Way,Apt 70,21941,Mandera,Naivasha,"Mandera, Kenya",0,Dormant
+744,[Business] Ole Sereni Lodge,Business,Claude,Ahmed,0710248510,64 Eldoret Ln,Apt 60,15244,Tharaka-Nithi,Embakasi,"Tharaka-Nithi, Kenya",0,Dormant
+745,Michel Odhiambo,Individual,Michel,Odhiambo,0744594578,298 Waiyaki Way,Apt 37,44954,Kisumu,Kasarani,"Kisumu, Kenya",0,Dormant
+746,Mwangi Malema,Individual,Mwangi,Malema,0729808024,4 Kimathi St,Apt 94,55212,Nairobi,Nyando,"Nairobi, Kenya",1,Active
+747,[Business] Hilton Haven,Business,Mwangi,Ibrahim,0790824391,493 Mombasa Rd,Apt 84,82566,Kitui,Changamwe,"Kitui, Kenya",1,Active
+748,[Business] Hemingways Manor,Business,Njeri,Nkurunziza,0774841488,760 Mbagathi Way,Apt 13,25262,Embu,Nyali,"Embu, Kenya",1,Active
+749,[Business] Hemingways Resort,Business,Claudine,Ndayishimiye,0709070499,797 Uhuru Hwy,Apt 76,30255,Muranga,Nakuru Town,"Muranga, Kenya",1,Active
+750,[Business] Leopard Beach Haven,Business,Emmanuelle,Kagame,0766564276,714 Kilimani Rd,Apt 90,70572,Laikipia,Kisauni,"Laikipia, Kenya",1,Active
+751,Pierrette Ibrahim,Individual,Pierrette,Ibrahim,0773827880,364 Donholm Rd,Apt 90,53109,Eldoret,Eldoret West,"Eldoret, Kenya",0,Dormant
+752,Paul Wanyama,Individual,Paul,Wanyama,0708721047,227 Nakuru Blvd,Apt 22,78706,Nakuru,Eldoret West,"Nakuru, Kenya",0,Dormant
+753,[Business] Baobab Inn,Business,Jeanne,Mutua,0780066628,768 Nairobi St,Apt 84,17935,Isiolo,Gilgil,"Isiolo, Kenya",1,Active
+754,[Business] Hilton Palace,Business,Pierrette,Mwangi,0773368588,216 Tom Mboya St,Apt 35,60574,Meru,Westlands,"Meru, Kenya",1,Active
+755,Wanjiku Njoroge,Individual,Wanjiku,Njoroge,0749566174,247 Kimathi St,Apt 26,86033,Embu,Jomvu,"Embu, Kenya",1,Active
+756,[Business] Leopard Beach Resort,Business,Amina,Njoroge,0713485419,838 Kiambu Rd,Apt 40,51413,Wajir,Nyando,"Wajir, Kenya",1,Active
+757,[Business] Sarova Haven,Business,Alain,Abdullahi,0708178332,646 Mama Ngina St,Apt 99,53125,Wajir,Nakuru Town,"Wajir, Kenya",1,Active
+758,[Business] Ole Sereni Manor,Business,Kamau,Mbeki,0780882170,782 Donholm Rd,Apt 44,21517,Kiambu,Kisumu East,"Kiambu, Kenya",1,Active
+759,Alaine Nkurunziza,Individual,Alaine,Nkurunziza,0797116674,359 Uhuru Hwy,Apt 11,15375,Garissa,Muhoroni,"Garissa, Kenya",1,Active
+760,[Business] Safari Resort,Business,Emmanuel,Munywe,0712793729,908 Jogoo Rd,Apt 43,33318,Marsabit,Eldoret East,"Marsabit, Kenya",0,Dormant
+761,[Business] Safari Inn,Business,Claudine,Mugisha,0768408362,170 State House Rd,Apt 55,69871,Isiolo,Embakasi,"Isiolo, Kenya",0,Dormant
+762,Patricia Ibrahim,Individual,Patricia,Ibrahim,0735609016,743 Lavington Rd,Apt 25,29878,Mandera,Moiben,"Mandera, Kenya",1,Active
+763,[Business] Fairmont Suites,Business,Emmanuel,Mugisha,0774140700,719 Ngong Rd,Apt 19,14829,Machakos,Naivasha,"Machakos, Kenya",1,Active
+764,[Business] Tamarind Retreat,Business,Josephine,Mandela,0724698989,259 Moi Ave,Apt 4,77637,Mandera,Gilgil,"Mandera, Kenya",0,Dormant
+765,Joseph Abdi,Individual,Joseph,Abdi,0765411258,515 Ngong Rd,Apt 69,22480,Mandera,Kisumu West,"Mandera, Kenya",0,Dormant
+766,[Business] Safari Palace,Business,Josephine,Mandela,0719075349,126 South B Rd,Apt 52,12457,Eldoret,Nyali,"Eldoret, Kenya",1,Active
+767,Joseph Zuma,Individual,Joseph,Zuma,0788323567,975 Thika Rd,Apt 97,60512,Isiolo,Naivasha,"Isiolo, Kenya",0,Dormant
+768,Marie Kabongo,Individual,Marie,Kabongo,0775298356,750 Gigiri Rd,Apt 88,81123,Wajir,Muhoroni,"Wajir, Kenya",1,Active
+769,[Business] Fairmont Suites,Business,Pierrette,Adan,0759754367,508 Parklands Rd,Apt 31,10597,Machakos,Kasarani,"Machakos, Kenya",1,Active
+770,[Business] Diani Inn,Business,Pauline,Mwangi,0706275832,425 Mombasa Rd,Apt 97,50896,Baringo,Likoni,"Baringo, Kenya",1,Active
