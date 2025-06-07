@@ -1,0 +1,21 @@
+branch_branchCode,branch_phone,branch_addressLine1,branch_addressLine2,branch_postalCode,branch_county,branch_subCounty
+1,0700000001,Westlands Commercial Centre,"Ring Road, Westlands",00100,Nairobi,Westlands
+2,0700000002,Yaya Centre,Argwings Kodhek Rd,00100,Nairobi,Kilimani
+3,0700000003,Thika Road Mall,Thika Road,00100,Nairobi,Kasarani
+4,0700000004,Taj Mall,Outer Ring Rd,00100,Nairobi,Embakasi
+5,0700000005,Galleria Mall,Langata Rd,00100,Nairobi,Langata
+6,0700000006,The Junction Mall,Ngong Rd,00100,Nairobi,Dagoretti
+7,0700000007,Garden City Mall,Thika Road,00100,Nairobi,Ruaraka
+8,0700000008,Sarit Centre,Karuna Rd,00100,Nairobi,Starehe
+9,0700000009,Kamukunji Market,Kamukunji Rd,00100,Nairobi,Kamukunji
+10,0700000010,Makadara Law Courts,Jogoo Rd,00100,Nairobi,Makadara
+11,0700000011,Mathare Hospital,Hospital Rd,00100,Nairobi,Mathare
+12,0700000012,Roy Sambu Shopping Centre,Roy Sambu Rd,00100,Nairobi,Roy Sambu
+13,0700000013,Kibra Social Hall,Kibra Dr,00100,Nairobi,Kibra
+14,0700000014,Kangemi Market,Waiyaki Way,00100,Nairobi,Kangemi
+15,0700000015,Githurai Market,Githurai Rd,00100,Nairobi,Githurai
+16,0710000001,City Mall,Nyali Rd,80100,Mombasa,Nyali
+17,0710000002,Mega Plaza,Oginga Odinga Rd,40100,Kisumu,Kisumu Central
+18,0710000003,Westside Mall,Kenya Rd,20100,Nakuru,Nakuru Town East
+19,0710000004,Rupa Mall,Uganda Rd,30100,Uasin Gishu,Kesses
+20,0710000005,Nyeri Mall,Gakere Rd,10100,Nyeri,Nyeri Central
