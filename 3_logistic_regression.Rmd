@@ -441,7 +441,7 @@ print(auc_value)
 ```
 
 | AUC Value | Interpretation |
-|----|----|
+|------------------------------------|------------------------------------|
 | 0.5 | Using the logistic regression model is equivalent to randomly guessing |
 | 0.6 - 0.7 | Poor discrimination of the classes |
 | 0.7 - 0.8 | Acceptable discrimination of the classes (fair) |
@@ -479,7 +479,7 @@ crPlots(log_test)
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are.
+This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated test statistics. It can also make findings appear more significant than they actually are.
 
 The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
