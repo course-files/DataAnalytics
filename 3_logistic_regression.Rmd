@@ -441,7 +441,7 @@ print(auc_value)
 ```
 
 | AUC Value | Interpretation |
-|------------------------------------|------------------------------------|
+|----|----|
 | 0.5 | Using the logistic regression model is equivalent to randomly guessing |
 | 0.6 - 0.7 | Poor discrimination of the classes |
 | 0.7 - 0.8 | Acceptable discrimination of the classes (fair) |
