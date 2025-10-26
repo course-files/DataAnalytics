@@ -341,26 +341,26 @@ plot(slr_test, which = 1)
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are.
+Test of Independence of Errors (Autocorrelation) This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
-The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+For the Durbin-Watson test:
 
--   The null hypothesis, H~0~, is that there is no autocorrelation
+-   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation
-
-If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.1573, therefore, the test of independence of errors around the regression line passes.
+-   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations) • If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
 
 ```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
 dwtest(slr_test)
 ```
 
-## [**Test of Normality**]{.underline}
+The results show a p-value of \>.05 (and a DW statistic of 1.91), therefore, the test of independence of errors around the regression line passes, i.e., there is no autocorrelation. In other words, there is no evidence to reject the null hypothesis that states that, "there is no aurocorrelation".
 
-The test of normality assesses whether the residuals are approximately normally distributed, i.e., most residuals (errors) are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+## [**Test of Normality of the Distribution of the Errors**]{.underline}
 
-A Q-Q plot is a scatterplot of the quantiles of the residuals against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+
+A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
 
 If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
 
@@ -392,9 +392,23 @@ plot(slr_test, which = 3)
 
 **Breusch-Pagan Test**
 
-The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot
+The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot.
 
-Interpretation: If the p-value is less than 0.05, there is statistically significant evidence of heteroscedasticity in the residuals
+Formally:
+
+-   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+
+-   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
+
+p-Value:
+
+-   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
+
+-   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
+
+Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
+
+With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad)
 
 ```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
@@ -413,9 +427,79 @@ summary(gvlma_results)
 
 # Interpretation of the Results
 
-We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful.
+We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
 
-## Academic Statement
+**t-Statistic t(498) = 114.91:** This is the calculated t-value for the purchase_frequency coefficient. It quantifies how many standard errors the estimated coefficient (19.54) deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero).
+
+**Degrees of Freedom:** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+
+For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
+
+Degrees of freedom affects the shape of sampling distributions, which in turn influences p-values and critical values used in hypothesis testing.
+
+**df = 498:** This reflects the sample size adjusted for the number of parameters estimated in the model. For a simple linear regression (one independent variable + an intercept), df is calculated as n-2, where n is the total sample size. Here, 498=500−2.
+
+The t-statistic evaluates whether purchase frequency has a statistically significant relationship with customer lifetime value. With t(498)=114.91 and p \< .001, the result is highly significant, rejecting the null hypothesis. This means **purchase frequency strongly predicts CLV in the population**.
+
+**F-Statistic**
+
+**F(1, 498) = 13,200, p \< .001** The results of the analysis yielded an F-statistic of 13,200, with 1 degree of freedom in the numerator (1 = the number of predictors) and 498 degrees of freedom in the denominator (F(1, 498) = 13,200). The numerator degree of freedom corresponds to the single predictor variable (purchase frequency), while the denominator degree of freedom is derived from the total number of observations (500) minus the number of predictors (1) and then minus 1 for the intercept (500 - 1 - 1 = 498)
+
+The p-value associated with this F-statistic was less than .001 (p \< .001). Following APA style guidelines, exact p-values are reported unless they fall below .001, in which case “p \< .001” is used. The low p-value (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
+
+The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
+
+**Coefficient of Determination (R2)**
+
+The R-squared value represents the proportion of the total variation in the dependent variable (CLV) that can be attributed to or explained by the independent variable (purchase frequency). An R-squared of 0.96 indicates that approximately 96% of the variability in customer lifetime value can be explained by its linear relationship with purchase frequency. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
+
+**Adjusted R-squared** is a modified statistic that accounts for the number of predictors in the model; for simple linear regression with only one predictor, the difference between R-squared and adjusted R-squared is usually negligible.
+
+**Multiple R-squared:** Measures the proportion of variance in Y explained by X (e.g., R2 = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
+
+Adjusted R-squared: Also measures the proportion of variance in Y explained by X, however, it introduces a penalty based on the number of independent variables relative to the sample size.
+
+The difference between multiple R-squared and adjusted R-squared is negligible in cases where there is only 1 independent variable.
+
+**Residual Standard Error**
+
+The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed CLV values and the CLV values predicted by the regression model. It represents the standard deviation of the data points around the regression line. The residual standard error was 7.73 on 498 degrees of freedom. A residual standard error of 7.73 indicates that, on average, the predicted customer lifetime value from the model deviates from the actual observed value by approximately 7.73 units.
+
+A smaller residual standard error implies that the data points are more tightly clustered around the regression line, indicating a more precise model.
+
+**Confidence Interval**
+
+A 95% confidence interval (CI) for a parameter—such as a regression coefficient—provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
+
+**Uncertainty quantification:** A CI communicates your estimate’s precision—narrower intervals imply more precise estimates (often due to larger samples or less variability), whereas wider intervals indicate greater uncertainty about the true value.
+
+**Academic Reporting (based on the APA 7th Edition Style)**
+
+Below are some key considerations to note when reporting statistical analysis using the APA style:\
+
+1.  The type of statistical test must be stated
+
+2.  Although not mandatory, the dependent variable is usually stated first followed by the independent variable when describing relationships, e.g., “…to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales” such that Sales is the dependent variable that depends on advertising expenditures on YouTube, TikTok, and Facebook.
+
+3.  Test statistic and parameters: Report the appropriate test statistic (*t*-Statistic, *F*-Statistic, $\chi^2$ , etc.) with the degrees of freedom in parentheses. The italicized statistical symbol is immediately followed by the degrees of freedom in parentheses without a space, e.g., *t*(498) and not t (498).
+
+4.  Exact p-values: Report exact p-values, when possible (e.g., *p* = .032), unless they are less than .001, then report as *p* \< .001.
+
+5.  Effect sizes: Include appropriate effect size measures (e.g., R²) to indicate practical significance.
+
+6.  Standard errors: Report standard errors of estimates when relevant. The standard error tells you how much your estimate might vary if you were to repeat your study with different random samples from the same population. A smaller standard error indicates a more precise estimate.
+
+7.  Confidence Intervals (CI): The confidence level should be clearly stated whenever you report point estimates (e.g., means, regression coefficients, correlations, etc.). The 95% confidence interval is the most common, and if another level is used (e.g., 90% CI, 99% CI), it should be explicitly mentioned. Confidence intervals are typically enclosed in square brackets [], with the lower and upper limits separated by a comma. For example: 95% CI [-.03, .04]. They are usually reported directly after the statistic they describe, often within the same sentence or in parentheses.
+
+8.  Two decimal places: Report to two decimal places, except p-values which may need three or more decimal places.
+
+9.  Descriptive statistics: Report relevant means, standard deviations, and sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD = 4.62)
+
+10. Italicize statistical symbols: Use italics for statistical symbols (*t*, *F*, *p*, etc.) but not for Greek letters (μ, σ, α), subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) = 15.62, *p* \< .001, The participants (N = 120) had an average score (*M* = 25.43, *SD* = 4.62) on the cognitive test
+
+Further reading: <https://apastyle.apa.org/jars>
+
+## Academic Statement (APA)
 
 A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
 

@@ -376,24 +376,33 @@ Deviation}}{Standard Deviation}}\label{standard-deviation}
 ##                2.036393               40.525498
 \end{verbatim}
 
-\subsubsection{\texorpdfstring{\textbf{Kurtosis}}{Kurtosis}}\label{kurtosis}
+\subsubsection{\texorpdfstring{\textbf{Kurtosis
+(Pearson)}}{Kurtosis (Pearson)}}\label{kurtosis-pearson}
 
 The Kurtosis informs us of how often outliers occur in the results.
 There are different formulas for calculating kurtosis. Specifying ``type
 = 2'' allows us to use the 2nd formula which is the same kurtosis
-formula used in other statistical software like SPSS and SAS.
+formula used in other statistical software like SPSS and SAS. It is
+referred to as ``Pearson's definition of kurtosis''.
 
 In ``type = 2'' (used in SPSS and SAS):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Kurtosis \textless{} 3 implies a low number of outliers
+  Kurtosis \textless{} 3 implies a low number of outliers → platykurtic
 \item
-  Kurtosis = 3 implies a medium number of outliers
+  Kurtosis = 3 implies a medium number of outliers → mesokurtic
 \item
-  Kurtosis \textgreater{} 3 implies a high number of outliers
+  Kurtosis \textgreater{} 3 implies a high number of outliers →
+  leptokurtic
 \end{enumerate}
+
+High kurtosis (leptokurtic) affects models that are sensitive to
+outliers. Estimates of the variance are also inflated. Low kurtosis
+(platykurtic) implies a possible underestimation of real-world
+variability. The typical remedy includes trimming outliers or using
+robust statistical methods that are less affected by outliers.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -430,6 +439,11 @@ SAS) can be interpreted as:
   distribution.
 \end{enumerate}
 
+Skewed data results in misleading averages and potentially biased model
+coefficients. The typical remedy to skewed data involves applying data
+transformations such as logarithmic, square-root, or Box--Cox, etc. to
+reduce skewness.
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{sapply}\NormalTok{(clv\_data[,], skewness, }\AttributeTok{type =} \DecValTok{2}\NormalTok{)}
@@ -440,6 +454,12 @@ SAS) can be interpreted as:
 ##      purchase_frequency customer_lifetime_value 
 ##             -0.04021915             -0.01608242
 \end{verbatim}
+
+As a data analyst, you need to confirm if the distortion in kurtosis or
+skewness is a data problem or it is a real-world insight. For example, a
+real-world insight could be that few customers drive most of the value.
+This is as opposed to looking it at it as a distortion that needs to be
+corrected.
 
 \subsection{\texorpdfstring{\ul{\textbf{Measures of
 Relationship}}}{Measures of Relationship}}\label{measures-of-relationship}
@@ -673,6 +693,13 @@ View the summary of the model.
 ## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: < 2.2e-16
 \end{verbatim}
 
+The confidence level represents the degree of certainty that a
+confidence interval contains the true population parameter. For example,
+a 95\% confidence level means that if you were to take many random
+samples and compute the confidence interval from each, about 95\% of
+those intervals would contain the true population value, while about 5\%
+would not.
+
 To obtain a 95\% confidence interval:
 
 \begin{Shaded}
@@ -689,17 +716,18 @@ To obtain a 95\% confidence interval:
 
 \section{Diagnostic EDA}\label{diagnostic-eda}
 
-Diagnostic EDA is performed to validate that the regression assumptions
-are true with respect to the statistical test. Validating the regression
-assumption in turn ensures that the statistical tests applied are
-appropriate for the data and helps to prevent incorrect conclusions.
+Diagnostic Exploratory Data Analysis (EDA) is performed to verify that
+the assumptions underlying the regression model are satisfied.
+Confirming that these assumptions hold ensures that the statistical
+tests used in the model are valid for the data, thus reducing the risk
+of drawing incorrect or misleading conclusions in your data analysis.
 
 \subsection{\texorpdfstring{\ul{\textbf{Test of
 Linearity}}}{Test of Linearity}}\label{test-of-linearity}
 
 The test of linearity is used to assess whether the relationship between
-the dependent variables and the independent variables is linear. This is
-necessary given that linearity is one of the key assumptions of
+the dependent variable and the independent variable(s) is linear. This
+is necessary given that linearity is one of the key assumptions of
 statistical tests of regression and verifying it is crucial for ensuring
 the validity of the model's estimates and predictions.
 
@@ -719,33 +747,32 @@ randomly placed around the 0.0 residual line.
 \subsection{\texorpdfstring{\ul{\textbf{Test of Independence of Errors
 (Autocorrelation)}}}{Test of Independence of Errors (Autocorrelation)}}\label{test-of-independence-of-errors-autocorrelation}
 
-This test is necessary to confirm that each observation is independent
-of the other. It helps to identify \textbf{autocorrelation} that is
-introduced when the data is collected over a close period of time or
-when one observation is related to another observation. Autocorrelation
-leads to underestimated standard errors and inflated t-statistics. It
-can also make findings appear more significant than they actually are.
-
-The ``\textbf{Durbin-Watson Test}'' can be used as a test of
-independence of errors (test of autocorrelation). A Durbin-Watson
-statistic close to 2 suggests no autocorrelation, while values
-approaching 0 or 4 indicate positive or negative autocorrelation,
+Test of Independence of Errors (Autocorrelation) This test is necessary
+to confirm that each observation is independent of the other. It helps
+to identify autocorrelation that is introduced when the data is
+collected over a close period of time or when one observation is related
+to another observation. Autocorrelation leads to underestimated standard
+errors and inflated t-statistics. It can also make findings appear more
+significant than they actually are. The ``Durbin-Watson Test'' can be
+used as a test of independence of errors (test of autocorrelation). A
+Durbin-Watson statistic close to 2 suggests no autocorrelation, while
+values approaching 0 or 4 indicate positive or negative autocorrelation,
 respectively.
+
+For the Durbin-Watson test:
 
 \begin{itemize}
 \item
   The null hypothesis, H\textsubscript{0}, is that there is no
-  autocorrelation
+  autocorrelation (no autocorrelation = there is no correlation between
+  residuals across time or across observations).
 \item
   The alternative hypothesis, H\textsubscript{a}, is that there is
-  autocorrelation
+  autocorrelation (autocorrelation = there is a correlation between
+  residuals across time or across observations) • If the p-value of the
+  Durbin-Watson statistic is greater than 0.05 then there is no evidence
+  to reject the null hypothesis that ``there is no autocorrelation''.
 \end{itemize}
-
-If the p-value of the Durbin-Watson statistic is greater than 0.05 then
-there is no evidence to reject the null hypothesis that ``there is no
-autocorrelation''. The results below show a p-value of 0.1573,
-therefore, the test of independence of errors around the regression line
-passes.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -763,16 +790,23 @@ passes.
 ## alternative hypothesis: true autocorrelation is greater than 0
 \end{verbatim}
 
-\subsection{\texorpdfstring{\ul{\textbf{Test of
-Normality}}}{Test of Normality}}\label{test-of-normality}
+The results show a p-value of \textgreater.05 (and a DW statistic of
+1.91), therefore, the test of independence of errors around the
+regression line passes, i.e., there is no autocorrelation. In other
+words, there is no evidence to reject the null hypothesis that states
+that, ``there is no aurocorrelation''.
 
-The test of normality assesses whether the residuals are approximately
-normally distributed, i.e., most residuals (errors) are close to zero
-and large errors are rare. A Q-Q plot can be used to conduct the test of
-normality.
+\subsection{\texorpdfstring{\ul{\textbf{Test of Normality of the
+Distribution of the
+Errors}}}{Test of Normality of the Distribution of the Errors}}\label{test-of-normality-of-the-distribution-of-the-errors}
 
-A Q-Q plot is a scatterplot of the quantiles of the residuals against
-the quantiles of a normal distribution. Quantiles are statistical values
+The test of normality of the distribution of the errors assesses whether
+the errors (residuals) are approximately normally distributed, i.e.,
+most errors are close to zero and large errors are rare. A Q-Q plot can
+be used to conduct the test of normality.
+
+A Q-Q plot is a scatterplot of the quantiles of the errors against the
+quantiles of a normal distribution. Quantiles are statistical values
 that divide a dataset or probability distribution into equal-sized
 intervals. They help in understanding how data is distributed by marking
 specific points that separate the data into groups of equal size.
@@ -833,10 +867,36 @@ heteroscedasticity with increasing variance for larger fitted values.
 \textbf{Breusch-Pagan Test}
 
 The Breusch-Pagan Test can also be used in addition to the visual
-inspection of a Scale-Location plot
+inspection of a Scale-Location plot.
 
-Interpretation: If the p-value is less than 0.05, there is statistically
-significant evidence of heteroscedasticity in the residuals
+Formally:
+
+\begin{itemize}
+\item
+  Null hypothesis (H₀): The residuals are homoscedastic (equal
+  variance).
+\item
+  Alternative hypothesis (H₁): The residuals are heteroscedastic
+  (non-constant variance).
+\end{itemize}
+
+p-Value:
+
+\begin{itemize}
+\item
+  p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity
+  → good, model passes.
+\item
+  p-value \textless{} 0.05: Reject H₀ → evidence of heteroscedasticity →
+  bad, model fails.
+\end{itemize}
+
+Interpretation: If the p-value is less than 0.05, then we reject the
+null hypothesis that states that ``the residuals are homoscedastic''
+
+With a p-value \textless{} 0.05, there is statistically significant
+evidence of heteroscedasticity in the residuals in this case (which is
+bad)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -909,9 +969,191 @@ purpose.
 Results}\label{interpretation-of-the-results}
 
 We can interpret the results of the statistical test with more
-confidence if the tests of assumptions are successful.
+confidence if the tests of assumptions are successful. The presentation
+of the results and its subsequent interpretation is based on the
+following notes.
 
-\subsection{Academic Statement}\label{academic-statement}
+\textbf{t-Statistic t(498) = 114.91:} This is the calculated t-value for
+the purchase\_frequency coefficient. It quantifies how many standard
+errors the estimated coefficient (19.54) deviates from zero. A larger
+t-value (e.g., \textgreater2) indicates stronger evidence against the
+null hypothesis (i.e., that the coefficient is zero).
+
+\textbf{Degrees of Freedom:} Degrees of freedom refers to the number of
+values in a calculation that are free to vary. It is essentially a
+measure of how much independent information is available for estimating
+a statistical parameter.
+
+For example: Imagine you need to calculate the average height of 5
+people, and you know the sum of all their heights is 340 inches. If you
+know the heights of 4 of these people (65, 70, 68, and 72 inches), you
+can automatically determine the height of the fifth person without
+measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example,
+even though there are 5 people, you only have 4 degrees of freedom
+because once you know 4 heights and the total, the 5th height is no
+longer ``free to vary'' -- it is determined by the other values.
+
+Degrees of freedom affects the shape of sampling distributions, which in
+turn influences p-values and critical values used in hypothesis testing.
+
+\textbf{df = 498:} This reflects the sample size adjusted for the number
+of parameters estimated in the model. For a simple linear regression
+(one independent variable + an intercept), df is calculated as n-2,
+where n is the total sample size. Here, 498=500−2.
+
+The t-statistic evaluates whether purchase frequency has a statistically
+significant relationship with customer lifetime value. With
+t(498)=114.91 and p \textless{} .001, the result is highly significant,
+rejecting the null hypothesis. This means \textbf{purchase frequency
+strongly predicts CLV in the population}.
+
+\textbf{F-Statistic}
+
+\textbf{F(1, 498) = 13,200, p \textless{} .001} The results of the
+analysis yielded an F-statistic of 13,200, with 1 degree of freedom in
+the numerator (1 = the number of predictors) and 498 degrees of freedom
+in the denominator (F(1, 498) = 13,200). The numerator degree of freedom
+corresponds to the single predictor variable (purchase frequency), while
+the denominator degree of freedom is derived from the total number of
+observations (500) minus the number of predictors (1) and then minus 1
+for the intercept (500 - 1 - 1 = 498)
+
+The p-value associated with this F-statistic was less than .001 (p
+\textless{} .001). Following APA style guidelines, exact p-values are
+reported unless they fall below .001, in which case ``p \textless{}
+.001'' is used. The low p-value (any p-value \textless{} .05 is
+considered low) indicates that the overall regression model \textbf{is
+statistically significant}.
+
+The F-test in regression evaluates whether the variance explained by the
+model is significantly greater than the unexplained variance (error).
+Think of the F-statistic as a ratio of ``signal'' (useful prediction) to
+``noise'' (unexplained variation). The higher this ratio, the more
+confident you can be that your model is capturing something real. The
+larger the F-Statistic, the better the model's performance.
+
+\textbf{Coefficient of Determination (R2)}
+
+The R-squared value represents the proportion of the total variation in
+the dependent variable (CLV) that can be attributed to or explained by
+the independent variable (purchase frequency). An R-squared of 0.96
+indicates that approximately 96\% of the variability in customer
+lifetime value can be explained by its linear relationship with purchase
+frequency. An R-squared value approaching 1 signifies that the
+regression line closely aligns with the observed data points.
+
+\textbf{Adjusted R-squared} is a modified statistic that accounts for
+the number of predictors in the model; for simple linear regression with
+only one predictor, the difference between R-squared and adjusted
+R-squared is usually negligible.
+
+\textbf{Multiple R-squared:} Measures the proportion of variance in Y
+explained by X (e.g., R2 = 0.6 means 60\% of sales variance is explained
+by advertisement expenditure). The multiple R-squared value always
+increases (or at least never decreases) when you add more independent
+variables.
+
+Adjusted R-squared: Also measures the proportion of variance in Y
+explained by X, however, it introduces a penalty based on the number of
+independent variables relative to the sample size.
+
+The difference between multiple R-squared and adjusted R-squared is
+negligible in cases where there is only 1 independent variable.
+
+\textbf{Residual Standard Error}
+
+The residual standard error quantifies the average magnitude of the
+errors (residuals), which are the discrepancies between the observed CLV
+values and the CLV values predicted by the regression model. It
+represents the standard deviation of the data points around the
+regression line. The residual standard error was 7.73 on 498 degrees of
+freedom. A residual standard error of 7.73 indicates that, on average,
+the predicted customer lifetime value from the model deviates from the
+actual observed value by approximately 7.73 units.
+
+A smaller residual standard error implies that the data points are more
+tightly clustered around the regression line, indicating a more precise
+model.
+
+\textbf{Confidence Interval}
+
+A 95\% confidence interval (CI) for a parameter---such as a regression
+coefficient---provides a range that, under repeated sampling, would
+contain the true (but unknown) population parameter 95\% of the time.
+Analogy: Imagine shooting arrows at a target. If you drew a circle
+around where 95\% of your arrows landed, that circle is like a
+confidence interval---it captures the region in which your ``shots''
+(i.e., estimates from different samples) tend to fall.
+
+\textbf{Uncertainty quantification:} A CI communicates your estimate's
+precision---narrower intervals imply more precise estimates (often due
+to larger samples or less variability), whereas wider intervals indicate
+greater uncertainty about the true value.
+
+\textbf{Academic Reporting (based on the APA 7th Edition Style)}
+
+Below are some key considerations to note when reporting statistical
+analysis using the APA style:\\
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The type of statistical test must be stated
+\item
+  Although not mandatory, the dependent variable is usually stated first
+  followed by the independent variable when describing relationships,
+  e.g., ``\ldots to examine whether advertising expenditures on YouTube,
+  TikTok, and Facebook collectively predict Sales'' such that Sales is
+  the dependent variable that depends on advertising expenditures on
+  YouTube, TikTok, and Facebook.
+\item
+  Test statistic and parameters: Report the appropriate test statistic
+  (\emph{t}-Statistic, \emph{F}-Statistic, \(\chi^2\) , etc.) with the
+  degrees of freedom in parentheses. The italicized statistical symbol
+  is immediately followed by the degrees of freedom in parentheses
+  without a space, e.g., \emph{t}(498) and not t (498).
+\item
+  Exact p-values: Report exact p-values, when possible (e.g., \emph{p} =
+  .032), unless they are less than .001, then report as \emph{p}
+  \textless{} .001.
+\item
+  Effect sizes: Include appropriate effect size measures (e.g., R²) to
+  indicate practical significance.
+\item
+  Standard errors: Report standard errors of estimates when relevant.
+  The standard error tells you how much your estimate might vary if you
+  were to repeat your study with different random samples from the same
+  population. A smaller standard error indicates a more precise
+  estimate.
+\item
+  Confidence Intervals (CI): The confidence level should be clearly
+  stated whenever you report point estimates (e.g., means, regression
+  coefficients, correlations, etc.). The 95\% confidence interval is the
+  most common, and if another level is used (e.g., 90\% CI, 99\% CI), it
+  should be explicitly mentioned. Confidence intervals are typically
+  enclosed in square brackets {[}{]}, with the lower and upper limits
+  separated by a comma. For example: 95\% CI {[}-.03, .04{]}. They are
+  usually reported directly after the statistic they describe, often
+  within the same sentence or in parentheses.
+\item
+  Two decimal places: Report to two decimal places, except p-values
+  which may need three or more decimal places.
+\item
+  Descriptive statistics: Report relevant means, standard deviations,
+  and sample sizes, e.g., The sample size included 500 observations (M =
+  25.43, SD = 4.62)
+\item
+  Italicize statistical symbols: Use italics for statistical symbols
+  (\emph{t}, \emph{F}, \emph{p}, etc.) but not for Greek letters (μ, σ,
+  α), subscripts, or parenthetical information, e.g., R² = .45,
+  \emph{F}(2, 97) = 15.62, \emph{p} \textless{} .001, The participants
+  (N = 120) had an average score (\emph{M} = 25.43, \emph{SD} = 4.62) on
+  the cognitive test
+\end{enumerate}
+
+Further reading: \url{https://apastyle.apa.org/jars}
+
+\subsection{Academic Statement (APA)}\label{academic-statement-apa}
 
 A simple linear regression was conducted on data from 500 observations
 (N = 500) to examine the relationship between customer lifetime value
