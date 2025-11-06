@@ -3,6 +3,26 @@ title: "Simple Linear Regression"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -12,26 +32,6 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
-  html_notebook:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    self_contained: false
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    self_contained: false
-    keep_md: true
-  word_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    keep_md: true
 ---
 
 ```{r setup_chunk, message=FALSE, warning=FALSE}
@@ -347,7 +347,9 @@ For the Durbin-Watson test:
 
 -   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations) • If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
+-   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
+
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
 
 ```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
@@ -408,7 +410,7 @@ p-Value:
 
 Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
 
-With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad)
+With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
 
 ```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
@@ -449,7 +451,7 @@ The p-value associated with this F-statistic was less than .001 (p \< .001). Fol
 
 The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
 
-**Coefficient of Determination (R2)**
+**Coefficient of Determination (R^2^)**
 
 The R-squared value represents the proportion of the total variation in the dependent variable (CLV) that can be attributed to or explained by the independent variable (purchase frequency). An R-squared of 0.96 indicates that approximately 96% of the variability in customer lifetime value can be explained by its linear relationship with purchase frequency. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
 
@@ -477,7 +479,7 @@ A 95% confidence interval (CI) for a parameter—such as a regression coefficien
 
 Below are some key considerations to note when reporting statistical analysis using the APA style:\
 
-1.  The type of statistical test must be stated
+1.  The type of statistical test must be stated.
 
 2.  Although not mandatory, the dependent variable is usually stated first followed by the independent variable when describing relationships, e.g., “…to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales” such that Sales is the dependent variable that depends on advertising expenditures on YouTube, TikTok, and Facebook.
 
@@ -493,11 +495,15 @@ Below are some key considerations to note when reporting statistical analysis us
 
 8.  Two decimal places: Report to two decimal places, except p-values which may need three or more decimal places.
 
-9.  Descriptive statistics: Report relevant means, standard deviations, and sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD = 4.62)
+9.  Descriptive statistics: Report relevant means, standard deviations, and sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD = 4.62).
 
-10. Italicize statistical symbols: Use italics for statistical symbols (*t*, *F*, *p*, etc.) but not for Greek letters (μ, σ, α), subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) = 15.62, *p* \< .001, The participants (N = 120) had an average score (*M* = 25.43, *SD* = 4.62) on the cognitive test
+10. Italicize statistical symbols: Use italics for statistical symbols (*t*, *F*, *p*, etc.) but not for Greek letters ( $\mu$, $\sigma$, $\alpha$), subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) = 15.62, *p* \< .001, The participants (*N* = 120) had an average score (*M* = 25.43, *SD* = 4.62) on the cognitive test.
 
 Further reading: <https://apastyle.apa.org/jars>
+
+## Limitations and Diagnostic Findings
+
+The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
 
 ## Academic Statement (APA)
 
@@ -507,6 +513,38 @@ A simple linear regression was conducted on data from 500 observations (N = 500)
 
 The strength of the relationship highlights the critical importance of customer retention. Initiatives that effectively encourage repeat purchases appear to be a primary driver of customer lifetime value based on this analysis. This understanding can guide the allocation of resources towards strategies that foster customer loyalty and encourage repeat business.
 
-## Limitations
+# Knitting the Notebook
 
-The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
+The “Knit” utility in R can be used to convert the R Notebook into either a:
+
+1.  HTML document that can be opened using a browser
+
+2.  HTML notebook that can also be opened using a browser and has basic interactive features
+
+3.  Word Document
+
+4.  PDF document
+
+The conversion to PDF requires the installation of the following free software:
+
+-   For Windows: MiKTeX - <https://miktex.org/download>
+
+-   For MacOS: MacTeX - <https://www.tug.org/mactex/mactex-download.html>
+
+-   For Linux: TeX Live - <https://www.tug.org/texlive/quickinstall.html>
+
+Also, you need to install the `tinytex` package. The `tinytex` package helps RStudio to find and use MikTex, MacTeX, or TeXLive. Execute the following **in the console section of RStudio** to install TinyTex:
+
+`install.packages("tinytex")`
+
+`tinytex::install_tinytex()`
+
+If you are using MiKTeX for Windows, you should also enable the installation of packages on-the-fly. This is found in “Settings \> General \> Package Installation”
+
+Lastly, set the LaTeX Engine to `xelatex`. This is found in "Output Options \> Advanced" in R Studio.
+
+# References and Further Reading
+
+American Psychological Association. (2025, February). *Journal Article Reporting Standards (JARS)*. APA Style. Retrieved April 28, 2025, from <https://apastyle.apa.org/jars>
+
+Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress. <https://link.springer.com/book/10.1007/978-1-4842-8754-5>
