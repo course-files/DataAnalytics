@@ -1,0 +1,787 @@
+---
+title: "Simple Linear Regression"
+author: "Allan Omondi"
+date: "2025-11-13"
+output:
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
+  pdf_document: 
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
+---
+
+
+``` r
+knitr::opts_chunk$set(echo = TRUE)
+# `installed.packages()` retrieves a matrix of all installed packages
+# `[, "Package"]` extracts on the "Package" column from the matrix of all packages
+# The %in% operator is used to test if the specified package is in the matrix of all packages
+# `character.only = TRUE` ensures that the quoted name of the package is not treated as a symbol
+# `dependencies = TRUE` instructs R to install not only the specified package but also its dependencies
+# `pacman::p_load("here")` installs the package called "here". This package is used in the next line.
+# `knitr::opts_knit$set(root.dir = here::here())` is used to ensure that the "knitr" utility in R knows where to find the files required to create the HTML, Word, or PDF version of the notebook.
+
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+# Load the Dataset
+
+The following synthetic dataset contains the estimated Customer Lifetime Value (CLV) as the dependent variable and the customer purchase frequency as the independent variable. The dataset is loaded as shown below.
+
+
+``` r
+# `pacman::p_load()` is designed to both install and load packages
+pacman::p_load("readr")
+
+clv_data <- read_csv("./data/clv_data.csv")
+head(clv_data)
+```
+
+```
+## # A tibble: 6 × 2
+##   purchase_frequency customer_lifetime_value
+##                <dbl>                   <dbl>
+## 1                  3                   110. 
+## 2                  7                   190. 
+## 3                  6                   160. 
+## 4                  2                    94.4
+## 5                  4                   133. 
+## 6                  8                   223.
+```
+
+# Initial EDA
+
+[**View the Dimensions**]{.underline}
+
+The number of observations and variables.
+
+
+``` r
+dim(clv_data)
+```
+
+```
+## [1] 500   2
+```
+
+[**View the Data Types**]{.underline}
+
+
+``` r
+sapply(clv_data, class)
+```
+
+```
+##      purchase_frequency customer_lifetime_value 
+##               "numeric"               "numeric"
+```
+
+
+``` r
+str(clv_data)
+```
+
+```
+## spc_tbl_ [500 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ purchase_frequency     : num [1:500] 3 7 6 2 4 8 0 4 8 3 ...
+##  $ customer_lifetime_value: num [1:500] 110.3 190.2 160 94.4 133.2 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   purchase_frequency = col_double(),
+##   ..   customer_lifetime_value = col_double()
+##   .. )
+##  - attr(*, "problems")=<externalptr>
+```
+
+[**Descriptive Statistics**]{.underline}
+
+Understanding your data can lead to:
+
+-   **Data cleaning:** To remove extreme outliers or impute missing data.
+
+-   **Data transformation:** To reduce skewness
+
+-   **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+
+-   **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+
+Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
+
+1.  **Measures of frequency:** count and percent
+
+2.  **Measures of central tendency:** mean, median, and mode
+
+3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) [includes a box and whisker plot for visualization], kurtosis, skewness [includes a histogram for visualization]).
+
+4.  **Measures of relationship:** covariance and correlation
+
+## [**Measures of Frequency**]{.underline}
+
+This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories for the gender).
+
+## [**Measures of Central Tendency**]{.underline}
+
+The median and the mean of each numeric variable:
+
+
+``` r
+summary(clv_data)
+```
+
+```
+##  purchase_frequency customer_lifetime_value
+##  Min.   :-1.000     Min.   : 26.13         
+##  1st Qu.: 4.000     1st Qu.:122.04         
+##  Median : 5.000     Median :148.21         
+##  Mean   : 4.914     Mean   :148.25         
+##  3rd Qu.: 6.000     3rd Qu.:175.88         
+##  Max.   :11.000     Max.   :262.04
+```
+
+The first 5 rows in the dataset:
+
+
+``` r
+head(clv_data, 5)
+```
+
+```
+## # A tibble: 5 × 2
+##   purchase_frequency customer_lifetime_value
+##                <dbl>                   <dbl>
+## 1                  3                   110. 
+## 2                  7                   190. 
+## 3                  6                   160. 
+## 4                  2                    94.4
+## 5                  4                   133.
+```
+
+The last 5 rows in the dataset:
+
+
+``` r
+tail(clv_data, 5)
+```
+
+```
+## # A tibble: 5 × 2
+##   purchase_frequency customer_lifetime_value
+##                <dbl>                   <dbl>
+## 1                  6                    176.
+## 2                  6                    176.
+## 3                  5                    144.
+## 4                  6                    165.
+## 5                  5                    139.
+```
+
+## [**Measures of Distribution**]{.underline}
+
+Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
+
+Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+
+The syntax `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. For example, specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to perform calculations on only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
+
+### **Variance**
+
+
+``` r
+# `sapply()` is designed to apply a function to a variable in a dataset
+# In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
+sapply(clv_data[,], var)
+```
+
+```
+##      purchase_frequency customer_lifetime_value 
+##                4.146898             1642.315996
+```
+
+### **Standard Deviation**
+
+
+``` r
+sapply(clv_data[,], sd)
+```
+
+```
+##      purchase_frequency customer_lifetime_value 
+##                2.036393               40.525498
+```
+
+### **Kurtosis (Pearson)**
+
+The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS. It is referred to as "Pearson's definition of kurtosis".
+
+In “type = 2” (used in SPSS and SAS):
+
+1.  Kurtosis \< 3 implies a low number of outliers → platykurtic
+
+2.  Kurtosis = 3 implies a medium number of outliers → mesokurtic
+
+3.  Kurtosis \> 3 implies a high number of outliers → leptokurtic
+
+High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies a possible underestimation of real-world variability. The typical remedy includes trimming outliers or using robust statistical methods that are less affected by outliers.
+
+
+``` r
+pacman::p_load("e1071")
+sapply(clv_data[,],  kurtosis, type = 2)
+```
+
+```
+##      purchase_frequency customer_lifetime_value 
+##              -0.1220038              -0.1484811
+```
+
+### **Skewness**
+
+The skewness is used to identify the asymmetry of the distribution of results. Similar to kurtosis, there are several ways of computing the skewness.
+
+Using “type = 2” (common in other statistical software like SPSS and SAS) can be interpreted as:
+
+1.  Skewness between -0.4 and 0.4 (inclusive) implies that there is no skew in the distribution of results; the distribution of results is symmetrical; it is a normal distribution; a Gaussian distribution.
+
+2.  Skewness above 0.4 implies a positive skew; a right-skewed distribution.
+
+3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
+
+Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
+
+
+``` r
+sapply(clv_data[,], skewness, type = 2)
+```
+
+```
+##      purchase_frequency customer_lifetime_value 
+##             -0.04021915             -0.01608242
+```
+
+As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to looking it at it as a distortion that needs to be corrected.
+
+## [**Measures of Relationship**]{.underline}
+
+### **Covariance**
+
+Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
+
+-   **Positive Covariance:** When one variable increases, the other tends to increase as well.
+
+-   **Negative Covariance:** When one variable increases, the other tends to decrease.
+
+-   **Zero Covariance:** No linear relationship exists between the variables.
+
+While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
+
+
+``` r
+cov(clv_data, method = "spearman")
+```
+
+```
+##                         purchase_frequency customer_lifetime_value
+## purchase_frequency                20409.91                20235.73
+## customer_lifetime_value           20235.73                20874.99
+```
+
+### **Correlation**
+
+A strong correlation between variables enables us to better predict the value of the dependent variable using the value of the independent variable. However, a weak correlation between two variables does not help us to predict the value of the dependent variable from the value of the independent variable. This is useful only if there is a linear association between the variables.
+
+We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
+
+
+``` r
+cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = "spearman")
+```
+
+```
+## 
+## 	Spearman's rank correlation rho
+## 
+## data:  clv_data$customer_lifetime_value and clv_data$purchase_frequency
+## S = 409190, p-value < 2.2e-16
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##       rho 
+## 0.9803588
+```
+
+To view the correlation of all variables
+
+
+``` r
+cor(clv_data, method = "spearman")
+```
+
+```
+##                         purchase_frequency customer_lifetime_value
+## purchase_frequency               1.0000000               0.9803588
+## customer_lifetime_value          0.9803588               1.0000000
+```
+
+## [**Basic Visualizations**]{.underline}
+
+### **Histogram**
+
+
+``` r
+# `par(mfrow = c(1, 2))` This is used to divide the area used to plot
+# the visualization into a 1 row by 2 columns grid
+# `for (i in 1:2)` This is used to identify the variable (column) 
+# that is being processed
+# `clv_data[[i]]` This is used to extract the i-th column as a vector
+# `hist()` This is the function used to plot the histogram
+par(mfrow = c(1, 2))
+for (i in 1:2) {
+  if (is.numeric(clv_data[[i]])) {
+    hist(clv_data[[i]],
+         main = names(clv_data)[i],
+         xlab = names(clv_data)[i])
+  } else {
+    message(paste("Column", names(clv_data)[i],
+                  "is not numeric and will be skipped."))
+  }
+}
+```
+
+![](1_simple_linear_regression_files/figure-docx/visualization_histogram-1.png)<!-- -->
+
+### **Box and Whisker Plot**
+
+
+``` r
+# `boxplot()` This is the function used to plot the box and whisker plot visualization
+par(mfrow = c(1, 2))
+for (i in 1:2) {
+  if (is.numeric(clv_data[[i]])) {
+    boxplot(clv_data[[i]], main = names(clv_data)[i])
+  } else {
+    message(paste("Column", names(clv_data)[i], "is not numeric and will be skipped."))
+  }
+}
+```
+
+![](1_simple_linear_regression_files/figure-docx/visualization_boxplot-1.png)<!-- -->
+
+### **Missing Data Plot**
+
+
+``` r
+pacman::p_load("Amelia")
+
+missmap(clv_data, col = c("red", "grey"), legend = TRUE)
+```
+
+![](1_simple_linear_regression_files/figure-docx/missing_data_plot-1.png)<!-- -->
+
+### **Correlation Plot**
+
+
+``` r
+pacman::p_load("ggcorrplot")
+
+ggcorrplot(cor(clv_data[,]))
+```
+
+![](1_simple_linear_regression_files/figure-docx/correlation_plot-1.png)<!-- -->
+
+### **Scatter Plot**
+
+
+``` r
+pacman::p_load("corrplot")
+
+pairs(customer_lifetime_value ~ ., data = clv_data,
+      col = clv_data$customer_lifetime_value)
+```
+
+![](1_simple_linear_regression_files/figure-docx/scatter_plot_1-1.png)<!-- -->
+
+
+``` r
+pacman::p_load("ggplot2")
+ggplot(clv_data,
+       aes(x = purchase_frequency, y = customer_lifetime_value)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = "Relationship between Customer Lifetime Value and Purchase Frequency",
+    x = "Purchase Frequency",
+    y = "Customer Lifetime Value"
+  )
+```
+
+![](1_simple_linear_regression_files/figure-docx/scatter_plot_2-1.png)<!-- -->
+
+# Statistical Test
+
+We then apply a simple linear regression as a statistical test for regression.
+
+
+``` r
+slr_test <- lm(customer_lifetime_value ~ purchase_frequency, data = clv_data)
+```
+
+View the summary of the model.
+
+
+``` r
+summary(slr_test)
+```
+
+```
+## 
+## Call:
+## lm(formula = customer_lifetime_value ~ purchase_frequency, data = clv_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -19.1176  -5.6169  -0.0491   5.6618  20.4837 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)         52.2538     0.9042   57.79   <2e-16 ***
+## purchase_frequency  19.5356     0.1700  114.91   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.734 on 498 degrees of freedom
+## Multiple R-squared:  0.9637,	Adjusted R-squared:  0.9636 
+## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: < 2.2e-16
+```
+
+The confidence level represents the degree of certainty that a confidence interval contains the true population parameter. For example, a 95% confidence level means that if you were to take many random samples and compute the confidence interval from each, about 95% of those intervals would contain the true population value, while about 5% would not.
+
+To obtain a 95% confidence interval:
+
+
+``` r
+confint(slr_test, level = 0.95)
+```
+
+```
+##                       2.5 %   97.5 %
+## (Intercept)        50.47731 54.03036
+## purchase_frequency 19.20159 19.86965
+```
+
+# Diagnostic EDA
+
+Diagnostic Exploratory Data Analysis (EDA) is performed to verify that the assumptions underlying the regression model are satisfied. Confirming that these assumptions hold ensures that the statistical tests used in the model are valid for the data, thus reducing the risk of drawing incorrect or misleading conclusions in your data analysis.
+
+## [**Test of Linearity**]{.underline}
+
+The test of linearity is used to assess whether the relationship between the dependent variable and the independent variable(s) is linear. This is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
+
+A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line.
+
+
+``` r
+plot(slr_test, which = 1)
+```
+
+![](1_simple_linear_regression_files/figure-docx/test_of_linearity-1.png)<!-- -->
+
+## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
+
+Test of Independence of Errors (Autocorrelation) This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+
+For the Durbin-Watson test:
+
+-   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
+
+-   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
+
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
+
+
+``` r
+pacman::p_load("lmtest")
+dwtest(slr_test)
+```
+
+```
+## 
+## 	Durbin-Watson test
+## 
+## data:  slr_test
+## DW = 1.9104, p-value = 0.1573
+## alternative hypothesis: true autocorrelation is greater than 0
+```
+
+The results show a p-value of \>.05 (and a DW statistic of 1.91), therefore, the test of independence of errors around the regression line passes, i.e., there is no autocorrelation. In other words, there is no evidence to reject the null hypothesis that states that, "there is no aurocorrelation".
+
+## [**Test of Normality of the Distribution of the Errors**]{.underline}
+
+The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+
+A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+
+If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
+
+
+``` r
+plot(slr_test, which = 2)
+```
+
+![](1_simple_linear_regression_files/figure-docx/test_of_normality-1.png)<!-- -->
+
+## [**Test of Homoscedasticity**]{.underline}
+
+Homoscedasticity requires that the spread of residuals should be constant across all levels of the independent variable. A scale-location plot (a.k.a. spread-location plot) can be used to conduct a test of homoscedasticity.
+
+The x-axis shows the fitted (predicted) values from the model and the y-axis shows the square root of the standardized residuals. The red line is added to help visualize any patterns.
+
+In a model with homoscedastic errors (equal variance across all predicted values):
+
+-   Points should be randomly scattered around a horizontal line
+
+-   The smooth line should be approximately horizontal
+
+-   The vertical spread of points should be roughly equal across all fitted values
+
+-   No obvious patterns, funnels, or trends should be visible
+
+Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
+
+
+``` r
+plot(slr_test, which = 3)
+```
+
+![](1_simple_linear_regression_files/figure-docx/test_of_homoscedasticity-1.png)<!-- -->
+
+**Breusch-Pagan Test**
+
+The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot.
+
+Formally:
+
+-   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+
+-   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
+
+p-Value:
+
+-   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
+
+-   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
+
+Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
+
+With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
+
+
+``` r
+pacman::p_load("lmtest")
+lmtest::bptest(slr_test)
+```
+
+```
+## 
+## 	studentized Breusch-Pagan test
+## 
+## data:  slr_test
+## BP = 8.9114, df = 1, p-value = 0.002834
+```
+
+## [**Quantitative Validation of Assumptions**]{.underline}
+
+The graphical representations of the various tests of assumptions should be accompanied by quantitative values. The `gvlma` package (Global Validation of Linear Models Assumptions) is useful for this purpose.
+
+
+``` r
+pacman::p_load("gvlma")
+gvlma_results <- gvlma(slr_test)
+summary(gvlma_results)
+```
+
+```
+## 
+## Call:
+## lm(formula = customer_lifetime_value ~ purchase_frequency, data = clv_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -19.1176  -5.6169  -0.0491   5.6618  20.4837 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)         52.2538     0.9042   57.79   <2e-16 ***
+## purchase_frequency  19.5356     0.1700  114.91   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.734 on 498 degrees of freedom
+## Multiple R-squared:  0.9637,	Adjusted R-squared:  0.9636 
+## F-statistic: 1.32e+04 on 1 and 498 DF,  p-value: < 2.2e-16
+## 
+## 
+## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+## Level of Significance =  0.05 
+## 
+## Call:
+##  gvlma(x = slr_test) 
+## 
+##                      Value p-value                Decision
+## Global Stat        5.08943 0.27824 Assumptions acceptable.
+## Skewness           0.03973 0.84201 Assumptions acceptable.
+## Kurtosis           3.61252 0.05735 Assumptions acceptable.
+## Link Function      0.01459 0.90385 Assumptions acceptable.
+## Heteroscedasticity 1.42258 0.23298 Assumptions acceptable.
+```
+
+# Interpretation of the Results
+
+We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
+
+**t-Statistic t(498) = 114.91:** This is the calculated t-value for the purchase_frequency coefficient. It quantifies how many standard errors the estimated coefficient (19.54) deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero).
+
+**Degrees of Freedom:** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+
+For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
+
+Degrees of freedom affects the shape of sampling distributions, which in turn influences p-values and critical values used in hypothesis testing.
+
+**df = 498:** This reflects the sample size adjusted for the number of parameters estimated in the model. For a simple linear regression (one independent variable + an intercept), df is calculated as n-2, where n is the total sample size. Here, 498=500−2.
+
+The t-statistic evaluates whether purchase frequency has a statistically significant relationship with customer lifetime value. With t(498)=114.91 and p \< .001, the result is highly significant, rejecting the null hypothesis. This means **purchase frequency strongly predicts CLV in the population**.
+
+**F-Statistic**
+
+**F(1, 498) = 13,200, p \< .001** The results of the analysis yielded an F-statistic of 13,200, with 1 degree of freedom in the numerator (1 = the number of predictors) and 498 degrees of freedom in the denominator (F(1, 498) = 13,200). The numerator degree of freedom corresponds to the single predictor variable (purchase frequency), while the denominator degree of freedom is derived from the total number of observations (500) minus the number of predictors (1) and then minus 1 for the intercept (500 - 1 - 1 = 498)
+
+The p-value associated with this F-statistic was less than .001 (p \< .001). Following APA style guidelines, exact p-values are reported unless they fall below .001, in which case “p \< .001” is used. The low p-value (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
+
+The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
+
+**Coefficient of Determination (R^2^)**
+
+The R-squared value represents the proportion of the total variation in the dependent variable (CLV) that can be attributed to or explained by the independent variable (purchase frequency). An R-squared of 0.96 indicates that approximately 96% of the variability in customer lifetime value can be explained by its linear relationship with purchase frequency. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
+
+**Adjusted R-squared** is a modified statistic that accounts for the number of predictors in the model; for simple linear regression with only one predictor, the difference between R-squared and adjusted R-squared is usually negligible.
+
+**Multiple R-squared:** Measures the proportion of variance in Y explained by X (e.g., R2 = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
+
+Adjusted R-squared: Also measures the proportion of variance in Y explained by X, however, it introduces a penalty based on the number of independent variables relative to the sample size.
+
+The difference between multiple R-squared and adjusted R-squared is negligible in cases where there is only 1 independent variable.
+
+**Residual Standard Error**
+
+The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed CLV values and the CLV values predicted by the regression model. It represents the standard deviation of the data points around the regression line. The residual standard error was 7.73 on 498 degrees of freedom. A residual standard error of 7.73 indicates that, on average, the predicted customer lifetime value from the model deviates from the actual observed value by approximately 7.73 units.
+
+A smaller residual standard error implies that the data points are more tightly clustered around the regression line, indicating a more precise model.
+
+**Confidence Interval**
+
+A 95% confidence interval (CI) for a parameter—such as a regression coefficient—provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
+
+**Uncertainty quantification:** A CI communicates your estimate’s precision—narrower intervals imply more precise estimates (often due to larger samples or less variability), whereas wider intervals indicate greater uncertainty about the true value.
+
+**Academic Reporting (based on the APA 7th Edition Style)**
+
+Below are some key considerations to note when reporting statistical analysis using the APA style:\
+
+1.  The type of statistical test must be stated.
+
+2.  Although not mandatory, the dependent variable is usually stated first followed by the independent variable when describing relationships, e.g., “…to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales” such that Sales is the dependent variable that depends on advertising expenditures on YouTube, TikTok, and Facebook.
+
+3.  Test statistic and parameters: Report the appropriate test statistic (*t*-Statistic, *F*-Statistic, $\chi^2$ , etc.) with the degrees of freedom in parentheses. The italicized statistical symbol is immediately followed by the degrees of freedom in parentheses without a space, e.g., *t*(498) and not t (498).
+
+4.  Exact p-values: Report exact p-values, when possible (e.g., *p* = .032), unless they are less than .001, then report as *p* \< .001.
+
+5.  Effect sizes: Include appropriate effect size measures (e.g., R²) to indicate practical significance.
+
+6.  Standard errors: Report standard errors of estimates when relevant. The standard error tells you how much your estimate might vary if you were to repeat your study with different random samples from the same population. A smaller standard error indicates a more precise estimate.
+
+7.  Confidence Intervals (CI): The confidence level should be clearly stated whenever you report point estimates (e.g., means, regression coefficients, correlations, etc.). The 95% confidence interval is the most common, and if another level is used (e.g., 90% CI, 99% CI), it should be explicitly mentioned. Confidence intervals are typically enclosed in square brackets [], with the lower and upper limits separated by a comma. For example: 95% CI [-.03, .04]. They are usually reported directly after the statistic they describe, often within the same sentence or in parentheses.
+
+8.  Two decimal places: Report to two decimal places, except p-values which may need three or more decimal places.
+
+9.  Descriptive statistics: Report relevant means, standard deviations, and sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD = 4.62).
+
+10. Italicize statistical symbols: Use italics for statistical symbols (*t*, *F*, *p*, etc.) but not for Greek letters ( $\mu$, $\sigma$, $\alpha$), subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) = 15.62, *p* \< .001, The participants (*N* = 120) had an average score (*M* = 25.43, *SD* = 4.62) on the cognitive test.
+
+Further reading: <https://apastyle.apa.org/jars>
+
+## Limitations and Diagnostic Findings
+
+The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
+
+## Academic Statement (APA)
+
+A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
+
+## Business Analysis
+
+The strength of the relationship highlights the critical importance of customer retention. Initiatives that effectively encourage repeat purchases appear to be a primary driver of customer lifetime value based on this analysis. This understanding can guide the allocation of resources towards strategies that foster customer loyalty and encourage repeat business.
+
+# Knitting the Notebook
+
+The “Knit” utility in R can be used to convert the R Notebook into either a:
+
+1.  HTML document that can be opened using a browser
+
+2.  HTML notebook that can also be opened using a browser and has basic interactive features
+
+3.  Word Document
+
+4.  PDF document
+
+The conversion to PDF requires the installation of the following free software:
+
+-   For Windows: MiKTeX - <https://miktex.org/download>
+
+-   For MacOS: MacTeX - <https://www.tug.org/mactex/mactex-download.html>
+
+-   For Linux: TeX Live - <https://www.tug.org/texlive/quickinstall.html>
+
+Also, you need to install the `tinytex` package. The `tinytex` package helps RStudio to find and use MikTex, MacTeX, or TeXLive. Execute the following **in the console section of RStudio** to install TinyTex:
+
+`install.packages("tinytex")`
+
+`tinytex::install_tinytex()`
+
+If you are using MiKTeX for Windows, you should also enable the installation of packages on-the-fly. This is found in “Settings \> General \> Package Installation”
+
+Lastly, set the LaTeX Engine to `xelatex`. This is found in "Output Options \> Advanced" in R Studio.
+
+# References and Further Reading
+
+American Psychological Association. (2025, February). *Journal Article Reporting Standards (JARS)*. APA Style. Retrieved April 28, 2025, from <https://apastyle.apa.org/jars>
+
+Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress. <https://link.springer.com/book/10.1007/978-1-4842-8754-5>
