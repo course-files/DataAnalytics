@@ -48,11 +48,6 @@ po/*~
 # RStudio Connect folder
 rsconnect/
 /sandbox
-4_logistic_regression-siwaka_dishes.nb.html
-4_logistic_regression-siwaka_dishes.Rmd
-4_logistic_regression-siwaka_dishes.tex
-4_logistic_regression-siwaka_dishes.pdf
-/4_logistic_regression-siwaka_dishes_files
 
 /1_simple_linear_regression_files
 1_simple_linear_regression.html
@@ -60,9 +55,29 @@ rsconnect/
 1_simple_linear_regression.pdf
 1_simple_linear_regression.tex
 1_simple_linear_regression.docx
+
 /2_multiple_linear_regression_files
 2_multiple_linear_regression.html
 2_multiple_linear_regression.nb.html
 2_multiple_linear_regression.pdf
 2_multiple_linear_regression.tex
 2_multiple_linear_regression.docx
+
+/3_logistic_regression_files
+3_logistic_regression.html
+3_logistic_regression.nb.html
+3_logistic_regression.pdf
+3_logistic_regression.docx
+3_logistic_regression.tex
+
+/4_logistic_regression-siwaka_dishes_files
+4_logistic_regression-siwaka_dishes.nb.html
+4_logistic_regression-siwaka_dishes.Rmd
+4_logistic_regression-siwaka_dishes.tex
+4_logistic_regression-siwaka_dishes.pdf
+
+/5_multiple_linear_regression_files
+5_multiple_linear_regression.nb.html
+5_multiple_linear_regression.Rmd
+5_multiple_linear_regression.tex
+5_multiple_linear_regression.pdf
