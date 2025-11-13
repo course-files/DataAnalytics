@@ -3,11 +3,13 @@ title: "Simple Linear Regression"
 author: "Allan Omondi"
 date: "2025-11-13"
 output:
-  word_document:
+  html_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 6
+    fig_height: 6
+    self_contained: false
     keep_md: true
   pdf_document: 
     toc: true
@@ -24,13 +26,11 @@ output:
     number_sections: true
     fig_width: 6
     self_contained: false
-  html_document:
+  word_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 6
-    fig_height: 6
-    self_contained: false
     keep_md: true
 ---
 
@@ -288,7 +288,7 @@ sapply(clv_data[,], skewness, type = 2)
 ##             -0.04021915             -0.01608242
 ```
 
-As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to looking it at it as a distortion that needs to be corrected.
+As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to always looking it at it as a distortion that needs to be corrected.
 
 ## [**Measures of Relationship**]{.underline}
 
@@ -376,7 +376,7 @@ for (i in 1:2) {
 }
 ```
 
-![](1_simple_linear_regression_files/figure-docx/visualization_histogram-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/visualization_histogram-1.png)<!-- -->
 
 ### **Box and Whisker Plot**
 
@@ -393,7 +393,7 @@ for (i in 1:2) {
 }
 ```
 
-![](1_simple_linear_regression_files/figure-docx/visualization_boxplot-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/visualization_boxplot-1.png)<!-- -->
 
 ### **Missing Data Plot**
 
@@ -404,7 +404,7 @@ pacman::p_load("Amelia")
 missmap(clv_data, col = c("red", "grey"), legend = TRUE)
 ```
 
-![](1_simple_linear_regression_files/figure-docx/missing_data_plot-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/missing_data_plot-1.png)<!-- -->
 
 ### **Correlation Plot**
 
@@ -415,7 +415,7 @@ pacman::p_load("ggcorrplot")
 ggcorrplot(cor(clv_data[,]))
 ```
 
-![](1_simple_linear_regression_files/figure-docx/correlation_plot-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/correlation_plot-1.png)<!-- -->
 
 ### **Scatter Plot**
 
@@ -427,7 +427,7 @@ pairs(customer_lifetime_value ~ ., data = clv_data,
       col = clv_data$customer_lifetime_value)
 ```
 
-![](1_simple_linear_regression_files/figure-docx/scatter_plot_1-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/scatter_plot_1-1.png)<!-- -->
 
 
 ``` r
@@ -443,7 +443,7 @@ ggplot(clv_data,
   )
 ```
 
-![](1_simple_linear_regression_files/figure-docx/scatter_plot_2-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/scatter_plot_2-1.png)<!-- -->
 
 # Statistical Test
 
@@ -512,11 +512,11 @@ A plot of the residuals versus the fitted values enables us to test for linearit
 plot(slr_test, which = 1)
 ```
 
-![](1_simple_linear_regression_files/figure-docx/test_of_linearity-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/test_of_linearity-1.png)<!-- -->
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-Test of Independence of Errors (Autocorrelation) This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
 For the Durbin-Watson test:
 
@@ -556,7 +556,7 @@ If the points in the Q-Q plot fall along a straight line, then the normality ass
 plot(slr_test, which = 2)
 ```
 
-![](1_simple_linear_regression_files/figure-docx/test_of_normality-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/test_of_normality-1.png)<!-- -->
 
 ## [**Test of Homoscedasticity**]{.underline}
 
@@ -581,7 +581,7 @@ Points forming a cone shape that widens from left to right suggests heteroscedas
 plot(slr_test, which = 3)
 ```
 
-![](1_simple_linear_regression_files/figure-docx/test_of_homoscedasticity-1.png)<!-- -->
+![](1_simple_linear_regression_files/figure-html/test_of_homoscedasticity-1.png)<!-- -->
 
 **Breusch-Pagan Test**
 
@@ -668,41 +668,33 @@ summary(gvlma_results)
 
 We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
 
-**t-Statistic t(498) = 114.91:** This is the calculated t-value for the purchase_frequency coefficient. It quantifies how many standard errors the estimated coefficient (19.54) deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero).
+**t-Statistic t(d.f.):** It quantifies how many standard errors the estimated coefficient deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero). The t-statistic has its corresponding p-value such that a p-value \< .05 implies a statistically significant t-statistic.
 
-**Degrees of Freedom:** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+**Degrees of Freedom (d.f.):** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
 
 For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
 
-Degrees of freedom affects the shape of sampling distributions, which in turn influences p-values and critical values used in hypothesis testing.
-
-**df = 498:** This reflects the sample size adjusted for the number of parameters estimated in the model. For a simple linear regression (one independent variable + an intercept), df is calculated as n-2, where n is the total sample size. Here, 498=500−2.
-
-The t-statistic evaluates whether purchase frequency has a statistically significant relationship with customer lifetime value. With t(498)=114.91 and p \< .001, the result is highly significant, rejecting the null hypothesis. This means **purchase frequency strongly predicts CLV in the population**.
-
 **F-Statistic**
 
-**F(1, 498) = 13,200, p \< .001** The results of the analysis yielded an F-statistic of 13,200, with 1 degree of freedom in the numerator (1 = the number of predictors) and 498 degrees of freedom in the denominator (F(1, 498) = 13,200). The numerator degree of freedom corresponds to the single predictor variable (purchase frequency), while the denominator degree of freedom is derived from the total number of observations (500) minus the number of predictors (1) and then minus 1 for the intercept (500 - 1 - 1 = 498)
-
-The p-value associated with this F-statistic was less than .001 (p \< .001). Following APA style guidelines, exact p-values are reported unless they fall below .001, in which case “p \< .001” is used. The low p-value (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
+**F(d.f. in numerator, d.f. in denominator):** The numerator degree of freedom corresponds to the number of predictor variables, while the denominator degree of freedom is derived from the total number of observations minus the number of predictors and then minus 1 for the intercept.
 
 The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
 
+Also, a low p-value of the F-statistic (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
+
 **Coefficient of Determination (R^2^)**
 
-The R-squared value represents the proportion of the total variation in the dependent variable (CLV) that can be attributed to or explained by the independent variable (purchase frequency). An R-squared of 0.96 indicates that approximately 96% of the variability in customer lifetime value can be explained by its linear relationship with purchase frequency. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
+The R-squared value represents the proportion of the total variation in the dependent variable that can be attributed to or explained by the independent variable. An R-squared of 0.96 indicates that approximately 96% of the variability in the dependent variable can be explained by its linear relationship with the independent variable. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
 
-**Adjusted R-squared** is a modified statistic that accounts for the number of predictors in the model; for simple linear regression with only one predictor, the difference between R-squared and adjusted R-squared is usually negligible.
+**Multiple R-squared:** Measures the proportion of variance in the dependent variable explained by the independent variable (e.g., Multiple R^2^ = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
 
-**Multiple R-squared:** Measures the proportion of variance in Y explained by X (e.g., R2 = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
-
-Adjusted R-squared: Also measures the proportion of variance in Y explained by X, however, it introduces a penalty based on the number of independent variables relative to the sample size.
+**Adjusted R-squared:** Also measures the proportion of variance in the dependent variable explained by the independent variable, however, it introduces a penalty based on the number of independent variables relative to the sample size.
 
 The difference between multiple R-squared and adjusted R-squared is negligible in cases where there is only 1 independent variable.
 
 **Residual Standard Error**
 
-The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed CLV values and the CLV values predicted by the regression model. It represents the standard deviation of the data points around the regression line. The residual standard error was 7.73 on 498 degrees of freedom. A residual standard error of 7.73 indicates that, on average, the predicted customer lifetime value from the model deviates from the actual observed value by approximately 7.73 units.
+The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed values in the dataset and the values predicted by the regression model. It represents the standard deviation of the data points around the regression line. For example, a residual standard error of 7.73 indicates that, on average, the model's predicted value of the dependent variable deviates from the actual observed value by approximately 7.73 units.
 
 A smaller residual standard error implies that the data points are more tightly clustered around the regression line, indicating a more precise model.
 
@@ -742,11 +734,11 @@ Further reading: <https://apastyle.apa.org/jars>
 
 The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
 
-## Academic Statement (APA)
+## Academic Statement (APA)—Academic-Ready Language
 
 A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
 
-## Business Analysis
+## Business Analysis—Boardroom-Ready Language
 
 The strength of the relationship highlights the critical importance of customer retention. Initiatives that effectively encourage repeat purchases appear to be a primary driver of customer lifetime value based on this analysis. This understanding can guide the allocation of resources towards strategies that foster customer loyalty and encourage repeat business.
 
