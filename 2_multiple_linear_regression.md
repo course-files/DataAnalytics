@@ -27,8 +27,8 @@ output:
     toc: true
     toc_depth: 4
     number_sections: true
-    fig_width: 4
-    fig_height: 4
+    fig_width: 6
+    fig_height: 6
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
@@ -119,6 +119,26 @@ str(advertising_data)
 
 [**Descriptive Statistics**]{.underline}
 
+Understanding your data can lead to:
+
+-   **Data cleaning:** To remove extreme outliers or impute missing data.
+
+-   **Data transformation:** To reduce skewness
+
+-   **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+
+-   **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+
+Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
+
+1.  **Measures of frequency:** count and percent
+
+2.  **Measures of central tendency:** mean, median, and mode
+
+3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) [includes a box and whisker plot for visualization], kurtosis, skewness [includes a histogram for visualization]).
+
+4.  **Measures of relationship:** covariance and correlation
+
 ## [**Measures of Frequency**]{.underline}
 
 This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories).
@@ -183,6 +203,8 @@ tail(advertising_data, 5)
 Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
 
 Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+
+The syntax `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. For example, specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to perform calculations on only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
 
 ### **Variance**
 
@@ -256,6 +278,8 @@ sapply(advertising_data[,], skewness, type = 2)
 ##      YouTube       TikTok     Facebook        Sales 
 ## -0.003603533 -0.003310514 -0.001325236  0.116540143
 ```
+
+As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that the sales were exceptionally high because of a viral marketing campaign.
 
 ## [**Measures of Relationship**]{.underline}
 
@@ -529,7 +553,7 @@ plot(mlr_test, which = 1)
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
 For the Durbin-Watson test:
 
@@ -558,7 +582,11 @@ With a Durbin-Watson test statistic of 0.76 and a *p* \< 0.05 in this case, we r
 
 ## [**Test of Normality**]{.underline}
 
-If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
+The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+
+A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+
+If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
 
 
 ``` r
@@ -568,6 +596,10 @@ plot(mlr_test, which = 2)
 ![](2_multiple_linear_regression_files/figure-docx/test_of_normality-1.png)<!-- -->
 
 ## [**Test of Homoscedasticity**]{.underline}
+
+Homoscedasticity requires that the spread of residuals should be constant across all levels of the independent variable. A scale-location plot (a.k.a. spread-location plot) can be used to conduct a test of homoscedasticity.
+
+The x-axis shows the fitted (predicted) values from the model and the y-axis shows the square root of the standardized residuals. The red line is added to help visualize any patterns.
 
 In a model with homoscedastic errors (equal variance across all predicted values):
 
@@ -579,7 +611,7 @@ In a model with homoscedastic errors (equal variance across all predicted values
 
 -   No obvious patterns, funnels, or trends should be visible
 
-In this case, there is homoscedasticity (the errors vary across all predicted values within a similar range).
+Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
 
 
 ``` r
@@ -606,7 +638,7 @@ p-Value:
 
 Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
 
-With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
+With a p-value \< 0.01, there is statistically significant evidence of homescedasticity in the residuals in this case (which is good).
 
 
 ``` r
@@ -623,6 +655,8 @@ lmtest::bptest(mlr_test)
 ```
 
 ## [**Quantitative Validation of Assumptions**]{.underline}
+
+The graphical representations of the various tests of assumptions should be accompanied by quantitative values. The `gvlma` package (Global Validation of Linear Models Assumptions) is useful for this purpose.
 
 
 ``` r
