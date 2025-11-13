@@ -1,21 +1,13 @@
 ---
 title: "Logistic Regression"
 author: "Allan Omondi"
-date: "2025-05-11"
+date: "2025-11-13"
 output:
   word_document:
     toc: true
     toc_depth: 4
     number_sections: true
     fig_width: 5
-    keep_md: true
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 4
-    fig_height: 4
-    self_contained: false
     keep_md: true
   pdf_document: 
     toc: true
@@ -26,6 +18,14 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 4
+    fig_height: 4
+    self_contained: false
+    keep_md: true
   html_notebook:
     toc: true
     toc_depth: 4
@@ -35,6 +35,16 @@ output:
 ---
 
 
+``` r
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
 
 # Load the Dataset
 
@@ -396,6 +406,13 @@ ggplot(subscription_churn_data,
 We then apply a logistic regression as a statistical test for regression.
 
 
+``` r
+log_test <- glm(renew ~ monthly_fee + customer_age + support_calls,
+                # This specifies that the generalized linear model to use
+                # is logistic regression
+                family = binomial,
+                data = subscription_churn_data)
+```
 
 View the summary of the model.
 
@@ -507,7 +524,11 @@ print(chi_2)
 ```
 
 ``` r
-p <- 1 - pchisq(chi_2, df = 3)
+# To get the degrees of freedom:
+calculated_df = length(coef(log_test)) - 1  # Subtract 1 for intercept
+
+
+p <- 1 - pchisq(chi_2, df = calculated_df)
 # to format as a scientific notation with four digits after the decimal place
 # sprintf("%.4e", p)
 format.pval(p, eps = .Machine$double.eps, digits = 2)
@@ -646,11 +667,13 @@ The test of linearity is necessary given that linearity is one of the key assump
 
 **Component-Plus-Residual (Partial-Residual) Plots**
 
-Logistic regression assumes that the relationship between the logit (log-odds) of the outcome and the continuous predictors is linear. A logit is the natural logarithm of the odds of an event occurring, i.e., if *p* is the probability of an event (where 0 \< *p* \< 1), the odds are $\frac{p}{1 - p}$ and the logit is:
+Logistic regression assumes that the relationship between the log-odds of the outcome and the continuous predictors is linear. A log-odds is the natural logarithm of the odds of an event occurring.
+
+If *p* is the probability of an event (where 0 \< *p* \< 1), the odds of the event occuring is the ratio of the probability that the event occurs to the probability that the event does not occur, i.e., $\frac{p}{1 - p}$ and the log-odds (computed using the logit function) of the event, *p*, is:
 
 $$ \text{logit}(p) = \ln\left(\frac{p}{1-p}\right) $$
 
-A roughly straight line indicates the logit-predictor linearity assumption is met.
+A roughly straight line indicates the "log-odds - predictor" linearity assumption is met.
 
 
 ``` r
@@ -661,17 +684,17 @@ crPlots(log_test)
 
 ![](3_logistic_regression_files/figure-docx/test_of_linearity-1.png)<!-- -->
 
-## Test of Independence of Errors
+## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are.
+This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated test statistics. It can also make findings appear more significant than they actually are.
 
-The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation).
+The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
 -   The null hypothesis, H~0~, is that there is no autocorrelation
 
 -   The alternative hypothesis, H~a~, is that there is autocorrelation
 
-If the p-value is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show *p* \> 0.05, therefore, the test of independence of errors around the regression line passes.
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.1573, therefore, the test of independence of errors around the regression line passes.
 
 
 ``` r
@@ -703,7 +726,7 @@ Multicollinearity arises when two or more independent variables (predictors) are
 
 ``` r
 pacman::p_load("car")
-vif(log_test)
+car::vif(log_test)
 ```
 
 ```
@@ -717,7 +740,7 @@ The `influencePlot()` function in R combines 3 key diagnostic measures into a si
 
 The plot displays:
 
--   Y-axis: Studentized residuals (standardized residuals adjusted for leverage).
+-   Y-axis: Studentized residuals (standardized residuals adjusted for leverage). This measures "outlierness" in the outcome variable.
 
 -   X-axis: Leverage (hat values), measuring how "unusual" an observation is in terms of its predictor values.
 
@@ -777,6 +800,15 @@ The influential outliers can then be:
 2.  Deleted so that the statistical test can be run again without them
 
 
+``` r
+influential_points <- as.numeric(row.names(influencePlot(log_test)))
+```
+
+![](3_logistic_regression_files/figure-docx/outliers_influencers_a-1.png)<!-- -->
+
+``` r
+subscription_churn_data_infl <- subscription_churn_data[influential_points, ]
+```
 
 Print the observation numbers that have been identified as influential outliers
 
