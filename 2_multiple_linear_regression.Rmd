@@ -3,21 +3,6 @@ title: "Multiple Linear Regression"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: 
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    fig_height: 5
-    fig_crop: false
-    keep_tex: true
-    latex_engine: xelatex
-  html_notebook:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    self_contained: false
   html_document:
     toc: true
     toc_depth: 4
@@ -32,6 +17,21 @@ output:
     number_sections: true
     fig_width: 5
     keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 5
+    self_contained: false
+  pdf_document: 
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
 ---
 
 ```{r setup_chunk, message=FALSE, warning=FALSE}
@@ -51,7 +51,7 @@ knitr::opts_knit$set(root.dir = here::here())
 ```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("readr")
 
-advertising_data <- read_csv("./data/advertising.csv")
+advertising_data <- read_csv("./data/sme_socialmedia_advertising_kenya.csv")
 head(advertising_data)
 ```
 
@@ -77,6 +77,26 @@ str(advertising_data)
 
 [**Descriptive Statistics**]{.underline}
 
+Understanding your data can lead to:
+
+-   **Data cleaning:** To remove extreme outliers or impute missing data.
+
+-   **Data transformation:** To reduce skewness
+
+-   **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+
+-   **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+
+Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
+
+1.  **Measures of frequency:** count and percent
+
+2.  **Measures of central tendency:** mean, median, and mode
+
+3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) [includes a box and whisker plot for visualization], kurtosis, skewness [includes a histogram for visualization]).
+
+4.  **Measures of relationship:** covariance and correlation
+
 ## [**Measures of Frequency**]{.underline}
 
 This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories).
@@ -89,11 +109,25 @@ The median and the mean of each numeric variable:
 summary(advertising_data)
 ```
 
+The first 5 rows in the dataset:
+
+```{r first_five, echo=TRUE, message=FALSE, warning=FALSE}
+head(advertising_data, 5)
+```
+
+The last 5 rows in the dataset:
+
+```{r last_five, echo=TRUE, message=FALSE, warning=FALSE}
+tail(advertising_data, 5)
+```
+
 ## [**Measures of Distribution**]{.underline}
 
 Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
 
 Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+
+The syntax `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. For example, specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to perform calculations on only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
 
 ### **Variance**
 
@@ -107,17 +141,19 @@ sapply(advertising_data[,], var)
 sapply(advertising_data[,], sd)
 ```
 
-### **Kurtosis**
+### **Kurtosis (Pearson)**
 
-The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS.
+The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS. It is referred to as "Pearson's definition of kurtosis".
 
 In “type = 2” (used in SPSS and SAS):
 
-1.  Kurtosis \< 3 implies a low number of outliers
+1.  Kurtosis \< 3 implies a low number of outliers → platykurtic
 
-2.  Kurtosis = 3 implies a medium number of outliers
+2.  Kurtosis = 3 implies a medium number of outliers → mesokurtic
 
-3.  Kurtosis \> 3 implies a high number of outliers
+3.  Kurtosis \> 3 implies a high number of outliers → leptokurtic
+
+High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies a possible underestimation of real-world variability. The typical remedy includes trimming outliers or using robust statistical methods that are less affected by outliers.
 
 ```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("e1071")
@@ -136,9 +172,13 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 
 3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
 
+Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
+
 ```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
 sapply(advertising_data[,], skewness, type = 2)
 ```
+
+As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that the sales were exceptionally high because of a viral marketing campaign.
 
 ## [**Measures of Relationship**]{.underline}
 
@@ -200,7 +240,6 @@ for (i in 1:4) {
 ### **Box and Whisker Plot**
 
 ```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-# `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
 for (i in 1:4) {
   if (is.numeric(advertising_data[[i]])) {
@@ -232,7 +271,7 @@ ggcorrplot(cor(advertising_data[,]))
 ```{r scatter_plot_1, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("corrplot")
 
-pairs(advertising_data$Sales ~ ., data = advertising_data, col = advertising_data$Sales)
+pairs(advertising_data$Sales ~ ., data = advertising_data)
 ```
 
 ```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
@@ -242,7 +281,7 @@ ggplot(advertising_data,
   geom_point() +
   geom_smooth(method = lm) +
   labs(
-    title = "Relationship between Sales Revenue and \nExpenditure on YouTube Marketing",
+    title = "Relationship between Sales Revenue and \nExpenditure on YouTube Marketing (KES)",
     x = "Expenditure",
     y = "Sales"
   )
@@ -258,8 +297,8 @@ ggplot(advertising_data_composite,
   geom_point() +
   geom_smooth(method = lm) +
   labs(
-    title = "Relationship between Sales Revenue and \nTotal Marketing Expenditure",
-    x = "Total Expenditure",
+    title = "Relationship between Sales Revenue and \nTotal Marketing Expenditure (KES)",
+    x = "Total Marketing Expenditure",
     y = "Sales"
   )
 ```
@@ -286,13 +325,9 @@ confint(mlr_test, level = 0.95)
 
 # Diagnostic EDA
 
-Diagnostic EDA is performed to validate that the regression assumptions are true with respect to the statistical test. Validating the regression assumption in turn ensures that the statistical tests applied are appropriate for the data and helps to prevent incorrect conclusions.
-
 ## [**Test of Linearity**]{.underline}
 
-The test of linearity is used to assess whether the relationship between the dependent variables and the independent variables is linear. This is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
-
-A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line, i.e., the residuals should randomly vary around the mean of the value of the response variable.
+For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line, i.e., the residuals should randomly vary around the mean of the value of the response variable.
 
 ```{r test_of_linearity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 plot(mlr_test, which = 1)
@@ -300,26 +335,28 @@ plot(mlr_test, which = 1)
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are.
+This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
-The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+For the Durbin-Watson test:
 
--   The null hypothesis, H~0~, is that there is no autocorrelation
+-   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation
+-   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
 
-If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.1573, therefore, the test of independence of errors around the regression line passes.
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
 
 ```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
 dwtest(mlr_test)
 ```
 
+With a Durbin-Watson test statistic of 0.76 and a *p* \< 0.05 in this case, we reject the null hypothesis that states that there is no autocorrelation. In other words, we conclude that the data contains autocorrelation.
+
 ## [**Test of Normality**]{.underline}
 
-The test of normality assesses whether the residuals are normally distributed, i.e., most residuals (errors) are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
 
-A Quantile-Quantile (Q-Q) plot is a scatterplot of the quantiles of the residuals against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
 
 If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
 
@@ -351,13 +388,27 @@ plot(mlr_test, which = 3)
 
 **Breusch-Pagan Test**
 
-The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot
+The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot.
 
-**Interpretation:** If the p-value is less than 0.05, there is statistically significant evidence of heteroscedasticity in the residuals.
+Formally:
+
+-   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+
+-   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
+
+p-Value:
+
+-   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
+
+-   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
+
+Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
+
+With a p-value \< 0.01, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
 
 ```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("lmtest")
-lmtest::bptest(slr_test)
+lmtest::bptest(mlr_test)
 ```
 
 ## [**Quantitative Validation of Assumptions**]{.underline}
@@ -372,7 +423,9 @@ summary(gvlma_results)
 
 ## Test of Multicollinearity
 
-Multicollinearity arises when two or more independent variables (predictors) are highly intercorrelated. The **Variance Inflation Factor (VIF)** quantifies how much the variance of a coefficient estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no collinearity; values above 5 suggest problematic levels of collinearity. High VIF values (VIF \> 5) suggest that the coefficient estimates are less reliable due to the correlations between predictors.
+Multicollinearity arises when two or more independent variables (predictors) are highly intercorrelated. The **Variance Inflation Factor (VIF)** quantifies how much the variance of a coefficient estimate is “inflated” due to multicollinearity.
+
+A VIF of 1 indicates no collinearity; values above 5 suggest problematic levels of collinearity. High VIF values (VIF \> 5) suggest that the coefficient estimates are less reliable due to the correlations between predictors.
 
 ```{r multicollinearity, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("car")
@@ -381,35 +434,77 @@ vif(mlr_test)
 
 # Interpretation of the Results
 
-## Academic Statement
+We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
 
-A simultaneous multiple linear regression analysis was conducted on data from 10 observations (N=10) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that neither expenses on YouTube ($\beta$ = 0.01, 95% CI [-.03, .04], SE = 0.02, *t*(6) = 0.38, *p* = .715), nor TikTok ($\beta$ = -0.01, 95% CI [-.09, .07], SE = 0.03, *t*(6) = -0.24, *p* = .820) nor Facebook ($\beta$ = 0.06, 95% CI [-.06, .18], SE = 0.05, *t*(6) = 1.28, *p* = .249) individually significantly predicted Sales (all *p* \> 0.05). The model explained 97.34% of the variance in Sales (Multiple R^2^ = .97, Adjusted R^2^ = .96, *F*(3, 6) = 73.32, *p* \< .001). The intercept was 32.02, 95% CI [-27.76, 91.80], SE = 24.43, *t*(6) = 1.31, *p* = .238. The residual standard error was 1.2, indicating a robust model. The full results are presented in the table below.
+**t-Statistic t(d.f.):** It quantifies how many standard errors the estimated coefficient deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero). The t-statistic has its corresponding p-value such that a p-value \< .05 implies a statistically significant t-statistic.
 
-|  Predictor  | $\beta$ |     95% CI      |  SE   | *t*(6) | *p*  |
-|:-----------:|:-------:|:---------------:|:-----:|:------:|:----:|
-| (Intercept) |  32.02  | [-27.76, 91.80] | 24.43 |  1.31  | .238 |
-|   YouTube   |  0.01   |   [-.03, .04]   | 0.02  |  0.38  | .715 |
-|   TikTok    |  -0.01  |   [-.09, .07]   | 0.03  | -0.24  | .820 |
-|  Facebook   |  0.06   |   [-.06, .18]   | 0.05  |  1.28  | .249 |
+**Degrees of Freedom (d.f.):** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+
+For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
+
+**F-Statistic**
+
+**F(d.f. in numerator, d.f. in denominator):** The numerator degree of freedom corresponds to the number of predictor variables, while the denominator degree of freedom is derived from the total number of observations minus the number of predictors and then minus 1 for the intercept.
+
+The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
+
+Also, a low p-value of the F-statistic (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
+
+**Coefficient of Determination (R^2^)**
+
+The R-squared value represents the proportion of the total variation in the dependent variable that can be attributed to or explained by the independent variable. An R-squared of 0.96 indicates that approximately 96% of the variability in the dependent variable can be explained by its linear relationship with the independent variable. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
+
+**Multiple R-squared:** Measures the proportion of variance in the dependent variable explained by the independent variable (e.g., Multiple R^2^ = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
+
+**Adjusted R-squared:** Also measures the proportion of variance in the dependent variable explained by the independent variable, however, it introduces a penalty based on the number of independent variables relative to the sample size.
+
+The difference between multiple R-squared and adjusted R-squared is negligible in cases where there is only 1 independent variable.
+
+**Residual Standard Error**
+
+The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed values in the dataset and the values predicted by the regression model. It represents the standard deviation of the data points around the regression line. For example, a residual standard error of 7.73 indicates that, on average, the model's predicted value of the dependent variable deviates from the actual observed value by approximately 7.73 units.
+
+A smaller residual standard error implies that the data points are more tightly clustered around the regression line, indicating a more precise model.
+
+**Confidence Interval**
+
+A 95% confidence interval (CI) for a parameter—such as a regression coefficient—provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
+
+**Uncertainty quantification:** A CI communicates your estimate’s precision—narrower intervals imply more precise estimates (often due to larger samples or less variability), whereas wider intervals indicate greater uncertainty about the true value.
+
+## Limitations and Diagnostic Findings
+
+**Methodological Limitation:** Lack of experimental variation in advertisement expenditure limits causal attribution to any single platform.
+
+**Diagnostic Findings:** The regression residuals exhibited evidence of heteroscedasticity, as indicated by a significant Breusch–Pagan test, $\chi^2$(3) = 304.78, p \< .001. Additionally, the Durbin–Watson test revealed evidence of positive autocorrelation in the residuals, *D* = 0.76, *p* \< .01. These results suggest that the assumptions of constant error variance and independence were not fully met, thereby limiting the validity of the standard error estimates and the inferential tests (e.g., t-tests and F-tests).
+
+## Academic Statement (APA)—Academic-Ready Language: Without data transformation
+
+A simultaneous multiple linear regression analysis was conducted on data from 250,000 observations (*N*=250,000) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that expenses on YouTube ($\beta$ = 8.08, 95% CI [8.02, 8.13], SE = 0.02, *t*(249,996) = 277.54, *p* \< 0.01), TikTok ($\beta$ = 7.30, 95% CI [7.22, 7.39], SE = 0.04, *t*(249,996) = 165.63, *p* \< 0.01), and Facebook ($\beta$ = 7.84, 95% CI [7.77, 7.91], SE = 0.35, *t*(249,996) = 222.12, *p* \< 0.01) significantly predicted Sales (all large t-values and *p* \< 0.05). The model explained 38.06% of the variance in Sales (Multiple R^2^ = 0.38, Adjusted R^2^ = 0.38, *F*(3, 249,996) = 51,210, *p* \< 0.01). The intercept was 236,800, 95% CI [228,608.10, 244,953.50], SE = 4,170, *t*(249,996) = 56.78, *p* \< 0.01. The residual standard error was 587,400. This inidcates that the predictors significantly contributed towards explaining Sales, however, diagnostic findings relieved that violations of homoscedasticity and independence of residuals (autocorrelation), suggesting that the model's robustness and reliability of standard errors may be limited. The results are presented in the table below.
+
+|  Predictor  | $\beta$ |          95% CI          |  SE   | *t*(249,996) |  *p*   |
+|:-----------:|:-------:|:------------------------:|:-----:|:------------:|:------:|
+| (Intercept) | 236,800 | [228,608.10, 244,953.50] | 4,170 |    56.78     | \< .01 |
+|   YouTube   |  8.08   |       [8.02, 8.13]       | 0.02  |    277.54    | \< .01 |
+|   TikTok    |  7.30   |       [7.22, 7.39]       | 0.04  |    165.63    | \< .01 |
+|  Facebook   |  7.84   |       [7.77, 7.91]       | 0.35  |    222.12    | \< .01 |
 
 : Regression Coefficients Predicting Sales from Multiple Advertising Channels
 
-***Note.*** N = 10; SE = standard error; CI = confidence interval.
+***Note.*** *N* = 250,000; *SE* = standard error; *CI* = confidence interval.
 
-Even though the results indicated a robust model whereby advertisement expenditures collectively predict sales, individual parameter estimates did not reach statistical significance when controlling for the other parameters. This suggests that the advertising channels collectively explain variation in Sales but do not uniquely predict Sales in this small sample. This may reflect multicollinearity among the different advertising platforms or limited statistical power due to the small sample size (*N* = 10). Future research should investigate these predictors with a larger sample and assess potential collinearity.
+Although all advertising channels significantly predicted Sales, YouTube expenditure had a slightly stronger effect ($\beta$ = 8.08) compared to Facebook ($\beta$ = 7.84) and TikTok ($\beta$ = 7.30). This suggests that, among the three platforms, YouTube contributes marginally more to Sales when holding other expenditures constant.
 
-## Business Analysis
+## Business Analysis (Boardroom-Ready Language)
 
-Although aggregate digital advertising spend across YouTube, TikTok, and Facebook is highly predictive of Sales (accounting for nearly all observed variation), the absence of statistically significant individual coefficients indicates that no single channel can be reliably credited with driving incremental Sales in this dataset. This finding suggests that, within the current investment levels and the constraints of a small sample, the three platforms function as a cohesive portfolio rather than as independent drivers of sales revenue. Recommendation for management:
+For every one Kenyan Shilling (KES) increase in YouTube advertising expenditure, Sales are predicted to increase by approximately 8.08 shillings, holding TikTok and Facebook expenditure constant. This is slightly higher than the corresponding effects for Facebook (7.84) and TikTok (7.30).
 
-1.  Continue to view YouTube, TikTok, and Facebook as complementary elements of a unified digital marketing strategy focusing on the total expenditure rather than favouring a single platform.
+Recommendation:
 
-## Limitations
+-   Management should continue to treat YouTube, TikTok, and Facebook as complementary pillars of a unified digital marketing strategy. However, a modest increase in YouTube advertising expenditure is advisable, given its slightly stronger association with Sales performance. Continuous monitoring and ROI analysis should be maintained to ensure sustained effectiveness across platforms.
 
-1.  Small Sample Size (N = 10): Using a limited number of observations restricts statistical power and inflates standard errors, raising the risk of a Type II error (failing to detect true channel effects).
+# References and Further Reading
 
-2.  Potential Multicollinearity: High intercorrelations among YouTube, TikTok, and Facebook expenditures may obscure unique contributions.
+American Psychological Association. (2025, February). *Journal Article Reporting Standards (JARS)*. APA Style. Retrieved April 28, 2025, from <https://apastyle.apa.org/jars>
 
-3.  Restricted Expenditure Range: Limited range of advertisement expenditures impairs the ability to detect linear effects.
-
-4.  Methodology: Lack of experimental variation in advertisement expenditure limits causal attribution to any single platform.
+Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress. <https://link.springer.com/book/10.1007/978-1-4842-8754-5>
