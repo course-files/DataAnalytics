@@ -3,12 +3,6 @@ title: "Multiple Linear Regression"
 author: "Allan Omondi"
 date: "2025-11-13"
 output:
-  word_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    keep_md: true
   html_document:
     toc: true
     toc_depth: 4
@@ -16,6 +10,12 @@ output:
     fig_width: 5
     fig_height: 5
     self_contained: false
+    keep_md: true
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 5
     keep_md: true
   html_notebook:
     toc: true
@@ -398,7 +398,7 @@ for (i in 1:4) {
 }
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/visualization_histogram-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-docx/visualization_histogram-2.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/visualization_histogram-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-html/visualization_histogram-2.png)<!-- -->
 
 ### **Box and Whisker Plot**
 
@@ -414,7 +414,7 @@ for (i in 1:4) {
 }
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/visualization_boxplot-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-docx/visualization_boxplot-2.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/visualization_boxplot-1.png)<!-- -->![](2_multiple_linear_regression_files/figure-html/visualization_boxplot-2.png)<!-- -->
 
 ### **Missing Data Plot**
 
@@ -425,7 +425,7 @@ pacman::p_load("Amelia")
 missmap(advertising_data, col = c("red", "grey"), legend = TRUE)
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/missing_data_plot-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/missing_data_plot-1.png)<!-- -->
 
 ### **Correlation Plot**
 
@@ -436,7 +436,7 @@ pacman::p_load("ggcorrplot")
 ggcorrplot(cor(advertising_data[,]))
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/correlation_plot-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/correlation_plot-1.png)<!-- -->
 
 ### **Scatter Plot**
 
@@ -447,7 +447,7 @@ pacman::p_load("corrplot")
 pairs(advertising_data$Sales ~ ., data = advertising_data)
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/scatter_plot_1-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/scatter_plot_1-1.png)<!-- -->
 
 
 ``` r
@@ -463,7 +463,7 @@ ggplot(advertising_data,
   )
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/scatter_plot_2-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/scatter_plot_2-1.png)<!-- -->
 
 
 ``` r
@@ -482,7 +482,7 @@ ggplot(advertising_data_composite,
   )
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/scatter_plot_3-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/scatter_plot_3-1.png)<!-- -->
 
 # Statistical Test
 
@@ -549,7 +549,7 @@ For the model to pass the test of linearity, there should be no pattern in the d
 plot(mlr_test, which = 1)
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/test_of_linearity-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/test_of_linearity-1.png)<!-- -->
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
@@ -593,7 +593,7 @@ If the points in the Q-Q plot fall along a straight line, then the normality ass
 plot(mlr_test, which = 2)
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/test_of_normality-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/test_of_normality-1.png)<!-- -->
 
 ## [**Test of Homoscedasticity**]{.underline}
 
@@ -618,7 +618,7 @@ Points forming a cone shape that widens from left to right suggests heteroscedas
 plot(mlr_test, which = 3)
 ```
 
-![](2_multiple_linear_regression_files/figure-docx/test_of_homoscedasticity-1.png)<!-- -->
+![](2_multiple_linear_regression_files/figure-html/test_of_homoscedasticity-1.png)<!-- -->
 
 **Breusch-Pagan Test**
 
@@ -638,7 +638,7 @@ p-Value:
 
 Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
 
-With a p-value \< 0.01, there is statistically significant evidence of homescedasticity in the residuals in this case (which is good).
+With a p-value \< 0.01, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
 
 
 ``` r
@@ -726,11 +726,11 @@ vif(mlr_test)
 
 **Methodological Limitation:** Lack of experimental variation in advertisement expenditure limits causal attribution to any single platform.
 
-**Diagnostic Findings:** The regression residuals exhibited evidence of heteroscedasticity, as indicated by a significant Breusch–Pagan test, $\chi^2$(3) = 304.78, p \< .01. Additionally, the Durbin–Watson test revealed evidence of positive autocorrelation in the residuals, *D*(3, *N* = 250,000) = 0.76, *p* \< .01. These results suggest that the assumptions of constant error variance and independence were not fully met, thereby limiting the validity of the standard error estimates and the inferential tests (e.g., t-tests and F-tests).
+**Diagnostic Findings:** The regression residuals exhibited evidence of heteroscedasticity, as indicated by a significant Breusch–Pagan test, $\chi^2$(3) = 304.78, p \< .001. Additionally, the Durbin–Watson test revealed evidence of positive autocorrelation in the residuals, *D* = 0.76, *p* \< .01. These results suggest that the assumptions of constant error variance and independence were not fully met, thereby limiting the validity of the standard error estimates and the inferential tests (e.g., t-tests and F-tests).
 
 ## Academic Statement (APA) - without data transformation
 
-A simultaneous multiple linear regression analysis was conducted on data from 250,000 observations (*N*=250,000) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that expenses on YouTube ($\beta$ = 8.08, 95% CI [8.02, 8.13], SE = 0.02, *t*(249,996) = 277.54, *p* \< 0.01), TikTok ($\beta$ = 7.30, 95% CI [7.22, 7.39], SE = 0.04, *t*(249,996) = 165.63, *p* \< 0.01), and Facebook ($\beta$ = 7.84, 95% CI [7.77, 7.91], SE = 0.35, *t*(249,996) = 222.12, *p* \< 0.01) significantly predicted Sales (all large t-values and *p* \< 0.05). The model explained 38.06% of the variance in Sales (Multiple R^2^ = 0.38, Adjusted R^2^ = 0.38, *F*(3, 249,996) = 51,210, *p* \< 0.01). The intercept was 236,800, 95% CI [228,608.10, 244,953.50], SE = 4,170, *t*(249,996) = 56.78, *p* \< 0.01. The residual standard error was 587,400. This inidcates that the predictors significantly contributed to explaining Sales, however, diagnostic findings relieved that violations of homoscedasticity and independence of residuals (autocorrelation), suggesting that the models robustness and reliability of standard errors may be limited. The full results are presented in the table below.
+A simultaneous multiple linear regression analysis was conducted on data from 250,000 observations (*N*=250,000) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that expenses on YouTube ($\beta$ = 8.08, 95% CI [8.02, 8.13], SE = 0.02, *t*(249,996) = 277.54, *p* \< 0.01), TikTok ($\beta$ = 7.30, 95% CI [7.22, 7.39], SE = 0.04, *t*(249,996) = 165.63, *p* \< 0.01), and Facebook ($\beta$ = 7.84, 95% CI [7.77, 7.91], SE = 0.35, *t*(249,996) = 222.12, *p* \< 0.01) significantly predicted Sales (all large t-values and *p* \< 0.05). The model explained 38.06% of the variance in Sales (Multiple R^2^ = 0.38, Adjusted R^2^ = 0.38, *F*(3, 249,996) = 51,210, *p* \< 0.01). The intercept was 236,800, 95% CI [228,608.10, 244,953.50], SE = 4,170, *t*(249,996) = 56.78, *p* \< 0.01. The residual standard error was 587,400. This inidcates that the predictors significantly contributed towards explaining Sales, however, diagnostic findings relieved that violations of homoscedasticity and independence of residuals (autocorrelation), suggesting that the model's robustness and reliability of standard errors may be limited. The results are presented in the table below.
 
 |  Predictor  | $\beta$ |          95% CI          |  SE   | *t*(249,996) |  *p*   |
 |:-----------:|:-------:|:------------------------:|:-----:|:------------:|:------:|
