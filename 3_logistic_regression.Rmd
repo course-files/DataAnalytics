@@ -12,6 +12,12 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 5
+    keep_md: true
   html_document:
     toc: true
     toc_depth: 4
@@ -19,12 +25,6 @@ output:
     fig_width: 4
     fig_height: 4
     self_contained: false
-    keep_md: true
-  word_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
     keep_md: true
   html_notebook:
     toc: true
@@ -441,7 +441,7 @@ print(auc_value)
 ```
 
 | AUC Value | Interpretation |
-|----|----|
+|------------------------------------|------------------------------------|
 | 0.5 | Using the logistic regression model is equivalent to randomly guessing |
 | 0.6 - 0.7 | Poor discrimination of the classes |
 | 0.7 - 0.8 | Acceptable discrimination of the classes (fair) |
