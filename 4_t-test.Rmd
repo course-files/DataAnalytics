@@ -326,7 +326,7 @@ The larger the difference in means, the larger the t-value. Also, the larger the
 
 | **Value of the `alternative` Parameter** | **Test Type** | **Alternative Hypothesis (Ha​)** | **Practical Interpretation** |
 |------------------|------------------|------------------|------------------|
-| **`"two.sided"`** (Default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
+| **`"two.sided"`** (The default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
 | **`"greater"`** | **One-Tailed** (Upper-Tailed) | $H_a: \mu > \mu_0$ (or $\mu_1 > \mu_2$) | Tests if the true mean (or mean difference) is **strictly greater than** the hypothesized value. You are *only* interested in a significant result in the positive direction. |
 | **`"less"`** | **One-Tailed** (Lower-Tailed) | $H_a: \mu < \mu_0$ (or $\mu_1 < \mu_2$) | Tests if the true mean (or mean difference) is **strictly less than** the hypothesized value. You are *only* interested in a significant result in the negative direction. |
 
@@ -349,6 +349,16 @@ t.test(
   sales_performance_data$SalesTargetA,
   mu = 50,
   alternative = "greater"
+)
+```
+
+**Question 1.c.:** *Is Product A less than the monthly sales target of 50 units?*
+
+```{r one_sample_t_test_less, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$SalesTargetA,
+  mu = 50,
+  alternative = "less"
 )
 ```
 
@@ -377,7 +387,7 @@ t.test(
 
 ## Paired Samples t-Test
 
-**Question 3.a.:** *Was the sales performance before training lower than the sales performance after training?*
+**Question 3.a.:** *Was the sales performance before training lower than the sales performance after training for each salesperson?*
 
 ```{r paired_sample_t_test_lesser, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
@@ -388,7 +398,7 @@ t.test(
 )
 ```
 
-**Question 3.b.:** *Was there a difference in sales performance before training versus after training?*
+**Question 3.b.:** *Was there a difference in sales performance before training versus after training for each salesperson?*
 
 ```{r paired_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
