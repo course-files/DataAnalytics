@@ -56,7 +56,17 @@ knitr::opts_knit$set(root.dir = here::here())
 
 # Load the Dataset
 
-The following synthetic dataset contains the estimated Customer Lifetime Value (CLV) as the dependent variable and the customer purchase frequency as the independent variable. The dataset is loaded as shown below.
+The following synthetic dataset contains a record of the number of sales for Product A. Variables include:
+
+-   `SalesTargetA` — monthly sales for Product A.
+
+-   `MarketingStrategy` — Either a “Digital” or “Traditional” marketing strategy.
+
+-   `WeeklySales` — weekly sales under the assigned marketing strategy.
+
+-   `BeforeTraining` — sales of the salesperson before the training program.
+
+-   `AfterTraining` — the same salesperson’s sales after the training program.
 
 ```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
 # `pacman::p_load()` is designed to both install and load packages
@@ -302,7 +312,7 @@ ggplot(sales_performance_data,
 
 # Statistical Test
 
-A t-test is used to determine if there is a significant difference between the means of two groups. A t-test compares both the sample mean and the standard deviations while considering the sample size and the degree of variability of the data.
+A t-test is used to determine if there is a significant difference between the means of two groups. A t-test compares both the sample mean and the standard deviations while considering the sample size and the degree of variability in the data.
 
 Three types of t-test:
 
@@ -310,12 +320,12 @@ Three types of t-test:
 
 -   **Independent samples t-test:** To compare the mean of two independent samples, e.g., comparing the mean of clients who bought product X versus those who did not buy product X.
 
--   **Paired samples t-test:** To compare the mean of two dependent samples, e.g., a before-and-after comparison of the same samples.
+-   **Paired samples t-test:** To compare the mean of two related measures for the same observation, e.g., a before-and-after comparison of sales for the same salesperson.
 
 The larger the difference in means, the larger the t-value. Also, the larger the variance in the data, the less meaningful the t-value is.
 
 | **Value of the `alternative` Parameter** | **Test Type** | **Alternative Hypothesis (Ha​)** | **Practical Interpretation** |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | **`"two.sided"`** (Default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
 | **`"greater"`** | **One-Tailed** (Upper-Tailed) | $H_a: \mu > \mu_0$ (or $\mu_1 > \mu_2$) | Tests if the true mean (or mean difference) is **strictly greater than** the hypothesized value. You are *only* interested in a significant result in the positive direction. |
 | **`"less"`** | **One-Tailed** (Lower-Tailed) | $H_a: \mu < \mu_0$ (or $\mu_1 < \mu_2$) | Tests if the true mean (or mean difference) is **strictly less than** the hypothesized value. You are *only* interested in a significant result in the negative direction. |
