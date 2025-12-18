@@ -352,6 +352,16 @@ t.test(
 )
 ```
 
+**Question 1.c.:** *Is Product A less than the monthly sales target of 50 units?*
+
+```{r one_sample_t_test_less, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$SalesTargetA,
+  mu = 50,
+  alternative = "less"
+)
+```
+
 ## Independent Samples t-Test
 
 **Question 2.a.:** *Does digital marketing outperform traditional marketing in weekly sales?*
