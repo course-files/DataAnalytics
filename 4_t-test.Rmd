@@ -56,7 +56,7 @@ knitr::opts_knit$set(root.dir = here::here())
 
 # Load the Dataset
 
-The following synthetic dataset contains a record of the number of sales for Product A. Variables include:
+The following **synthetic dataset** contains a record of the number of sales for Product A. Variables include:
 
 -   `SalesTargetA` — monthly sales for Product A
 
