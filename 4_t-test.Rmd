@@ -387,7 +387,7 @@ t.test(
 
 ## Paired Samples t-Test
 
-**Question 3.a.:** *Was the sales performance before training lower than the sales performance after training?*
+**Question 3.a.:** *Was the sales performance before training lower than the sales performance after training for each salesperson?*
 
 ```{r paired_sample_t_test_lesser, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
@@ -398,7 +398,7 @@ t.test(
 )
 ```
 
-**Question 3.b.:** *Was there a difference in sales performance before training versus after training?*
+**Question 3.b.:** *Was there a difference in sales performance before training versus after training for each salesperson?*
 
 ```{r paired_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
