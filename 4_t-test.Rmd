@@ -58,15 +58,15 @@ knitr::opts_knit$set(root.dir = here::here())
 
 The following synthetic dataset contains a record of the number of sales for Product A. Variables include:
 
--   `SalesTargetA` — monthly sales for Product A.
+-   `SalesTargetA` — monthly sales for Product A
 
--   `MarketingStrategy` — Either a “Digital” or “Traditional” marketing strategy.
+-   `MarketingStrategy` — Either a “Digital” or “Traditional” marketing strategy
 
--   `WeeklySales` — weekly sales under the assigned marketing strategy.
+-   `WeeklySales` — weekly sales under the assigned marketing strategy
 
--   `BeforeTraining` — sales of the salesperson before the training program.
+-   `BeforeTraining` — sales of the salesperson before the training program
 
--   `AfterTraining` — the same salesperson’s sales after the training program.
+-   `AfterTraining` — the same salesperson’s sales after the training program
 
 ```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
 # `pacman::p_load()` is designed to both install and load packages
