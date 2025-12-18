@@ -1,5 +1,5 @@
 ---
-title: "Simple Linear Regression"
+title: "t-Test"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
@@ -56,14 +56,24 @@ knitr::opts_knit$set(root.dir = here::here())
 
 # Load the Dataset
 
-The following synthetic dataset contains the estimated Customer Lifetime Value (CLV) as the dependent variable and the customer purchase frequency as the independent variable. The dataset is loaded as shown below.
+The following **synthetic dataset** contains a record of the number of sales for Product A. Variables include:
+
+-   `SalesTargetA` — monthly sales for Product A
+
+-   `MarketingStrategy` — Either a “Digital” or “Traditional” marketing strategy
+
+-   `WeeklySales` — weekly sales under the assigned marketing strategy
+
+-   `BeforeTraining` — sales of the salesperson before the training program
+
+-   `AfterTraining` — the same salesperson’s sales after the training program
 
 ```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
 # `pacman::p_load()` is designed to both install and load packages
 pacman::p_load("readr")
 
-clv_data <- read_csv("./data/clv_data.csv")
-head(clv_data)
+sales_performance_data <- read_csv("./data/sales_performance.csv")
+head(sales_performance_data)
 ```
 
 # Initial EDA
@@ -73,17 +83,17 @@ head(clv_data)
 The number of observations and variables.
 
 ```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
-dim(clv_data)
+dim(sales_performance_data)
 ```
 
 [**View the Data Types**]{.underline}
 
 ```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(clv_data, class)
+sapply(sales_performance_data, class)
 ```
 
 ```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
-str(clv_data)
+str(sales_performance_data)
 ```
 
 [**Descriptive Statistics**]{.underline}
@@ -110,26 +120,30 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 
 ## [**Measures of Frequency**]{.underline}
 
-This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories for the gender).
+```{r measures_of_frequency, echo=TRUE, message=FALSE, warning=FALSE}
+sales_performance_data_freq <- sales_performance_data$MarketingStrategy
+cbind(frequency = table(sales_performance_data_freq),
+      percentage = prop.table(table(sales_performance_data_freq)) * 100)
+```
 
 ## [**Measures of Central Tendency**]{.underline}
 
 The median and the mean of each numeric variable:
 
 ```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
-summary(clv_data)
+summary(sales_performance_data)
 ```
 
 The first 5 rows in the dataset:
 
 ```{r first_five, echo=TRUE, message=FALSE, warning=FALSE}
-head(clv_data, 5)
+head(sales_performance_data, 5)
 ```
 
 The last 5 rows in the dataset:
 
 ```{r last_five, echo=TRUE, message=FALSE, warning=FALSE}
-tail(clv_data, 5)
+tail(sales_performance_data, 5)
 ```
 
 ## [**Measures of Distribution**]{.underline}
@@ -145,13 +159,13 @@ The syntax `dataset[rows, columns]` can be used to specify the exact rows and co
 ```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
 # `sapply()` is designed to apply a function to a variable in a dataset
 # In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
-sapply(clv_data[,], var)
+sapply(sales_performance_data[,c(1,3,4,5)], var)
 ```
 
 ### **Standard Deviation**
 
 ```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(clv_data[,], sd)
+sapply(sales_performance_data[,c(1,3,4,5)], sd)
 ```
 
 ### **Kurtosis (Pearson)**
@@ -170,7 +184,7 @@ High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estim
 
 ```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("e1071")
-sapply(clv_data[,],  kurtosis, type = 2)
+sapply(sales_performance_data[,c(1,3,4,5)],  kurtosis, type = 2)
 ```
 
 ### **Skewness**
@@ -188,7 +202,7 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
 
 ```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(clv_data[,], skewness, type = 2)
+sapply(sales_performance_data[,c(1,3,4,5)], skewness, type = 2)
 ```
 
 As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to always looking it at it as a distortion that needs to be corrected.
@@ -208,7 +222,7 @@ Covariance is a statistical measure that indicates the direction of the linear r
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
 ```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
-cov(clv_data, method = "spearman")
+cov(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
 ### **Correlation**
@@ -218,13 +232,13 @@ A strong correlation between variables enables us to better predict the value of
 We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
 
 ```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
-cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = "spearman")
+cor.test(sales_performance_data$BeforeTraining, sales_performance_data$AfterTraining, method = "spearman")
 ```
 
 To view the correlation of all variables
 
 ```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
-cor(clv_data, method = "spearman")
+cor(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
 ## [**Basic Visualizations**]{.underline}
@@ -236,16 +250,16 @@ cor(clv_data, method = "spearman")
 # the visualization into a 1 row by 2 columns grid
 # `for (i in 1:2)` This is used to identify the variable (column) 
 # that is being processed
-# `clv_data[[i]]` This is used to extract the i-th column as a vector
+# `sales_performance_data[[i]]` This is used to extract the i-th column as a vector
 # `hist()` This is the function used to plot the histogram
 par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    hist(clv_data[[i]],
-         main = names(clv_data)[i],
-         xlab = names(clv_data)[i])
+for (i in 1:5) {
+  if (is.numeric(sales_performance_data[[i]])) {
+    hist(sales_performance_data[[i]],
+         main = names(sales_performance_data)[i],
+         xlab = names(sales_performance_data)[i])
   } else {
-    message(paste("Column", names(clv_data)[i],
+    message(paste("Column", names(sales_performance_data)[i],
                   "is not numeric and will be skipped."))
   }
 }
@@ -256,11 +270,11 @@ for (i in 1:2) {
 ```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 # `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    boxplot(clv_data[[i]], main = names(clv_data)[i])
+for (i in 1:5) {
+  if (is.numeric(sales_performance_data[[i]])) {
+    boxplot(sales_performance_data[[i]], main = names(sales_performance_data)[i])
   } else {
-    message(paste("Column", names(clv_data)[i], "is not numeric and will be skipped."))
+    message(paste("Column", names(sales_performance_data)[i], "is not numeric and will be skipped."))
   }
 }
 ```
@@ -270,7 +284,7 @@ for (i in 1:2) {
 ```{r missing_data_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("Amelia")
 
-missmap(clv_data, col = c("red", "grey"), legend = TRUE)
+missmap(sales_performance_data, col = c("red", "grey"), legend = TRUE)
 ```
 
 ### **Correlation Plot**
@@ -278,156 +292,233 @@ missmap(clv_data, col = c("red", "grey"), legend = TRUE)
 ```{r correlation_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("ggcorrplot")
 
-ggcorrplot(cor(clv_data[,]))
+ggcorrplot(cor(sales_performance_data[,c(1,3,4,5)]))
 ```
 
 ### **Scatter Plot**
 
-```{r scatter_plot_1, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-pacman::p_load("corrplot")
-
-pairs(customer_lifetime_value ~ ., data = clv_data,
-      col = clv_data$customer_lifetime_value)
-```
-
 ```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("ggplot2")
-ggplot(clv_data,
-       aes(x = purchase_frequency, y = customer_lifetime_value)) + 
+ggplot(sales_performance_data,
+       aes(x = BeforeTraining, y = AfterTraining)) + 
   geom_point() +
   geom_smooth(method = lm) +
   labs(
-    title = "Relationship between Customer Lifetime Value and Purchase Frequency",
-    x = "Purchase Frequency",
-    y = "Customer Lifetime Value"
+    title = "Relationship between Before Training and After Training",
+    x = "Before Training",
+    y = "After Training"
   )
 ```
 
 # Statistical Test
 
-We then apply a simple linear regression as a statistical test for regression.
+A t-test is used to determine if there is a significant difference between the means of two groups. A t-test compares both the sample mean and the standard deviations while considering the sample size and the degree of variability in the data.
 
-```{r statistical_test_SLR, echo=TRUE, message=FALSE, warning=FALSE}
-slr_test <- lm(customer_lifetime_value ~ purchase_frequency, data = clv_data)
+Three types of t-test:
+
+-   **One sample t-test:** To compare the mean of one sample with a known reference, e.g., comparing the sample mean versus the business' claimed mean.
+
+-   **Independent samples t-test:** To compare the mean of two independent samples, e.g., comparing the mean of clients who bought product X versus those who did not buy product X.
+
+-   **Paired samples t-test:** To compare the mean of two related measures for the same observation, e.g., a before-and-after comparison of sales for the same salesperson.
+
+The larger the difference in means, the larger the t-value. Also, the larger the variance in the data, the less meaningful the t-value is.
+
+| **Value of the `alternative` Parameter** | **Test Type** | **Alternative Hypothesis (Ha​)** | **Practical Interpretation** |
+|------------------|------------------|------------------|------------------|
+| **`"two.sided"`** (Default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
+| **`"greater"`** | **One-Tailed** (Upper-Tailed) | $H_a: \mu > \mu_0$ (or $\mu_1 > \mu_2$) | Tests if the true mean (or mean difference) is **strictly greater than** the hypothesized value. You are *only* interested in a significant result in the positive direction. |
+| **`"less"`** | **One-Tailed** (Lower-Tailed) | $H_a: \mu < \mu_0$ (or $\mu_1 < \mu_2$) | Tests if the true mean (or mean difference) is **strictly less than** the hypothesized value. You are *only* interested in a significant result in the negative direction. |
+
+## One Sample t-Test
+
+**Question 1.a.:** *Is Product A meeting the monthly sales target of 50 units?*
+
+```{r one_sample_t_test_2_sided, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$SalesTargetA,
+  mu = 50,
+  alternative = "two.sided"
+)
 ```
 
-View the summary of the model.
+**Question 1.b.:** *Is Product A greater than the monthly sales target of 50 units?*
 
-```{r statistical_test_interpretation, echo=TRUE, message=FALSE, warning=FALSE}
-summary(slr_test)
+```{r one_sample_t_test_greater, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$SalesTargetA,
+  mu = 50,
+  alternative = "greater"
+)
 ```
 
-The confidence level represents the degree of certainty that a confidence interval contains the true population parameter. For example, a 95% confidence level means that if you were to take many random samples and compute the confidence interval from each, about 95% of those intervals would contain the true population value, while about 5% would not.
+## Independent Samples t-Test
 
-To obtain a 95% confidence interval:
+**Question 2.a.:** *Does digital marketing outperform traditional marketing in weekly sales?*
 
-```{r 95_confidence_interval, echo=TRUE, message=FALSE, warning=FALSE}
-confint(slr_test, level = 0.95)
+```{r independent_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  WeeklySales ~ MarketingStrategy,
+  data = sales_performance_data,
+  levels = c("Digital", "Traditional"),
+  alternative = "greater"   # Digital > Traditional
+)
 ```
 
-# Diagnostic EDA (Model Diagnostics)
+**Question 2.b.:** *Is there a difference in weekly sales between digital marketing and traditional marketing?*
 
-Diagnostic Exploratory Data Analysis (EDA) is performed to verify that the assumptions underlying the regression model are satisfied. Confirming that these assumptions hold ensures that the statistical tests used in the model are valid for the data, thus reducing the risk of drawing incorrect or misleading conclusions in your data analysis.
-
-## [**Test of Linearity**]{.underline}
-
-The test of linearity is used to assess whether the relationship between the dependent variable and the independent variable(s) is linear. This is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
-
-A plot of the residuals versus the fitted values enables us to test for linearity. For the model to pass the test of linearity, there should be no pattern in the distribution of residuals and the residuals should be randomly placed around the 0.0 residual line.
-
-```{r test_of_linearity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-plot(slr_test, which = 1)
+```{r independent_sample_t_test_greater, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  WeeklySales ~ MarketingStrategy,
+  data = sales_performance_data,
+  alternative = "two.sided"
+)
 ```
 
-## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
+## Paired Samples t-Test
 
-This test is necessary to confirm that each observation is independent of the other. It helps to identify autocorrelation that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated t-statistics. It can also make findings appear more significant than they actually are. The "Durbin-Watson Test" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+**Question 3.a.:** *Was the sales performance before training lower than the sales performance after training?*
 
-For the Durbin-Watson test:
-
--   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
-
--   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
-
-If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
-
-```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("lmtest")
-dwtest(slr_test)
+```{r paired_sample_t_test_lesser, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$BeforeTraining,
+  sales_performance_data$AfterTraining,
+  paired = TRUE,
+  alternative = "less"   # Before < After
+)
 ```
 
-The results show a p-value of \>.05 (and a DW statistic of 1.91), therefore, the test of independence of errors around the regression line passes, i.e., there is no autocorrelation. In other words, there is no evidence to reject the null hypothesis that states that, "there is no aurocorrelation".
+**Question 3.b.:** *Was there a difference in sales performance before training versus after training?*
+
+```{r paired_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
+t.test(
+  sales_performance_data$BeforeTraining,
+  sales_performance_data$AfterTraining,
+  paired = TRUE,
+  alternative = "two.sided"
+)
+```
+
+# Diagnostic EDA
+
+A t-test has no predictive structure and therefore cannot generate:
+
+1.  Model-based residuals
+
+2.  Fitted values
+
+3.  Leverage points
+
+4.  Influence measures
+
+5.  RMSE or R²
+
+Thus, it does not require model diagnostics.
+
+## [**Test of Linearity - NA**]{.underline}
+
+Linearity only exists between a predictor and outcome in a regression model. A t-test compares means, not linear relationships.
+
+There is no fitted line, no slope, and no regression function. Therefore, linearity is irrelevant.
+
+## [**Test of Independence of Errors (Autocorrelation) - NA**]{.underline}
+
+Unlike statistical tests of regression, we cannot confirm this statistically. Independence of observations is justified through the study design.
 
 ## [**Test of Normality of the Distribution of the Errors**]{.underline}
 
-The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+The Shapiro–Wilk test assesses whether a sample of data could reasonably have come from a normally distributed population. It enables you to answer the question, "Is this data “normal enough” for methods that assume normality?"
 
-A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+It tests the following hypothesis:
 
-If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
+H₀: The data comes from a normal distribution.
+
+H₁: The data does not come from a normal distribution.
+
+The test compares your ordered data values to the values you would expect if the data were perfectly normal.
+
+The more they disagree, the lower the Shapiro–Wilk statistic (W), and the smaller the p-value.
+
+It uses the same logic as a Q–Q plot, but expressed mathematically.
+
+**Interpretation**
+
+If p-value \> 0.05
+
+You fail to reject the null hypothesis. There is no evidence that the data deviates from a normal distribution. However, this does not mean the data is truly normal. It simply means it is normal enough for a t-test, ANOVA, or regression.
+
+**Sample Size Matters**
+
+Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect non-normality when it actually exists.
+
+Large samples (n \> 50): Shapiro–Wilk has too much power. It will declare almost anything “non-normal,” even slight deviations.
 
 ```{r test_of_normality, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-plot(slr_test, which = 2)
+shapiro.test(SalesTargetA)
+shapiro.test(WeeklySales[MarketingStrategy == "Digital"])
+shapiro.test(WeeklySales[MarketingStrategy == "Traditional"])
+shapiro.test(sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining)
 ```
 
 ## [**Test of Homoscedasticity**]{.underline}
 
-Homoscedasticity requires that the spread of residuals should be constant across all levels of the independent variable. A scale-location plot (a.k.a. spread-location plot) can be used to conduct a test of homoscedasticity.
+Homoscedasticity requires that the spread of residuals should be constant across all levels of the independent variable. This can be done by comparing group variances.
 
-The x-axis shows the fitted (predicted) values from the model and the y-axis shows the square root of the standardized residuals. The red line is added to help visualize any patterns.
+The following function in R performs an F-test for equality of variances:
 
-In a model with homoscedastic errors (equal variance across all predicted values):
+``` r
+var.test() 
+```
 
--   Points should be randomly scattered around a horizontal line
+The underlying hypotheses are:
 
--   The smooth line should be approximately horizontal
+H₀: The two population variances are equal.
 
--   The vertical spread of points should be roughly equal across all fitted values
+H₁: The two population variances are not equal.
 
--   No obvious patterns, funnels, or trends should be visible
+In this case, we answer the question, "Do Digital and Traditional marketing have equal weekly sales variability?"
 
-Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
+This matters depending on the type of t-test.
+
+**Student's t-test (equal variances):** Assumes the two groups have the same variance.
+
+``` r
+t.test(WeeklySales ~ MarketingStrategy, var.equal = TRUE)
+```
+
+**Welch's t-test (unequal variances):** Does not assume equal variances and adjusts the degrees of freedom.
+
+``` r
+t.test(WeeklySales ~ MarketingStrategy)
+```
+
+**Interpretation**
+
+If p-value \> 0.05
+
+You fail to reject the null hypothesis. There is no evidence that the variances differ. → You may use the Student’s t-test (var.equal=TRUE).
+
+If p-value \< 0.05
+
+You reject the null hypothesis. There is evidence that the variances are different. → Use Welch’s t-test (the default in R).
 
 ```{r test_of_homoscedasticity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-plot(slr_test, which = 3)
+var.test(WeeklySales ~ MarketingStrategy, data = sales_performance_data)
 ```
 
-**Breusch-Pagan Test**
+The real purpose of checking variances is not to satisfy a statistical rule. It is to understand whether your groups behave differently, not just whether their means differ.
 
-The Breusch-Pagan Test can also be used in addition to the visual inspection of a Scale-Location plot.
+Variance carries business meaning:
 
-Formally:
+1.  Highly variable digital campaigns may be riskier.
 
--   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+2.  Traditional campaigns may be more consistent but weaker.
 
--   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
-
-p-Value:
-
--   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
-
--   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
-
-Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
-
-With a p-value \< 0.05, there is statistically significant evidence of heteroscedasticity in the residuals in this case (which is bad).
-
-```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("lmtest")
-lmtest::bptest(slr_test)
-```
-
-## [**Quantitative Validation of Assumptions**]{.underline}
-
-The graphical representations of the various tests of assumptions should be accompanied by quantitative values. The `gvlma` package (Global Validation of Linear Models Assumptions) is useful for this purpose.
-
-```{r QuantitativeValidationofAssumptions, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("gvlma")
-gvlma_results <- gvlma(slr_test)
-summary(gvlma_results)
-```
+## [**Quantitative Validation of Assumptions - NA**]{.underline}
 
 # Interpretation of the Results
+
+A one-sample t-test was conducted to determine whether the mean monthly sales of Product A differed from the target of 50 units. Results indicated that the mean sales (M = 52.10, 95% CI [50.81, 53.39]) were significantly higher than the target, t(119) = 3.23, p = .002.
 
 We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
 
