@@ -465,8 +465,11 @@ Large samples (n \> 50): Shapiro–Wilk has too much power. It will declare almo
 
 ```{r test_of_normality, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 shapiro.test(sales_performance_data$SalesTargetA)
+
 shapiro.test(sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Digital"])
+
 shapiro.test(sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Traditional"])
+
 shapiro.test(sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining)
 ```
 
@@ -532,43 +535,23 @@ No residuals → no residual diagnostics → no quantitative validation of assum
 
 # Interpretation of the Results
 
-A one-sample t-test was conducted to determine whether the mean monthly sales of Product A differed from the target of 50 units. Results indicated that the mean sales (M = 52.10, 95% CI [50.81, 53.39]) were significantly higher than the target, t(119) = 3.23, p = .002.
+The presentation of the results and its subsequent interpretation is based on the following notes.
 
-We can interpret the results of the statistical test with more confidence if the tests of assumptions are successful. The presentation of the results and its subsequent interpretation is based on the following notes.
+**t-Statistic—t(d.f.):** In a one-sample t-test, the t-statistic measures how far the sample mean is from the hypothesised population mean.
 
-**t-Statistic t(d.f.):** It quantifies how many standard errors the estimated coefficient deviates from zero. A larger t-value (e.g., \>2) indicates stronger evidence against the null hypothesis (i.e., that the coefficient is zero). The t-statistic has its corresponding p-value such that a p-value \< .05 implies a statistically significant t-statistic.
+-   A t-value close to 0 indicates that the sample mean is very close to the hypothesised value.
 
-**Degrees of Freedom (d.f.):** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+-   A larger absolute t-value indicates that the observed mean is many standard errors away from the hypothesised mean, providing stronger evidence against the null hypothesis.
+
+The t-statistic has an associated p-value, which quantifies how likely it is to observe a t-value this extreme (or more extreme) if the null hypothesis were true.
+
+**Degrees of Freedom—(d.f.):** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
 
 For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
 
-**F-Statistic**
-
-**F(d.f. in numerator, d.f. in denominator):** The numerator degree of freedom corresponds to the number of predictor variables, while the denominator degree of freedom is derived from the total number of observations minus the number of predictors and then minus 1 for the intercept.
-
-The F-test in regression evaluates whether the variance explained by the model is significantly greater than the unexplained variance (error). Think of the F-statistic as a ratio of “signal” (useful prediction) to “noise” (unexplained variation). The higher this ratio, the more confident you can be that your model is capturing something real. The larger the F-Statistic, the better the model’s performance.
-
-Also, a low p-value of the F-statistic (any p-value \< .05 is considered low) indicates that the overall regression model **is statistically significant**.
-
-**Coefficient of Determination (R^2^)**
-
-The R-squared value represents the proportion of the total variation in the dependent variable that can be attributed to or explained by the independent variable. An R-squared of 0.96 indicates that approximately 96% of the variability in the dependent variable can be explained by its linear relationship with the independent variable. An R-squared value approaching 1 signifies that the regression line closely aligns with the observed data points.
-
-**Multiple R-squared:** Measures the proportion of variance in the dependent variable explained by the independent variable (e.g., Multiple R^2^ = 0.6 means 60% of sales variance is explained by advertisement expenditure). The multiple R-squared value always increases (or at least never decreases) when you add more independent variables.
-
-**Adjusted R-squared:** Also measures the proportion of variance in the dependent variable explained by the independent variable, however, it introduces a penalty based on the number of independent variables relative to the sample size.
-
-The difference between multiple R-squared and adjusted R-squared is negligible in cases where there is only 1 independent variable.
-
-**Residual Standard Error**
-
-The residual standard error quantifies the average magnitude of the errors (residuals), which are the discrepancies between the observed values in the dataset and the values predicted by the regression model. It represents the standard deviation of the data points around the regression line. For example, a residual standard error of 7.73 indicates that, on average, the model's predicted value of the dependent variable deviates from the actual observed value by approximately 7.73 units.
-
-A smaller residual standard error implies that the data points are more tightly clustered around the regression line, indicating a more precise model.
-
 **Confidence Interval**
 
-A 95% confidence interval (CI) for a parameter—such as a regression coefficient—provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
+A 95% confidence interval (CI) for a parameter provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
 
 **Uncertainty quantification:** A CI communicates your estimate’s precision—narrower intervals imply more precise estimates (often due to larger samples or less variability), whereas wider intervals indicate greater uncertainty about the true value.
 
@@ -600,15 +583,29 @@ Further reading: <https://apastyle.apa.org/jars>
 
 ## Limitations and Diagnostic Findings
 
-The model employed is a simple linear regression, which only considers the linear relationship between purchase frequency and CLV. Other potentially influential factors that are not included in this model could also play a significant role in determining CLV, e.g., the average monetary value of each purchase.
+One limitation of the analysis is that the assumption of normality was not fully met for weekly sales under the digital marketing strategy. A Shapiro–Wilk test indicated a statistically significant deviation from normality, W = 0.96, p = .035. Although the t-test is generally robust to moderate departures from normality, particularly with larger samples, this violation may affect the precision of the estimated confidence intervals.
+
+It is also worth noting that sales data are often skewed by promotions, seasonality, or occasional irregularities. In other words, the deviation from normality of the weekly sales under digitial marketing may be structural, not statistical noise.
+
+While non-parametric alternatives are available (e.g., the Wilcoxon signed-rank test), the t-test was retained due to its robustness under moderate non-normality and its direct interpretability in terms of mean differences, which is central to the business questions under investigation.
 
 ## Academic Statement (APA)—Academic-Ready Language
 
-A simple linear regression was conducted on data from 500 observations (N = 500) to examine the relationship between customer lifetime value (CLV) and purchase frequency. The results indicated that purchase frequency significantly predicted CLV, $\beta$ = 19.54, 95% CI [19.20, 19.87], SE = 0.17, *t*(498) = 114.91, *p* \< .001. The model explained 96.37% of the variance in CLV (R^2^ = .96, *F*(1, 498) = 13,200, *p* \< .001). For every unit increase in purchase frequency, CLV increased by approximately 19.54 units. The intercept was 52.25, 95 % CI [50.48, 54.03], and the residual standard error was 7.73, indicating strong predictive accuracy.
+A one-sample t-test was conducted to determine whether the mean monthly sales of Product A differed from the target of 50 units. Based on a sample of 120 observations, results indicated that the mean sales (M = 52.10, SD = 7.12, 95% CI [50.81, 53.39]) were significantly higher than the target, *t*(119) = 3.23, p = .002.
 
 ## Business Analysis—Boardroom-Ready Language
 
-The strength of the relationship highlights the critical importance of customer retention. Initiatives that effectively encourage repeat purchases appear to be a primary driver of customer lifetime value based on this analysis. This understanding can guide the allocation of resources towards strategies that foster customer loyalty and encourage repeat business.
+**Executive Summary**
+
+An analysis of 120 monthly sales observations shows that Product A is consistently exceeding its sales target. Average monthly sales are approximately 52 units, compared to a target of 50 units. This difference is statistically reliable and unlikely to be due to random fluctuation.
+
+While performance exceeds target, sales variability remains moderately high, indicating that not all periods perform equally well. Overall, Product A is meeting expectations, but performance stability can still be improved.
+
+**Recommendations:**
+
+The management should treat the current sales target as achievable under existing conditions. However, the observed variability suggests opportunities to stabilize performance through demand forecasting, inventory planning, or targeted sales interventions during weaker periods.
+
+If the strategic objective is growth rather than maintenance, the management may consider a gradual upward revision of the sales target, supported by operational safeguards to manage variability.
 
 # Knitting the Notebook
 
