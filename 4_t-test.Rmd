@@ -310,7 +310,7 @@ ggplot(sales_performance_data,
   )
 ```
 
-# Statistical Test
+# Statistical Test: Welch's t-test (unequal variances)
 
 A t-test is used to determine if there is a significant difference between the means of two groups. A t-test compares both the sample mean and the standard deviations while considering the sample size and the degree of variability in the data.
 
@@ -409,7 +409,7 @@ t.test(
 )
 ```
 
-# Diagnostic EDA
+# Model Diagnostic (Diagnostic EDA)
 
 A t-test has no predictive structure and therefore cannot generate:
 
@@ -464,9 +464,9 @@ Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect 
 Large samples (n \> 50): Shapiro–Wilk has too much power. It will declare almost anything “non-normal,” even slight deviations.
 
 ```{r test_of_normality, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-shapiro.test(SalesTargetA)
-shapiro.test(WeeklySales[MarketingStrategy == "Digital"])
-shapiro.test(WeeklySales[MarketingStrategy == "Traditional"])
+shapiro.test(sales_performance_data$SalesTargetA)
+shapiro.test(sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Digital"])
+shapiro.test(sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Traditional"])
 shapiro.test(sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining)
 ```
 
@@ -486,7 +486,7 @@ H₀: The two population variances are equal.
 
 H₁: The two population variances are not equal.
 
-In this case, we answer the question, "Do Digital and Traditional marketing have equal weekly sales variability?"
+In this case, we answer the question, "Do digital and traditional marketing have equal weekly sales variability?"
 
 This matters depending on the type of t-test.
 
@@ -504,11 +504,11 @@ t.test(WeeklySales ~ MarketingStrategy)
 
 **Interpretation**
 
-If p-value \> 0.05
+**If p-value \> 0.05**
 
-You fail to reject the null hypothesis. There is no evidence that the variances differ. → You may use the Student’s t-test (var.equal=TRUE).
+You fail to reject the null hypothesis. There is no evidence that the variances differ. → Use Student’s t-test (`var.equal=TRUE`).
 
-If p-value \< 0.05
+**If p-value \< 0.05**
 
 You reject the null hypothesis. There is evidence that the variances are different. → Use Welch’s t-test (the default in R).
 
@@ -525,6 +525,10 @@ Variance carries business meaning:
 2.  Traditional campaigns may be more consistent but weaker.
 
 ## [**Quantitative Validation of Assumptions - NA**]{.underline}
+
+A t-test does not generate a regression model and therefore does not generate residuals.\
+
+No residuals → no residual diagnostics → no quantitative validation of assumptions using `gvlma` package (Global Validation of Linear Models Assumptions).
 
 # Interpretation of the Results
 
