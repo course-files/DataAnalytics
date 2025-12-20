@@ -9,20 +9,6 @@ output:
     number_sections: true
     fig_width: 6
     keep_md: true
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    self_contained: false
-    keep_md: true
-  html_notebook:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    self_contained: false
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -32,6 +18,20 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
 ---
 
 
@@ -925,7 +925,7 @@ Further reading: <https://apastyle.apa.org/jars>
 
 One limitation of the analysis is that the assumption of normality was not fully met for weekly sales under the digital marketing strategy. A Shapiro–Wilk test indicated a statistically significant deviation from normality, W = 0.96, p = .035. Although the t-test is generally robust to moderate departures from normality, particularly with larger samples, this violation may affect the precision of the estimated confidence intervals.
 
-It is also worth noting that sales data are often skewed by promotions, seasonality, or occasional irregularities. In other words, the deviation from normality of the weekly sales under digitial marketing may be structural, not statistical noise.
+It is also worth noting that sales data are often skewed by promotions, seasonality, or occasional irregularities. In other words, the deviation from normality of the weekly sales under digital marketing may be structural, not statistical noise.
 
 While non-parametric alternatives are available, e.g., the Wilcoxon signed-rank test, the t-test was retained due to its robustness under moderate non-normality and its direct interpretability in terms of mean differences, which is central to the business questions under investigation.
 
@@ -1003,7 +1003,7 @@ In short, the training programme worked.
 
 1.  **Continue and Institutionalise the Training Programme:** The evidence strongly supports maintaining the current sales training initiative as a core capability rather than a one-off intervention.
 
-2.  **Scale Strategically:** Consider expanding the programme to new hires earlier in their onboarding cycle, as the return on training investment is demonstrably positive.
+2.  **Scale Strategically:** Consider expanding the programme to new hires earlier in their on-boarding cycle, as the return on training investment is demonstrably positive.
 
 3.  Move from “Did It Work?” to “How Do We Optimise It?” The next analytical step should focus on:
 
