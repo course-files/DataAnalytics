@@ -34,7 +34,6 @@ output:
     latex_engine: xelatex
 ---
 
-
 ``` r
 knitr::opts_chunk$set(echo = TRUE)
 # `installed.packages()` retrieves a matrix of all installed packages
@@ -76,7 +75,6 @@ The following **synthetic dataset** contains a record of the number of sales for
 
 -   `AfterTraining` — the same salesperson’s sales after the training program
 
-
 ``` r
 # `pacman::p_load()` is designed to both install and load packages
 pacman::p_load("readr")
@@ -85,7 +83,7 @@ sales_performance_data <- read_csv("./data/sales_performance.csv")
 head(sales_performance_data)
 ```
 
-```
+```         
 ## # A tibble: 6 × 5
 ##   SalesTargetA MarketingStrategy WeeklySales BeforeTraining AfterTraining
 ##          <dbl> <chr>                   <dbl>          <dbl>         <dbl>
@@ -103,35 +101,32 @@ head(sales_performance_data)
 
 The number of observations and variables.
 
-
 ``` r
 dim(sales_performance_data)
 ```
 
-```
+```         
 ## [1] 120   5
 ```
 
 [**View the Data Types**]{.underline}
 
-
 ``` r
 sapply(sales_performance_data, class)
 ```
 
-```
+```         
 ##      SalesTargetA MarketingStrategy       WeeklySales    BeforeTraining 
 ##         "numeric"       "character"         "numeric"         "numeric" 
 ##     AfterTraining 
 ##         "numeric"
 ```
 
-
 ``` r
 str(sales_performance_data)
 ```
 
-```
+```         
 ## spc_tbl_ [120 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
 ##  $ SalesTargetA     : num [1:120] 48 50 64 53 53 66 56 42 47 48 ...
 ##  $ MarketingStrategy: chr [1:120] "Digital" "Traditional" "Digital" "Traditional" ...
@@ -173,14 +168,13 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 
 ## [**Measures of Frequency**]{.underline}
 
-
 ``` r
 sales_performance_data_freq <- sales_performance_data$MarketingStrategy
 cbind(frequency = table(sales_performance_data_freq),
       percentage = prop.table(table(sales_performance_data_freq)) * 100)
 ```
 
-```
+```         
 ##             frequency percentage
 ## Digital            72         60
 ## Traditional        48         40
@@ -190,12 +184,11 @@ cbind(frequency = table(sales_performance_data_freq),
 
 The median and the mean of each numeric variable:
 
-
 ``` r
 summary(sales_performance_data)
 ```
 
-```
+```         
 ##   SalesTargetA   MarketingStrategy   WeeklySales    BeforeTraining 
 ##  Min.   :34.00   Length:120         Min.   :36.00   Min.   :36.00  
 ##  1st Qu.:47.00   Class :character   1st Qu.:63.75   1st Qu.:56.00  
@@ -214,12 +207,11 @@ summary(sales_performance_data)
 
 The first 5 rows in the dataset:
 
-
 ``` r
 head(sales_performance_data, 5)
 ```
 
-```
+```         
 ## # A tibble: 5 × 5
 ##   SalesTargetA MarketingStrategy WeeklySales BeforeTraining AfterTraining
 ##          <dbl> <chr>                   <dbl>          <dbl>         <dbl>
@@ -232,12 +224,11 @@ head(sales_performance_data, 5)
 
 The last 5 rows in the dataset:
 
-
 ``` r
 tail(sales_performance_data, 5)
 ```
 
-```
+```         
 ## # A tibble: 5 × 5
 ##   SalesTargetA MarketingStrategy WeeklySales BeforeTraining AfterTraining
 ##          <dbl> <chr>                   <dbl>          <dbl>         <dbl>
@@ -258,26 +249,24 @@ The syntax `dataset[rows, columns]` can be used to specify the exact rows and co
 
 ### **Variance**
 
-
 ``` r
 # `sapply()` is designed to apply a function to a variable in a dataset
 # In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
 sapply(sales_performance_data[,c(1,3,4,5)], var)
 ```
 
-```
+```         
 ##   SalesTargetA    WeeklySales BeforeTraining  AfterTraining 
 ##       50.64538      142.22794       74.87143      108.42997
 ```
 
 ### **Standard Deviation**
 
-
 ``` r
 sapply(sales_performance_data[,c(1,3,4,5)], sd)
 ```
 
-```
+```         
 ##   SalesTargetA    WeeklySales BeforeTraining  AfterTraining 
 ##       7.116557      11.925936       8.652828      10.412971
 ```
@@ -296,13 +285,12 @@ In “type = 2” (used in SPSS and SAS):
 
 High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies a possible underestimation of real-world variability. The typical remedy includes trimming outliers or using robust statistical methods that are less affected by outliers.
 
-
 ``` r
 pacman::p_load("e1071")
 sapply(sales_performance_data[,c(1,3,4,5)],  kurtosis, type = 2)
 ```
 
-```
+```         
 ##   SalesTargetA    WeeklySales BeforeTraining  AfterTraining 
 ##     -0.1610855      0.2929290      0.1016499      0.1276711
 ```
@@ -321,12 +309,11 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 
 Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
 
-
 ``` r
 sapply(sales_performance_data[,c(1,3,4,5)], skewness, type = 2)
 ```
 
-```
+```         
 ##   SalesTargetA    WeeklySales BeforeTraining  AfterTraining 
 ##      0.1261366     -0.2417535     -0.2593415     -0.2408826
 ```
@@ -347,12 +334,11 @@ Covariance is a statistical measure that indicates the direction of the linear r
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
-
 ``` r
 cov(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
-```
+```         
 ##                SalesTargetA WeeklySales BeforeTraining AfterTraining
 ## SalesTargetA     1207.13025    75.19538     -178.52941     -71.07353
 ## WeeklySales        75.19538  1208.49580      -10.41176      27.58824
@@ -366,7 +352,6 @@ A strong correlation between variables enables us to better predict the value of
 
 We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
 
-
 ``` r
 cor.test(
   sales_performance_data$BeforeTraining,
@@ -374,9 +359,9 @@ cor.test(
   method = "spearman")
 ```
 
-```
+```         
 ## 
-## 	Spearman's rank correlation rho
+##  Spearman's rank correlation rho
 ## 
 ## data:  sales_performance_data$BeforeTraining and sales_performance_data$AfterTraining
 ## S = 58196, p-value < 2.2e-16
@@ -388,12 +373,11 @@ cor.test(
 
 To view the correlation of all variables
 
-
 ``` r
 cor(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
-```
+```         
 ##                SalesTargetA  WeeklySales BeforeTraining AfterTraining
 ## SalesTargetA     1.00000000  0.062257476   -0.147849680   -0.05884861
 ## WeeklySales      0.06225748  1.000000000   -0.008617662    0.02283004
@@ -404,7 +388,6 @@ cor(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 ## [**Basic Visualizations**]{.underline}
 
 ### **Histogram**
-
 
 ``` r
 # `par(mfrow = c(1, 2))` This is used to divide the area used to plot
@@ -430,7 +413,6 @@ for (i in 1:5) {
 
 ### **Box and Whisker Plot**
 
-
 ``` r
 # `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
@@ -448,7 +430,6 @@ for (i in 1:5) {
 
 ### **Missing Data Plot**
 
-
 ``` r
 pacman::p_load("Amelia")
 
@@ -459,7 +440,6 @@ missmap(sales_performance_data, col = c("red", "grey"), legend = TRUE)
 
 ### **Correlation Plot**
 
-
 ``` r
 pacman::p_load("ggcorrplot")
 
@@ -469,7 +449,6 @@ ggcorrplot(cor(sales_performance_data[,c(1,3,4,5)]))
 ![](4_t-test_files/figure-html/correlation_plot-1.png)<!-- -->
 
 ### **Scatter Plot**
-
 
 ``` r
 pacman::p_load("ggplot2")
@@ -501,7 +480,7 @@ Three types of t-test:
 The larger the difference in means, the larger the t-value. Also, the larger the variance in the data, the less meaningful the t-value is.
 
 | **Value of the `alternative` Parameter** | **Test Type** | **Alternative Hypothesis (Ha​)** | **Practical Interpretation** |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **`"two.sided"`** (The default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
 | **`"greater"`** | **One-Tailed** (Upper-Tailed) | $H_a: \mu > \mu_0$ (or $\mu_1 > \mu_2$) | Tests if the true mean (or mean difference) is **strictly greater than** the hypothesized value. You are *only* interested in a significant result in the positive direction. |
 | **`"less"`** | **One-Tailed** (Lower-Tailed) | $H_a: \mu < \mu_0$ (or $\mu_1 < \mu_2$) | Tests if the true mean (or mean difference) is **strictly less than** the hypothesized value. You are *only* interested in a significant result in the negative direction. |
@@ -509,7 +488,6 @@ The larger the difference in means, the larger the t-value. Also, the larger the
 ## One Sample t-Test
 
 **Question 1.a.:** *Is Product A meeting the monthly sales target of 50 units?*
-
 
 ``` r
 t.test(
@@ -519,9 +497,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	One Sample t-test
+##  One Sample t-test
 ## 
 ## data:  sales_performance_data$SalesTargetA
 ## t = 3.2325, df = 119, p-value = 0.001588
@@ -535,7 +513,6 @@ t.test(
 
 **Question 1.b.:** *Is Product A greater than the monthly sales target of 50 units?*
 
-
 ``` r
 t.test(
   sales_performance_data$SalesTargetA,
@@ -544,9 +521,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	One Sample t-test
+##  One Sample t-test
 ## 
 ## data:  sales_performance_data$SalesTargetA
 ## t = 3.2325, df = 119, p-value = 0.0007939
@@ -560,7 +537,6 @@ t.test(
 
 **Question 1.c.:** *Is Product A less than the monthly sales target of 50 units?*
 
-
 ``` r
 t.test(
   sales_performance_data$SalesTargetA,
@@ -569,9 +545,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	One Sample t-test
+##  One Sample t-test
 ## 
 ## data:  sales_performance_data$SalesTargetA
 ## t = 3.2325, df = 119, p-value = 0.9992
@@ -587,7 +563,6 @@ t.test(
 
 **Question 2.a.:** *Does digital marketing outperform traditional marketing in weekly sales?*
 
-
 ``` r
 t.test(
   WeeklySales ~ MarketingStrategy,
@@ -597,9 +572,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  WeeklySales by MarketingStrategy
 ## t = 3.8264, df = 81.065, p-value = 0.0001273
@@ -613,7 +588,6 @@ t.test(
 
 **Question 2.b.:** *Is there a difference in weekly sales between digital marketing and traditional marketing?*
 
-
 ``` r
 t.test(
   WeeklySales ~ MarketingStrategy,
@@ -622,9 +596,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	Welch Two Sample t-test
+##  Welch Two Sample t-test
 ## 
 ## data:  WeeklySales by MarketingStrategy
 ## t = 3.8264, df = 81.065, p-value = 0.0002546
@@ -640,7 +614,6 @@ t.test(
 
 **Question 3.a.:** *Was the sales performance before training lower than the sales performance after training for each salesperson?*
 
-
 ``` r
 t.test(
   sales_performance_data$BeforeTraining,
@@ -650,9 +623,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	Paired t-test
+##  Paired t-test
 ## 
 ## data:  sales_performance_data$BeforeTraining and sales_performance_data$AfterTraining
 ## t = -7.9027, df = 119, p-value = 7.687e-13
@@ -666,7 +639,6 @@ t.test(
 
 **Question 3.b.:** *Was there a difference in sales performance before training versus after training for each salesperson?*
 
-
 ``` r
 t.test(
   sales_performance_data$BeforeTraining,
@@ -676,9 +648,9 @@ t.test(
 )
 ```
 
-```
+```         
 ## 
-## 	Paired t-test
+##  Paired t-test
 ## 
 ## data:  sales_performance_data$BeforeTraining and sales_performance_data$AfterTraining
 ## t = -7.9027, df = 119, p-value = 1.537e-12
@@ -744,14 +716,13 @@ Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect 
 
 Large samples (n \> 50): Shapiro–Wilk has too much power. It will declare almost anything “non-normal,” even slight deviations.
 
-
 ``` r
 shapiro.test(sales_performance_data$SalesTargetA)
 ```
 
-```
+```         
 ## 
-## 	Shapiro-Wilk normality test
+##  Shapiro-Wilk normality test
 ## 
 ## data:  sales_performance_data$SalesTargetA
 ## W = 0.99264, p-value = 0.7805
@@ -763,9 +734,9 @@ shapiro.test(
     sales_performance_data$MarketingStrategy == "Digital"])
 ```
 
-```
+```         
 ## 
-## 	Shapiro-Wilk normality test
+##  Shapiro-Wilk normality test
 ## 
 ## data:  sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Digital"]
 ## W = 0.96343, p-value = 0.0346
@@ -777,9 +748,9 @@ shapiro.test(
     sales_performance_data$MarketingStrategy == "Traditional"])
 ```
 
-```
+```         
 ## 
-## 	Shapiro-Wilk normality test
+##  Shapiro-Wilk normality test
 ## 
 ## data:  sales_performance_data$WeeklySales[sales_performance_data$MarketingStrategy == "Traditional"]
 ## W = 0.99086, p-value = 0.9689
@@ -790,9 +761,9 @@ shapiro.test(
   sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining)
 ```
 
-```
+```         
 ## 
-## 	Shapiro-Wilk normality test
+##  Shapiro-Wilk normality test
 ## 
 ## data:  sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining
 ## W = 0.99083, p-value = 0.6106
@@ -840,14 +811,13 @@ You fail to reject the null hypothesis. There is no evidence that the variances 
 
 You reject the null hypothesis. There is evidence that the variances are different. → Use Welch’s t-test (the default in R).
 
-
 ``` r
 var.test(WeeklySales ~ MarketingStrategy, data = sales_performance_data)
 ```
 
-```
+```         
 ## 
-## 	F test to compare two variances
+##  F test to compare two variances
 ## 
 ## data:  WeeklySales by MarketingStrategy
 ## F = 0.55833, num df = 71, denom df = 47, p-value = 0.02585
