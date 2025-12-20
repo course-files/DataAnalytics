@@ -3,26 +3,6 @@ title: "t-Test"
 author: "Allan Omondi"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    self_contained: false
-    keep_md: true
-  word_document:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    keep_md: true
-  html_notebook:
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    self_contained: false
   pdf_document: 
     toc: true
     toc_depth: 4
@@ -32,6 +12,26 @@ output:
     fig_crop: false
     keep_tex: true
     latex_engine: xelatex
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    fig_height: 6
+    self_contained: false
+    keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    self_contained: false
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 6
+    keep_md: true
 ---
 
 ```{r setup_chunk, message=FALSE, warning=FALSE}
@@ -650,6 +650,44 @@ In practical terms, digital marketing is delivering meaningfully higher sales ou
     -   Integrated with digital campaigns, or
 
     -   Targeted more selectively where it performs best
+
+## Paired Samples t-Test
+
+### Academic Statement (APA)—Academic-Ready Language
+
+A paired-samples t-test was conducted to examine whether sales performance differed before and after sales training. Results indicated a statistically significant difference in sales performance, *t*(119) = −7.90, p \< .001, 95% CI [−5.46, −3.27]. On average, sales performance after training was higher than before training, with a mean increase of 4.37 units.
+
+**Notes on interpretation:**
+
+1.  The negative t-value reflects the subtraction order (Before − After).
+
+2.  The confidence interval does not include zero, indicating a statistically significant improvement.
+
+3.  The magnitude of the mean difference suggests a practically meaningful effect.
+
+4.  A paired-samples t-test supports causal interpretation because each salesperson serves as their own baseline. Future analyses should: include a control group, adjust for seasonality,
+
+### Business Analysis—Boardroom-Ready Language
+
+#### **Executive Summary**
+
+Sales training had a clear and measurable impact on performance. Across 120 salespeople, post-training sales were consistently higher than pre-training sales. On average, each salesperson increased their sales by approximately four to five units following the training programme. This improvement is statistically robust and highly unlikely to be due to chance.
+
+In short, the training programme worked.
+
+#### **Recommendations**
+
+1.  **Continue and Institutionalise the Training Programme:** The evidence strongly supports maintaining the current sales training initiative as a core capability rather than a one-off intervention.
+
+2.  **Scale Strategically:** Consider expanding the programme to new hires earlier in their onboarding cycle, as the return on training investment is demonstrably positive.
+
+3.  Move from “Did It Work?” to “How Do We Optimise It?” The next analytical step should focus on:
+
+    -   Which components of the training drive the largest gains
+
+    -   Whether performance gains persist over time
+
+    -   Whether certain salesperson profiles benefit more than others
 
 # Knitting the Notebook
 
