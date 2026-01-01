@@ -1,4 +1,4 @@
-# DataAnalytics
+# Data Analytics
 
 The default installation directory is set here:
 [.Rprofile](/.Rprofile)
