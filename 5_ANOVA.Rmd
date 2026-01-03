@@ -61,26 +61,85 @@ pacman::p_load("here")
 knitr::opts_knit$set(root.dir = here::here())
 ```
 
+# Generate the Synthetic Dataset
+
+## 4 Algorithms, 10 independent datasets, and 5 independent runs
+
+Execute the following to generate the synthetic dataset: synthetic-data-for-ml-model-comparison.R
+
+“**4 × 10 × 5 = 200 observations**” means:
+
+-   4 algorithms
+
+-   10 [**independent datasets**]{.underline}
+
+-   5 independent runs per algorithm–dataset pair
+
+A "run" means:
+
+-   Different random seed
+
+-   Different initialization
+
+-   Possibly different train/test split
+
+Therefore: The unit of analysis is the dataset, not the run. The 5 runs are replicates, not new experimental units.
+
+## NOT the same as Cross-Validation with Repeats
+
+A run set up as a 10-Fold cross-validation with 5 repeats means:
+
+For each algorithm on one dataset:
+
+-   The dataset is split into 10 folds
+
+-   The algorithm is trained and tested 10 times
+
+-   The entire 10-fold process is repeated 5 times
+
+That gives 50 performance estimates per algorithm per dataset. However — and this is the critical part — those 50 values are [**NOT independent observations**]{.underline}.
+
+They are correlated because:
+
+-   The same data points appear in multiple folds
+
+-   Training sets overlap heavily
+
+-   Test sets are reused across repeats
+
+This disqualifies it from being used in statistical tests of comparison that expect independence of observations.
+
+## Valid ways to Create Independent Datasets
+
+1.  Naturally distinct datasets
+    -   Different real-world sources
+    -   Different domains or tasks
+    -   Examples: Different UCI datasets, different companies’ sales datasets, different medical studies
+2.  Independent data-generating processes
+    -   Simulated datasets with independent random draws
+    -   Different parameterizations (noise level, class imbalance, feature correlations)
+3.  Independent experimental units
+    -   Different time periods where stationarity holds
+    -   Different geographical regions
+    -   Different populations
+
 # Load the Dataset
-
-The following **synthetic dataset** contains a record of the number of sales for Product A. Variables include:
-
--   `SalesTargetA` — monthly sales for Product A
-
--   `MarketingStrategy` — Either a “Digital” or “Traditional” marketing strategy
-
--   `WeeklySales` — weekly sales under the assigned marketing strategy
-
--   `BeforeTraining` — sales of the salesperson before the training program
-
--   `AfterTraining` — the same salesperson’s sales after the training program
 
 ```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
 # `pacman::p_load()` is designed to both install and load packages
 pacman::p_load("readr")
 
-sales_performance_data <- read_csv("./data/sales_performance.csv")
-head(sales_performance_data)
+ml_performance_data <- read_csv("data/ml_results.csv", 
+    col_types = cols(Dataset = col_factor(levels = c("Dataset_1", 
+        "Dataset_2", "Dataset_3", "Dataset_4", 
+        "Dataset_5", "Dataset_6", "Dataset_7", 
+        "Dataset_8", "Dataset_9", "Dataset_10")), 
+        Run = col_factor(levels = c("1", 
+            "2", "3", "4", "5", "6", "7", 
+            "8", "9", "10")), Algorithm = col_factor(levels = c("Logistic Regression", 
+            "Random Forest", "SVM", "Gradient Boosting"))))
+
+head(ml_performance_data)
 ```
 
 # Initial EDA
@@ -90,17 +149,17 @@ head(sales_performance_data)
 The number of observations and variables.
 
 ```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
-dim(sales_performance_data)
+dim(ml_performance_data)
 ```
 
 [**View the Data Types**]{.underline}
 
 ```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(sales_performance_data, class)
+sapply(ml_performance_data, class)
 ```
 
 ```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
-str(sales_performance_data)
+str(ml_performance_data)
 ```
 
 [**Descriptive Statistics**]{.underline}
@@ -128,9 +187,9 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 ## [**Measures of Frequency**]{.underline}
 
 ```{r measures_of_frequency, echo=TRUE, message=FALSE, warning=FALSE}
-sales_performance_data_freq <- sales_performance_data$MarketingStrategy
-cbind(frequency = table(sales_performance_data_freq),
-      percentage = prop.table(table(sales_performance_data_freq)) * 100)
+ml_performance_data_freq <- ml_performance_data$MarketingStrategy
+cbind(frequency = table(ml_performance_data_freq),
+      percentage = prop.table(table(ml_performance_data_freq)) * 100)
 ```
 
 ## [**Measures of Central Tendency**]{.underline}
@@ -138,19 +197,19 @@ cbind(frequency = table(sales_performance_data_freq),
 The median and the mean of each numeric variable:
 
 ```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
-summary(sales_performance_data)
+summary(ml_performance_data)
 ```
 
 The first 5 rows in the dataset:
 
 ```{r first_five, echo=TRUE, message=FALSE, warning=FALSE}
-head(sales_performance_data, 5)
+head(ml_performance_data, 5)
 ```
 
 The last 5 rows in the dataset:
 
 ```{r last_five, echo=TRUE, message=FALSE, warning=FALSE}
-tail(sales_performance_data, 5)
+tail(ml_performance_data, 5)
 ```
 
 ## [**Measures of Distribution**]{.underline}
@@ -166,13 +225,13 @@ The syntax `dataset[rows, columns]` can be used to specify the exact rows and co
 ```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
 # `sapply()` is designed to apply a function to a variable in a dataset
 # In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
-sapply(sales_performance_data[,c(1,3,4,5)], var)
+sapply(ml_performance_data[,c(1,3,4,5)], var)
 ```
 
 ### **Standard Deviation**
 
 ```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(sales_performance_data[,c(1,3,4,5)], sd)
+sapply(ml_performance_data[,c(1,3,4,5)], sd)
 ```
 
 ### **Kurtosis (Pearson)**
@@ -191,7 +250,7 @@ High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estim
 
 ```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("e1071")
-sapply(sales_performance_data[,c(1,3,4,5)],  kurtosis, type = 2)
+sapply(ml_performance_data[,c(1,3,4,5)],  kurtosis, type = 2)
 ```
 
 ### **Skewness**
@@ -209,7 +268,7 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
 
 ```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(sales_performance_data[,c(1,3,4,5)], skewness, type = 2)
+sapply(ml_performance_data[,c(1,3,4,5)], skewness, type = 2)
 ```
 
 As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to always looking it at it as a distortion that needs to be corrected.
@@ -229,7 +288,7 @@ Covariance is a statistical measure that indicates the direction of the linear r
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
 ```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
-cov(sales_performance_data[,c(1,3,4,5)], method = "spearman")
+cov(ml_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
 ### **Correlation**
@@ -240,15 +299,15 @@ We can measure the statistical significance of the correlation using Spearman's 
 
 ```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
 cor.test(
-  sales_performance_data$BeforeTraining,
-  sales_performance_data$AfterTraining,
+  ml_performance_data$BeforeTraining,
+  ml_performance_data$AfterTraining,
   method = "spearman")
 ```
 
 To view the correlation of all variables
 
 ```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
-cor(sales_performance_data[,c(1,3,4,5)], method = "spearman")
+cor(ml_performance_data[,c(1,3,4,5)], method = "spearman")
 ```
 
 ## [**Basic Visualizations**]{.underline}
@@ -260,16 +319,16 @@ cor(sales_performance_data[,c(1,3,4,5)], method = "spearman")
 # the visualization into a 1 row by 2 columns grid
 # `for (i in 1:2)` This is used to identify the variable (column) 
 # that is being processed
-# `sales_performance_data[[i]]` This is used to extract the i-th column as a vector
+# `ml_performance_data[[i]]` This is used to extract the i-th column as a vector
 # `hist()` This is the function used to plot the histogram
 par(mfrow = c(1, 2))
 for (i in 1:5) {
-  if (is.numeric(sales_performance_data[[i]])) {
-    hist(sales_performance_data[[i]],
-         main = names(sales_performance_data)[i],
-         xlab = names(sales_performance_data)[i])
+  if (is.numeric(ml_performance_data[[i]])) {
+    hist(ml_performance_data[[i]],
+         main = names(ml_performance_data)[i],
+         xlab = names(ml_performance_data)[i])
   } else {
-    message(paste("Column", names(sales_performance_data)[i],
+    message(paste("Column", names(ml_performance_data)[i],
                   "is not numeric and will be skipped."))
   }
 }
@@ -281,10 +340,10 @@ for (i in 1:5) {
 # `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
 for (i in 1:5) {
-  if (is.numeric(sales_performance_data[[i]])) {
-    boxplot(sales_performance_data[[i]], main = names(sales_performance_data)[i])
+  if (is.numeric(ml_performance_data[[i]])) {
+    boxplot(ml_performance_data[[i]], main = names(ml_performance_data)[i])
   } else {
-    message(paste("Column", names(sales_performance_data)[i],
+    message(paste("Column", names(ml_performance_data)[i],
                   "is not numeric and will be skipped."))
   }
 }
@@ -295,7 +354,7 @@ for (i in 1:5) {
 ```{r missing_data_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("Amelia")
 
-missmap(sales_performance_data, col = c("red", "grey"), legend = TRUE)
+missmap(ml_performance_data, col = c("red", "grey"), legend = TRUE)
 ```
 
 ### **Correlation Plot**
@@ -303,14 +362,14 @@ missmap(sales_performance_data, col = c("red", "grey"), legend = TRUE)
 ```{r correlation_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("ggcorrplot")
 
-ggcorrplot(cor(sales_performance_data[,c(1,3,4,5)]))
+ggcorrplot(cor(ml_performance_data[,c(1,3,4,5)]))
 ```
 
 ### **Scatter Plot**
 
 ```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("ggplot2")
-ggplot(sales_performance_data,
+ggplot(ml_performance_data,
        aes(x = BeforeTraining, y = AfterTraining)) + 
   geom_point() +
   geom_smooth(method = lm) +
@@ -336,7 +395,7 @@ Three types of t-test:
 The larger the difference in means, the larger the t-value. Also, the larger the variance in the data, the less meaningful the t-value is.
 
 | **Value of the `alternative` Parameter** | **Test Type** | **Alternative Hypothesis (Ha​)** | **Practical Interpretation** |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | **`"two.sided"`** (The default) | **Two-Tailed** | $H_a: \mu \neq \mu_0$ (or $\mu_1 \neq \mu_2$) | Tests if the true mean (or mean difference) is **not equal to** the hypothesized value. You are interested in a significant difference in *either* the positive or negative direction. |
 | **`"greater"`** | **One-Tailed** (Upper-Tailed) | $H_a: \mu > \mu_0$ (or $\mu_1 > \mu_2$) | Tests if the true mean (or mean difference) is **strictly greater than** the hypothesized value. You are *only* interested in a significant result in the positive direction. |
 | **`"less"`** | **One-Tailed** (Lower-Tailed) | $H_a: \mu < \mu_0$ (or $\mu_1 < \mu_2$) | Tests if the true mean (or mean difference) is **strictly less than** the hypothesized value. You are *only* interested in a significant result in the negative direction. |
@@ -347,7 +406,7 @@ The larger the difference in means, the larger the t-value. Also, the larger the
 
 ```{r one_sample_t_test_2_sided, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
-  sales_performance_data$SalesTargetA,
+  ml_performance_data$SalesTargetA,
   mu = 50,
   alternative = "two.sided"
 )
@@ -357,7 +416,7 @@ t.test(
 
 ```{r one_sample_t_test_greater, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
-  sales_performance_data$SalesTargetA,
+  ml_performance_data$SalesTargetA,
   mu = 50,
   alternative = "greater"
 )
@@ -367,7 +426,7 @@ t.test(
 
 ```{r one_sample_t_test_less, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
-  sales_performance_data$SalesTargetA,
+  ml_performance_data$SalesTargetA,
   mu = 50,
   alternative = "less"
 )
@@ -380,7 +439,7 @@ t.test(
 ```{r independent_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
   WeeklySales ~ MarketingStrategy,
-  data = sales_performance_data,
+  data = ml_performance_data,
   levels = c("Digital", "Traditional"),
   alternative = "greater"   # Digital > Traditional
 )
@@ -391,7 +450,7 @@ t.test(
 ```{r independent_sample_t_test_greater, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
   WeeklySales ~ MarketingStrategy,
-  data = sales_performance_data,
+  data = ml_performance_data,
   alternative = "two.sided"
 )
 ```
@@ -402,8 +461,8 @@ t.test(
 
 ```{r paired_sample_t_test_lesser, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
-  sales_performance_data$BeforeTraining,
-  sales_performance_data$AfterTraining,
+  ml_performance_data$BeforeTraining,
+  ml_performance_data$AfterTraining,
   paired = TRUE,
   alternative = "less"   # Before < After
 )
@@ -413,8 +472,8 @@ t.test(
 
 ```{r paired_sample_t_test_two_sided, echo=TRUE, message=FALSE, warning=FALSE}
 t.test(
-  sales_performance_data$BeforeTraining,
-  sales_performance_data$AfterTraining,
+  ml_performance_data$BeforeTraining,
+  ml_performance_data$AfterTraining,
   paired = TRUE,
   alternative = "two.sided"
 )
@@ -475,18 +534,18 @@ Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect 
 Large samples (n \> 50): Shapiro–Wilk has too much power. It will declare almost anything “non-normal,” even slight deviations.
 
 ```{r test_of_normality, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-shapiro.test(sales_performance_data$SalesTargetA)
+shapiro.test(ml_performance_data$SalesTargetA)
 
 shapiro.test(
-  sales_performance_data$WeeklySales[
-    sales_performance_data$MarketingStrategy == "Digital"])
+  ml_performance_data$WeeklySales[
+    ml_performance_data$MarketingStrategy == "Digital"])
 
 shapiro.test(
-  sales_performance_data$WeeklySales[
-    sales_performance_data$MarketingStrategy == "Traditional"])
+  ml_performance_data$WeeklySales[
+    ml_performance_data$MarketingStrategy == "Traditional"])
 
 shapiro.test(
-  sales_performance_data$AfterTraining - sales_performance_data$BeforeTraining)
+  ml_performance_data$AfterTraining - ml_performance_data$BeforeTraining)
 ```
 
 ## [**Test of Homoscedasticity**]{.underline}
@@ -532,7 +591,7 @@ You fail to reject the null hypothesis. There is no evidence that the variances 
 You reject the null hypothesis. There is evidence that the variances are different. → Use Welch’s t-test (the default in R).
 
 ```{r test_of_homoscedasticity, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-var.test(WeeklySales ~ MarketingStrategy, data = sales_performance_data)
+var.test(WeeklySales ~ MarketingStrategy, data = ml_performance_data)
 ```
 
 The real purpose of checking variances is not to satisfy a statistical rule. It is to understand whether your groups behave differently, not just whether their means differ.
