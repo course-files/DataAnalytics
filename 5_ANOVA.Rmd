@@ -187,7 +187,7 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 ## [**Measures of Frequency**]{.underline}
 
 ```{r measures_of_frequency, echo=TRUE, message=FALSE, warning=FALSE}
-ml_performance_data_freq <- ml_performance_data$MarketingStrategy
+ml_performance_data_freq <- ml_performance_data$Algorithm
 cbind(frequency = table(ml_performance_data_freq),
       percentage = prop.table(table(ml_performance_data_freq)) * 100)
 ```
@@ -225,13 +225,13 @@ The syntax `dataset[rows, columns]` can be used to specify the exact rows and co
 ```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
 # `sapply()` is designed to apply a function to a variable in a dataset
 # In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
-sapply(ml_performance_data[,c(1,3,4,5)], var)
+sapply(ml_performance_data[,c(4)], var)
 ```
 
 ### **Standard Deviation**
 
 ```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(ml_performance_data[,c(1,3,4,5)], sd)
+sapply(ml_performance_data[,c(4)], sd)
 ```
 
 ### **Kurtosis (Pearson)**
@@ -250,7 +250,7 @@ High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estim
 
 ```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("e1071")
-sapply(ml_performance_data[,c(1,3,4,5)],  kurtosis, type = 2)
+sapply(ml_performance_data[,c(4)],  kurtosis, type = 2)
 ```
 
 ### **Skewness**
@@ -268,47 +268,10 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
 
 ```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
-sapply(ml_performance_data[,c(1,3,4,5)], skewness, type = 2)
+sapply(ml_performance_data[,c(4)], skewness, type = 2)
 ```
 
 As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to always looking it at it as a distortion that needs to be corrected.
-
-## [**Measures of Relationship**]{.underline}
-
-### **Covariance**
-
-Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
-
--   **Positive Covariance:** When one variable increases, the other tends to increase as well.
-
--   **Negative Covariance:** When one variable increases, the other tends to decrease.
-
--   **Zero Covariance:** No linear relationship exists between the variables.
-
-While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
-
-```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
-cov(ml_performance_data[,c(1,3,4,5)], method = "spearman")
-```
-
-### **Correlation**
-
-A strong correlation between variables enables us to better predict the value of the dependent variable using the value of the independent variable. However, a weak correlation between two variables does not help us to predict the value of the dependent variable from the value of the independent variable. This is useful only if there is a linear association between the variables.
-
-We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
-
-```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
-cor.test(
-  ml_performance_data$BeforeTraining,
-  ml_performance_data$AfterTraining,
-  method = "spearman")
-```
-
-To view the correlation of all variables
-
-```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
-cor(ml_performance_data[,c(1,3,4,5)], method = "spearman")
-```
 
 ## [**Basic Visualizations**]{.underline}
 
@@ -322,7 +285,7 @@ cor(ml_performance_data[,c(1,3,4,5)], method = "spearman")
 # `ml_performance_data[[i]]` This is used to extract the i-th column as a vector
 # `hist()` This is the function used to plot the histogram
 par(mfrow = c(1, 2))
-for (i in 1:5) {
+for (i in 4:4) {
   if (is.numeric(ml_performance_data[[i]])) {
     hist(ml_performance_data[[i]],
          main = names(ml_performance_data)[i],
@@ -339,7 +302,7 @@ for (i in 1:5) {
 ```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 # `boxplot()` This is the function used to plot the box and whisker plot visualization
 par(mfrow = c(1, 2))
-for (i in 1:5) {
+for (i in 4:4) {
   if (is.numeric(ml_performance_data[[i]])) {
     boxplot(ml_performance_data[[i]], main = names(ml_performance_data)[i])
   } else {
@@ -357,27 +320,30 @@ pacman::p_load("Amelia")
 missmap(ml_performance_data, col = c("red", "grey"), legend = TRUE)
 ```
 
-### **Correlation Plot**
-
-```{r correlation_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-pacman::p_load("ggcorrplot")
-
-ggcorrplot(cor(ml_performance_data[,c(1,3,4,5)]))
-```
-
 ### **Scatter Plot**
 
 ```{r scatter_plot_2, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
 pacman::p_load("ggplot2")
 ggplot(ml_performance_data,
-       aes(x = BeforeTraining, y = AfterTraining)) + 
+       aes(x = Algorithm, y = Accuracy)) + 
   geom_point() +
   geom_smooth(method = lm) +
   labs(
-    title = "Relationship between Before Training and After Training",
-    x = "Before Training",
-    y = "After Training"
+    title = "Relationship between Algorithm and Accuracy",
+    x = "Algorithm",
+    y = "Accuracy"
   )
+```
+
+# Statistical Test: ANOVA
+
+```{r anova, echo=TRUE, message=FALSE, warning=FALSE}
+anova_model <- aov(Accuracy ~ Algorithm, data = ml_performance_data)
+summary(anova_model)
+```
+
+```{r post_hoc_tukey, echo=TRUE, message=FALSE, warning=FALSE}
+TukeyHSD(anova_model)
 ```
 
 # Statistical Test: Welch's t-test (unequal variances)
