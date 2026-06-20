@@ -90,13 +90,13 @@ str(clv_data)
 
 Understanding your data can lead to:
 
--   **Data cleaning:** To remove extreme outliers or impute missing data.
+- **Data cleaning:** To remove extreme outliers or impute missing data.
 
--   **Data transformation:** To reduce skewness
+- **Data transformation:** To reduce skewness
 
--   **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
 
--   **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+- **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
 
 Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
 
@@ -199,11 +199,11 @@ As a data analyst, you need to confirm if the distortion in kurtosis or skewness
 
 Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
 
--   **Positive Covariance:** When one variable increases, the other tends to increase as well.
+- **Positive Covariance:** When one variable increases, the other tends to increase as well.
 
--   **Negative Covariance:** When one variable increases, the other tends to decrease.
+- **Negative Covariance:** When one variable increases, the other tends to decrease.
 
--   **Zero Covariance:** No linear relationship exists between the variables.
+- **Zero Covariance:** No linear relationship exists between the variables.
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
@@ -345,9 +345,9 @@ This test is necessary to confirm that each observation is independent of the ot
 
 For the Durbin-Watson test:
 
--   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
+- The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
+- The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
 
 If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
 
@@ -378,13 +378,13 @@ The x-axis shows the fitted (predicted) values from the model and the y-axis sho
 
 In a model with homoscedastic errors (equal variance across all predicted values):
 
--   Points should be randomly scattered around a horizontal line
+- Points should be randomly scattered around a horizontal line
 
--   The smooth line should be approximately horizontal
+- The smooth line should be approximately horizontal
 
--   The vertical spread of points should be roughly equal across all fitted values
+- The vertical spread of points should be roughly equal across all fitted values
 
--   No obvious patterns, funnels, or trends should be visible
+- No obvious patterns, funnels, or trends should be visible
 
 Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
 
@@ -398,15 +398,15 @@ The Breusch-Pagan Test can also be used in addition to the visual inspection of 
 
 Formally:
 
--   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+- Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
 
--   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
+- Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
 
 p-Value:
 
--   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
+- p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
 
--   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
+- p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
 
 Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
 
@@ -519,11 +519,11 @@ The “Knit” utility in R can be used to convert the R Notebook into either a:
 
 The conversion to PDF requires the installation of the following free software:
 
--   For Windows: MiKTeX - <https://miktex.org/download>
+- For Windows: MiKTeX - <https://miktex.org/download>
 
--   For MacOS: MacTeX - <https://www.tug.org/mactex/mactex-download.html>
+- For MacOS: MacTeX - <https://www.tug.org/mactex/mactex-download.html>
 
--   For Linux: TeX Live - <https://www.tug.org/texlive/quickinstall.html>
+- For Linux: TeX Live - <https://www.tug.org/texlive/quickinstall.html>
 
 Also, you need to install the `tinytex` package. The `tinytex` package helps RStudio to find and use MikTex, MacTeX, or TeXLive. Execute the following **in the console section of RStudio** to install TinyTex:
 
