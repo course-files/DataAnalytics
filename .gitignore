@@ -73,12 +73,14 @@ sandbox_*/
 3_logistic_regression.tex
 
 /4_logistic_regression-siwaka_dishes_files
+4_logistic_regression-siwaka_dishes.html
 4_logistic_regression-siwaka_dishes.nb.html
 4_logistic_regression-siwaka_dishes.Rmd
 4_logistic_regression-siwaka_dishes.tex
 # 4_logistic_regression-siwaka_dishes.pdf
 
 /5_multiple_linear_regression_files
+5_multiple_linear_regression.html
 5_multiple_linear_regression.nb.html
 5_multiple_linear_regression.Rmd
 5_multiple_linear_regression.tex
@@ -87,14 +89,8 @@ sandbox_*/
 /4_t-test_files
 4_t-test.html
 4_t-test.nb.html
-# 4_t-test.pdf
 4_t-test.docx
 4_t-test.tex
+# 4_t-test.pdf
 
-/5_ANOVA_files
-5_ANOVA.html
-5_ANOVA.nb.html
-# 5_ANOVA.pdf
-5_ANOVA.docx
-5_ANOVA.tex
 .positai
