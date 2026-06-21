@@ -94,13 +94,6 @@ knitr::opts_knit$set(root.dir = normalizePath("."))
 # `dependencies = TRUE` instructs R to install not only the specified package but
 # also its dependencies
 
-# `pacman::p_load("here")` installs the package called "here". This package is used
-# in the next line.
-# `knitr::opts_knit$set(root.dir = here::here())` is used to ensure that the "knitr"
-# utility in R knows where to find the files required to create the HTML, Word, or
-# PDF version of the notebook.
-
-
 if (!"pacman" %in% installed.packages()[, "Package"]) {
   install.packages("pacman", dependencies = TRUE)
   library("pacman")
