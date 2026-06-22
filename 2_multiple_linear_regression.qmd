@@ -1,37 +1,53 @@
 ---
-title: "Multiple Linear Regression"
+title: "Statistical Tests of Regression: Multiple Linear Regression"
+subtitle: "v1.0.0"
 author: "Allan Omondi"
-date: "`r Sys.Date()`"
-output:
-  html_document:
+date: today
+date-format: "DD MMMM YYYY"
+
+engine: knitr
+
+editor: visual
+
+format:
+  html:
     toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    fig_height: 5
-    self_contained: false
-    keep_md: true
-  word_document:
+    toc-depth: 4
+    toc-float: true
+    number-sections: true
+    fig-width: 6
+    fig-height: 6
+    embed-resources: true
+    keep-md: false
+    df-print: paged
+    theme: flatly
+    highlight-style: tango
+  docx:
     toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    keep_md: true
-  html_notebook:
+    toc-depth: 4
+    number-sections: true
+    fig-width: 6
+    keep-md: false
+  pdf:
     toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 5
-    self_contained: false
-  pdf_document: 
-    toc: true
-    toc_depth: 4
-    number_sections: true
-    fig_width: 6
-    fig_height: 6
-    fig_crop: false
-    keep_tex: true
-    latex_engine: xelatex
+    toc-depth: 4
+    number-sections: true
+    fig-width: 6
+    fig-height: 6
+    fig-crop: false
+    keep-tex: false
+    pdf-engine: xelatex
+
+execute:
+  echo: fenced
+  message: false
+  warning: false
+  fig-width: 9
+  fig-height: 5
+
+knitr:
+  opts_chunk:
+    comment: "#>"
 ---
 
 ```{r setup_chunk, message=FALSE, warning=FALSE}
@@ -79,13 +95,13 @@ str(advertising_data)
 
 Understanding your data can lead to:
 
--   **Data cleaning:** To remove extreme outliers or impute missing data.
+- **Data cleaning:** To remove extreme outliers or impute missing data.
 
--   **Data transformation:** To reduce skewness
+- **Data transformation:** To reduce skewness
 
--   **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
 
--   **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+- **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
 
 Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
 
@@ -93,7 +109,7 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 
 2.  **Measures of central tendency:** mean, median, and mode
 
-3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) [includes a box and whisker plot for visualization], kurtosis, skewness [includes a histogram for visualization]).
+3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) \[includes a box and whisker plot for visualization\], kurtosis, skewness \[includes a histogram for visualization\]).
 
 4.  **Measures of relationship:** covariance and correlation
 
@@ -186,11 +202,11 @@ As a data analyst, you need to confirm if the distortion in kurtosis or skewness
 
 Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
 
--   **Positive Covariance:** When one variable increases, the other tends to increase as well.
+- **Positive Covariance:** When one variable increases, the other tends to increase as well.
 
--   **Negative Covariance:** When one variable increases, the other tends to decrease.
+- **Negative Covariance:** When one variable increases, the other tends to decrease.
 
--   **Zero Covariance:** No linear relationship exists between the variables.
+- **Zero Covariance:** No linear relationship exists between the variables.
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
@@ -339,9 +355,9 @@ This test is necessary to confirm that each observation is independent of the ot
 
 For the Durbin-Watson test:
 
--   The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
+- The null hypothesis, H~0~, is that there is no autocorrelation (no autocorrelation = there is no correlation between residuals across time or across observations).
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
+- The alternative hypothesis, H~a~, is that there is autocorrelation (autocorrelation = there is a correlation between residuals across time or across observations)
 
 If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation".
 
@@ -372,13 +388,13 @@ The x-axis shows the fitted (predicted) values from the model and the y-axis sho
 
 In a model with homoscedastic errors (equal variance across all predicted values):
 
--   Points should be randomly scattered around a horizontal line
+- Points should be randomly scattered around a horizontal line
 
--   The smooth line should be approximately horizontal
+- The smooth line should be approximately horizontal
 
--   The vertical spread of points should be roughly equal across all fitted values
+- The vertical spread of points should be roughly equal across all fitted values
 
--   No obvious patterns, funnels, or trends should be visible
+- No obvious patterns, funnels, or trends should be visible
 
 Points forming a cone shape that widens from left to right suggests heteroscedasticity with increasing variance for larger fitted values.
 
@@ -392,15 +408,15 @@ The Breusch-Pagan Test can also be used in addition to the visual inspection of 
 
 Formally:
 
--   Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+- Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
 
--   Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
+- Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant variance).
 
 p-Value:
 
--   p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
+- p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good, model passes.
 
--   p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
+- p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model fails.
 
 Interpretation: If the p-value is less than 0.05, then we reject the null hypothesis that states that “the residuals are homoscedastic”
 
@@ -480,14 +496,14 @@ A 95% confidence interval (CI) for a parameter—such as a regression coefficien
 
 ## Academic Statement (APA)—Academic-Ready Language: Without data transformation
 
-A simultaneous multiple linear regression analysis was conducted on data from 250,000 observations (*N*=250,000) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that expenses on YouTube ($\beta$ = 8.08, 95% CI [8.02, 8.13], SE = 0.02, *t*(249,996) = 277.54, *p* \< 0.01), TikTok ($\beta$ = 7.30, 95% CI [7.22, 7.39], SE = 0.04, *t*(249,996) = 165.63, *p* \< 0.01), and Facebook ($\beta$ = 7.84, 95% CI [7.77, 7.91], SE = 0.35, *t*(249,996) = 222.12, *p* \< 0.01) significantly predicted Sales (all large t-values and *p* \< 0.05). The model explained 38.06% of the variance in Sales (Multiple R^2^ = 0.38, Adjusted R^2^ = 0.38, *F*(3, 249,996) = 51,210, *p* \< 0.01). The intercept was 236,800, 95% CI [228,608.10, 244,953.50], SE = 4,170, *t*(249,996) = 56.78, *p* \< 0.01. The residual standard error was 587,400. This inidcates that the predictors significantly contributed towards explaining Sales, however, diagnostic findings relieved that violations of homoscedasticity and independence of residuals (autocorrelation), suggesting that the model's robustness and reliability of standard errors may be limited. The results are presented in the table below.
+A simultaneous multiple linear regression analysis was conducted on data from 250,000 observations (*N*=250,000) to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales. The results indicated that expenses on YouTube ($\beta$ = 8.08, 95% CI \[8.02, 8.13\], SE = 0.02, *t*(249,996) = 277.54, *p* \< 0.01), TikTok ($\beta$ = 7.30, 95% CI \[7.22, 7.39\], SE = 0.04, *t*(249,996) = 165.63, *p* \< 0.01), and Facebook ($\beta$ = 7.84, 95% CI \[7.77, 7.91\], SE = 0.35, *t*(249,996) = 222.12, *p* \< 0.01) significantly predicted Sales (all large t-values and *p* \< 0.05). The model explained 38.06% of the variance in Sales (Multiple R^2^ = 0.38, Adjusted R^2^ = 0.38, *F*(3, 249,996) = 51,210, *p* \< 0.01). The intercept was 236,800, 95% CI \[228,608.10, 244,953.50\], SE = 4,170, *t*(249,996) = 56.78, *p* \< 0.01. The residual standard error was 587,400. This inidcates that the predictors significantly contributed towards explaining Sales, however, diagnostic findings relieved that violations of homoscedasticity and independence of residuals (autocorrelation), suggesting that the model's robustness and reliability of standard errors may be limited. The results are presented in the table below.
 
-|  Predictor  | $\beta$ |          95% CI          |  SE   | *t*(249,996) |  *p*   |
-|:-----------:|:-------:|:------------------------:|:-----:|:------------:|:------:|
-| (Intercept) | 236,800 | [228,608.10, 244,953.50] | 4,170 |    56.78     | \< .01 |
-|   YouTube   |  8.08   |       [8.02, 8.13]       | 0.02  |    277.54    | \< .01 |
-|   TikTok    |  7.30   |       [7.22, 7.39]       | 0.04  |    165.63    | \< .01 |
-|  Facebook   |  7.84   |       [7.77, 7.91]       | 0.35  |    222.12    | \< .01 |
+|  Predictor  | $\beta$ |           95% CI           |  SE   | *t*(249,996) |  *p*   |
+|:-----------:|:-------:|:--------------------------:|:-----:|:------------:|:------:|
+| (Intercept) | 236,800 | \[228,608.10, 244,953.50\] | 4,170 |    56.78     | \< .01 |
+|   YouTube   |  8.08   |       \[8.02, 8.13\]       | 0.02  |    277.54    | \< .01 |
+|   TikTok    |  7.30   |       \[7.22, 7.39\]       | 0.04  |    165.63    | \< .01 |
+|  Facebook   |  7.84   |       \[7.77, 7.91\]       | 0.35  |    222.12    | \< .01 |
 
 : Regression Coefficients Predicting Sales from Multiple Advertising Channels
 
@@ -501,7 +517,7 @@ For every one Kenyan Shilling (KES) increase in YouTube advertising expenditure,
 
 Recommendation:
 
--   Management should continue to treat YouTube, TikTok, and Facebook as complementary pillars of a unified digital marketing strategy. However, a modest increase in YouTube advertising expenditure is advisable, given its slightly stronger association with Sales performance. Continuous monitoring and ROI analysis should be maintained to ensure sustained effectiveness across platforms.
+- Management should continue to treat YouTube, TikTok, and Facebook as complementary pillars of a unified digital marketing strategy. However, a modest increase in YouTube advertising expenditure is advisable, given its slightly stronger association with Sales performance. Continuous monitoring and ROI analysis should be maintained to ensure sustained effectiveness across platforms.
 
 # References and Further Reading
 

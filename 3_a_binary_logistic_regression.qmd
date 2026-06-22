@@ -170,11 +170,11 @@ sapply(subscription_churn_data[,], skewness, type = 2)
 
 Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
 
--   **Positive Covariance:** When one variable increases, the other tends to increase as well.
+- **Positive Covariance:** When one variable increases, the other tends to increase as well.
 
--   **Negative Covariance:** When one variable increases, the other tends to decrease.
+- **Negative Covariance:** When one variable increases, the other tends to decrease.
 
--   **Zero Covariance:** No linear relationship exists between the variables.
+- **Zero Covariance:** No linear relationship exists between the variables.
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
@@ -301,25 +301,19 @@ summary(log_test)
 
 The logistic regression equation is in the following form:
 
-$$
-\text{log-odds(renew)} = \beta_0 + \beta_1 \cdot fee + \beta_2 \cdot age + \beta_3 \cdot calls
-$$
+$$\text{log-odds(renew)} = \beta_0 + \beta_1 \cdot fee + \beta_2 \cdot age + \beta_3 \cdot calls$$
 
 Plugging in the coefficients from the output gives:
 
-$$
-\text{log-odds(renew)} = -0.941778 + -0.043563 \cdot fee + 0.026110 \cdot age + 0.697795 \cdot calls
-$$
+$$\text{log-odds(renew)} = -0.941778 + -0.043563 \cdot fee + 0.026110 \cdot age + 0.697795 \cdot calls$$
 
 The log-odds is then converted into a probability using the logistic function as:
 
-$$
-P(\text{renew = 1}) = \frac{1}{1+e^{-\text{log-odds}}}
-$$
+$$P(\text{renew = 1}) = \frac{1}{1+e^{-\text{log-odds}}}$$
 
--   If P(renew=1)≥0.5, predict renewal of subscription(1).
+- If P(renew=1)≥0.5, predict renewal of subscription(1).
 
--   If P(renew=1)\<0.5, predict cancellation of subscription (0).
+- If P(renew=1)\<0.5, predict cancellation of subscription (0).
 
 For example, a monthly fee of 50, customer age of 62, and 3 support calls in the past month is probably going to renew their subscription:
 
@@ -418,13 +412,13 @@ There were 4 Fisher scoring iterations which indicates that the fitting routine 
 
 The ROC Curve and the AUC gives insight into how well the logistic regression model distinguishes between the two outcome classes (1 = renew and 0 = cancel).
 
--   The x-axis shows the False Positive Rate (FPR), or specificity.
+- The x-axis shows the False Positive Rate (FPR), or specificity.
 
--   The y-axis shows the True Positive Rate (TPR), or sensitivity.
+- The y-axis shows the True Positive Rate (TPR), or sensitivity.
 
--   The curve shows how TPR and FPR change as the decision threshold changes from 0 to 1.
+- The curve shows how TPR and FPR change as the decision threshold changes from 0 to 1.
 
--   A curve closer to the top-left corner indicates better model performance.
+- A curve closer to the top-left corner indicates better model performance.
 
 ```{r model_fit_a, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
 pacman::p_load("pROC")
@@ -441,7 +435,7 @@ print(auc_value)
 ```
 
 | AUC Value | Interpretation |
-|------------------------------------|------------------------------------|
+|----|----|
 | 0.5 | Using the logistic regression model is equivalent to randomly guessing |
 | 0.6 - 0.7 | Poor discrimination of the classes |
 | 0.7 - 0.8 | Acceptable discrimination of the classes (fair) |
@@ -483,9 +477,9 @@ This test is necessary to confirm that each observation is independent of the ot
 
 The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
 
--   The null hypothesis, H~0~, is that there is no autocorrelation
+- The null hypothesis, H~0~, is that there is no autocorrelation
 
--   The alternative hypothesis, H~a~, is that there is autocorrelation
+- The alternative hypothesis, H~a~, is that there is autocorrelation
 
 If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of 0.1573, therefore, the test of independence of errors around the regression line passes.
 
@@ -517,29 +511,29 @@ The `influencePlot()` function in R combines 3 key diagnostic measures into a si
 
 The plot displays:
 
--   Y-axis: Studentized residuals (standardized residuals adjusted for leverage). This measures "outlierness" in the outcome variable.
+- Y-axis: Studentized residuals (standardized residuals adjusted for leverage). This measures "outlierness" in the outcome variable.
 
--   X-axis: Leverage (hat values), measuring how "unusual" an observation is in terms of its predictor values.
+- X-axis: Leverage (hat values), measuring how "unusual" an observation is in terms of its predictor values.
 
--   Bubble size: Cook’s distance, quantifying the influence of each observation on the model coefficients.
+- Bubble size: Cook’s distance, quantifying the influence of each observation on the model coefficients.
 
 Top-left/bottom-left:
 
--   Indicates observations with high residuals but low leverage: Outliers in the outcome but not predictors.
+- Indicates observations with high residuals but low leverage: Outliers in the outcome but not predictors.
 
--   Possible next step: Investigate the observations for misclassified outcomes.
+- Possible next step: Investigate the observations for misclassified outcomes.
 
 Top-right/bottom-right:
 
--   Indicates high residuals and high leverage: Influential outliers that distort the model.
+- Indicates high residuals and high leverage: Influential outliers that distort the model.
 
--   Possible next step: These are the most problematic observations. You need to check if they are valid data points or errors.
+- Possible next step: These are the most problematic observations. You need to check if they are valid data points or errors.
 
 Middle-right:
 
--   High leverage but residuals near 0: Unusual predictor values but well-predicted outcomes.
+- High leverage but residuals near 0: Unusual predictor values but well-predicted outcomes.
 
--   Possible next step: These observations are generally safe to keep.
+- Possible next step: These observations are generally safe to keep.
 
 ```{r outliers_plot, echo=TRUE, message=FALSE, warning=FALSE}
 pacman::p_load("car")
@@ -584,12 +578,12 @@ Subtracting the residual deviance (906.19 on 996 df) from the null deviance (1,0
 
 The results are reported in the table below:
 
-|        Predictor        | $\beta$ |     95% CI     |  SE  |  *z*  |   *p*   |
-|:-----------------------:|:-------:|:--------------:|:----:|:-----:|:-------:|
-|       (Intercept)       |  -0.94  | [-2.02, 0.12]  | 0.55 | -1.73 |  0.085  |
-|       Monthly Fee       |  -0.04  | [-0.06, -0.03] | 0.01 | -4.88 | \< .001 |
-|     Customer's Age      |  0.03   |  [0.01, 0.04]  | 0.01 | 3.09  |  .002   |
-| Number of Support Calls |  0.70   |  [0.54, 0.86]  | 0.08 | 8.56  | \< .001 |
+|        Predictor        | $\beta$ |      95% CI      |  SE  |  *z*  |   *p*   |
+|:-----------------------:|:-------:|:----------------:|:----:|:-----:|:-------:|
+|       (Intercept)       |  -0.94  | \[-2.02, 0.12\]  | 0.55 | -1.73 |  0.085  |
+|       Monthly Fee       |  -0.04  | \[-0.06, -0.03\] | 0.01 | -4.88 | \< .001 |
+|     Customer's Age      |  0.03   |  \[0.01, 0.04\]  | 0.01 | 3.09  |  .002   |
+| Number of Support Calls |  0.70   |  \[0.54, 0.86\]  | 0.08 | 8.56  | \< .001 |
 
 : Regression Coefficients Predicting Renewal from Multiple Customer Features
 
@@ -597,13 +591,13 @@ The results are reported in the table below:
 
 **Predictor Effects**
 
--   The monthly fee ($\beta$ = -0.04, 95% CI [-0.06, -0.03], SE = 0.01, *z* = -4.88, *p* \< .001) was the first predictor. For every unit increase in monthly fees, the odds of renewal decrease by 4% (*OR* = 0.96, 95% CI [0.94, 0.97], p\< .001).
+- The monthly fee ($\beta$ = -0.04, 95% CI \[-0.06, -0.03\], SE = 0.01, *z* = -4.88, *p* \< .001) was the first predictor. For every unit increase in monthly fees, the odds of renewal decrease by 4% (*OR* = 0.96, 95% CI \[0.94, 0.97\], p\< .001).
 
--   The customer age ($\beta$ = 0.03, 95% CI [0.01, 0.04], SE = 0.01, *z* = 3.09, *p* = .002). For every unit increase in the customer's age, the odds of renewal increased by 3% (*OR* = 1.03, 95% CI [1.01, 1.04], *p* = .002).
+- The customer age ($\beta$ = 0.03, 95% CI \[0.01, 0.04\], SE = 0.01, *z* = 3.09, *p* = .002). For every unit increase in the customer's age, the odds of renewal increased by 3% (*OR* = 1.03, 95% CI \[1.01, 1.04\], *p* = .002).
 
--   The number of support calls ($\beta$ = 0.70, 95% CI [0.54, 0.86], SE = 0.08, *z* = 8.56, *p* \< .001). For every unit increase in the number of support calls, the odds of renewal increased by 101% (*OR* = 2.01, 95% CI [1.72, 2.36], *p* \< .001)
+- The number of support calls ($\beta$ = 0.70, 95% CI \[0.54, 0.86\], SE = 0.08, *z* = 8.56, *p* \< .001). For every unit increase in the number of support calls, the odds of renewal increased by 101% (*OR* = 2.01, 95% CI \[1.72, 2.36\], *p* \< .001)
 
--   The intercept term was not statistically significant ($\beta$ = -0.94, 95 % CI [-2.02, 0.12], SE = 0.55, *z* = -1.73, *p* = 0.085) thus indicating no significant baseline odds of renewal when all predictors are zero.
+- The intercept term was not statistically significant ($\beta$ = -0.94, 95 % CI \[-2.02, 0.12\], SE = 0.55, *z* = -1.73, *p* = 0.085) thus indicating no significant baseline odds of renewal when all predictors are zero.
 
 ## Business Analysis
 
@@ -611,31 +605,31 @@ Key insights:
 
 1.  Monthly Fee:
 
-    -   Finding: Higher monthly fees significantly reduce renewal odds (−4% per unit increase in monthly fee).
+    - Finding: Higher monthly fees significantly reduce renewal odds (−4% per unit increase in monthly fee).
 
-    -   Implication: Customers are price-sensitive; fee hikes risk cancellations.
+    - Implication: Customers are price-sensitive; fee hikes risk cancellations.
 
-    -   Recommendation: Avoid aggressive fee increases. Consider small, incremental fee adjustments for high-value customers.
+    - Recommendation: Avoid aggressive fee increases. Consider small, incremental fee adjustments for high-value customers.
 
 2.  Customer Age:
 
-    -   Finding: Older customers are more likely to renew (+3% odds per year of age).
+    - Finding: Older customers are more likely to renew (+3% odds per year of age).
 
-    -   Implication: Younger customers may need targeted retention efforts.
+    - Implication: Younger customers may need targeted retention efforts.
 
-    -   Recommendation: Launch engagement campaigns, e.g., personalized offers
+    - Recommendation: Launch engagement campaigns, e.g., personalized offers
 
 3.  Support Calls:
 
-    -   Finding: Each support call doubles renewal odds (+101% per unit increase in support calls).
+    - Finding: Each support call doubles renewal odds (+101% per unit increase in support calls).
 
-    -   Implication: Proactive customer support drives loyalty and retention.
+    - Implication: Proactive customer support drives loyalty and retention.
 
-    -   Recommendations:
+    - Recommendations:
 
-        -   Train customer care officers to resolve issues fully and to anticipate needs, e.g., follow-up calls after ticket closure
+      - Train customer care officers to resolve issues fully and to anticipate needs, e.g., follow-up calls after ticket closure
 
-        -   Avoid over-reliance on support calls: High call volumes may indicate unresolved product issues.
+      - Avoid over-reliance on support calls: High call volumes may indicate unresolved product issues.
 
 ## Limitations
 

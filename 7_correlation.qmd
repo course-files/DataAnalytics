@@ -1,0 +1,693 @@
+---
+title: "Statistical Tests of Correlation: Pearson's r and Spearman's rho"
+subtitle: "v1.0.0"
+author: "Allan Omondi"
+date: today
+date-format: "DD MMMM YYYY"
+
+engine: knitr
+
+editor: visual
+
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    toc-float: true
+    number-sections: true
+    fig-width: 6
+    fig-height: 6
+    embed-resources: true
+    keep-md: false
+    df-print: paged
+    theme: flatly
+    highlight-style: tango
+  docx:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    fig-width: 6
+    keep-md: false
+  pdf:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    fig-width: 6
+    fig-height: 6
+    fig-crop: false
+    keep-tex: false
+    pdf-engine: xelatex
+
+execute:
+  echo: fenced
+  message: false
+  warning: false
+  fig-width: 9
+  fig-height: 5
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+---
+
+```{r knitr_setup}
+#| echo: false
+#| message: false
+#| warning: false
+
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("."))
+```
+
+```{r install_dependencies}
+#| echo: true
+#| message: false
+#| warning: false
+
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman")
+}
+
+# For reading data from a CSV file
+pacman::p_load("readr")
+# For data visualization
+pacman::p_load("ggplot2")
+# For data visualization of missing data
+pacman::p_load("naniar")
+# For skewness and kurtosis
+pacman::p_load("e1071")
+# For the Breusch-Pagan test (homoscedasticity) and the Durbin-Watson test
+# (independence of errors / autocorrelation)
+pacman::p_load("lmtest")
+# For Cook's distance and other regression diagnostics used to support
+# the linearity and outlier checks below
+pacman::p_load("car")
+```
+
+# What Are Pearson's r and Spearman's rho?
+
+## Pearson's Correlation Coefficient (r)
+
+**Purpose:** Measures the strength and direction of the *linear* relationship between two continuous variables.\
+**Variables:** Two continuous variables, measured on the same set of observations.\
+**Output:** A correlation coefficient *r* ranging from −1 (perfect negative linear relationship) to +1 (perfect positive linear relationship), with 0 indicating no linear relationship; a *t*-test and p-value assessing whether *r* differs from 0; a 95% confidence interval for *r*.\
+**Example:** Does spending more on marketing relate, in a straight-line fashion, to higher monthly sales?
+
+## Spearman's Rank Correlation Coefficient (rho, ρ or *r*~s~)
+
+**Purpose:** Measures the strength and direction of the *monotonic* relationship between two variables — whether one variable consistently tends to increase (or decrease) as the other increases, without requiring that relationship to be a straight line.\
+**Variables:** Two variables that are at least ordinal (rankable); need not be normally distributed, and need not be related in a strictly linear way.\
+**Output:** A correlation coefficient ρ ranging from −1 to +1, computed on the *ranks* of the data rather than the raw values; a test statistic (*S*) and p-value assessing whether ρ differs from 0.\
+**Example:** Do stores with longer delivery times tend to have lower customer satisfaction, even if the size of that drop is not constant per extra day of delay?
+
+## Difference between Pearson's Correlation Coefficient (r) and Spearman's Rank Correlation Coefficient (rho, ρ or *r*~s~)
+
+Pearson's r and Spearman's rho answer related but distinct questions, and the choice between them is a diagnostic decision, not a matter of preference. Pearson's r is the more familiar and more statistically efficient test when its assumptions hold (the relationship is genuinely linear, both variables are reasonably normally distributed, and there are no strongly influential outliers). Spearman's rho asks a looser, more robust question — "do the two variables move together in the same direction?" — and remains valid when the relationship is monotonic but curved, when the data are ordinal rather than truly continuous, or when outliers would otherwise distort a linear fit.
+
+This notebook uses one dataset containing two genuinely different relationships, so that the two coefficients can be computed on each, compared directly, and the resulting differences traced back to a concrete diagnostic cause rather than left as an abstract rule.
+
+> Research questions used in this notebook:
+>
+> 1.  *Is monthly sales linearly related to marketing spend across stores?* (designed to suit Pearson's r)
+> 2.  *Is customer satisfaction related to average delivery time across stores, and does that relationship hold even though it is not a straight line and is disturbed by a few outlier stores?* (designed to suit Spearman's rho)
+
+# Generate the Synthetic Dataset
+
+## Business Context
+
+The dataset simulates store-level performance data for a retail chain (40 stores), the kind of data a business analyst or supply-chain analyst might use to evaluate whether marketing investment pays off in sales, or whether delivery delays are costing customer goodwill.
+
+| Variable | Description |
+|----|----|
+| `Store_ID` | Unique store identifier |
+| `Marketing_Spend_USD` | Monthly marketing spend per store (USD) |
+| `Monthly_Sales_USD` | Monthly sales revenue per store (USD) |
+| `Avg_Delivery_Time_Days` | Average customer delivery time for that store (days) |
+| `Customer_Satisfaction_Score` | Average customer satisfaction score for that store (0–100) |
+
+Execute the following R script to generate the synthetic dataset: `./data/synthetic-data-for-business-correlation.R`
+
+The script builds two relationships deliberately, rather than leaving them to chance:
+
+1.  **Marketing_Spend_USD → Monthly_Sales_USD**: built as a straight-line relationship with normally distributed noise — sales rise in roughly constant proportion to spend, the textbook condition Pearson's r is designed to detect.
+
+2.  **Avg_Delivery_Time_Days → Customer_Satisfaction_Score**: built as a *hyperbolic decay* — satisfaction drops sharply for the first day or two of delay, then levels off, which is a realistic diminishing-returns shape but is **not** a straight line. Three stores additionally receive an unrelated "shock" to their satisfaction score (for example, a refund or a public complaint unrelated to delivery speed itself), which barely changes the *rank order* of the relationship but does disturb a *linear* fit. This combination of curvature plus outliers is exactly the situation Spearman's rho is more robust to than Pearson's r.
+
+# Load the Dataset
+
+```{r load_dataset}
+#| echo: true
+#| message: false
+#| warning: false
+
+business_data <- read_csv(
+  "data/business_correlation_data.csv",
+  col_types = cols(
+    Store_ID                    = col_character(),
+    Marketing_Spend_USD         = col_double(),
+    Monthly_Sales_USD           = col_double(),
+    Avg_Delivery_Time_Days      = col_double(),
+    Customer_Satisfaction_Score = col_double()
+  )
+)
+
+head(business_data)
+```
+
+# Initial EDA
+
+[**View the Dimensions**]{.underline}
+
+```{r show_dimensions}
+#| echo: true
+#| message: false
+#| warning: false
+
+dim(business_data)
+```
+
+[**View the Data Types**]{.underline}
+
+```{r show_data_types}
+#| echo: true
+#| message: false
+#| warning: false
+
+str(business_data)
+```
+
+[**Descriptive Statistics**]{.underline}
+
+## [**Measures of Frequency — Not Applicable**]{.underline}
+
+Measures of frequency (counts and percentages per category) require a categorical grouping variable. Every analytic variable in this dataset is continuous; `Store_ID` is a unique identifier, not a category with repeated levels, so a frequency table of it would simply show "1" for every one of the 40 stores and convey nothing.
+
+**Alternative provided:** for correlation analysis, the equivalent first look is a preview of how the variables relate to one another, in the form of a quick correlation matrix of all four numeric variables. This previews, in a single step, the same relationships the rest of this notebook examines in depth.
+
+```{r alternative_correlation_preview}
+#| echo: true
+#| message: false
+#| warning: false
+
+# `cor()` on a data frame of numeric columns returns the full pairwise
+# correlation matrix in one call -- the natural substitute, for
+# correlation analysis, for a frequency table.
+numeric_columns <- business_data[, c("Marketing_Spend_USD", "Monthly_Sales_USD",
+                                      "Avg_Delivery_Time_Days",
+                                      "Customer_Satisfaction_Score")]
+round(cor(numeric_columns), 3)
+```
+
+## [**Measures of Central Tendency**]{.underline}
+
+```{r central_tendency}
+#| echo: true
+#| message: false
+#| warning: false
+
+summary(business_data)
+```
+
+## [**Measures of Distribution**]{.underline}
+
+### **Variance and Standard Deviation**
+
+```{r distribution_variance_sd}
+#| echo: true
+#| message: false
+#| warning: false
+
+sapply(numeric_columns, var)
+sapply(numeric_columns, sd)
+```
+
+### **Kurtosis and Skewness (Pearson, "type 2")**
+
+```{r distribution_kurtosis_skewness}
+#| echo: true
+#| message: false
+#| warning: false
+
+sapply(numeric_columns, e1071::skewness, type = 2)
+sapply(numeric_columns, e1071::kurtosis, type = 2)
+```
+
+All four variables show skewness comfortably within ±1 and no extreme kurtosis, consistent with the moderate, controlled noise built into the generating script; none of this, however, says anything yet about whether any *pair* of variables is related in a straight line or merely a monotonic curve — that is what the visualizations and the Diagnostic EDA below are for.
+
+## [**Basic Visualizations**]{.underline}
+
+### **Histograms**
+
+```{r visualization_histogram}
+#| echo: true
+#| message: false
+#| warning: false
+
+col_index <- seq_along(numeric_columns)
+for (col_index in col_index) {
+  col_name <- names(numeric_columns)[col_index]
+
+  p <- ggplot2::ggplot(numeric_columns, aes(x = .data[[col_name]])) +
+    geom_histogram(bins = 12, fill = "#4F6EA4", color = "#FFFFFF") +
+    scale_x_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    scale_y_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    labs(
+      title = paste0("Histogram of the Variable '", col_name, "'"),
+      subtitle = "EDA for distribution shape before correlation testing",
+      x = col_name,
+      y = "Count",
+      caption = paste0("Source: Business Correlation Data | n = ",
+                       nrow(numeric_columns), ", ",
+                       "M = ", sprintf("%.2f", mean(numeric_columns[[col_name]])), ", ",
+                       "sd = ", sprintf("%.2f", sd(numeric_columns[[col_name]])))
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+      axis.title          = element_text(color = "#1D1D1D"),
+      axis.text           = element_text(color = "#898989"),
+      axis.text.x         = element_text(angle = 30, hjust = 1),
+      plot.caption        = element_text(color = "#898989"),
+      panel.grid.major.x  = element_blank(),
+      panel.grid.minor.x  = element_blank(),
+      panel.grid.minor.y  = element_blank(),
+      axis.line.x         = element_line(color = "#1D1D1D"),
+      axis.line.y         = element_line(color = "#1D1D1D")
+    )
+  print(p)
+}
+```
+
+### **Box and Whisker Plots**
+
+```{r visualization_boxplot}
+#| echo: true
+#| message: false
+#| warning: false
+
+col_index <- seq_along(numeric_columns)
+for (col_index in col_index) {
+  col_name <- names(numeric_columns)[col_index]
+
+  p <- ggplot2::ggplot(numeric_columns, aes(x = "", y = .data[[col_name]])) +
+    stat_boxplot(geom = "errorbar", width = 0.15, color = "#1D1D1D") +
+    geom_boxplot(fill = "#4F6EA4", color = "#1D1D1D", width = 0.3) +
+    labs(
+      title = paste0("Box and Whisker Plot of the Variable '", col_name, "'"),
+      subtitle = "EDA for spread and outlier check before correlation testing",
+      x = NULL,
+      y = col_name,
+      caption = paste0("Source: Business Correlation Data | n = ",
+                       nrow(numeric_columns), ", ",
+                       "M = ", sprintf("%.2f", mean(numeric_columns[[col_name]])), ", ",
+                       "sd = ", sprintf("%.2f", sd(numeric_columns[[col_name]])))
+    ) +
+    theme_minimal(base_size = 12) +
+    theme(
+      plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+      axis.title          = element_text(color = "#1D1D1D"),
+      axis.text           = element_text(color = "#898989"),
+      plot.caption        = element_text(color = "#898989"),
+      panel.grid.major.x  = element_blank(),
+      panel.grid.minor.x  = element_blank(),
+      panel.grid.minor.y  = element_blank(),
+      axis.line.x         = element_line(color = "#1D1D1D"),
+      axis.line.y         = element_line(color = "#1D1D1D")
+    )
+  print(p)
+}
+```
+
+### **Missing Data Plot**
+
+```{r missing_data_plot}
+#| echo: true
+#| message: false
+#| warning: false
+
+naniar::vis_miss(business_data) +
+  labs(
+    title = "Missing Data Overview",
+    subtitle = "EDA for missingness pattern before correlation testing",
+    caption = paste0("Source: Business Correlation Data | n = ", nrow(business_data))
+  ) +
+  scale_fill_manual(values = c("Present" = "#4F6EA4", "Missing" = "#E03C31")) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    plot.caption        = element_text(color = "#898989"),
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    panel.grid.minor.y  = element_blank()
+  )
+```
+
+### **Scatter Plots (the Central Visualization for Correlation)**
+
+Unlike in the ANOVA notebook, where the scatter plot was a minor supporting visualization, the scatter plot is the single most important diagnostic for a correlation analysis: it shows directly what a correlation coefficient can only summarize numerically.
+
+```{r scatter_plot_pair1}
+#| echo: true
+#| message: false
+#| warning: false
+
+ggplot2::ggplot(business_data, aes(x = Marketing_Spend_USD, y = Monthly_Sales_USD)) +
+  geom_point(color = "#4F6EA4", alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", color = "#1D1D1D", fill = "#A9C0DA") +
+  labs(
+    title = "Marketing Spend vs. Monthly Sales",
+    subtitle = "EDA for linear association before Pearson's r",
+    x = "Marketing Spend (USD)",
+    y = "Monthly Sales (USD)",
+    caption = paste0("Source: Business Correlation Data | n = ", nrow(business_data))
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    plot.caption        = element_text(color = "#898989"),
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+  )
+```
+
+```{r scatter_plot_pair2}
+#| echo: true
+#| message: false
+#| warning: false
+
+ggplot2::ggplot(business_data, aes(x = Avg_Delivery_Time_Days, y = Customer_Satisfaction_Score)) +
+  geom_point(color = "#4F6EA4", alpha = 0.7, size = 2) +
+  # a straight regression line AND a flexible loess curve are layered
+  # together deliberately: where the two diverge visually is exactly
+  # where the linearity assumption is in question
+  geom_smooth(method = "lm", color = "#1D1D1D", se = FALSE, linetype = "dashed") +
+  geom_smooth(method = "loess", color = "#E03C31", se = FALSE) +
+  labs(
+    title = "Average Delivery Time vs. Customer Satisfaction",
+    subtitle = "Dashed black = linear fit; red = flexible (loess) fit -- compare the two",
+    x = "Average Delivery Time (days)",
+    y = "Customer Satisfaction Score (0-100)",
+    caption = paste0("Source: Business Correlation Data | n = ", nrow(business_data))
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    plot.caption        = element_text(color = "#898989"),
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+  )
+```
+
+The first scatter plot shows points tracking closely along a straight line: a visual case for Pearson's r. The second shows the red (flexible) curve and the black dashed (straight-line) fit clearly diverging, particularly at short delivery times, plus a small number of points sitting well off the curve: a visual case against relying on Pearson's r alone, and for at least checking what Spearman's rho says instead. This visual impression is confirmed numerically in the Diagnostic EDA section below.
+
+# Statistical Test: Correlation
+
+## Pearson's Correlation Coefficient (r)
+
+```{r pearson_pair1}
+#| echo: true
+#| message: false
+#| warning: false
+
+pearson_pair1 <- cor.test(business_data$Marketing_Spend_USD,
+                          business_data$Monthly_Sales_USD,
+                          method = "pearson")
+pearson_pair1
+```
+
+`cor.test()` reports the correlation coefficient (*r*), a *t*-statistic testing whether *r* differs from 0, the degrees of freedom (*n* − 2), the p-value, and a 95% confidence interval for *r*. For completeness, and to set up the direct comparison below, Pearson's r is also computed on the second relationship (delivery time vs. satisfaction), even though that relationship was designed to be non-linear:
+
+```{r pearson_pair2}
+#| echo: true
+#| message: false
+#| warning: false
+
+pearson_pair2 <- cor.test(business_data$Avg_Delivery_Time_Days,
+                          business_data$Customer_Satisfaction_Score,
+                          method = "pearson")
+pearson_pair2
+```
+
+## Spearman's Rank Correlation Coefficient (rho)
+
+```{r spearman_pair2}
+#| echo: true
+#| message: false
+#| warning: false
+
+spearman_pair2 <- cor.test(business_data$Avg_Delivery_Time_Days,
+                           business_data$Customer_Satisfaction_Score,
+                           method = "spearman")
+spearman_pair2
+```
+
+`cor.test(..., method = "spearman")` first converts both variables to ranks, then computes Pearson's formula on those ranks. The reported statistic is *S*, not *t*; it is derived from the sum of squared rank differences and has its own reference distribution. Here, R falls back to a normal approximation for the p-value rather than its exact calculation, and issues a warning to that effect ("Cannot compute exact p-value with ties"), which the code above suppresses only to keep the output uncluttered, not to hide the underlying cause: both `Avg_Delivery_Time_Days` and `Customer_Satisfaction_Score` contain a small number of tied (repeated) values, a consequence of rounding continuous measurements to one decimal place. This is confirmed directly in the Diagnostic EDA section below, and is exactly the kind of detail that suppressing a warning without reading it first would have hidden. For the same direct comparison, Spearman's rho is also computed on the first relationship (marketing spend vs. sales), where no such ties are present:
+
+```{r spearman_pair1}
+#| echo: true
+#| message: false
+#| warning: false
+
+spearman_pair1 <- cor.test(business_data$Marketing_Spend_USD,
+                           business_data$Monthly_Sales_USD,
+                           method = "spearman")
+spearman_pair1
+```
+
+## Comparing Pearson and Spearman on the Same Relationships
+
+```{r comparison_table}
+#| echo: true
+#| message: false
+#| warning: false
+
+comparison_table <- data.frame(
+  Relationship = c("Marketing Spend -> Sales", "Delivery Time -> Satisfaction"),
+  Pearson_r    = c(unname(pearson_pair1$estimate), unname(pearson_pair2$estimate)),
+  Spearman_rho = c(unname(spearman_pair1$estimate), unname(spearman_pair2$estimate))
+)
+comparison_table$Abs_Difference <- abs(comparison_table$Pearson_r) - abs(comparison_table$Spearman_rho)
+comparison_table
+```
+
+For the first relationship (designed to be linear), Pearson's r and Spearman's rho are nearly identical (.92 vs .92): when a relationship genuinely is linear, the two coefficients have little reason to disagree, since a perfectly ranked monotonic relationship is also, in this case, close to a straight line. For the second relationship (designed to be curved, with outliers), the two coefficients diverge in the expected direction: Spearman's rho (≈ −.90) is slightly larger in magnitude than Pearson's r (≈ −.88), because Spearman is not penalized for the curvature or thrown off by the outliers in the same way Pearson is. The Diagnostic EDA section below identifies precisely which assumption is responsible for that gap.
+
+# Diagnostic EDA (Model Diagnostic)
+
+Each assumption below is checked once for Pearson's r (since these are exactly its assumptions), and then revisited briefly for Spearman's rho to state plainly whether the same check applies, and what Spearman relies on instead. This mirrors the ANOVA notebook's practice of explicitly marking a section "Not Applicable" rather than silently omitting it.
+
+## [**Test of Linearity**]{.underline}
+
+**Applicable to Pearson's r.** Pearson's r is only a faithful summary of the relationship between two variables if that relationship is approximately a straight line; a strong curved relationship can produce a misleadingly small *r*, or, less often, a misleading *r* of the wrong apparent strength.
+
+```{r linearity_check}
+#| echo: true
+#| message: false
+#| warning: false
+
+fit_pair1 <- lm(Monthly_Sales_USD ~ Marketing_Spend_USD, data = business_data)
+fit_pair2 <- lm(Customer_Satisfaction_Score ~ Avg_Delivery_Time_Days, data = business_data)
+
+summary(fit_pair1)$r.squared
+summary(fit_pair2)$r.squared
+```
+
+```{r linearity_residual_plots}
+#| echo: true
+#| message: false
+#| warning: false
+
+plot(fit_pair1, which = 1, main = "Residuals vs Fitted: Marketing Spend -> Sales")
+plot(fit_pair2, which = 1, main = "Residuals vs Fitted: Delivery Time -> Satisfaction")
+```
+
+**Interpretation:** For Marketing Spend → Sales, the residuals scatter randomly above and below zero with no visible curve, and the simple linear fit explains *R*² = .853 of the variance: the linearity assumption is well supported. For Delivery Time → Satisfaction, the residual plot shows a faint but real bow-shaped pattern (residuals tend positive at the extremes and negative in the middle), the visual signature of fitting a straight line to a curved relationship; the linear fit explains less variance (*R*² = .773) than the relationship visually appears to contain. **Linearity is therefore in question for the second relationship** — this is the diagnostic basis for preferring Spearman's rho there.
+
+**Not Required (in the same form) for Spearman's rho.** Spearman's rho does not assume the relationship is a straight line; it only requires the relationship to be monotonic (consistently increasing or consistently decreasing, without requiring a constant rate). **Alternative check provided: Test of Monotonicity.** There is no single named statistical test for monotonicity in the way there is for linearity; it is assessed primarily by visual inspection of the scatter plot (produced in the Initial EDA above) and is corroborated by the magnitude and significance of rho itself — a strong, significant rho is, by construction, evidence that a consistent directional trend exists, regardless of its exact shape. Both relationships in this dataset show a clear, visually unbroken monotonic trend (positive for Pair 1, negative for Pair 2), so the monotonicity requirement is satisfied for both, even though the linearity requirement is not satisfied for Pair 2.
+
+## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
+
+**Applicable to Pearson's r**, since it relies on a fitted linear model whose residuals are assumed independent of one another. As in the ANOVA notebook, this check is only meaningful if the row order of the dataset reflects a genuine sequence; here, `Store_ID` order is an arbitrary labelling, not a time series or any other natural sequence, so a significant result would not have a clear real-world interpretation, and a non-significant result should not be over-interpreted as confirming anything beyond "no autocorrelation in this arbitrary row order." It is included to keep the diagnostic workflow consistent with the earlier notebooks, and would become genuinely important if, for example, the data had instead been collected in calendar order, store by store, over time.
+
+```{r test_of_independence}
+#| echo: true
+#| message: false
+#| warning: false
+
+lmtest::dwtest(fit_pair1)
+lmtest::dwtest(fit_pair2)
+```
+
+**Interpretation:** Both Durbin-Watson statistics are close to 2 (Pair 1: *DW* = 1.98, *p* = .490; Pair 2: *DW* = 1.75, *p* = .220), indicating no detectable autocorrelation in either model's residuals at their current row order — consistent with that order being arbitrary rather than meaningful.
+
+**Not Applicable in the same form for Spearman's rho.** Spearman's rho is not derived from a fitted regression model and has no residuals of its own to test for autocorrelation; the concept does not directly transfer. **Alternative:** if observations were genuinely sequential (e.g., the same store measured repeatedly over time), the more relevant concern for a rank-based test would be whether the *ranking itself* drifts systematically over the sequence — which would be visible as a trend in a plot of rank against sequence order, rather than as a single test statistic.
+
+## [**Test of Normality**]{.underline}
+
+**Applicable to Pearson's r**, indirectly: Pearson's r and its associated p-value are most reliable when the residuals of the linear relationship are approximately normally distributed.
+
+```{r test_of_normality}
+#| echo: true
+#| message: false
+#| warning: false
+
+shapiro.test(residuals(fit_pair1))
+shapiro.test(residuals(fit_pair2))
+```
+
+**Interpretation:** For Pair 1, the residuals show no evidence against normality, *W* = .96, *p* = .154; the normality assumption is reasonably supported. For Pair 2, the residuals **do** depart significantly from normality, *W* = .92, *p* = .006. This is direct, quantitative evidence (not just a visual impression) that a Pearson-based analysis of Pair 2 is standing on shakier ground than a Pearson-based analysis of Pair 1.
+
+**Not Required for Spearman's rho.** Because Spearman's rho is computed on ranks, and the rank transformation itself does not depend on the original variables' distributions, no normality assumption is needed. **Alternative:** the only distributional requirement for Spearman's rho is that the variables be measurable on at least an ordinal scale (so that "greater than" and "less than" are meaningful) — a far weaker requirement than approximate normality, and one both variables here clearly satisfy.
+
+## [**Test of Homoscedasticity**]{.underline}
+
+**Applicable to Pearson's r.** Homoscedasticity means the scatter of points around the regression line should be roughly the same width along the whole range of the predictor, rather than fanning out or narrowing.
+
+```{r test_of_homoscedasticity}
+#| echo: true
+#| message: false
+#| warning: false
+
+lmtest::bptest(fit_pair1)
+lmtest::bptest(fit_pair2)
+```
+
+**Interpretation:** Neither Breusch-Pagan test is significant (Pair 1: *BP* = 1.29, *p* = .256; Pair 2: *BP* = 1.72, *p* = .190), so homoscedasticity is reasonably supported for both relationships. This is a useful reminder that the assumptions behind Pearson's r are separate from one another and can hold or fail independently: Pair 2 fails the normality check above while passing this one, which is why a single overall assumption check would have been less informative than checking each assumption on its own terms.
+
+**Not Required for Spearman's rho.** Because Spearman's rho operates on ranks rather than raw distances from a fitted line, unequal scatter in the raw variables does not bias it in the way it would bias Pearson's r. **Alternative:** there is no homoscedasticity-equivalent check for Spearman's rho; its main vulnerability is not to unequal spread but to a high proportion of tied ranks, which is checked separately below.
+
+## [**Test of Outliers and Influential Points**]{.underline}
+
+**Applicable to both tests, but with different consequences.** A single extreme point can have an outsized effect on Pearson's r, because it is computed from raw distances; it has far less effect on Spearman's rho, because an extreme value is simply assigned the most extreme available rank and contributes no more leverage than any other top-ranked point would.
+
+```{r outlier_check}
+#| echo: true
+#| message: false
+#| warning: false
+
+cooks_pair1 <- cooks.distance(fit_pair1)
+cooks_pair2 <- cooks.distance(fit_pair2)
+
+# A common rule of thumb flags points with Cook's distance above 4/n as
+# worth a closer look, rather than automatically removing them.
+which(cooks_pair1 > 4 / nrow(business_data))
+which(cooks_pair2 > 4 / nrow(business_data))
+```
+
+**Interpretation:** For Pair 1, two stores (rows 6 and 31) show somewhat elevated influence, consistent with ordinary sampling variability rather than a systematic problem; removing them would not be expected to change the conclusion. For Pair 2, two of the three stores that were deliberately constructed as outliers when the data were generated (rows 18 and 33) are correctly flagged by Cook's distance; the third (row 5) is not flagged, a reminder that influence diagnostics are a useful guide rather than an infallible detector. This is exactly the disturbance responsible for Pearson's r (−.88) being noticeably smaller in magnitude than Spearman's rho (−.90) on the same relationship.
+
+## [**Check for Tied Ranks**]{.underline}
+
+**Applicable to Spearman's rho**, since it is computed from ranks: two equal raw values within the same variable receive the same (averaged) rank, and a large number of ties reduces the precision of the rho calculation and requires a correction that the normal-approximation p-value already used above accounts for.
+
+```{r tied_ranks_check}
+#| echo: true
+#| message: false
+#| warning: false
+
+length(business_data$Marketing_Spend_USD) - length(unique(business_data$Marketing_Spend_USD))
+length(business_data$Monthly_Sales_USD) - length(unique(business_data$Monthly_Sales_USD))
+length(business_data$Avg_Delivery_Time_Days) - length(unique(business_data$Avg_Delivery_Time_Days))
+length(business_data$Customer_Satisfaction_Score) - length(unique(business_data$Customer_Satisfaction_Score))
+```
+
+**Interpretation:** Each value above counts duplicate values within that variable. `Marketing_Spend_USD` and `Monthly_Sales_USD` (Pair 1) show 0 ties each, as expected for finely measured dollar amounts. `Avg_Delivery_Time_Days` and `Customer_Satisfaction_Score` (Pair 2), however, show 5 and 3 duplicate values respectively — a direct consequence of rounding both variables to one decimal place over a fairly narrow range. This is precisely why R's `cor.test()` issued a "cannot compute exact p-value with ties" warning for Pair 2 (suppressed in the code chunk above, but verified here rather than ignored) and fell back to the normal-approximation p-value reported earlier. The ties are not numerous enough to meaningfully distort rho itself, but they are a second, genuine reason — alongside the curvature and outliers identified above — to treat Pair 2 as better suited to Spearman's rho than to Pearson's r: Pearson's r has no comparable tie-handling concern, but it has no tolerance for the non-linearity and outliers either, whereas Spearman's rho tolerates ties via its standard mid-rank procedure and the appropriate p-value adjustment, applied automatically here.
+
+**Not Applicable in the same sense for Pearson's r.** Pearson's r is computed on the raw values, not on ranks, so "tied ranks" is not a concept that applies to it directly; repeated raw values simply contribute as repeated data points to the usual variance and covariance calculations.
+
+## [**Quantitative Validation of Assumptions**]{.underline}
+
+Unlike the ANOVA notebook, where a global validation function such as `gvlma()` was explicitly not applicable (its linearity component is meaningless for a categorical predictor), the predictor here genuinely is continuous, so `gvlma()` would, in principle, apply to `fit_pair1` and `fit_pair2` above. It is deliberately not used in this notebook: it bundles several assumption checks into one combined output that requires its own separate explanation, while the assumption-specific tests already conducted above (Shapiro-Wilk, Breusch-Pagan, Durbin-Watson, Cook's distance) already cover the same ground individually, with each result traceable to a specific, named assumption rather than a single combined verdict. This is a deliberate teaching choice, not a limitation of the predictor type.
+
+# Interpretation of the Results
+
+The presentation of the results and its subsequent interpretation is based on the following notes.
+
+**Correlation Coefficient (r or ρ):** Both Pearson's r and Spearman's rho range from −1 to +1. The sign indicates direction (positive: both variables tend to rise together; negative: one tends to rise as the other falls); the magnitude indicates strength, conventionally interpreted (Cohen, 1988) as: \|r\| ≈ .10 a small effect, ≈ .30 a medium effect, ≈ .50 or above a large effect. Both relationships examined in this notebook qualify as large effects by this convention.
+
+**Degrees of Freedom—(df):** For Pearson's r, *df* = *n* − 2 (here, 40 − 2 = 38); two degrees of freedom are used because both the slope and intercept of the underlying line are estimated from the same data before the correlation is assessed. Spearman's rho is conventionally reported the same way, using the same *df* = *n* − 2, even though its *S* test statistic is not itself a *t*-statistic.
+
+**Confidence Interval:** A 95% confidence interval for *r* gives the range of values that would be expected to contain the true population correlation in 95% of repeated samples of this size. A narrower interval indicates a more precise estimate; an interval that excludes 0 indicates the correlation is statistically distinguishable from "no relationship" at the conventional .05 threshold, which is consistent with, though not identical to, a significant p-value.
+
+**Academic Reporting (Based on the APA 7th Edition Style)**
+
+1.  State the type of correlation test explicitly (Pearson's r or Spearman's rho); they are not interchangeable in reporting, since they answer different questions about the relationship.
+
+2.  Report the coefficient with degrees of freedom in parentheses, the p-value, and, for Pearson's r, the 95% confidence interval: *r*(38) = .92, *p* \< .001, 95% CI \[.86, .96\].
+
+3.  Exact p-values should be reported when possible, unless they are less than .001, in which case report as *p* \< .001.
+
+4.  Report the coefficient itself as the effect size; no separate effect-size statistic is needed for a correlation, since *r* and ρ are already standardized measures of association strength.
+
+5.  When both Pearson's r and Spearman's rho are computed on the same data (as a robustness check, or because the diagnostics were ambiguous), report both, and state explicitly which one is treated as the primary result and why.
+
+6.  Two decimal places are typical for correlation coefficients; p-values may need three or more decimal places. Round to the nearest value; do not truncate.
+
+7.  Italicize statistical symbols (*r*, *p*) but not Greek letters (ρ), consistent with general APA convention; ρ is commonly written as *r*~s~ in running text specifically to allow italicization where a Greek letter cannot be italicized.
+
+Further reading: <https://apastyle.apa.org/jars>
+
+## Marketing Spend and Monthly Sales (Pearson's r as the Primary Test)
+
+### Technical Academic Report (Based on APA Guidelines of Reporting Results)
+
+A Pearson correlation was computed to assess the linear relationship between marketing spend and monthly sales across 40 retail stores. Prior to interpreting the result, the relevant assumptions were checked: the relationship appeared linear on visual inspection and by *R*² (.853), residuals showed no evidence against normality, *W* = .96, *p* = .154, no evidence of heteroscedasticity, *BP* = 1.29, *p* = .256, and only ordinary, non-systematic influential points. There was a strong, statistically significant positive correlation between marketing spend and monthly sales, *r*(38) = .92, *p* \< .001, 95% CI \[.86, .96\]. A Spearman correlation computed on the same data, as a robustness check, produced an almost identical result, *r*~s~(38) = .92, *p* \< .001, consistent with the assumption checks above: when the linearity and normality assumptions genuinely hold, the parametric and non-parametric coefficients are expected to agree closely.
+
+### Non-Technical Business Report
+
+Stores that spend more on marketing consistently bring in more in monthly sales, and this is one of the strongest, most consistent patterns in this dataset — not a coincidence of a few high performers. The relationship is close to a straight line: each additional dollar of marketing spend is associated with roughly the same proportional increase in sales, regardless of whether a store already spends a little or a lot. Two independent statistical checks (a standard one and a more cautious, "harder to fool" one) reach the same conclusion, which adds confidence that this is a real pattern rather than a statistical fluke.
+
+### Recommendations
+
+1.  **Treat marketing spend as a genuine lever on sales for planning purposes**, given the strength and consistency of this relationship, while remembering that correlation alone does not establish that increasing spend *causes* the sales increase; stores with higher sales may also simply have more budget to spend, or both may be driven by a third factor such as store size or location quality.
+
+2.  **Run a controlled test (e.g., a budget increase at a subset of stores) before treating this as proof of a causal return on marketing investment.** Correlational evidence, however strong, is the right basis for forming a hypothesis, not for concluding the question is settled.
+
+3.  **Investigate the two moderately influential stores (rows 6 and 31) individually** to understand whether something store-specific (rather than marketing spend) explains their slightly unusual position, before using this relationship for store-by-store budget decisions.
+
+## Average Delivery Time and Customer Satisfaction (Spearman's rho as the Primary Test)
+
+### Technical Academic Report (Based on APA Guidelines of Reporting Results)
+
+A Spearman correlation was computed to assess the monotonic relationship between average delivery time and customer satisfaction across the same 40 stores. Pearson's r was also computed for comparison and assumption-checking purposes; the relevant diagnostics indicated that a Pearson-based analysis was not fully appropriate here: residuals departed significantly from normality, *W* = .92, *p* = .006, and the residual plot showed a curved pattern consistent with the relationship's designed non-linear (diminishing-returns) shape, while two of the dataset's three deliberately extreme stores were flagged as influential by Cook's distance. Homoscedasticity was not violated, *BP* = 1.72, *p* = .190, isolating the problem specifically to linearity and normality rather than to unequal variance.
+
+Given these diagnostics, Spearman's rho is reported as the primary result: there was a strong, statistically significant negative monotonic relationship between average delivery time and customer satisfaction, *r*~s~(38) = −.90, *p* \< .001. For comparison, Pearson's r on the same data was somewhat smaller in magnitude, *r*(38) = −.88, *p* \< .001, 95% CI \[−.93, −.78\] — both indicate a strong relationship, but Spearman's rho is the more faithful summary of this specific, non-linear, outlier-affected relationship.
+
+### Non-Technical Business Report
+
+Stores with longer average delivery times tend to have meaningfully lower customer satisfaction, and this pattern holds consistently across nearly all 40 stores. The relationship is not perfectly proportional, however: the biggest drop in satisfaction happens in the first day or two of delay, after which further delay matters less — satisfaction does not keep falling at the same rate. A small number of stores also show satisfaction scores that do not fit the delivery-time pattern at all, which most likely reflects unrelated, one-off service incidents (for example, a refund or complaint) rather than delivery performance itself, and the analysis was able to identify which stores those are.
+
+### Recommendations
+
+1.  **Prioritize reducing delivery times from "slow" to "moderate" over reducing them from "moderate" to "fast."** The diminishing-returns shape of this relationship indicates the satisfaction payoff is front-loaded: shaving a day off an already-fast delivery is worth far less than shaving a day off a slow one.
+
+2.  **Investigate the three flagged stores (rows 5, 18, and 33) individually rather than folding them into the general delivery-time pattern.** Their satisfaction scores are not well explained by delivery time at all, and treating them as ordinary data points would understate how strong the genuine delivery-time effect is for every other store.
+
+3.  **Report Spearman's rho, not Pearson's r, as the headline statistic for this relationship in any further analysis or presentation**, and state the reason (non-linearity and the influential points identified above) rather than defaulting to Pearson's r out of habit.
+
+4.  **Treat this analysis as descriptive of the current operating range of delivery times, not necessarily a fixed law.** A diminishing-returns curve fitted to delivery times of one to ten days should not be extrapolated to, for example, same-day delivery without separately verifying the relationship still holds in that range.
+
+# References and Further Reading
+
+American Psychological Association. (2025, February). *Journal Article Reporting Standards (JARS)*. APA Style. Retrieved April 28, 2025, from <https://apastyle.apa.org/jars>
+
+Cohen, J. (1988). *Statistical power analysis for the behavioral sciences* (2nd ed.). Lawrence Erlbaum Associates.
+
+Pearson, K. (1895). Note on regression and inheritance in the case of two parents. *Proceedings of the Royal Society of London, 58*, 240–242. <https://doi.org/10.1098/rspl.1895.0041>
+
+Spearman, C. (1904). The proof and measurement of association between two things. *The American Journal of Psychology, 15*(1), 72–101. <https://doi.org/10.2307/1412159>
+
+Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress. <https://link.springer.com/book/10.1007/978-1-4842-8754-5>

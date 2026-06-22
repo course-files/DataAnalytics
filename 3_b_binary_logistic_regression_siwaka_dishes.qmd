@@ -1,0 +1,626 @@
+---
+title: "Customer Feedback Analysis using Logistic Regression"
+author: "Allan Omondi"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: 
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 5
+    fig_height: 5
+    fig_crop: false
+    keep_tex: true
+    latex_engine: xelatex
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 4
+    fig_height: 4
+    self_contained: false
+    keep_md: true
+  word_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 5
+    keep_md: true
+  html_notebook:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+    fig_width: 4
+    self_contained: false
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup_chunk, message=FALSE, warning=FALSE}
+if (!"pacman" %in% installed.packages()[, "Package"]) {
+  install.packages("pacman", dependencies = TRUE)
+  library("pacman", character.only = TRUE)
+}
+
+pacman::p_load("here")
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+# Load the Dataset
+
+The synthetic customer feedback dataset contains 10,888 observations and 43 variables. The variables that form the predictors are the following 4:
+
+| Column Number | Predictor                       |
+|---------------|---------------------------------|
+| 19            | customerfeedback_foodquality    |
+| 20            | customerfeedback_servicequality |
+| 21            | customerfeedback_pricetovalue   |
+| 22            | customerfeedback_ambiance       |
+
+: List of predictors
+
+And the variable that is the outcome is column 11, i.e., `customer_status`
+
+```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("readr")
+
+customer_feedback_data <- 
+  read_csv("https://github.com/course-files/DataAnalytics/raw/refs/heads/main/data/siwaka_dishes_view_customerfeedback_data.csv", col_types = cols(
+    customer_status = col_factor(levels = c("1", "0")),
+    customerorder_orderDate = col_datetime(format = "%Y-%m-%d %H:%M:%S"),
+    customerorder_requiredDate = col_datetime(format = "%Y-%m-%d %H:%M:%S"),
+    customerorder_dispatchDate = col_datetime(format = "%Y-%m-%d %H:%M:%S")
+    )
+  )
+
+head(customer_feedback_data)
+```
+
+# Initial EDA
+
+[**View the Dimensions**]{.underline}
+
+The number of observations and the number of variables.
+
+```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
+dim(customer_feedback_data)
+```
+
+[**View the Data Types**]{.underline}
+
+```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(customer_feedback_data, class)
+```
+
+```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
+str(customer_feedback_data)
+```
+
+[**Descriptive Statistics**]{.underline}
+
+## Measures of Frequency
+
+49.92% of the feedback was from customers who are active and 50.08% of the feedback was from customers who are dormant. The distribution of observations amongst the two classes was therefore balanced.
+
+```{r frequency, echo=TRUE, message=FALSE, warning=FALSE}
+customer_feedback_data_freq <- customer_feedback_data$customer_status
+cbind(frequency = table(customer_feedback_data_freq),
+      percentage = prop.table(table(customer_feedback_data_freq)) * 100)
+
+```
+
+## Measures of Central Tendency
+
+The median and the mean of each numeric variable:
+
+```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
+summary(customer_feedback_data)
+```
+
+## Measures of Distribution
+
+Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
+
+Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+
+### Variance
+
+```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(customer_feedback_data[,c(19,20,21,22)], var)
+```
+
+### Standard Deviation
+
+```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(customer_feedback_data[, c(19,20,21,22)], sd)
+```
+
+### Kurtosis
+
+The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2nd formula which is the same kurtosis formula used in other statistical software like SPSS and SAS.
+
+In “type = 2” (used in SPSS and SAS):
+
+1.  Kurtosis \< 3 implies a low number of outliers
+
+2.  Kurtosis = 3 implies a medium number of outliers
+
+3.  Kurtosis \> 3 implies a high number of outliers
+
+```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("e1071")
+sapply(customer_feedback_data[,c(19,20,21,22)],  kurtosis, type = 2)
+```
+
+### Skewness
+
+The skewness is used to identify the asymmetry of the distribution of results. Similar to kurtosis, there are several ways of computing the skewness.
+
+Using “type = 2” (common in other statistical software like SPSS and SAS) can be interpreted as:
+
+1.  Skewness between -0.4 and 0.4 (inclusive) implies that there is no skew in the distribution of results; the distribution of results is symmetrical; it is a normal distribution; a Gaussian distribution.
+
+2.  Skewness above 0.4 implies a positive skew; a right-skewed distribution.
+
+3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
+
+```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
+sapply(customer_feedback_data[,c(19,20,21,22)], skewness, type = 2)
+```
+
+## Measures of Relationship
+
+### Covariance
+
+Covariance is a statistical measure that indicates the direction of the linear relationship between two variables. It assesses whether increases in one variable correspond to increases or decreases in another.​
+
+- **Positive Covariance:** When one variable increases, the other tends to increase as well.
+
+- **Negative Covariance:** When one variable increases, the other tends to decrease.
+
+- **Zero Covariance:** No linear relationship exists between the variables.
+
+While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
+
+```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
+cov(customer_feedback_data[,c(19,20,21,22)], method = "spearman")
+```
+
+### Correlation
+
+A strong correlation between variables enables us to better predict the value of the dependent variable using the value of the independent variable. However, a weak correlation between two variables does not help us to predict the value of the dependent variable from the value of the independent variable. This is useful only if there is a linear association between the variables.
+
+We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
+
+To view the correlation of all variables at the same time
+
+```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
+cor(customer_feedback_data[,c(19,20,21,22)], method = "spearman")
+```
+
+## Basic Visualizations
+
+### Histogram
+
+```{r visualization_histogram, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+par(mfrow = c(1, 2))
+for (i in 1:43) {
+  if (is.numeric(customer_feedback_data[[i]])) {
+    hist(customer_feedback_data[[i]],
+         main = names(customer_feedback_data)[i],
+         xlab = names(customer_feedback_data)[i])
+  } else {
+    message(paste("Column", names(customer_feedback_data)[i],
+                  "is not numeric and will be skipped."))
+  }
+}
+```
+
+### Box and Whisker Plot
+
+```{r visualization_boxplot, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+par(mfrow = c(1, 2))
+for (i in 1:43) {
+  if (is.numeric(customer_feedback_data[[i]])) {
+    boxplot(customer_feedback_data[[i]], main = names(customer_feedback_data)[i])
+  } else {
+    message(paste("Column", names(customer_feedback_data)[i],
+                  "is not numeric and will be skipped."))
+  }
+}
+```
+
+### Missing Data Plot
+
+```{r missing_data_plot, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("Amelia")
+
+missmap(customer_feedback_data, col = c("red", "grey"), legend = TRUE)
+```
+
+### Correlation Plot
+
+```{r correlation_plot, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("ggcorrplot")
+
+ggcorrplot(cor(customer_feedback_data[,c(19,20,21,22)]))
+```
+
+### Scatter Plot
+
+```{r scatter_plot_1, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("corrplot")
+
+pairs(orderdetail_quantityOrdered ~ customerfeedback_foodquality + customerfeedback_servicequality + customerfeedback_pricetovalue + customerfeedback_ambiance, data = customer_feedback_data, col = customer_feedback_data$customer_status)
+```
+
+```{r scatter_plot_2, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("ggplot2")
+ggplot(customer_feedback_data,
+       aes(x = customerfeedback_ambiance, y = customerfeedback_foodquality)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = "Relationship between Food Quality Rating and \nAmbiance Rating (correlation of 0.91)",
+    x = "Service Quality",
+    y = "Food Quality Rating"
+  )
+```
+
+```{r scatter_plot_3, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("ggplot2")
+ggplot(customer_feedback_data,
+       aes(x = customerfeedback_ambiance, y = customerfeedback_foodquality, color = customer_status)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = "Relationship between Food Quality Rating and \n Ambiance Rating for Each Customer Status",
+    x = "Service Quality Rating",
+    y = "Food Quality Rating",
+    color = "Customer Status"
+  ) +
+  scale_color_discrete(
+    labels = c("1" = "Active Customer", "0" = "Dormant Customer")
+  ) + 
+  theme_minimal()  # Optional: applies a cleaner theme
+```
+
+# Statistical Test
+
+We then apply a logistic regression as a statistical test for regression.
+
+```{r statistical_test_SLR, echo=TRUE, message=FALSE, warning=FALSE}
+log_test <- glm(customer_status ~ 
+                  customerfeedback_foodquality +
+                  customerfeedback_servicequality +
+                  customerfeedback_pricetovalue +
+                  customerfeedback_ambiance,
+                # This specifies that the generalized linear model to use
+                # is logistic regression
+                family = binomial,
+                data = customer_feedback_data)
+```
+
+View the summary of the model.
+
+```{r statistical_test_interpretation, echo=TRUE, message=FALSE, warning=FALSE}
+summary(log_test)
+```
+
+The logistic regression equation is in the following form:
+
+$$\text{log-odds(customerstatus)} = \beta_0 + \beta_1 \cdot foodquality + \beta_2 \cdot servicequality + \beta_3 \cdot pricetovalue + \beta_4 \cdot ambiance$$
+
+Plugging in the coefficients from the output gives:
+
+$$\text{log-odds(customerstatus)} = 3.89 - 0.59 \cdot foodquality - 0.22 \cdot servicequality - 0.25 \cdot pricetovalue - 0.27 \cdot ambiance$$
+
+The log-odds is then converted into a probability using the logistic function as:
+
+$$P(\text{customerstatus = 1}) = \frac{1}{1+e^{-\text{log-odds}}}$$
+
+- If P(customer_status=1)≥0.5, predict active customer (1).
+
+- If P(customer_status=1)\<0.5, predict dormant customer (0).
+
+Example 1: A food quality rating of 2, service quality rating of 1, a price-to-value rating of 2, and an ambiance rating of 1 results in P(customer_status=1) = 0.85 which is an active customer:
+
+```{r sample_prediction_a, echo=TRUE, message=FALSE, warning=FALSE}
+coefs <- coef(log_test)
+log_odds   <- coefs["(Intercept)"] + 
+  coefs["customerfeedback_foodquality"] * 2 +
+  coefs["customerfeedback_servicequality"] * 1 +
+  coefs["customerfeedback_pricetovalue"] * 2 +
+  coefs["customerfeedback_ambiance"] * 1
+
+p_manual <- 1 / (1 + exp(-log_odds))
+
+print(p_manual)
+
+```
+
+Example 2: A food quality rating of 4, service quality rating of 4, a price-to-value rating of 3, and an ambiance rating of 5 results in P(customer_status=1) = 0.19 which is a dormant customer:
+
+```{r sample_prediction_b, echo=TRUE, message=FALSE, warning=FALSE}
+coefs <- coef(log_test)
+log_odds   <- coefs["(Intercept)"] + 
+  coefs["customerfeedback_foodquality"] * 4 +
+  coefs["customerfeedback_servicequality"] * 4 +
+  coefs["customerfeedback_pricetovalue"] * 3 +
+  coefs["customerfeedback_ambiance"] * 5
+p_manual <- 1 / (1 + exp(-log_odds))
+
+print(p_manual)
+```
+
+## The $\chi^2$ Statistic and its p-Value
+
+To obtain the p-value of the $\chi^2$ statistic:
+
+```{r p_value_of_chi_2, echo=TRUE, message=FALSE, warning=FALSE}
+# chi_2 <- log_test$null.deviance/1 - log_test$residuals
+chi_2 <- 15094 - 10328
+
+print(chi_2)
+
+# To get the degrees of freedom:
+calculated_df = length(coef(log_test)) - 1  # Subtract 1 for intercept
+
+p <- 1 - pchisq(chi_2, df = calculated_df)
+# to format as a scientific notation with four digits after the decimal place
+# sprintf("%.4e", p)
+format.pval(p, eps = .Machine$double.eps, digits = 2)
+```
+
+## 95% Confidence Interval of the Parameters
+
+To obtain a 95% confidence interval for the parameters:
+
+```{r 95_confidence_interval, echo=TRUE, message=FALSE, warning=FALSE}
+confint(log_test, level = 0.95)
+```
+
+## Odds Ratio
+
+Exponentiating the coefficients yields odds ratios, which quantify the multiplicative change in odds for a one‑unit increase in the predictor.
+
+```{r odds_ratio, echo=TRUE, message=FALSE, warning=FALSE}
+exp(coef(log_test))
+```
+
+### 95% Confidence Interval for the Odds Ratio
+
+To obtain a 95% confidence interval for the Odds Ratio:
+
+```{r 95_confidence_interval_OR, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("dplyr")
+confint(log_test) %>% exp()
+```
+
+## Akaike Information Criterion (AIC)
+
+AIC specifies how well a model fits the data from which it was generated. The AIC value is calculated using the number of predictor variables and also the estimate of the maximum likelihood of the model. AIC penalizes complexity, therefore, any model with a lesser AIC value is a more significant model. A lower AIC value means the complexity of the model is lower and the model better explains the variations. The model's AIC value of `10,338` can be compared with the AIC value of alternative models, e.g., a logistic regression model that has dropped one of the original predictors.
+
+## McFadden’s Pseudo R^2^
+
+Logistic regression does not use the traditional R², but we can compute a **pseudo-R²** (McFadden’s) as follows:
+
+```{r mcfaddens_pseudo_R2, echo=TRUE, message=FALSE, warning=FALSE}
+pseudo_r2 <- 1 - (log_test$deviance / log_test$null.deviance)
+print(pseudo_r2)
+```
+
+We get a McFadden's pseudo-R^2^ of `0.32` . A pseudo-R^2^ \> 0.2 is considered strong in logistic regression.
+
+## Fisher Scoring Iterations
+
+There were `4` Fisher scoring iterations which indicates that the fitting routine required 4 iterative updates to reach convergence. A small number (\< 10) suggests that the algorithm found the maximum-likelihood estimates efficiently without convergence warnings.
+
+## Model Fit Metrics
+
+The ROC Curve and the AUC gives insight into how well the logistic regression model distinguishes between the two outcome classes (1 = active customer and 0 = dormant customer).
+
+- The x-axis shows the False Positive Rate (FPR), or specificity.
+
+- The y-axis shows the True Positive Rate (TPR), or sensitivity.
+
+- The curve shows how TPR and FPR change as the decision threshold changes from 0 to 1.
+
+- A curve closer to the top-left corner indicates better model performance.
+
+```{r model_fit_a, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+pacman::p_load("pROC")
+
+predicted_probs <- predict(log_test, type = "response")
+
+roc_obj <- roc(customer_feedback_data$customer_status, predicted_probs)
+auc_value <- auc(roc_obj)
+plot(roc_obj, col = "blue", main = "ROC Curve for Logistic Regression")
+```
+
+```{r model_fit_b, echo=TRUE, fig.width=5, message=FALSE, warning=FALSE}
+print(auc_value)
+```
+
+| AUC Value | Interpretation |
+|----|----|
+| 0.5 | Using the logistic regression model is equivalent to randomly guessing |
+| 0.6 - 0.7 | Poor discrimination of the classes |
+| 0.7 - 0.8 | Acceptable discrimination of the classes (fair) |
+| 0.8 - 0.9 | Good discrimination |
+| 0.9 - 1.0 | Excellent discrimination |
+
+: AUC Value Interpretation
+
+An AUC of `0.86` indicates that the model has a good ability to discriminate between the two classes.
+
+# Diagnostic EDA
+
+Diagnostic EDA is performed to validate that the regression assumptions are true with respect to the statistical test. Validating the regression assumption in turn ensures that the statistical tests applied are appropriate for the data and helps to prevent incorrect conclusions.
+
+## Test of Linearity
+
+The test of linearity is necessary given that linearity is one of the key assumptions of statistical tests of regression and verifying it is crucial for ensuring the validity of the model's estimates and predictions.
+
+**Component-Plus-Residual (Partial-Residual) Plots**
+
+Logistic regression assumes that the relationship between the log-odds of the outcome and the continuous predictors is linear. A log-odds is the natural logarithm of the odds of an event occurring.
+
+If *p* is the probability of an event (where 0 \< *p* \< 1), the odds of the event occuring is the ratio of the probability that the event occurs to the probability that the event does not occur, i.e., $\frac{p}{1 - p}$ and the log-odds (computed using the logit function) of the event, *p*, is:
+
+$$ \text{logit}(p) = \ln\left(\frac{p}{1-p}\right) $$
+
+A roughly straight line indicates the "log-odds - predictor" linearity assumption is met.
+
+```{r test_of_linearity, echo=TRUE, fig.width=9, message=FALSE, warning=FALSE}
+pacman::p_load("car")
+
+crPlots(log_test)
+```
+
+## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
+
+This test is necessary to confirm that each observation is independent of the other. It helps to identify **autocorrelation** that is introduced when the data is collected over a close period of time or when one observation is related to another observation. Autocorrelation leads to underestimated standard errors and inflated test statistics. It can also make findings appear more significant than they actually are.
+
+The "**Durbin-Watson Test**" can be used as a test of independence of errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate positive or negative autocorrelation, respectively.
+
+- The null hypothesis, H~0~, is that there is no autocorrelation
+
+- The alternative hypothesis, H~a~, is that there is autocorrelation
+
+If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is no evidence to reject the null hypothesis that "there is no autocorrelation". The results below show a p-value of \< .001, therefore, the test of independence of errors around the regression line **fails**.
+
+```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("lmtest")
+dwtest(log_test)
+```
+
+## Test of Normality
+
+Logistic regression does not assume normality of residuals or predictors.
+
+## Test of Homoscedasticity
+
+The test of homoscedasticity is not relevant for logistic regression.
+
+## Test of Multicollinearity
+
+Multicollinearity arises when two or more independent variables (predictors) are highly intercorrelated. The **Variance Inflation Factor (VIF)** quantifies how much the variance of a coefficient estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no collinearity; values above 5 suggest problematic levels of collinearity. High VIF values (VIF \> 5) suggest that the coefficient estimates are less reliable due to the correlations between predictors.
+
+```{r multicollinearity, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("car")
+car::vif(log_test)
+```
+
+## Test of Outliers
+
+The `influencePlot()` function in R combines 3 key diagnostic measures into a single plot to identify influential observations.
+
+The plot displays:
+
+- Y-axis: Studentized residuals (standardized residuals adjusted for leverage). This measures "outlierness" in the outcome variable.
+
+- X-axis: Leverage (hat values), measuring how "unusual" an observation is in terms of its predictor values.
+
+- Bubble size: Cook’s distance, quantifying the influence of each observation on the model coefficients.
+
+Top-left/bottom-left:
+
+- Indicates observations with high residuals but low leverage: Outliers in the outcome but not predictors.
+
+- Possible next step: Investigate the observations for misclassified outcomes.
+
+Top-right/bottom-right:
+
+- Indicates high residuals and high leverage: Influential outliers that distort the model.
+
+- Possible next step: These are the most problematic observations. You need to check if they are valid data points or errors.
+
+Middle-right:
+
+- High leverage but residuals near 0: Unusual predictor values but well-predicted outcomes.
+
+- Possible next step: These observations are generally safe to keep.
+
+```{r outliers_plot, echo=TRUE, message=FALSE, warning=FALSE}
+pacman::p_load("car")
+
+influencePlot(log_test, 
+              id = list(n = 5),  # Label top 5 influential points
+              main = "Influence Plot",
+              sub = "Circle size = Cook's Distance")
+```
+
+The influential outliers can then be:
+
+1.  Corrected for data entry errors, e.g., an age of 240 years
+
+2.  Deleted so that the statistical test can be run again without them
+
+```{r outliers_influencers_a, echo=TRUE, message=FALSE, warning=FALSE}
+influential_points <- as.numeric(row.names(influencePlot(log_test)))
+customer_feedback_data_infl <- customer_feedback_data[influential_points, ]
+```
+
+Print the observation numbers that have been identified as influential outliers
+
+```{r outliers_influencers_b, echo=TRUE, message=FALSE, warning=FALSE}
+print(influential_points)
+```
+
+Print the influential observations' predictor and outcome values.
+
+```{r outliers_influencers_c, echo=TRUE, message=FALSE, warning=FALSE}
+head(customer_feedback_data_infl)
+```
+
+# Interpretation of the Results
+
+## Academic Statement
+
+A logistic regression analysis was conducted on the customer feedback data (N = 10,888) to examine whether food quality rating, service quality rating, price to value rating, and ambiance rating predicted a customer's status as active or dormant. The customer's status was coded as 1 for active and 0 for dormant.
+
+Subtracting the residual deviance (15,094 on 10,887 df) from the null deviance (10,328 on 10,883 df) gave a $\chi^2$(4, N = 10,888) = 4,766, *p* \< .001, thus showing that the model was statistically significant compared to the null model. An Area Under the Curve (AUC) value of `0.86` indicated that the model has a good ability to discriminate between the two classes.
+
+The results are reported in the table below:
+
+|    Predictor    | $\beta$ |      95% CI      |  SE  |  *z*   |   *p*   |
+|:---------------:|:-------:|:----------------:|:----:|:------:|:-------:|
+|   (Intercept)   |  3.89   |  \[3.75, 4.04\]  | 0.08 | 51.354 | \< .001 |
+|  Food Quality   |  -0.59  | \[-0.71, -0.48\] | 0.06 | -10.17 | \< .001 |
+| Service Quality |  -0.22  | \[-0.30, -0.14\] | 0.04 | -5.40  | \< .001 |
+| Price to Value  |  -0.25  | \[-0.33, -0.17\] | 0.04 | -6.00  | \< .001 |
+|    Ambiance     |  -0.27  | \[-0.35, -0.19\] | 0.04 | -6.51  | \< .001 |
+
+: Regression Coefficients Predicting a customer's status from customer feedback and other predictors
+
+***Note.*** N = 11,026; SE = standard error; CI = confidence interval.
+
+**Significant Predictor Effects**
+
+Assumption: The feedback scales are such that 1 = Excellent and 5 = Poor
+
+- The customer feedback rating for the quality of food ($\beta$ = -0.59, 95% CI \[-0.71, -0.48\], SE = 0.06, *z* = -10.17, *p* \< .001) was identified as the most significant predictor. A one-unit increase in the "customerfeedback_pricetovalue" predictor is associated with a 45% decrease in the odds of a customer being active (*OR* = 0.55).
+
+- The customer feedback rating for the ambiance ($\beta$ = -0.27, 95% CI \[-0.35, -0.19\], SE = 0.04, *z* = -6.51, *p* \< .001) was identified as the second-most significant predictor. A one-unit increase in the "customerfeedback_ambiance" predictor is associated with a 24% decrease in the odds of a customer being active (*OR* = 0.76).
+
+- While the customer feedback rating for the service quality and the price to value are both significant, they exhibit relatively smaller effects on the outcome. A one-unit increase in each is associated with a 20% decrease and 22% decrease in the odds of a customer being active respectively (*OR* = 0.80 and *OR* = 0.78 respectively).
+
+## Business Analysis
+
+Key insights:
+
+1.  Marketing and loyalty campaigns may be optimised by focusing outreach on at-risk branches identified by poor food-quality and ambiance ratings.
+
+2.  Investment in menu refinement and consistency should be considered to improve food quality ratings and thereby enhance customer retention.
+
+3.  Enhancements to the dining environment—such as decor updates, lighting adjustments, and noise control—should be considered to improve ambiance perceptions.
+
+## Limitations
+
+1.  Assumes no clustering (e.g., multiple feedback per customer) or autocorrelation (e.g., time-series trends).
+
+2.  The Durbin-Watson test fails therefore there is autocorrelation in the data, i.e., there is a correlation between residuals across observations.
+
+3.  High Variance Inflation Factor (VIF) values (VIF \> 5) suggest that the coefficient estimates are less reliable due to the correlations between predictors. `customerfeedback_foodquality` has a VIF = 6.01

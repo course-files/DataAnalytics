@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Allan Omondi" />
+
+<meta name="date" content="2026-06-22" />
+
+<title>Logistic Regression</title>
+
+<script src="file82203a577fb7_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="file82203a577fb7_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="file82203a577fb7_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="file82203a577fb7_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="file82203a577fb7_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="file82203a577fb7_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<link href="file82203a577fb7_files/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="file82203a577fb7_files/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="file82203a577fb7_files/navigation-1.1/tabsets.js"></script>
+<script src="file82203a577fb7_files/navigation-1.1/codefolding.js"></script>
+<script src="file82203a577fb7_files/navigation-1.1/sourceembed.js"></script>
+<link href="file82203a577fb7_files/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="file82203a577fb7_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+<style type="text/css">
+.kable-table {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-bottom: 20px;
+  max-height: 350px;
+}
+
+.kable-table table {
+  margin-bottom: 0px;
+}
+
+.kable-table table>thead>tr>th {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+}
+
+.kable-table table>thead {
+  background-color: #fff;
+}
+</style>
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Logistic Regression</h1>
+<h4 class="author">Allan Omondi</h4>
+<h4 class="date">2026-06-22</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#load-the-dataset" id="toc-load-the-dataset"><span
+class="toc-section-number">1</span> Load the Dataset</a></li>
+<li><a href="#initial-eda" id="toc-initial-eda"><span
+class="toc-section-number">2</span> Initial EDA</a>
+<ul>
+<li><a href="#measures-of-frequency"
+id="toc-measures-of-frequency"><span
+class="toc-section-number">2.1</span> Measures of Frequency</a></li>
+<li><a href="#measures-of-central-tendency"
+id="toc-measures-of-central-tendency"><span
+class="toc-section-number">2.2</span> Measures of Central
+Tendency</a></li>
+<li><a href="#measures-of-distribution"
+id="toc-measures-of-distribution"><span
+class="toc-section-number">2.3</span> Measures of Distribution</a>
+<ul>
+<li><a href="#variance" id="toc-variance"><span
+class="toc-section-number">2.3.1</span> Variance</a></li>
+<li><a href="#standard-deviation" id="toc-standard-deviation"><span
+class="toc-section-number">2.3.2</span> Standard Deviation</a></li>
+<li><a href="#kurtosis" id="toc-kurtosis"><span
+class="toc-section-number">2.3.3</span> Kurtosis</a></li>
+<li><a href="#skewness" id="toc-skewness"><span
+class="toc-section-number">2.3.4</span> Skewness</a></li>
+</ul></li>
+<li><a href="#measures-of-relationship"
+id="toc-measures-of-relationship"><span
+class="toc-section-number">2.4</span> Measures of Relationship</a>
+<ul>
+<li><a href="#covariance" id="toc-covariance"><span
+class="toc-section-number">2.4.1</span> Covariance</a></li>
+<li><a href="#correlation" id="toc-correlation"><span
+class="toc-section-number">2.4.2</span> Correlation</a></li>
+</ul></li>
+<li><a href="#basic-visualizations" id="toc-basic-visualizations"><span
+class="toc-section-number">2.5</span> Basic Visualizations</a>
+<ul>
+<li><a href="#histogram" id="toc-histogram"><span
+class="toc-section-number">2.5.1</span> Histogram</a></li>
+<li><a href="#box-and-whisker-plot" id="toc-box-and-whisker-plot"><span
+class="toc-section-number">2.5.2</span> Box and Whisker Plot</a></li>
+<li><a href="#missing-data-plot" id="toc-missing-data-plot"><span
+class="toc-section-number">2.5.3</span> Missing Data Plot</a></li>
+<li><a href="#correlation-plot" id="toc-correlation-plot"><span
+class="toc-section-number">2.5.4</span> Correlation Plot</a></li>
+<li><a href="#scatter-plot" id="toc-scatter-plot"><span
+class="toc-section-number">2.5.5</span> Scatter Plot</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#statistical-test" id="toc-statistical-test"><span
+class="toc-section-number">3</span> Statistical Test</a>
+<ul>
+<li><a href="#the-chi2-statistic-and-its-p-value"
+id="toc-the-chi2-statistic-and-its-p-value"><span
+class="toc-section-number">3.1</span> The <span
+class="math inline">\(\chi^2\)</span> Statistic and its p-Value</a></li>
+<li><a href="#confidence-interval-of-the-parameters"
+id="toc-confidence-interval-of-the-parameters"><span
+class="toc-section-number">3.2</span> 95% Confidence Interval of the
+Parameters</a></li>
+<li><a href="#odds-ratio" id="toc-odds-ratio"><span
+class="toc-section-number">3.3</span> Odds Ratio</a>
+<ul>
+<li><a href="#confidence-interval-for-the-odds-ratio"
+id="toc-confidence-interval-for-the-odds-ratio"><span
+class="toc-section-number">3.3.1</span> 95% Confidence Interval for the
+Odds Ratio</a></li>
+</ul></li>
+<li><a href="#akaike-information-criterion-aic"
+id="toc-akaike-information-criterion-aic"><span
+class="toc-section-number">3.4</span> Akaike Information Criterion
+(AIC)</a></li>
+<li><a href="#mcfaddens-pseudo-r2" id="toc-mcfaddens-pseudo-r2"><span
+class="toc-section-number">3.5</span> McFadden’s Pseudo
+R<sup>2</sup></a></li>
+<li><a href="#fisher-scoring-iterations"
+id="toc-fisher-scoring-iterations"><span
+class="toc-section-number">3.6</span> Fisher Scoring Iterations</a></li>
+<li><a href="#model-fit-metrics" id="toc-model-fit-metrics"><span
+class="toc-section-number">3.7</span> Model Fit Metrics</a></li>
+</ul></li>
+<li><a href="#diagnostic-eda" id="toc-diagnostic-eda"><span
+class="toc-section-number">4</span> Diagnostic EDA</a>
+<ul>
+<li><a href="#test-of-linearity" id="toc-test-of-linearity"><span
+class="toc-section-number">4.1</span> Test of Linearity</a></li>
+<li><a href="#test-of-independence-of-errors-autocorrelation"
+id="toc-test-of-independence-of-errors-autocorrelation"><span
+class="toc-section-number">4.2</span> <u><strong>Test of Independence of
+Errors (Autocorrelation)</strong></u></a></li>
+<li><a href="#test-of-normality" id="toc-test-of-normality"><span
+class="toc-section-number">4.3</span> Test of Normality</a></li>
+<li><a href="#test-of-homoscedasticity"
+id="toc-test-of-homoscedasticity"><span
+class="toc-section-number">4.4</span> Test of Homoscedasticity</a></li>
+<li><a href="#test-of-multicollinearity"
+id="toc-test-of-multicollinearity"><span
+class="toc-section-number">4.5</span> Test of Multicollinearity</a></li>
+<li><a href="#test-of-outliers" id="toc-test-of-outliers"><span
+class="toc-section-number">4.6</span> Test of Outliers</a></li>
+</ul></li>
+<li><a href="#interpretation-of-the-results"
+id="toc-interpretation-of-the-results"><span
+class="toc-section-number">5</span> Interpretation of the Results</a>
+<ul>
+<li><a href="#academic-statement" id="toc-academic-statement"><span
+class="toc-section-number">5.1</span> Academic Statement</a></li>
+<li><a href="#business-analysis" id="toc-business-analysis"><span
+class="toc-section-number">5.2</span> Business Analysis</a></li>
+<li><a href="#limitations" id="toc-limitations"><span
+class="toc-section-number">5.3</span> Limitations</a></li>
+</ul></li>
+</ul>
+</div>
+
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhV1lnS0NGY0luQmhZMjFoYmx3aUlDVnBiaVVnYVc1emRHRnNiR1ZrTG5CaFkydGhaMlZ6S0NsYkxDQmNJbEJoWTJ0aFoyVmNJbDBwSUh0Y2JpQWdhVzV6ZEdGc2JDNXdZV05yWVdkbGN5aGNJbkJoWTIxaGJsd2lMQ0JrWlhCbGJtUmxibU5wWlhNZ1BTQlVVbFZGS1Z4dUlDQnNhV0p5WVhKNUtGd2ljR0ZqYldGdVhDSXNJR05vWVhKaFkzUmxjaTV2Ym14NUlEMGdWRkpWUlNsY2JuMWNibHh1Y0dGamJXRnVPanB3WDJ4dllXUW9YQ0pvWlhKbFhDSXBYRzVjYm10dWFYUnlPanB2Y0hSelgydHVhWFFrYzJWMEtISnZiM1F1WkdseUlEMGdhR1Z5WlRvNmFHVnlaU2dwS1Z4dVlHQmdJbjA9IC0tPlxuXG5gYGByXG5pZiAoIVwicGFjbWFuXCIgJWluJSBpbnN0YWxsZWQucGFja2FnZXMoKVssIFwiUGFja2FnZVwiXSkge1xuICBpbnN0YWxsLnBhY2thZ2VzKFwicGFjbWFuXCIsIGRlcGVuZGVuY2llcyA9IFRSVUUpXG4gIGxpYnJhcnkoXCJwYWNtYW5cIiwgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxufVxuXG5wYWNtYW46OnBfbG9hZChcImhlcmVcIilcblxua25pdHI6Om9wdHNfa25pdCRzZXQocm9vdC5kaXIgPSBoZXJlOjpoZXJlKCkpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaWYgKCFcInBhY21hblwiICVpbiUgaW5zdGFsbGVkLnBhY2thZ2VzKClbLCBcIlBhY2thZ2VcIl0pIHtcbiAgaW5zdGFsbC5wYWNrYWdlcyhcInBhY21hblwiLCBkZXBlbmRlbmNpZXMgPSBUUlVFKVxuICBsaWJyYXJ5KFwicGFjbWFuXCIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbn1cblxucGFjbWFuOjpwX2xvYWQoXCJoZXJlXCIpXG5cbmtuaXRyOjpvcHRzX2tuaXQkc2V0KHJvb3QuZGlyID0gaGVyZTo6aGVyZSgpKVxuYGBgIn0= -->
+<pre class="r"><code>if (!&quot;pacman&quot; %in% installed.packages()[, &quot;Package&quot;]) {
+  install.packages(&quot;pacman&quot;, dependencies = TRUE)
+  library(&quot;pacman&quot;, character.only = TRUE)
+}
+
+pacman::p_load(&quot;here&quot;)
+
+knitr::opts_knit$set(root.dir = here::here())</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="load-the-dataset" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Load the Dataset</h1>
+<p>The synthetic subscription churn dataset contains 1,000 observations
+and four variables:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>monthly_fee:</strong> The monthly subscription fee paid
+by the customer</p></li>
+<li><p><strong>customer_age:</strong> The age of the customer in
+years.</p></li>
+<li><p><strong>support_calls:</strong> The number of support calls the
+customer made in the last month</p></li>
+<li><p><strong>renew:</strong> This is the outcome (dependent) variable
+(1 = customer will not cancel; 0 = customer will cancel)</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSnlaV0ZrY2x3aUtWeHVYRzV6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlTQThMU0JjYmlBZ2NtVmhaRjlqYzNZb1hDSmtZWFJoTDNOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymk1amMzWmNJaXdnWTI5c1gzUjVjR1Z6SUQwZ1kyOXNjeWhjYmlBZ0lDQnRiMjUwYUd4NVgyWmxaU0E5SUdOdmJGOWtiM1ZpYkdVb0tTeGNiaUFnSUNCamRYTjBiMjFsY2w5aFoyVWdQU0JqYjJ4ZlpHOTFZbXhsS0Nrc1hHNGdJQ0FnYzNWd2NHOXlkRjlqWVd4c2N5QTlJR052YkY5cGJuUmxaMlZ5S0Nrc1hHNGdJQ0FnY21WdVpYY2dQU0JqYjJ4ZlptRmpkRzl5S0d4bGRtVnNjeUE5SUdNb1hDSXhYQ0lzSUZ3aU1Gd2lLU2xjYmlBZ0lDQXBYRzRnSUNsY2JseHVhR1ZoWkNoemRXSnpZM0pwY0hScGIyNWZZMmgxY201ZlpHRjBZU2xjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwicmVhZHJcIilcblxuc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEgPC0gXG4gIHJlYWRfY3N2KFwiZGF0YS9zdWJzY3JpcHRpb25fY2h1cm4uY3N2XCIsIGNvbF90eXBlcyA9IGNvbHMoXG4gICAgbW9udGhseV9mZWUgPSBjb2xfZG91YmxlKCksXG4gICAgY3VzdG9tZXJfYWdlID0gY29sX2RvdWJsZSgpLFxuICAgIHN1cHBvcnRfY2FsbHMgPSBjb2xfaW50ZWdlcigpLFxuICAgIHJlbmV3ID0gY29sX2ZhY3RvcihsZXZlbHMgPSBjKFwiMVwiLCBcIjBcIikpXG4gICAgKVxuICApXG5cbmhlYWQoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJyZWFkclwiKVxuXG5zdWJzY3JpcHRpb25fY2h1cm5fZGF0YSA8LSBcbiAgcmVhZF9jc3YoXCJkYXRhL3N1YnNjcmlwdGlvbl9jaHVybi5jc3ZcIiwgY29sX3R5cGVzID0gY29scyhcbiAgICBtb250aGx5X2ZlZSA9IGNvbF9kb3VibGUoKSxcbiAgICBjdXN0b21lcl9hZ2UgPSBjb2xfZG91YmxlKCksXG4gICAgc3VwcG9ydF9jYWxscyA9IGNvbF9pbnRlZ2VyKCksXG4gICAgcmVuZXcgPSBjb2xfZmFjdG9yKGxldmVscyA9IGMoXCIxXCIsIFwiMFwiKSlcbiAgICApXG4gIClcblxuaGVhZChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;readr&quot;)
+
+subscription_churn_data &lt;- 
+  read_csv(&quot;data/subscription_churn.csv&quot;, col_types = cols(
+    monthly_fee = col_double(),
+    customer_age = col_double(),
+    support_calls = col_integer(),
+    renew = col_factor(levels = c(&quot;1&quot;, &quot;0&quot;))
+    )
+  )
+
+head(subscription_churn_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="initial-eda" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Initial EDA</h1>
+<p><u><strong>View the Dimensions</strong></u></p>
+<p>The number of observations and the number of variables.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVaR2x0S0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhLVnh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbmRpbShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGltKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>dim(subscription_churn_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p><u><strong>View the Data Types</strong></u></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjMkZ3Y0d4NUtITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoTENCamJHRnpjeWxjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbnNhcHBseShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSwgY2xhc3MpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhLCBjbGFzcylcbmBgYCJ9 -->
+<pre class="r"><code>sapply(subscription_churn_data, class)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjM1J5S0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhLVnh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbnN0cihzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVxuYGBgIn0= -->
+<pre class="r"><code>str(subscription_churn_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p><u><strong>Descriptive Statistics</strong></u></p>
+<div id="measures-of-frequency" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Measures of
+Frequency</h2>
+<p>79.4% continue their subscription and 20.6% cancelled their
+subscription. It is not balanced.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjM1ZpYzJOeWFYQjBhVzl1WDJOb2RYSnVYMlJoZEdGZlpuSmxjU0E4TFNCemRXSnpZM0pwY0hScGIyNWZZMmgxY201ZlpHRjBZU1J5Wlc1bGQxeHVZMkpwYm1Rb1puSmxjWFZsYm1ONUlEMGdkR0ZpYkdVb2MzVmljMk55YVhCMGFXOXVYMk5vZFhKdVgyUmhkR0ZmWm5KbGNTa3NYRzRnSUNBZ0lDQndaWEpqWlc1MFlXZGxJRDBnY0hKdmNDNTBZV0pzWlNoMFlXSnNaU2h6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlWOW1jbVZ4S1NrZ0tpQXhNREFwWEc1Y2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5zdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9mcmVxIDwtIHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhJHJlbmV3XG5jYmluZChmcmVxdWVuY3kgPSB0YWJsZShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9mcmVxKSxcbiAgICAgIHBlcmNlbnRhZ2UgPSBwcm9wLnRhYmxlKHRhYmxlKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhX2ZyZXEpKSAqIDEwMClcblxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFfZnJlcSA8LSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSRyZW5ld1xuY2JpbmQoZnJlcXVlbmN5ID0gdGFibGUoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFfZnJlcSksXG4gICAgICBwZXJjZW50YWdlID0gcHJvcC50YWJsZSh0YWJsZShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9mcmVxKSkgKiAxMDApXG5cbmBgYCJ9 -->
+<pre class="r"><code>subscription_churn_data_freq &lt;- subscription_churn_data$renew
+cbind(frequency = table(subscription_churn_data_freq),
+      percentage = prop.table(table(subscription_churn_data_freq)) * 100)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="measures-of-central-tendency" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Measures of Central
+Tendency</h2>
+<p>The median and the mean of each numeric variable:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjM1Z0YldGeWVTaHpkV0p6WTNKcGNIUnBiMjVmWTJoMWNtNWZaR0YwWVNsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5zdW1tYXJ5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>summary(subscription_churn_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="measures-of-distribution" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Measures of
+Distribution</h2>
+<p>Measuring the variability in the dataset is important because the
+amount of variability determines <strong>how well you can
+generalize</strong> results from the sample to a new observation in the
+population.</p>
+<p>Low variability is ideal because it means that you can better predict
+information about the population based on the sample data. High
+variability means that the values are less consistent, thus making it
+harder to make predictions.</p>
+<div id="variance" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Variance</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjMkZ3Y0d4NUtITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoV3l3Z01Ub3pYU3dnZG1GeUtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywgMTozXSwgdmFyKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywgMTozXSwgdmFyKVxuYGBgIn0= -->
+<pre class="r"><code>sapply(subscription_churn_data[, 1:3], var)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="standard-deviation" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Standard
+Deviation</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjMkZ3Y0d4NUtITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoV3l3Z01Ub3pYU3dnYzJRcFhHNWdZR0FpZlE9PSAtLT5cblxuYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywgMTozXSwgc2QpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywgMTozXSwgc2QpXG5gYGAifQ== -->
+<pre class="r"><code>sapply(subscription_churn_data[, 1:3], sd)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="kurtosis" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Kurtosis</h3>
+<p>The Kurtosis informs us of how often outliers occur in the results.
+There are different formulas for calculating kurtosis. Specifying “type
+= 2” allows us to use the 2nd formula which is the same kurtosis formula
+used in other statistical software like SPSS and SAS.</p>
+<p>In “type = 2” (used in SPSS and SAS):</p>
+<ol style="list-style-type: decimal">
+<li><p>Kurtosis &lt; 3 implies a low number of outliers</p></li>
+<li><p>Kurtosis = 3 implies a medium number of outliers</p></li>
+<li><p>Kurtosis &gt; 3 implies a high number of outliers</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmxNVEEzTVZ3aUtWeHVjMkZ3Y0d4NUtITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoV3l4ZExDQWdhM1Z5ZEc5emFYTXNJSFI1Y0dVZ1BTQXlLVnh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiZTEwNzFcIilcbnNhcHBseShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVssXSwgIGt1cnRvc2lzLCB0eXBlID0gMilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJlMTA3MVwiKVxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWyxdLCAga3VydG9zaXMsIHR5cGUgPSAyKVxuYGBgIn0= -->
+<pre class="r"><code>pacman::p_load(&quot;e1071&quot;)
+sapply(subscription_churn_data[,],  kurtosis, type = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="skewness" class="section level3" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Skewness</h3>
+<p>The skewness is used to identify the asymmetry of the distribution of
+results. Similar to kurtosis, there are several ways of computing the
+skewness.</p>
+<p>Using “type = 2” (common in other statistical software like SPSS and
+SAS) can be interpreted as:</p>
+<ol style="list-style-type: decimal">
+<li><p>Skewness between -0.4 and 0.4 (inclusive) implies that there is
+no skew in the distribution of results; the distribution of results is
+symmetrical; it is a normal distribution; a Gaussian
+distribution.</p></li>
+<li><p>Skewness above 0.4 implies a positive skew; a right-skewed
+distribution.</p></li>
+<li><p>Skewness below -0.4 implies a negative skew; a left-skewed
+distribution.</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjMkZ3Y0d4NUtITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoV3l4ZExDQnphMlYzYm1WemN5d2dkSGx3WlNBOUlESXBYRzVnWUdBaWZRPT0gLS0+XG5cbmBgYHJcbnNhcHBseShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVssXSwgc2tld25lc3MsIHR5cGUgPSAyKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWyxdLCBza2V3bmVzcywgdHlwZSA9IDIpXG5gYGAifQ== -->
+<pre class="r"><code>sapply(subscription_churn_data[,], skewness, type = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="measures-of-relationship" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Measures of
+Relationship</h2>
+<div id="covariance" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Covariance</h3>
+<p>Covariance is a statistical measure that indicates the direction of
+the linear relationship between two variables. It assesses whether
+increases in one variable correspond to increases or decreases in
+another.​</p>
+<ul>
+<li><p><strong>Positive Covariance:</strong> When one variable
+increases, the other tends to increase as well.</p></li>
+<li><p><strong>Negative Covariance:</strong> When one variable
+increases, the other tends to decrease.</p></li>
+<li><p><strong>Zero Covariance:</strong> No linear relationship exists
+between the variables.</p></li>
+</ul>
+<p>While covariance indicates the direction of a relationship, it does
+not convey the strength or consistency of the relationship. The
+correlation coefficient is used to indicate the strength of the
+relationship.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjkyS0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhXeXd4T2pOZExDQnRaWFJvYjJRZ1BTQmNJbk53WldGeWJXRnVYQ0lwWEc1Z1lHQWlmUT09IC0tPlxuXG5gYGByXG5jb3Yoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbLDE6M10sIG1ldGhvZCA9IFwic3BlYXJtYW5cIilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY292KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywxOjNdLCBtZXRob2QgPSBcInNwZWFybWFuXCIpXG5gYGAifQ== -->
+<pre class="r"><code>cov(subscription_churn_data[,1:3], method = &quot;spearman&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="correlation" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Correlation</h3>
+<p>A strong correlation between variables enables us to better predict
+the value of the dependent variable using the value of the independent
+variable. However, a weak correlation between two variables does not
+help us to predict the value of the dependent variable from the value of
+the independent variable. This is useful only if there is a linear
+association between the variables.</p>
+<p>We can measure the statistical significance of the correlation using
+Spearman’s rank correlation <em>rho</em>. This shows us if the variables
+are significantly monotonically related. A monotonic relationship
+between two variables implies that as one variable increases, the other
+variable either consistently increases or consistently decreases. The
+key characteristic is the preservation of the direction of change,
+though the rate of change may vary.</p>
+<p>To view the correlation of all variables at the same time</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjl5S0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhXeXd4T2pOZExDQnRaWFJvYjJRZ1BTQmNJbk53WldGeWJXRnVYQ0lwWEc1Z1lHQWlmUT09IC0tPlxuXG5gYGByXG5jb3Ioc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbLDE6M10sIG1ldGhvZCA9IFwic3BlYXJtYW5cIilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29yKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywxOjNdLCBtZXRob2QgPSBcInNwZWFybWFuXCIpXG5gYGAifQ== -->
+<pre class="r"><code>cor(subscription_churn_data[,1:3], method = &quot;spearman&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="basic-visualizations" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Basic
+Visualizations</h2>
+<div id="histogram" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Histogram</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0Z5S0cxbWNtOTNJRDBnWXlneExDQXlLU2xjYm1admNpQW9hU0JwYmlBeE9qUXBJSHRjYmlBZ2FXWWdLR2x6TG01MWJXVnlhV01vYzNWaWMyTnlhWEIwYVc5dVgyTm9kWEp1WDJSaGRHRmJXMmxkWFNrcElIdGNiaUFnSUNCb2FYTjBLSE4xWW5OamNtbHdkR2x2Ymw5amFIVnlibDlrWVhSaFcxdHBYVjBzWEc0Z0lDQWdJQ0FnSUNCdFlXbHVJRDBnYm1GdFpYTW9jM1ZpYzJOeWFYQjBhVzl1WDJOb2RYSnVYMlJoZEdFcFcybGRMRnh1SUNBZ0lDQWdJQ0FnZUd4aFlpQTlJRzVoYldWektITjFZbk5qY21sd2RHbHZibDlqYUhWeWJsOWtZWFJoS1Z0cFhTbGNiaUFnZlNCbGJITmxJSHRjYmlBZ0lDQnRaWE56WVdkbEtIQmhjM1JsS0Z3aVEyOXNkVzF1WENJc0lHNWhiV1Z6S0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhLVnRwWFN4Y2JpQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lGd2lhWE1nYm05MElHNTFiV1Z5YVdNZ1lXNWtJSGRwYkd3Z1ltVWdjMnRwY0hCbFpDNWNJaWtwWEc0Z0lIMWNibjFjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbnBhcihtZnJvdyA9IGMoMSwgMikpXG5mb3IgKGkgaW4gMTo0KSB7XG4gIGlmIChpcy5udW1lcmljKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW1tpXV0pKSB7XG4gICAgaGlzdChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVtbaV1dLFxuICAgICAgICAgbWFpbiA9IG5hbWVzKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVtpXSxcbiAgICAgICAgIHhsYWIgPSBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0pXG4gIH0gZWxzZSB7XG4gICAgbWVzc2FnZShwYXN0ZShcIkNvbHVtblwiLCBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0sXG4gICAgICAgICAgICAgICAgICBcImlzIG5vdCBudW1lcmljIGFuZCB3aWxsIGJlIHNraXBwZWQuXCIpKVxuICB9XG59XG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFyKG1mcm93ID0gYygxLCAyKSlcbmZvciAoaSBpbiAxOjQpIHtcbiAgaWYgKGlzLm51bWVyaWMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbW2ldXSkpIHtcbiAgICBoaXN0KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW1tpXV0sXG4gICAgICAgICBtYWluID0gbmFtZXMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpW2ldLFxuICAgICAgICAgeGxhYiA9IG5hbWVzKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVtpXSlcbiAgfSBlbHNlIHtcbiAgICBtZXNzYWdlKHBhc3RlKFwiQ29sdW1uXCIsIG5hbWVzKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVtpXSxcbiAgICAgICAgICAgICAgICAgIFwiaXMgbm90IG51bWVyaWMgYW5kIHdpbGwgYmUgc2tpcHBlZC5cIikpXG4gIH1cbn1cbmBgYCJ9 -->
+<pre class="r"><code>par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(subscription_churn_data[[i]])) {
+    hist(subscription_churn_data[[i]],
+         main = names(subscription_churn_data)[i],
+         xlab = names(subscription_churn_data)[i])
+  } else {
+    message(paste(&quot;Column&quot;, names(subscription_churn_data)[i],
+                  &quot;is not numeric and will be skipped.&quot;))
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="box-and-whisker-plot" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Box and Whisker
+Plot</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0Z5S0cxbWNtOTNJRDBnWXlneExDQXlLU2xjYm1admNpQW9hU0JwYmlBeE9qUXBJSHRjYmlBZ2FXWWdLR2x6TG01MWJXVnlhV01vYzNWaWMyTnlhWEIwYVc5dVgyTm9kWEp1WDJSaGRHRmJXMmxkWFNrcElIdGNiaUFnSUNCaWIzaHdiRzkwS0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhXMXRwWFYwc0lHMWhhVzRnUFNCdVlXMWxjeWh6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlTbGJhVjBwWEc0Z0lIMGdaV3h6WlNCN1hHNGdJQ0FnYldWemMyRm5aU2h3WVhOMFpTaGNJa052YkhWdGJsd2lMQ0J1WVcxbGN5aHpkV0p6WTNKcGNIUnBiMjVmWTJoMWNtNWZaR0YwWVNsYmFWMHNYRzRnSUNBZ0lDQWdJQ0FnSUNBZ0lDQWdJQ0JjSW1seklHNXZkQ0J1ZFcxbGNtbGpJR0Z1WkNCM2FXeHNJR0psSUhOcmFYQndaV1F1WENJcEtWeHVJQ0I5WEc1OVhHNWdZR0FpZlE9PSAtLT5cblxuYGBgclxucGFyKG1mcm93ID0gYygxLCAyKSlcbmZvciAoaSBpbiAxOjQpIHtcbiAgaWYgKGlzLm51bWVyaWMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbW2ldXSkpIHtcbiAgICBib3hwbG90KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW1tpXV0sIG1haW4gPSBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0pXG4gIH0gZWxzZSB7XG4gICAgbWVzc2FnZShwYXN0ZShcIkNvbHVtblwiLCBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0sXG4gICAgICAgICAgICAgICAgICBcImlzIG5vdCBudW1lcmljIGFuZCB3aWxsIGJlIHNraXBwZWQuXCIpKVxuICB9XG59XG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFyKG1mcm93ID0gYygxLCAyKSlcbmZvciAoaSBpbiAxOjQpIHtcbiAgaWYgKGlzLm51bWVyaWMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbW2ldXSkpIHtcbiAgICBib3hwbG90KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW1tpXV0sIG1haW4gPSBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0pXG4gIH0gZWxzZSB7XG4gICAgbWVzc2FnZShwYXN0ZShcIkNvbHVtblwiLCBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0sXG4gICAgICAgICAgICAgICAgICBcImlzIG5vdCBudW1lcmljIGFuZCB3aWxsIGJlIHNraXBwZWQuXCIpKVxuICB9XG59XG5gYGAifQ== -->
+<pre class="r"><code>par(mfrow = c(1, 2))
+for (i in 1:4) {
+  if (is.numeric(subscription_churn_data[[i]])) {
+    boxplot(subscription_churn_data[[i]], main = names(subscription_churn_data)[i])
+  } else {
+    message(paste(&quot;Column&quot;, names(subscription_churn_data)[i],
+                  &quot;is not numeric and will be skipped.&quot;))
+  }
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="missing-data-plot" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> Missing Data
+Plot</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSkJiV1ZzYVdGY0lpbGNibHh1YldsemMyMWhjQ2h6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlTd2dZMjlzSUQwZ1l5aGNJbkpsWkZ3aUxDQmNJbWR5WlhsY0lpa3NJR3hsWjJWdVpDQTlJRlJTVlVVcFhHNWdZR0FpZlE9PSAtLT5cblxuYGBgclxucGFjbWFuOjpwX2xvYWQoXCJBbWVsaWFcIilcblxubWlzc21hcChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSwgY29sID0gYyhcInJlZFwiLCBcImdyZXlcIiksIGxlZ2VuZCA9IFRSVUUpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJBbWVsaWFcIilcblxubWlzc21hcChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSwgY29sID0gYyhcInJlZFwiLCBcImdyZXlcIiksIGxlZ2VuZCA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>pacman::p_load(&quot;Amelia&quot;)
+
+missmap(subscription_churn_data, col = c(&quot;red&quot;, &quot;grey&quot;), legend = TRUE)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="correlation-plot" class="section level3" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Correlation
+Plot</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSm5aMk52Y25Kd2JHOTBYQ0lwWEc1Y2JtZG5ZMjl5Y25Cc2IzUW9ZMjl5S0hOMVluTmpjbWx3ZEdsdmJsOWphSFZ5Ymw5a1lYUmhXeXd4T2pOZEtTbGNibUJnWUNKOSAtLT5cblxuYGBgclxucGFjbWFuOjpwX2xvYWQoXCJnZ2NvcnJwbG90XCIpXG5cbmdnY29ycnBsb3QoY29yKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywxOjNdKSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJnZ2NvcnJwbG90XCIpXG5cbmdnY29ycnBsb3QoY29yKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywxOjNdKSlcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;ggcorrplot&quot;)
+
+ggcorrplot(cor(subscription_churn_data[,1:3]))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="scatter-plot" class="section level3" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Scatter Plot</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmpiM0p5Y0d4dmRGd2lLVnh1WEc1d1lXbHljeWh5Wlc1bGR5QitJQzRzSUdSaGRHRWdQU0J6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlTd2dZMjlzSUQwZ2MzVmljMk55YVhCMGFXOXVYMk5vZFhKdVgyUmhkR0VrY21WdVpYY3BYRzVnWUdBaWZRPT0gLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiY29ycnBsb3RcIilcblxucGFpcnMocmVuZXcgfiAuLCBkYXRhID0gc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEsIGNvbCA9IHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhJHJlbmV3KVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJjb3JycGxvdFwiKVxuXG5wYWlycyhyZW5ldyB+IC4sIGRhdGEgPSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSwgY29sID0gc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEkcmVuZXcpXG5gYGAifQ== -->
+<pre class="r"><code>pacman::p_load(&quot;corrplot&quot;)
+
+pairs(renew ~ ., data = subscription_churn_data, col = subscription_churn_data$renew)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSm5aM0JzYjNReVhDSXBYRzVuWjNCc2IzUW9jM1ZpYzJOeWFYQjBhVzl1WDJOb2RYSnVYMlJoZEdFc1hHNGdJQ0FnSUNBZ1lXVnpLSGdnUFNCamRYTjBiMjFsY2w5aFoyVXNJSGtnUFNCdGIyNTBhR3g1WDJabFpTa3BJQ3NnWEc0Z0lHZGxiMjFmY0c5cGJuUW9LU0FyWEc0Z0lHZGxiMjFmYzIxdmIzUm9LRzFsZEdodlpDQTlJR3h0S1NBclhHNGdJR3hoWW5Nb1hHNGdJQ0FnZEdsMGJHVWdQU0JjSWxKbGJHRjBhVzl1YzJocGNDQmlaWFIzWldWdUlFMXZiblJvYkhrZ1JtVmxJR0Z1WkNCY1hHNURkWE4wYjIxbGNpQkJaMlZjSWl4Y2JpQWdJQ0I0SUQwZ1hDSkRkWE4wYjIxbGNpQkJaMlZjSWl4Y2JpQWdJQ0I1SUQwZ1hDSk5iMjUwYUd4NUlFWmxaVndpWEc0Z0lDbGNibUJnWUNKOSAtLT5cblxuYGBgclxucGFjbWFuOjpwX2xvYWQoXCJnZ3Bsb3QyXCIpXG5nZ3Bsb3Qoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEsXG4gICAgICAgYWVzKHggPSBjdXN0b21lcl9hZ2UsIHkgPSBtb250aGx5X2ZlZSkpICsgXG4gIGdlb21fcG9pbnQoKSArXG4gIGdlb21fc21vb3RoKG1ldGhvZCA9IGxtKSArXG4gIGxhYnMoXG4gICAgdGl0bGUgPSBcIlJlbGF0aW9uc2hpcCBiZXR3ZWVuIE1vbnRobHkgRmVlIGFuZCBcXG5DdXN0b21lciBBZ2VcIixcbiAgICB4ID0gXCJDdXN0b21lciBBZ2VcIixcbiAgICB5ID0gXCJNb250aGx5IEZlZVwiXG4gIClcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJnZ3Bsb3QyXCIpXG5nZ3Bsb3Qoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEsXG4gICAgICAgYWVzKHggPSBjdXN0b21lcl9hZ2UsIHkgPSBtb250aGx5X2ZlZSkpICsgXG4gIGdlb21fcG9pbnQoKSArXG4gIGdlb21fc21vb3RoKG1ldGhvZCA9IGxtKSArXG4gIGxhYnMoXG4gICAgdGl0bGUgPSBcIlJlbGF0aW9uc2hpcCBiZXR3ZWVuIE1vbnRobHkgRmVlIGFuZCBcXG5DdXN0b21lciBBZ2VcIixcbiAgICB4ID0gXCJDdXN0b21lciBBZ2VcIixcbiAgICB5ID0gXCJNb250aGx5IEZlZVwiXG4gIClcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;ggplot2&quot;)
+ggplot(subscription_churn_data,
+       aes(x = customer_age, y = monthly_fee)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = &quot;Relationship between Monthly Fee and \nCustomer Age&quot;,
+    x = &quot;Customer Age&quot;,
+    y = &quot;Monthly Fee&quot;
+  )</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSm5aM0JzYjNReVhDSXBYRzVuWjNCc2IzUW9jM1ZpYzJOeWFYQjBhVzl1WDJOb2RYSnVYMlJoZEdFc1hHNGdJQ0FnSUNBZ1lXVnpLSGdnUFNCamRYTjBiMjFsY2w5aFoyVXNJSGtnUFNCdGIyNTBhR3g1WDJabFpTd2dZMjlzYjNJZ1BTQnlaVzVsZHlrcElDc2dYRzRnSUdkbGIyMWZjRzlwYm5Rb0tTQXJYRzRnSUdkbGIyMWZjMjF2YjNSb0tHMWxkR2h2WkNBOUlHeHRLU0FyWEc0Z0lHeGhZbk1vWEc0Z0lDQWdkR2wwYkdVZ1BTQmNJbEpsYkdGMGFXOXVjMmhwY0NCaVpYUjNaV1Z1SUUxdmJuUm9iSGtnUm1WbElHRnVaQ0JjWEc1RGRYTjBiMjFsY2lCQloyVWdabTl5SUVWaFkyZ2dVbVZ1WlhkaGJDQlRkR0YwZFhOY0lpeGNiaUFnSUNCNElEMGdYQ0pEZFhOMGIyMWxjaUJCWjJWY0lpeGNiaUFnSUNCNUlEMGdYQ0pOYjI1MGFHeDVJRVpsWlZ3aUxGeHVJQ0FnSUdOdmJHOXlJRDBnWENKU1pXNWxkMkZzSUZOMFlYUjFjMXdpWEc0Z0lDa2dLMXh1SUNCelkyRnNaVjlqYjJ4dmNsOWthWE5qY21WMFpTaGNiaUFnSUNCc1lXSmxiSE1nUFNCaktGd2lNVndpSUQwZ1hDSlNaVzVsZDJWa0lGTjFZbk5qY21sd2RHbHZibHdpTENCY0lqQmNJaUE5SUZ3aVEyRnVZMlZzYkdWa0lGTjFZbk5qY21sd2RHbHZibHdpS1Z4dUlDQXBJQ3NnWEc0Z0lIUm9aVzFsWDIxcGJtbHRZV3dvS1NBZ0l5QlBjSFJwYjI1aGJEb2dZV1JrY3lCaElHTnNaV0Z1WlhJZ2RHaGxiV1ZjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiZ2dwbG90MlwiKVxuZ2dwbG90KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhLFxuICAgICAgIGFlcyh4ID0gY3VzdG9tZXJfYWdlLCB5ID0gbW9udGhseV9mZWUsIGNvbG9yID0gcmVuZXcpKSArIFxuICBnZW9tX3BvaW50KCkgK1xuICBnZW9tX3Ntb290aChtZXRob2QgPSBsbSkgK1xuICBsYWJzKFxuICAgIHRpdGxlID0gXCJSZWxhdGlvbnNoaXAgYmV0d2VlbiBNb250aGx5IEZlZSBhbmQgXFxuQ3VzdG9tZXIgQWdlIGZvciBFYWNoIFJlbmV3YWwgU3RhdHVzXCIsXG4gICAgeCA9IFwiQ3VzdG9tZXIgQWdlXCIsXG4gICAgeSA9IFwiTW9udGhseSBGZWVcIixcbiAgICBjb2xvciA9IFwiUmVuZXdhbCBTdGF0dXNcIlxuICApICtcbiAgc2NhbGVfY29sb3JfZGlzY3JldGUoXG4gICAgbGFiZWxzID0gYyhcIjFcIiA9IFwiUmVuZXdlZCBTdWJzY3JpcHRpb25cIiwgXCIwXCIgPSBcIkNhbmNlbGxlZCBTdWJzY3JpcHRpb25cIilcbiAgKSArIFxuICB0aGVtZV9taW5pbWFsKCkgICMgT3B0aW9uYWw6IGFkZHMgYSBjbGVhbmVyIHRoZW1lXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJnZ3Bsb3QyXCIpXG5nZ3Bsb3Qoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEsXG4gICAgICAgYWVzKHggPSBjdXN0b21lcl9hZ2UsIHkgPSBtb250aGx5X2ZlZSwgY29sb3IgPSByZW5ldykpICsgXG4gIGdlb21fcG9pbnQoKSArXG4gIGdlb21fc21vb3RoKG1ldGhvZCA9IGxtKSArXG4gIGxhYnMoXG4gICAgdGl0bGUgPSBcIlJlbGF0aW9uc2hpcCBiZXR3ZWVuIE1vbnRobHkgRmVlIGFuZCBcXG5DdXN0b21lciBBZ2UgZm9yIEVhY2ggUmVuZXdhbCBTdGF0dXNcIixcbiAgICB4ID0gXCJDdXN0b21lciBBZ2VcIixcbiAgICB5ID0gXCJNb250aGx5IEZlZVwiLFxuICAgIGNvbG9yID0gXCJSZW5ld2FsIFN0YXR1c1wiXG4gICkgK1xuICBzY2FsZV9jb2xvcl9kaXNjcmV0ZShcbiAgICBsYWJlbHMgPSBjKFwiMVwiID0gXCJSZW5ld2VkIFN1YnNjcmlwdGlvblwiLCBcIjBcIiA9IFwiQ2FuY2VsbGVkIFN1YnNjcmlwdGlvblwiKVxuICApICsgXG4gIHRoZW1lX21pbmltYWwoKSAgIyBPcHRpb25hbDogYWRkcyBhIGNsZWFuZXIgdGhlbWVcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;ggplot2&quot;)
+ggplot(subscription_churn_data,
+       aes(x = customer_age, y = monthly_fee, color = renew)) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  labs(
+    title = &quot;Relationship between Monthly Fee and \nCustomer Age for Each Renewal Status&quot;,
+    x = &quot;Customer Age&quot;,
+    y = &quot;Monthly Fee&quot;,
+    color = &quot;Renewal Status&quot;
+  ) +
+  scale_color_discrete(
+    labels = c(&quot;1&quot; = &quot;Renewed Subscription&quot;, &quot;0&quot; = &quot;Cancelled Subscription&quot;)
+  ) + 
+  theme_minimal()  # Optional: adds a cleaner theme</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+</div>
+<div id="statistical-test" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Statistical Test</h1>
+<p>We then apply a logistic regression as a statistical test for
+regression.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHViRzluWDNSbGMzUWdQQzBnWjJ4dEtISmxibVYzSUg0Z2JXOXVkR2hzZVY5bVpXVWdLeUJqZFhOMGIyMWxjbDloWjJVZ0t5QnpkWEJ3YjNKMFgyTmhiR3h6TEZ4dUlDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUNNZ1ZHaHBjeUJ6Y0dWamFXWnBaWE1nZEdoaGRDQjBhR1VnWjJWdVpYSmhiR2w2WldRZ2JHbHVaV0Z5SUcxdlpHVnNJSFJ2SUhWelpWeHVJQ0FnSUNBZ0lDQWdJQ0FnSUNBZ0lDTWdhWE1nYkc5bmFYTjBhV01nY21WbmNtVnpjMmx2Ymx4dUlDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUdaaGJXbHNlU0E5SUdKcGJtOXRhV0ZzTEZ4dUlDQWdJQ0FnSUNBZ0lDQWdJQ0FnSUdSaGRHRWdQU0J6ZFdKelkzSnBjSFJwYjI1ZlkyaDFjbTVmWkdGMFlTbGNibUJnWUNKOSAtLT5cblxuYGBgclxubG9nX3Rlc3QgPC0gZ2xtKHJlbmV3IH4gbW9udGhseV9mZWUgKyBjdXN0b21lcl9hZ2UgKyBzdXBwb3J0X2NhbGxzLFxuICAgICAgICAgICAgICAgICMgVGhpcyBzcGVjaWZpZXMgdGhhdCB0aGUgZ2VuZXJhbGl6ZWQgbGluZWFyIG1vZGVsIHRvIHVzZVxuICAgICAgICAgICAgICAgICMgaXMgbG9naXN0aWMgcmVncmVzc2lvblxuICAgICAgICAgICAgICAgIGZhbWlseSA9IGJpbm9taWFsLFxuICAgICAgICAgICAgICAgIGRhdGEgPSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubG9nX3Rlc3QgPC0gZ2xtKHJlbmV3IH4gbW9udGhseV9mZWUgKyBjdXN0b21lcl9hZ2UgKyBzdXBwb3J0X2NhbGxzLFxuICAgICAgICAgICAgICAgICMgVGhpcyBzcGVjaWZpZXMgdGhhdCB0aGUgZ2VuZXJhbGl6ZWQgbGluZWFyIG1vZGVsIHRvIHVzZVxuICAgICAgICAgICAgICAgICMgaXMgbG9naXN0aWMgcmVncmVzc2lvblxuICAgICAgICAgICAgICAgIGZhbWlseSA9IGJpbm9taWFsLFxuICAgICAgICAgICAgICAgIGRhdGEgPSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>log_test &lt;- glm(renew ~ monthly_fee + customer_age + support_calls,
+                # This specifies that the generalized linear model to use
+                # is logistic regression
+                family = binomial,
+                data = subscription_churn_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>View the summary of the model.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjM1Z0YldGeWVTaHNiMmRmZEdWemRDbGNibUJnWUNKOSAtLT5cblxuYGBgclxuc3VtbWFyeShsb2dfdGVzdClcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShsb2dfdGVzdClcbmBgYCJ9 -->
+<pre class="r"><code>summary(log_test)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The logistic regression equation is in the following form:</p>
+<p><span class="math display">\[\text{log-odds(renew)} = \beta_0 +
+\beta_1 \cdot fee + \beta_2 \cdot age + \beta_3 \cdot calls\]</span></p>
+<p>Plugging in the coefficients from the output gives:</p>
+<p><span class="math display">\[\text{log-odds(renew)} = -0.941778 +
+-0.043563 \cdot fee + 0.026110 \cdot age + 0.697795 \cdot
+calls\]</span></p>
+<p>The log-odds is then converted into a probability using the logistic
+function as:</p>
+<p><span class="math display">\[P(\text{renew = 1}) =
+\frac{1}{1+e^{-\text{log-odds}}}\]</span></p>
+<ul>
+<li><p>If P(renew=1)≥0.5, predict renewal of subscription(1).</p></li>
+<li><p>If P(renew=1)&lt;0.5, predict cancellation of subscription
+(0).</p></li>
+</ul>
+<p>For example, a monthly fee of 50, customer age of 62, and 3 support
+calls in the past month is probably going to renew their
+subscription:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjlsWm5NZ1BDMGdZMjlsWmloc2IyZGZkR1Z6ZENsY2JteHZaMTl2WkdSeklDQWdQQzBnWTI5bFpuTmJYQ0lvU1c1MFpYSmpaWEIwS1Z3aVhTQXJJRnh1SUNCamIyVm1jMXRjSW0xdmJuUm9iSGxmWm1WbFhDSmRJQ29nTlRBZ0sxeHVJQ0JqYjJWbWMxdGNJbU4xYzNSdmJXVnlYMkZuWlZ3aVhTQXFJRFl5SUN0Y2JpQWdZMjlsWm5OYlhDSnpkWEJ3YjNKMFgyTmhiR3h6WENKZElDb2dNMXh1WEc1d1gyMWhiblZoYkNBOExTQXhJQzhnS0RFZ0t5QmxlSEFvTFd4dloxOXZaR1J6S1NsY2JseHVjSEpwYm5Rb2NGOXRZVzUxWVd3cFhHNWNibUJnWUNKOSAtLT5cblxuYGBgclxuY29lZnMgPC0gY29lZihsb2dfdGVzdClcbmxvZ19vZGRzICAgPC0gY29lZnNbXCIoSW50ZXJjZXB0KVwiXSArIFxuICBjb2Vmc1tcIm1vbnRobHlfZmVlXCJdICogNTAgK1xuICBjb2Vmc1tcImN1c3RvbWVyX2FnZVwiXSAqIDYyICtcbiAgY29lZnNbXCJzdXBwb3J0X2NhbGxzXCJdICogM1xuXG5wX21hbnVhbCA8LSAxIC8gKDEgKyBleHAoLWxvZ19vZGRzKSlcblxucHJpbnQocF9tYW51YWwpXG5cbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29lZnMgPC0gY29lZihsb2dfdGVzdClcbmxvZ19vZGRzICAgPC0gY29lZnNbXCIoSW50ZXJjZXB0KVwiXSArIFxuICBjb2Vmc1tcIm1vbnRobHlfZmVlXCJdICogNTAgK1xuICBjb2Vmc1tcImN1c3RvbWVyX2FnZVwiXSAqIDYyICtcbiAgY29lZnNbXCJzdXBwb3J0X2NhbGxzXCJdICogM1xuXG5wX21hbnVhbCA8LSAxIC8gKDEgKyBleHAoLWxvZ19vZGRzKSlcblxucHJpbnQocF9tYW51YWwpXG5cbmBgYCJ9 -->
+<pre class="r"><code>coefs &lt;- coef(log_test)
+log_odds   &lt;- coefs[&quot;(Intercept)&quot;] + 
+  coefs[&quot;monthly_fee&quot;] * 50 +
+  coefs[&quot;customer_age&quot;] * 62 +
+  coefs[&quot;support_calls&quot;] * 3
+
+p_manual &lt;- 1 / (1 + exp(-log_odds))
+
+print(p_manual)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>For example, a monthly fee of 50, customer age of 21, and 3 support
+calls in the past month is probably going to cancel their
+subscription:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjlsWm5NZ1BDMGdZMjlsWmloc2IyZGZkR1Z6ZENsY2JteHZaMTl2WkdSeklDQWdQQzBnWTI5bFpuTmJYQ0lvU1c1MFpYSmpaWEIwS1Z3aVhTQXJJRnh1SUNCamIyVm1jMXRjSW0xdmJuUm9iSGxmWm1WbFhDSmRJQ29nTlRBZ0sxeHVJQ0JqYjJWbWMxdGNJbU4xYzNSdmJXVnlYMkZuWlZ3aVhTQXFJREl4SUN0Y2JpQWdZMjlsWm5OYlhDSnpkWEJ3YjNKMFgyTmhiR3h6WENKZElDb2dNMXh1WEc1d1gyMWhiblZoYkNBOExTQXhJQzhnS0RFZ0t5QmxlSEFvTFd4dloxOXZaR1J6S1NsY2JseHVjSEpwYm5Rb2NGOXRZVzUxWVd3cFhHNWdZR0FpZlE9PSAtLT5cblxuYGBgclxuY29lZnMgPC0gY29lZihsb2dfdGVzdClcbmxvZ19vZGRzICAgPC0gY29lZnNbXCIoSW50ZXJjZXB0KVwiXSArIFxuICBjb2Vmc1tcIm1vbnRobHlfZmVlXCJdICogNTAgK1xuICBjb2Vmc1tcImN1c3RvbWVyX2FnZVwiXSAqIDIxICtcbiAgY29lZnNbXCJzdXBwb3J0X2NhbGxzXCJdICogM1xuXG5wX21hbnVhbCA8LSAxIC8gKDEgKyBleHAoLWxvZ19vZGRzKSlcblxucHJpbnQocF9tYW51YWwpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29lZnMgPC0gY29lZihsb2dfdGVzdClcbmxvZ19vZGRzICAgPC0gY29lZnNbXCIoSW50ZXJjZXB0KVwiXSArIFxuICBjb2Vmc1tcIm1vbnRobHlfZmVlXCJdICogNTAgK1xuICBjb2Vmc1tcImN1c3RvbWVyX2FnZVwiXSAqIDIxICtcbiAgY29lZnNbXCJzdXBwb3J0X2NhbGxzXCJdICogM1xuXG5wX21hbnVhbCA8LSAxIC8gKDEgKyBleHAoLWxvZ19vZGRzKSlcblxucHJpbnQocF9tYW51YWwpXG5gYGAifQ== -->
+<pre class="r"><code>coefs &lt;- coef(log_test)
+log_odds   &lt;- coefs[&quot;(Intercept)&quot;] + 
+  coefs[&quot;monthly_fee&quot;] * 50 +
+  coefs[&quot;customer_age&quot;] * 21 +
+  coefs[&quot;support_calls&quot;] * 3
+
+p_manual &lt;- 1 / (1 + exp(-log_odds))
+
+print(p_manual)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="the-chi2-statistic-and-its-p-value" class="section level2"
+number="3.1">
+<h2><span class="header-section-number">3.1</span> The <span
+class="math inline">\(\chi^2\)</span> Statistic and its p-Value</h2>
+<p>To obtain the p-value of the <span
+class="math inline">\(\chi^2\)</span> statistic:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVJeUJqYUdsZk1pQThMU0JzYjJkZmRHVnpkQ1J1ZFd4c0xtUmxkbWxoYm1ObEx6RWdMU0JzYjJkZmRHVnpkQ1J5WlhOcFpIVmhiSE5jYm1Ob2FWOHlJRHd0SURFd01UY3VNaklnTFNBNU1EWXVNVGxjYmx4dWNISnBiblFvWTJocFh6SXBYRzVjYmlNZ1ZHOGdaMlYwSUhSb1pTQmtaV2R5WldWeklHOW1JR1p5WldWa2IyMDZYRzVqWVd4amRXeGhkR1ZrWDJSbUlEMGdiR1Z1WjNSb0tHTnZaV1lvYkc5blgzUmxjM1FwS1NBdElERWdJQ01nVTNWaWRISmhZM1FnTVNCbWIzSWdhVzUwWlhKalpYQjBYRzVjYmx4dWNDQThMU0F4SUMwZ2NHTm9hWE54S0dOb2FWOHlMQ0JrWmlBOUlHTmhiR04xYkdGMFpXUmZaR1lwWEc0aklIUnZJR1p2Y20xaGRDQmhjeUJoSUhOamFXVnVkR2xtYVdNZ2JtOTBZWFJwYjI0Z2QybDBhQ0JtYjNWeUlHUnBaMmwwY3lCaFpuUmxjaUIwYUdVZ1pHVmphVzFoYkNCd2JHRmpaVnh1SXlCemNISnBiblJtS0Z3aUpTNDBaVndpTENCd0tWeHVabTl5YldGMExuQjJZV3dvY0N3Z1pYQnpJRDBnTGsxaFkyaHBibVVrWkc5MVlteGxMbVZ3Y3l3Z1pHbG5hWFJ6SUQwZ01pbGNibUJnWUNKOSAtLT5cblxuYGBgclxuIyBjaGlfMiA8LSBsb2dfdGVzdCRudWxsLmRldmlhbmNlLzEgLSBsb2dfdGVzdCRyZXNpZHVhbHNcbmNoaV8yIDwtIDEwMTcuMjIgLSA5MDYuMTlcblxucHJpbnQoY2hpXzIpXG5cbiMgVG8gZ2V0IHRoZSBkZWdyZWVzIG9mIGZyZWVkb206XG5jYWxjdWxhdGVkX2RmID0gbGVuZ3RoKGNvZWYobG9nX3Rlc3QpKSAtIDEgICMgU3VidHJhY3QgMSBmb3IgaW50ZXJjZXB0XG5cblxucCA8LSAxIC0gcGNoaXNxKGNoaV8yLCBkZiA9IGNhbGN1bGF0ZWRfZGYpXG4jIHRvIGZvcm1hdCBhcyBhIHNjaWVudGlmaWMgbm90YXRpb24gd2l0aCBmb3VyIGRpZ2l0cyBhZnRlciB0aGUgZGVjaW1hbCBwbGFjZVxuIyBzcHJpbnRmKFwiJS40ZVwiLCBwKVxuZm9ybWF0LnB2YWwocCwgZXBzID0gLk1hY2hpbmUkZG91YmxlLmVwcywgZGlnaXRzID0gMilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjaGlfMiA8LSBsb2dfdGVzdCRudWxsLmRldmlhbmNlLzEgLSBsb2dfdGVzdCRyZXNpZHVhbHNcbmNoaV8yIDwtIDEwMTcuMjIgLSA5MDYuMTlcblxucHJpbnQoY2hpXzIpXG5cbiMgVG8gZ2V0IHRoZSBkZWdyZWVzIG9mIGZyZWVkb206XG5jYWxjdWxhdGVkX2RmID0gbGVuZ3RoKGNvZWYobG9nX3Rlc3QpKSAtIDEgICMgU3VidHJhY3QgMSBmb3IgaW50ZXJjZXB0XG5cblxucCA8LSAxIC0gcGNoaXNxKGNoaV8yLCBkZiA9IGNhbGN1bGF0ZWRfZGYpXG4jIHRvIGZvcm1hdCBhcyBhIHNjaWVudGlmaWMgbm90YXRpb24gd2l0aCBmb3VyIGRpZ2l0cyBhZnRlciB0aGUgZGVjaW1hbCBwbGFjZVxuIyBzcHJpbnRmKFwiJS40ZVwiLCBwKVxuZm9ybWF0LnB2YWwocCwgZXBzID0gLk1hY2hpbmUkZG91YmxlLmVwcywgZGlnaXRzID0gMilcbmBgYCJ9 -->
+<pre class="r"><code># chi_2 &lt;- log_test$null.deviance/1 - log_test$residuals
+chi_2 &lt;- 1017.22 - 906.19
+
+print(chi_2)
+
+# To get the degrees of freedom:
+calculated_df = length(coef(log_test)) - 1  # Subtract 1 for intercept
+
+
+p &lt;- 1 - pchisq(chi_2, df = calculated_df)
+# to format as a scientific notation with four digits after the decimal place
+# sprintf(&quot;%.4e&quot;, p)
+format.pval(p, eps = .Machine$double.eps, digits = 2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="confidence-interval-of-the-parameters" class="section level2"
+number="3.2">
+<h2><span class="header-section-number">3.2</span> 95% Confidence
+Interval of the Parameters</h2>
+<p>To obtain a 95% confidence interval for the parameters:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjl1Wm1sdWRDaHNiMmRmZEdWemRDd2diR1YyWld3Z1BTQXdMamsxS1Z4dVlHQmdJbjA9IC0tPlxuXG5gYGByXG5jb25maW50KGxvZ190ZXN0LCBsZXZlbCA9IDAuOTUpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29uZmludChsb2dfdGVzdCwgbGV2ZWwgPSAwLjk1KVxuYGBgIn0= -->
+<pre class="r"><code>confint(log_test, level = 0.95)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="odds-ratio" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Odds Ratio</h2>
+<p>Exponentiating the coefficients yields odds ratios, which quantify
+the multiplicative change in odds for a one‑unit increase in the
+predictor.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVaWGh3S0dOdlpXWW9iRzluWDNSbGMzUXBLVnh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbmV4cChjb2VmKGxvZ190ZXN0KSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXhwKGNvZWYobG9nX3Rlc3QpKVxuYGBgIn0= -->
+<pre class="r"><code>exp(coef(log_test))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="confidence-interval-for-the-odds-ratio" class="section level3"
+number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> 95% Confidence
+Interval for the Odds Ratio</h3>
+<p>To obtain a 95% confidence interval for the Odds Ratio:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmtjR3g1Y2x3aUtWeHVZMjl1Wm1sdWRDaHNiMmRmZEdWemRDa2dKVDRsSUdWNGNDZ3BYRzVnWUdBaWZRPT0gLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiZHBseXJcIilcbmNvbmZpbnQobG9nX3Rlc3QpICU+JSBleHAoKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJkcGx5clwiKVxuY29uZmludChsb2dfdGVzdCkgJT4lIGV4cCgpXG5gYGAifQ== -->
+<pre class="r"><code>pacman::p_load(&quot;dplyr&quot;)
+confint(log_test) %&gt;% exp()</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="akaike-information-criterion-aic" class="section level2"
+number="3.4">
+<h2><span class="header-section-number">3.4</span> Akaike Information
+Criterion (AIC)</h2>
+<p>AIC specifies how well a model fits the data from which it was
+generated. The AIC value is calculated using the number of predictor
+variables and also the estimate of the maximum likelihood of the model.
+AIC penalizes complexity, therefore, any model with a lesser AIC value
+is a more significant model. A lower AIC value means the complexity of
+the model is lower and the model better explains the variations. The
+model’s AIC value of 914.19 can be compared with the AIC value of
+alternative models, e.g., a logistic regression that has dropped one of
+the original predictors.</p>
+</div>
+<div id="mcfaddens-pseudo-r2" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> McFadden’s Pseudo
+R<sup>2</sup></h2>
+<p>Logistic regression does not use the traditional R², but we can
+compute a <strong>pseudo-R²</strong> (McFadden’s) as follows:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjSE5sZFdSdlgzSXlJRHd0SURFZ0xTQW9iRzluWDNSbGMzUWtaR1YyYVdGdVkyVWdMeUJzYjJkZmRHVnpkQ1J1ZFd4c0xtUmxkbWxoYm1ObEtWeHVjSEpwYm5Rb2NITmxkV1J2WDNJeUtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxucHNldWRvX3IyIDwtIDEgLSAobG9nX3Rlc3QkZGV2aWFuY2UgLyBsb2dfdGVzdCRudWxsLmRldmlhbmNlKVxucHJpbnQocHNldWRvX3IyKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHNldWRvX3IyIDwtIDEgLSAobG9nX3Rlc3QkZGV2aWFuY2UgLyBsb2dfdGVzdCRudWxsLmRldmlhbmNlKVxucHJpbnQocHNldWRvX3IyKVxuYGBgIn0= -->
+<pre class="r"><code>pseudo_r2 &lt;- 1 - (log_test$deviance / log_test$null.deviance)
+print(pseudo_r2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A McFadden’s pseudo-R<sup>2</sup> of 0.109 suggests that the
+predictors explain approximately 10.91% of the variance in the outcome.
+pseudo-R<sup>2</sup> &gt; 0.2 are considered strong in logistic
+regression.</p>
+</div>
+<div id="fisher-scoring-iterations" class="section level2" number="3.6">
+<h2><span class="header-section-number">3.6</span> Fisher Scoring
+Iterations</h2>
+<p>There were 4 Fisher scoring iterations which indicates that the
+fitting routine required four iterative updates to reach convergence. A
+small number (&lt; 10) suggests that the algorithm found the
+maximum-likelihood estimates efficiently without convergence
+warnings.</p>
+</div>
+<div id="model-fit-metrics" class="section level2" number="3.7">
+<h2><span class="header-section-number">3.7</span> Model Fit
+Metrics</h2>
+<p>The ROC Curve and the AUC gives insight into how well the logistic
+regression model distinguishes between the two outcome classes (1 =
+renew and 0 = cancel).</p>
+<ul>
+<li><p>The x-axis shows the False Positive Rate (FPR), or
+specificity.</p></li>
+<li><p>The y-axis shows the True Positive Rate (TPR), or
+sensitivity.</p></li>
+<li><p>The curve shows how TPR and FPR change as the decision threshold
+changes from 0 to 1.</p></li>
+<li><p>A curve closer to the top-left corner indicates better model
+performance.</p></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSndVazlEWENJcFhHNWNibkJ5WldScFkzUmxaRjl3Y205aWN5QThMU0J3Y21Wa2FXTjBLR3h2WjE5MFpYTjBMQ0IwZVhCbElEMGdYQ0p5WlhOd2IyNXpaVndpS1Z4dVhHNXliMk5mYjJKcUlEd3RJSEp2WXloemRXSnpZM0pwY0hScGIyNWZZMmgxY201ZlpHRjBZU1J5Wlc1bGR5d2djSEpsWkdsamRHVmtYM0J5YjJKektWeHVZWFZqWDNaaGJIVmxJRHd0SUdGMVl5aHliMk5mYjJKcUtWeHVjR3h2ZENoeWIyTmZiMkpxTENCamIyd2dQU0JjSW1Kc2RXVmNJaXdnYldGcGJpQTlJRndpVWs5RElFTjFjblpsSUdadmNpQk1iMmRwYzNScFl5QlNaV2R5WlhOemFXOXVYQ0lwWEc1Z1lHQWlmUT09IC0tPlxuXG5gYGByXG5wYWNtYW46OnBfbG9hZChcInBST0NcIilcblxucHJlZGljdGVkX3Byb2JzIDwtIHByZWRpY3QobG9nX3Rlc3QsIHR5cGUgPSBcInJlc3BvbnNlXCIpXG5cbnJvY19vYmogPC0gcm9jKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhJHJlbmV3LCBwcmVkaWN0ZWRfcHJvYnMpXG5hdWNfdmFsdWUgPC0gYXVjKHJvY19vYmopXG5wbG90KHJvY19vYmosIGNvbCA9IFwiYmx1ZVwiLCBtYWluID0gXCJST0MgQ3VydmUgZm9yIExvZ2lzdGljIFJlZ3Jlc3Npb25cIilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJwUk9DXCIpXG5cbnByZWRpY3RlZF9wcm9icyA8LSBwcmVkaWN0KGxvZ190ZXN0LCB0eXBlID0gXCJyZXNwb25zZVwiKVxuXG5yb2Nfb2JqIDwtIHJvYyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSRyZW5ldywgcHJlZGljdGVkX3Byb2JzKVxuYXVjX3ZhbHVlIDwtIGF1Yyhyb2Nfb2JqKVxucGxvdChyb2Nfb2JqLCBjb2wgPSBcImJsdWVcIiwgbWFpbiA9IFwiUk9DIEN1cnZlIGZvciBMb2dpc3RpYyBSZWdyZXNzaW9uXCIpXG5gYGAifQ== -->
+<pre class="r"><code>pacman::p_load(&quot;pROC&quot;)
+
+predicted_probs &lt;- predict(log_test, type = &quot;response&quot;)
+
+roc_obj &lt;- roc(subscription_churn_data$renew, predicted_probs)
+auc_value &lt;- auc(roc_obj)
+plot(roc_obj, col = &quot;blue&quot;, main = &quot;ROC Curve for Logistic Regression&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjSEpwYm5Rb1lYVmpYM1poYkhWbEtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxucHJpbnQoYXVjX3ZhbHVlKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoYXVjX3ZhbHVlKVxuYGBgIn0= -->
+<pre class="r"><code>print(auc_value)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<table>
+<caption>AUC Value Interpretation</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>AUC Value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.5</td>
+<td>Using the logistic regression model is equivalent to randomly
+guessing</td>
+</tr>
+<tr class="even">
+<td>0.6 - 0.7</td>
+<td>Poor discrimination of the classes</td>
+</tr>
+<tr class="odd">
+<td>0.7 - 0.8</td>
+<td>Acceptable discrimination of the classes (fair)</td>
+</tr>
+<tr class="even">
+<td>0.8 - 0.9</td>
+<td>Good discrimination</td>
+</tr>
+<tr class="odd">
+<td>0.9 - 1.0</td>
+<td>Excellent discrimination</td>
+</tr>
+</tbody>
+</table>
+<p>An AUC of 0.7167 indicates that the model has an acceptable ability
+to discriminate between the two classes.</p>
+</div>
+</div>
+<div id="diagnostic-eda" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Diagnostic EDA</h1>
+<p>Diagnostic EDA is performed to validate that the regression
+assumptions are true with respect to the statistical test. Validating
+the regression assumption in turn ensures that the statistical tests
+applied are appropriate for the data and helps to prevent incorrect
+conclusions.</p>
+<div id="test-of-linearity" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Test of
+Linearity</h2>
+<p>The test of linearity is necessary given that linearity is one of the
+key assumptions of statistical tests of regression and verifying it is
+crucial for ensuring the validity of the model’s estimates and
+predictions.</p>
+<p><strong>Component-Plus-Residual (Partial-Residual) Plots</strong></p>
+<p>Logistic regression assumes that the relationship between the
+log-odds of the outcome and the continuous predictors is linear. A
+log-odds is the natural logarithm of the odds of an event occurring.</p>
+<p>If <em>p</em> is the probability of an event (where 0 &lt; <em>p</em>
+&lt; 1), the odds of the event occuring is the ratio of the probability
+that the event occurs to the probability that the event does not occur,
+i.e., <span class="math inline">\(\frac{p}{1 - p}\)</span> and the
+log-odds (computed using the logit function) of the event, <em>p</em>,
+is:</p>
+<p><span class="math display">\[ \text{logit}(p) =
+\ln\left(\frac{p}{1-p}\right) \]</span></p>
+<p>A roughly straight line indicates the “log-odds - predictor”
+linearity assumption is met.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmpZWEpjSWlsY2JseHVZM0pRYkc5MGN5aHNiMmRmZEdWemRDbGNibHh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiY2FyXCIpXG5cbmNyUGxvdHMobG9nX3Rlc3QpXG5cbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJjYXJcIilcblxuY3JQbG90cyhsb2dfdGVzdClcblxuYGBgIn0= -->
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+
+crPlots(log_test)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="test-of-independence-of-errors-autocorrelation"
+class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> <u><strong>Test of
+Independence of Errors (Autocorrelation)</strong></u></h2>
+<p>This test is necessary to confirm that each observation is
+independent of the other. It helps to identify
+<strong>autocorrelation</strong> that is introduced when the data is
+collected over a close period of time or when one observation is related
+to another observation. Autocorrelation leads to underestimated standard
+errors and inflated test statistics. It can also make findings appear
+more significant than they actually are.</p>
+<p>The “<strong>Durbin-Watson Test</strong>” can be used as a test of
+independence of errors (test of autocorrelation). A Durbin-Watson
+statistic close to 2 suggests no autocorrelation, while values
+approaching 0 or 4 indicate positive or negative autocorrelation,
+respectively.</p>
+<ul>
+<li><p>The null hypothesis, H<sub>0</sub>, is that there is no
+autocorrelation</p></li>
+<li><p>The alternative hypothesis, H<sub>a</sub>, is that there is
+autocorrelation</p></li>
+</ul>
+<p>If the p-value of the Durbin-Watson statistic is greater than 0.05
+then there is no evidence to reject the null hypothesis that “there is
+no autocorrelation”. The results below show a p-value of 0.1573,
+therefore, the test of independence of errors around the regression line
+passes.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSnNiWFJsYzNSY0lpbGNibVIzZEdWemRDaHNiMmRmZEdWemRDbGNibUJnWUNKOSAtLT5cblxuYGBgclxucGFjbWFuOjpwX2xvYWQoXCJsbXRlc3RcIilcbmR3dGVzdChsb2dfdGVzdClcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJsbXRlc3RcIilcbmR3dGVzdChsb2dfdGVzdClcbmBgYCJ9 -->
+<pre class="r"><code>pacman::p_load(&quot;lmtest&quot;)
+dwtest(log_test)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="test-of-normality" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Test of
+Normality</h2>
+<p>Logistic regression does not assume normality of residuals or
+predictors.</p>
+</div>
+<div id="test-of-homoscedasticity" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Test of
+Homoscedasticity</h2>
+<p>The test of homoscedasticity is not relevant for logistic
+regression.</p>
+</div>
+<div id="test-of-multicollinearity" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Test of
+Multicollinearity</h2>
+<p>Multicollinearity arises when two or more independent variables
+(predictors) are highly intercorrelated. The <strong>Variance Inflation
+Factor (VIF)</strong> quantifies how much the variance of a coefficient
+estimate is “inflated” due to multicollinearity. A VIF of 1 indicates no
+collinearity; values above 5 suggest problematic levels of collinearity.
+High VIF values (VIF &gt; 5) suggest that the coefficient estimates are
+less reliable due to the correlations between predictors.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmpZWEpjSWlsY2JtTmhjam82ZG1sbUtHeHZaMTkwWlhOMEtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxucGFjbWFuOjpwX2xvYWQoXCJjYXJcIilcbmNhcjo6dmlmKGxvZ190ZXN0KVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJjYXJcIilcbmNhcjo6dmlmKGxvZ190ZXN0KVxuYGBgIn0= -->
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+car::vif(log_test)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="test-of-outliers" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Test of Outliers</h2>
+<p>The <code>influencePlot()</code> function in R combines 3 key
+diagnostic measures into a single plot to identify influential
+observations.</p>
+<p>The plot displays:</p>
+<ul>
+<li><p>Y-axis: Studentized residuals (standardized residuals adjusted
+for leverage). This measures “outlierness” in the outcome
+variable.</p></li>
+<li><p>X-axis: Leverage (hat values), measuring how “unusual” an
+observation is in terms of its predictor values.</p></li>
+<li><p>Bubble size: Cook’s distance, quantifying the influence of each
+observation on the model coefficients.</p></li>
+</ul>
+<p>Top-left/bottom-left:</p>
+<ul>
+<li><p>Indicates observations with high residuals but low leverage:
+Outliers in the outcome but not predictors.</p></li>
+<li><p>Possible next step: Investigate the observations for
+misclassified outcomes.</p></li>
+</ul>
+<p>Top-right/bottom-right:</p>
+<ul>
+<li><p>Indicates high residuals and high leverage: Influential outliers
+that distort the model.</p></li>
+<li><p>Possible next step: These are the most problematic observations.
+You need to check if they are valid data points or errors.</p></li>
+</ul>
+<p>Middle-right:</p>
+<ul>
+<li><p>High leverage but residuals near 0: Unusual predictor values but
+well-predicted outcomes.</p></li>
+<li><p>Possible next step: These observations are generally safe to
+keep.</p></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjR0ZqYldGdU9qcHdYMnh2WVdRb1hDSmpZWEpjSWlsY2JseHVhVzVtYkhWbGJtTmxVR3h2ZENoc2IyZGZkR1Z6ZEN3Z1hHNGdJQ0FnSUNBZ0lDQWdJQ0FnSUdsa0lEMGdiR2x6ZENodUlEMGdOU2tzSUNBaklFeGhZbVZzSUhSdmNDQTFJR2x1Wm14MVpXNTBhV0ZzSUhCdmFXNTBjMXh1SUNBZ0lDQWdJQ0FnSUNBZ0lDQnRZV2x1SUQwZ1hDSkpibVpzZFdWdVkyVWdVR3h2ZEZ3aUxGeHVJQ0FnSUNBZ0lDQWdJQ0FnSUNCemRXSWdQU0JjSWtOcGNtTnNaU0J6YVhwbElEMGdRMjl2YXlkeklFUnBjM1JoYm1ObFhDSXBYRzVnWUdBaWZRPT0gLS0+XG5cbmBgYHJcbnBhY21hbjo6cF9sb2FkKFwiY2FyXCIpXG5cbmluZmx1ZW5jZVBsb3QobG9nX3Rlc3QsIFxuICAgICAgICAgICAgICBpZCA9IGxpc3QobiA9IDUpLCAgIyBMYWJlbCB0b3AgNSBpbmZsdWVudGlhbCBwb2ludHNcbiAgICAgICAgICAgICAgbWFpbiA9IFwiSW5mbHVlbmNlIFBsb3RcIixcbiAgICAgICAgICAgICAgc3ViID0gXCJDaXJjbGUgc2l6ZSA9IENvb2sncyBEaXN0YW5jZVwiKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGFjbWFuOjpwX2xvYWQoXCJjYXJcIilcblxuaW5mbHVlbmNlUGxvdChsb2dfdGVzdCwgXG4gICAgICAgICAgICAgIGlkID0gbGlzdChuID0gNSksICAjIExhYmVsIHRvcCA1IGluZmx1ZW50aWFsIHBvaW50c1xuICAgICAgICAgICAgICBtYWluID0gXCJJbmZsdWVuY2UgUGxvdFwiLFxuICAgICAgICAgICAgICBzdWIgPSBcIkNpcmNsZSBzaXplID0gQ29vaydzIERpc3RhbmNlXCIpXG5gYGAifQ== -->
+<pre class="r"><code>pacman::p_load(&quot;car&quot;)
+
+influencePlot(log_test, 
+              id = list(n = 5),  # Label top 5 influential points
+              main = &quot;Influence Plot&quot;,
+              sub = &quot;Circle size = Cook&#39;s Distance&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The influential outliers can then be:</p>
+<ol style="list-style-type: decimal">
+<li><p>Corrected for data entry errors, e.g., an age of 240
+years</p></li>
+<li><p>Deleted so that the statistical test can be run again without
+them</p></li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhVzVtYkhWbGJuUnBZV3hmY0c5cGJuUnpJRHd0SUdGekxtNTFiV1Z5YVdNb2NtOTNMbTVoYldWektHbHVabXgxWlc1alpWQnNiM1FvYkc5blgzUmxjM1FwS1NsY2JseHVjM1ZpYzJOeWFYQjBhVzl1WDJOb2RYSnVYMlJoZEdGZmFXNW1iQ0E4TFNCemRXSnpZM0pwY0hScGIyNWZZMmgxY201ZlpHRjBZVnRwYm1ac2RXVnVkR2xoYkY5d2IybHVkSE1zSUYxY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5pbmZsdWVudGlhbF9wb2ludHMgPC0gYXMubnVtZXJpYyhyb3cubmFtZXMoaW5mbHVlbmNlUGxvdChsb2dfdGVzdCkpKVxuXG5zdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9pbmZsIDwtIHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW2luZmx1ZW50aWFsX3BvaW50cywgXVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaW5mbHVlbnRpYWxfcG9pbnRzIDwtIGFzLm51bWVyaWMocm93Lm5hbWVzKGluZmx1ZW5jZVBsb3QobG9nX3Rlc3QpKSlcblxuc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFfaW5mbCA8LSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVtpbmZsdWVudGlhbF9wb2ludHMsIF1cbmBgYCJ9 -->
+<pre class="r"><code>influential_points &lt;- as.numeric(row.names(influencePlot(log_test)))
+
+subscription_churn_data_infl &lt;- subscription_churn_data[influential_points, ]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Print the observation numbers that have been identified as
+influential outliers</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjSEpwYm5Rb2FXNW1iSFZsYm5ScFlXeGZjRzlwYm5SektWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxucHJpbnQoaW5mbHVlbnRpYWxfcG9pbnRzKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJpbnQoaW5mbHVlbnRpYWxfcG9pbnRzKVxuYGBgIn0= -->
+<pre class="r"><code>print(influential_points)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Print the influential observations’ predictor and outcome values.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR1ZoWkNoemRXSnpZM0pwY0hScGIyNWZZMmgxY201ZlpHRjBZVjlwYm1ac0tWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxuaGVhZChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9pbmZsKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGVhZChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YV9pbmZsKVxuYGBgIn0= -->
+<pre class="r"><code>head(subscription_churn_data_infl)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="interpretation-of-the-results" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Interpretation of the
+Results</h1>
+<div id="academic-statement" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Academic
+Statement</h2>
+<p>A logistic regression analysis was conducted on data (N = 1,000) to
+examine whether monthly subscription fee paid by a customer, the
+customer’s age, and the number of support calls the customer made in the
+last month predicted the subscription renewal, where renew was coded 1
+for subscription renewal and 0 for subscription cancellation.</p>
+<p>Subtracting the residual deviance (906.19 on 996 df) from the null
+deviance (1,017.22 on 999 df) gave a <span
+class="math inline">\(\chi^2\)</span>(3, N = 1,000) = 111.03, <em>p</em>
+&lt; .001, thus showing that the model was statistically significant
+compared to the null model. The set of predictors reliably distinguished
+between renewals and cancellations.</p>
+<p>The results are reported in the table below:</p>
+<table>
+<caption>Regression Coefficients Predicting Renewal from Multiple
+Customer Features</caption>
+<colgroup>
+<col width="33%" />
+<col width="12%" />
+<col width="24%" />
+<col width="8%" />
+<col width="9%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Predictor</th>
+<th align="center"><span class="math inline">\(\beta\)</span></th>
+<th align="center">95% CI</th>
+<th align="center">SE</th>
+<th align="center"><em>z</em></th>
+<th align="center"><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">(Intercept)</td>
+<td align="center">-0.94</td>
+<td align="center"><span class="math display">\[-2.02,
+0.12\]</span></td>
+<td align="center">0.55</td>
+<td align="center">-1.73</td>
+<td align="center">0.085</td>
+</tr>
+<tr class="even">
+<td align="center">Monthly Fee</td>
+<td align="center">-0.04</td>
+<td align="center"><span class="math display">\[-0.06,
+-0.03\]</span></td>
+<td align="center">0.01</td>
+<td align="center">-4.88</td>
+<td align="center">&lt; .001</td>
+</tr>
+<tr class="odd">
+<td align="center">Customer’s Age</td>
+<td align="center">0.03</td>
+<td align="center"><span class="math display">\[0.01, 0.04\]</span></td>
+<td align="center">0.01</td>
+<td align="center">3.09</td>
+<td align="center">.002</td>
+</tr>
+<tr class="even">
+<td align="center">Number of Support Calls</td>
+<td align="center">0.70</td>
+<td align="center"><span class="math display">\[0.54, 0.86\]</span></td>
+<td align="center">0.08</td>
+<td align="center">8.56</td>
+<td align="center">&lt; .001</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Note.</em></strong> N = 1,000; SE = standard error;
+CI = confidence interval.</p>
+<p><strong>Predictor Effects</strong></p>
+<ul>
+<li><p>The monthly fee (<span class="math inline">\(\beta\)</span> =
+-0.04, 95% CI <span class="math display">\[-0.06, -0.03\]</span>, SE =
+0.01, <em>z</em> = -4.88, <em>p</em> &lt; .001) was the first predictor.
+For every unit increase in monthly fees, the odds of renewal decrease by
+4% (<em>OR</em> = 0.96, 95% CI <span class="math display">\[0.94,
+0.97\]</span>, p&lt; .001).</p></li>
+<li><p>The customer age (<span class="math inline">\(\beta\)</span> =
+0.03, 95% CI <span class="math display">\[0.01, 0.04\]</span>, SE =
+0.01, <em>z</em> = 3.09, <em>p</em> = .002). For every unit increase in
+the customer’s age, the odds of renewal increased by 3% (<em>OR</em> =
+1.03, 95% CI <span class="math display">\[1.01, 1.04\]</span>,
+<em>p</em> = .002).</p></li>
+<li><p>The number of support calls (<span
+class="math inline">\(\beta\)</span> = 0.70, 95% CI <span
+class="math display">\[0.54, 0.86\]</span>, SE = 0.08, <em>z</em> =
+8.56, <em>p</em> &lt; .001). For every unit increase in the number of
+support calls, the odds of renewal increased by 101% (<em>OR</em> =
+2.01, 95% CI <span class="math display">\[1.72, 2.36\]</span>,
+<em>p</em> &lt; .001)</p></li>
+<li><p>The intercept term was not statistically significant (<span
+class="math inline">\(\beta\)</span> = -0.94, 95 % CI <span
+class="math display">\[-2.02, 0.12\]</span>, SE = 0.55, <em>z</em> =
+-1.73, <em>p</em> = 0.085) thus indicating no significant baseline odds
+of renewal when all predictors are zero.</p></li>
+</ul>
+</div>
+<div id="business-analysis" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Business
+Analysis</h2>
+<p>Key insights:</p>
+<ol style="list-style-type: decimal">
+<li><p>Monthly Fee:</p>
+<ul>
+<li><p>Finding: Higher monthly fees significantly reduce renewal odds
+(−4% per unit increase in monthly fee).</p></li>
+<li><p>Implication: Customers are price-sensitive; fee hikes risk
+cancellations.</p></li>
+<li><p>Recommendation: Avoid aggressive fee increases. Consider small,
+incremental fee adjustments for high-value customers.</p></li>
+</ul></li>
+<li><p>Customer Age:</p>
+<ul>
+<li><p>Finding: Older customers are more likely to renew (+3% odds per
+year of age).</p></li>
+<li><p>Implication: Younger customers may need targeted retention
+efforts.</p></li>
+<li><p>Recommendation: Launch engagement campaigns, e.g., personalized
+offers</p></li>
+</ul></li>
+<li><p>Support Calls:</p>
+<ul>
+<li><p>Finding: Each support call doubles renewal odds (+101% per unit
+increase in support calls).</p></li>
+<li><p>Implication: Proactive customer support drives loyalty and
+retention.</p></li>
+<li><p>Recommendations:</p>
+<ul>
+<li><p>Train customer care officers to resolve issues fully and to
+anticipate needs, e.g., follow-up calls after ticket closure</p></li>
+<li><p>Avoid over-reliance on support calls: High call volumes may
+indicate unresolved product issues.</p></li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="limitations" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Limitations</h2>
+<ol style="list-style-type: decimal">
+<li><p>Logistic regression performs poorly with small datasets or rare
+events (e.g., very few cancellations). Renewal rates are imbalanced,
+79.4% renewals, therefore, the coefficient estimates could be
+biased.</p></li>
+<li><p>Assumes no clustering (e.g., multiple subscriptions per customer)
+or autocorrelation (e.g., time-series trends).</p></li>
+<li><p>Stakeholders may struggle to interpret deviance or AIC
+values.</p></li>
+<li><p>Support Call Paradox: While <code>support_calls</code> had a
+strong positive effect, excessive calls could signal dissatisfaction
+(which is not captured by the model).</p></li>
+</ol>
+<!-- rnb-text-end -->
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxvZ2lzdGljIFJlZ3Jlc3Npb24iDQphdXRob3I6ICJBbGxhbiBPbW9uZGkiDQpkYXRlOiAiYHIgU3lzLkRhdGUoKWAiDQpvdXRwdXQ6DQogIHBkZl9kb2N1bWVudDogDQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA1DQogICAgZmlnX2hlaWdodDogNQ0KICAgIGZpZ19jcm9wOiBmYWxzZQ0KICAgIGtlZXBfdGV4OiB0cnVlDQogICAgbGF0ZXhfZW5naW5lOiB4ZWxhdGV4DQogIHdvcmRfZG9jdW1lbnQ6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA1DQogICAga2VlcF9tZDogdHJ1ZQ0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogdHJ1ZQ0KICAgIHRvY19kZXB0aDogNA0KICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQ0KICAgIGZpZ193aWR0aDogNA0KICAgIGZpZ19oZWlnaHQ6IDQNCiAgICBzZWxmX2NvbnRhaW5lZDogZmFsc2UNCiAgICBrZWVwX21kOiB0cnVlDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB0cnVlDQogICAgdG9jX2RlcHRoOiA0DQogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlDQogICAgZmlnX3dpZHRoOiA0DQogICAgc2VsZl9jb250YWluZWQ6IGZhbHNlDQotLS0NCg0KYGBge3Igc2V0dXBfY2h1bmssIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQppZiAoISJwYWNtYW4iICVpbiUgaW5zdGFsbGVkLnBhY2thZ2VzKClbLCAiUGFja2FnZSJdKSB7DQogIGluc3RhbGwucGFja2FnZXMoInBhY21hbiIsIGRlcGVuZGVuY2llcyA9IFRSVUUpDQogIGxpYnJhcnkoInBhY21hbiIsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCn0NCg0KcGFjbWFuOjpwX2xvYWQoImhlcmUiKQ0KDQprbml0cjo6b3B0c19rbml0JHNldChyb290LmRpciA9IGhlcmU6OmhlcmUoKSkNCmBgYA0KDQojIExvYWQgdGhlIERhdGFzZXQNCg0KVGhlIHN5bnRoZXRpYyBzdWJzY3JpcHRpb24gY2h1cm4gZGF0YXNldCBjb250YWlucyAxLDAwMCBvYnNlcnZhdGlvbnMgYW5kIGZvdXIgdmFyaWFibGVzOg0KDQoxLiAgKiptb250aGx5X2ZlZToqKiBUaGUgbW9udGhseSBzdWJzY3JpcHRpb24gZmVlIHBhaWQgYnkgdGhlIGN1c3RvbWVyDQoNCjIuICAqKmN1c3RvbWVyX2FnZToqKiBUaGUgYWdlIG9mIHRoZSBjdXN0b21lciBpbiB5ZWFycy4NCg0KMy4gICoqc3VwcG9ydF9jYWxsczoqKiBUaGUgbnVtYmVyIG9mIHN1cHBvcnQgY2FsbHMgdGhlIGN1c3RvbWVyIG1hZGUgaW4gdGhlIGxhc3QgbW9udGgNCg0KNC4gICoqcmVuZXc6KiogVGhpcyBpcyB0aGUgb3V0Y29tZSAoZGVwZW5kZW50KSB2YXJpYWJsZSAoMeKArz3igK9jdXN0b21lciB3aWxsIG5vdCBjYW5jZWw7IDDigK894oCvY3VzdG9tZXIgd2lsbCBjYW5jZWwpDQoNCmBgYHtyIGxvYWRfZGF0YXNldCwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoInJlYWRyIikNCg0Kc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEgPC0gDQogIHJlYWRfY3N2KCJkYXRhL3N1YnNjcmlwdGlvbl9jaHVybi5jc3YiLCBjb2xfdHlwZXMgPSBjb2xzKA0KICAgIG1vbnRobHlfZmVlID0gY29sX2RvdWJsZSgpLA0KICAgIGN1c3RvbWVyX2FnZSA9IGNvbF9kb3VibGUoKSwNCiAgICBzdXBwb3J0X2NhbGxzID0gY29sX2ludGVnZXIoKSwNCiAgICByZW5ldyA9IGNvbF9mYWN0b3IobGV2ZWxzID0gYygiMSIsICIwIikpDQogICAgKQ0KICApDQoNCmhlYWQoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpDQpgYGANCg0KIyBJbml0aWFsIEVEQQ0KDQpbKipWaWV3IHRoZSBEaW1lbnNpb25zKipdey51bmRlcmxpbmV9DQoNClRoZSBudW1iZXIgb2Ygb2JzZXJ2YXRpb25zIGFuZCB0aGUgbnVtYmVyIG9mIHZhcmlhYmxlcy4NCg0KYGBge3Igc2hvd19kaW1lbnNpb25zLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpkaW0oc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpDQpgYGANCg0KWyoqVmlldyB0aGUgRGF0YSBUeXBlcyoqXXsudW5kZXJsaW5lfQ0KDQpgYGB7ciBzaG93X2RhdGFfdHlwZXNfMSwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0Kc2FwcGx5KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhLCBjbGFzcykNCmBgYA0KDQpgYGB7ciBzaG93X2RhdGFfdHlwZXNfMiwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0Kc3RyKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKQ0KYGBgDQoNClsqKkRlc2NyaXB0aXZlIFN0YXRpc3RpY3MqKl17LnVuZGVybGluZX0NCg0KIyMgTWVhc3VyZXMgb2YgRnJlcXVlbmN5DQoNCjc5LjQlIGNvbnRpbnVlIHRoZWlyIHN1YnNjcmlwdGlvbiBhbmQgMjAuNiUgY2FuY2VsbGVkIHRoZWlyIHN1YnNjcmlwdGlvbi4gSXQgaXMgbm90IGJhbGFuY2VkLg0KDQpgYGB7ciBmcmVxdWVuY3ksIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnN1YnNjcmlwdGlvbl9jaHVybl9kYXRhX2ZyZXEgPC0gc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEkcmVuZXcNCmNiaW5kKGZyZXF1ZW5jeSA9IHRhYmxlKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhX2ZyZXEpLA0KICAgICAgcGVyY2VudGFnZSA9IHByb3AudGFibGUodGFibGUoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFfZnJlcSkpICogMTAwKQ0KDQpgYGANCg0KIyMgTWVhc3VyZXMgb2YgQ2VudHJhbCBUZW5kZW5jeQ0KDQpUaGUgbWVkaWFuIGFuZCB0aGUgbWVhbiBvZiBlYWNoIG51bWVyaWMgdmFyaWFibGU6DQoNCmBgYHtyIGNlbnRyYWxfdGVuZGVuY3ksIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnN1bW1hcnkoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpDQpgYGANCg0KIyMgTWVhc3VyZXMgb2YgRGlzdHJpYnV0aW9uDQoNCk1lYXN1cmluZyB0aGUgdmFyaWFiaWxpdHkgaW4gdGhlIGRhdGFzZXQgaXMgaW1wb3J0YW50IGJlY2F1c2UgdGhlIGFtb3VudCBvZiB2YXJpYWJpbGl0eSBkZXRlcm1pbmVzICoqaG93IHdlbGwgeW91IGNhbiBnZW5lcmFsaXplKiogcmVzdWx0cyBmcm9tIHRoZSBzYW1wbGUgdG8gYSBuZXcgb2JzZXJ2YXRpb24gaW4gdGhlIHBvcHVsYXRpb24uDQoNCkxvdyB2YXJpYWJpbGl0eSBpcyBpZGVhbCBiZWNhdXNlIGl0IG1lYW5zIHRoYXQgeW91IGNhbiBiZXR0ZXIgcHJlZGljdCBpbmZvcm1hdGlvbiBhYm91dCB0aGUgcG9wdWxhdGlvbiBiYXNlZCBvbiB0aGUgc2FtcGxlIGRhdGEuIEhpZ2ggdmFyaWFiaWxpdHkgbWVhbnMgdGhhdCB0aGUgdmFsdWVzIGFyZSBsZXNzIGNvbnNpc3RlbnQsIHRodXMgbWFraW5nIGl0IGhhcmRlciB0byBtYWtlIHByZWRpY3Rpb25zLg0KDQojIyMgVmFyaWFuY2UNCg0KYGBge3IgZGlzdHJpYnV0aW9uX3ZhcmlhbmNlLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpzYXBwbHkoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbLCAxOjNdLCB2YXIpDQpgYGANCg0KIyMjIFN0YW5kYXJkIERldmlhdGlvbg0KDQpgYGB7ciBkaXN0cmlidXRpb25fc3RhbmRhcmRfZGV2aWF0aW9uLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpzYXBwbHkoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbLCAxOjNdLCBzZCkNCmBgYA0KDQojIyMgS3VydG9zaXMNCg0KVGhlIEt1cnRvc2lzIGluZm9ybXMgdXMgb2YgaG93IG9mdGVuIG91dGxpZXJzIG9jY3VyIGluIHRoZSByZXN1bHRzLiBUaGVyZSBhcmUgZGlmZmVyZW50IGZvcm11bGFzIGZvciBjYWxjdWxhdGluZyBrdXJ0b3Npcy4gU3BlY2lmeWluZyDigJx0eXBlID0gMuKAnSBhbGxvd3MgdXMgdG8gdXNlIHRoZSAybmQgZm9ybXVsYSB3aGljaCBpcyB0aGUgc2FtZSBrdXJ0b3NpcyBmb3JtdWxhIHVzZWQgaW4gb3RoZXIgc3RhdGlzdGljYWwgc29mdHdhcmUgbGlrZSBTUFNTIGFuZCBTQVMuDQoNCkluIOKAnHR5cGUgPSAy4oCdICh1c2VkIGluIFNQU1MgYW5kIFNBUyk6DQoNCjEuICBLdXJ0b3NpcyBcPCAzIGltcGxpZXMgYSBsb3cgbnVtYmVyIG9mIG91dGxpZXJzDQoNCjIuICBLdXJ0b3NpcyA9IDMgaW1wbGllcyBhIG1lZGl1bSBudW1iZXIgb2Ygb3V0bGllcnMNCg0KMy4gIEt1cnRvc2lzIFw+IDMgaW1wbGllcyBhIGhpZ2ggbnVtYmVyIG9mIG91dGxpZXJzDQoNCmBgYHtyIGRpc3RyaWJ1dGlvbl9rdXJ0b3NpcywgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImUxMDcxIikNCnNhcHBseShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVssXSwgIGt1cnRvc2lzLCB0eXBlID0gMikNCmBgYA0KDQojIyMgU2tld25lc3MNCg0KVGhlIHNrZXduZXNzIGlzIHVzZWQgdG8gaWRlbnRpZnkgdGhlIGFzeW1tZXRyeSBvZiB0aGUgZGlzdHJpYnV0aW9uIG9mIHJlc3VsdHMuIFNpbWlsYXIgdG8ga3VydG9zaXMsIHRoZXJlIGFyZSBzZXZlcmFsIHdheXMgb2YgY29tcHV0aW5nIHRoZSBza2V3bmVzcy4NCg0KVXNpbmcg4oCcdHlwZSA9IDLigJ0gKGNvbW1vbiBpbiBvdGhlciBzdGF0aXN0aWNhbCBzb2Z0d2FyZSBsaWtlIFNQU1MgYW5kIFNBUykgY2FuIGJlIGludGVycHJldGVkIGFzOg0KDQoxLiAgU2tld25lc3MgYmV0d2VlbiAtMC40IGFuZCAwLjQgKGluY2x1c2l2ZSkgaW1wbGllcyB0aGF0IHRoZXJlIGlzIG5vIHNrZXcgaW4gdGhlIGRpc3RyaWJ1dGlvbiBvZiByZXN1bHRzOyB0aGUgZGlzdHJpYnV0aW9uIG9mIHJlc3VsdHMgaXMgc3ltbWV0cmljYWw7IGl0IGlzIGEgbm9ybWFsIGRpc3RyaWJ1dGlvbjsgYSBHYXVzc2lhbiBkaXN0cmlidXRpb24uDQoNCjIuICBTa2V3bmVzcyBhYm92ZSAwLjQgaW1wbGllcyBhIHBvc2l0aXZlIHNrZXc7IGEgcmlnaHQtc2tld2VkIGRpc3RyaWJ1dGlvbi4NCg0KMy4gIFNrZXduZXNzIGJlbG93IC0wLjQgaW1wbGllcyBhIG5lZ2F0aXZlIHNrZXc7IGEgbGVmdC1za2V3ZWQgZGlzdHJpYnV0aW9uLg0KDQpgYGB7ciBkaXN0cmlidXRpb25fc2tld25lc3MsIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnNhcHBseShzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVssXSwgc2tld25lc3MsIHR5cGUgPSAyKQ0KYGBgDQoNCiMjIE1lYXN1cmVzIG9mIFJlbGF0aW9uc2hpcA0KDQojIyMgQ292YXJpYW5jZQ0KDQpDb3ZhcmlhbmNlIGlzIGEgc3RhdGlzdGljYWwgbWVhc3VyZSB0aGF0IGluZGljYXRlcyB0aGUgZGlyZWN0aW9uIG9mIHRoZSBsaW5lYXIgcmVsYXRpb25zaGlwIGJldHdlZW4gdHdvIHZhcmlhYmxlcy4gSXQgYXNzZXNzZXMgd2hldGhlciBpbmNyZWFzZXMgaW4gb25lIHZhcmlhYmxlIGNvcnJlc3BvbmQgdG8gaW5jcmVhc2VzIG9yIGRlY3JlYXNlcyBpbiBhbm90aGVyLuKAiw0KDQotICoqUG9zaXRpdmUgQ292YXJpYW5jZToqKiBXaGVuIG9uZSB2YXJpYWJsZSBpbmNyZWFzZXMsIHRoZSBvdGhlciB0ZW5kcyB0byBpbmNyZWFzZSBhcyB3ZWxsLg0KDQotICoqTmVnYXRpdmUgQ292YXJpYW5jZToqKiBXaGVuIG9uZSB2YXJpYWJsZSBpbmNyZWFzZXMsIHRoZSBvdGhlciB0ZW5kcyB0byBkZWNyZWFzZS4NCg0KLSAqKlplcm8gQ292YXJpYW5jZToqKiBObyBsaW5lYXIgcmVsYXRpb25zaGlwIGV4aXN0cyBiZXR3ZWVuIHRoZSB2YXJpYWJsZXMuDQoNCldoaWxlIGNvdmFyaWFuY2UgaW5kaWNhdGVzIHRoZSBkaXJlY3Rpb24gb2YgYSByZWxhdGlvbnNoaXAsIGl0IGRvZXMgbm90IGNvbnZleSB0aGUgc3RyZW5ndGggb3IgY29uc2lzdGVuY3kgb2YgdGhlIHJlbGF0aW9uc2hpcC4gVGhlIGNvcnJlbGF0aW9uIGNvZWZmaWNpZW50IGlzIHVzZWQgdG8gaW5kaWNhdGUgdGhlIHN0cmVuZ3RoIG9mIHRoZSByZWxhdGlvbnNoaXAuDQoNCmBgYHtyIGRpc3RyaWJ1dGlvbl9jb3ZhcmlhbmNlLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpjb3Yoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbLDE6M10sIG1ldGhvZCA9ICJzcGVhcm1hbiIpDQpgYGANCg0KIyMjIENvcnJlbGF0aW9uDQoNCkEgc3Ryb25nIGNvcnJlbGF0aW9uIGJldHdlZW4gdmFyaWFibGVzIGVuYWJsZXMgdXMgdG8gYmV0dGVyIHByZWRpY3QgdGhlIHZhbHVlIG9mIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgdXNpbmcgdGhlIHZhbHVlIG9mIHRoZSBpbmRlcGVuZGVudCB2YXJpYWJsZS4gSG93ZXZlciwgYSB3ZWFrIGNvcnJlbGF0aW9uIGJldHdlZW4gdHdvIHZhcmlhYmxlcyBkb2VzIG5vdCBoZWxwIHVzIHRvIHByZWRpY3QgdGhlIHZhbHVlIG9mIHRoZSBkZXBlbmRlbnQgdmFyaWFibGUgZnJvbSB0aGUgdmFsdWUgb2YgdGhlIGluZGVwZW5kZW50IHZhcmlhYmxlLiBUaGlzIGlzIHVzZWZ1bCBvbmx5IGlmIHRoZXJlIGlzIGEgbGluZWFyIGFzc29jaWF0aW9uIGJldHdlZW4gdGhlIHZhcmlhYmxlcy4NCg0KV2UgY2FuIG1lYXN1cmUgdGhlIHN0YXRpc3RpY2FsIHNpZ25pZmljYW5jZSBvZiB0aGUgY29ycmVsYXRpb24gdXNpbmcgU3BlYXJtYW4ncyByYW5rIGNvcnJlbGF0aW9uICpyaG8qLiBUaGlzIHNob3dzIHVzIGlmIHRoZSB2YXJpYWJsZXMgYXJlIHNpZ25pZmljYW50bHkgbW9ub3RvbmljYWxseSByZWxhdGVkLiBBIG1vbm90b25pYyByZWxhdGlvbnNoaXAgYmV0d2VlbiB0d28gdmFyaWFibGVzIGltcGxpZXMgdGhhdCBhcyBvbmUgdmFyaWFibGUgaW5jcmVhc2VzLCB0aGUgb3RoZXIgdmFyaWFibGUgZWl0aGVyIGNvbnNpc3RlbnRseSBpbmNyZWFzZXMgb3IgY29uc2lzdGVudGx5IGRlY3JlYXNlcy4gVGhlIGtleSBjaGFyYWN0ZXJpc3RpYyBpcyB0aGUgcHJlc2VydmF0aW9uIG9mIHRoZSBkaXJlY3Rpb24gb2YgY2hhbmdlLCB0aG91Z2ggdGhlIHJhdGUgb2YgY2hhbmdlIG1heSB2YXJ5Lg0KDQpUbyB2aWV3IHRoZSBjb3JyZWxhdGlvbiBvZiBhbGwgdmFyaWFibGVzIGF0IHRoZSBzYW1lIHRpbWUNCg0KYGBge3IgZGlzdHJpYnV0aW9uX2NvcnJlbGF0aW9uXzIsIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmNvcihzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVssMTozXSwgbWV0aG9kID0gInNwZWFybWFuIikNCmBgYA0KDQojIyBCYXNpYyBWaXN1YWxpemF0aW9ucw0KDQojIyMgSGlzdG9ncmFtDQoNCmBgYHtyIHZpc3VhbGl6YXRpb25faGlzdG9ncmFtLCBlY2hvPVRSVUUsIGZpZy53aWR0aD01LCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFyKG1mcm93ID0gYygxLCAyKSkNCmZvciAoaSBpbiAxOjQpIHsNCiAgaWYgKGlzLm51bWVyaWMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbW2ldXSkpIHsNCiAgICBoaXN0KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhW1tpXV0sDQogICAgICAgICBtYWluID0gbmFtZXMoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEpW2ldLA0KICAgICAgICAgeGxhYiA9IG5hbWVzKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVtpXSkNCiAgfSBlbHNlIHsNCiAgICBtZXNzYWdlKHBhc3RlKCJDb2x1bW4iLCBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0sDQogICAgICAgICAgICAgICAgICAiaXMgbm90IG51bWVyaWMgYW5kIHdpbGwgYmUgc2tpcHBlZC4iKSkNCiAgfQ0KfQ0KYGBgDQoNCiMjIyBCb3ggYW5kIFdoaXNrZXIgUGxvdA0KDQpgYGB7ciB2aXN1YWxpemF0aW9uX2JveHBsb3QsIGVjaG89VFJVRSwgZmlnLndpZHRoPTUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpwYXIobWZyb3cgPSBjKDEsIDIpKQ0KZm9yIChpIGluIDE6NCkgew0KICBpZiAoaXMubnVtZXJpYyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVtbaV1dKSkgew0KICAgIGJveHBsb3Qoc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFbW2ldXSwgbWFpbiA9IG5hbWVzKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhKVtpXSkNCiAgfSBlbHNlIHsNCiAgICBtZXNzYWdlKHBhc3RlKCJDb2x1bW4iLCBuYW1lcyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSlbaV0sDQogICAgICAgICAgICAgICAgICAiaXMgbm90IG51bWVyaWMgYW5kIHdpbGwgYmUgc2tpcHBlZC4iKSkNCiAgfQ0KfQ0KYGBgDQoNCiMjIyBNaXNzaW5nIERhdGEgUGxvdA0KDQpgYGB7ciBtaXNzaW5nX2RhdGFfcGxvdCwgZWNobz1UUlVFLCBmaWcud2lkdGg9NSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnBhY21hbjo6cF9sb2FkKCJBbWVsaWEiKQ0KDQptaXNzbWFwKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhLCBjb2wgPSBjKCJyZWQiLCAiZ3JleSIpLCBsZWdlbmQgPSBUUlVFKQ0KYGBgDQoNCiMjIyBDb3JyZWxhdGlvbiBQbG90DQoNCmBgYHtyIGNvcnJlbGF0aW9uX3Bsb3QsIGVjaG89VFJVRSwgZmlnLndpZHRoPTUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpwYWNtYW46OnBfbG9hZCgiZ2djb3JycGxvdCIpDQoNCmdnY29ycnBsb3QoY29yKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhWywxOjNdKSkNCmBgYA0KDQojIyMgU2NhdHRlciBQbG90DQoNCmBgYHtyIHNjYXR0ZXJfcGxvdF8xLCBlY2hvPVRSVUUsIGZpZy53aWR0aD01LCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImNvcnJwbG90IikNCg0KcGFpcnMocmVuZXcgfiAuLCBkYXRhID0gc3Vic2NyaXB0aW9uX2NodXJuX2RhdGEsIGNvbCA9IHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhJHJlbmV3KQ0KYGBgDQoNCmBgYHtyIHNjYXR0ZXJfcGxvdF8yLCBlY2hvPVRSVUUsIGZpZy53aWR0aD01LCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImdncGxvdDIiKQ0KZ2dwbG90KHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhLA0KICAgICAgIGFlcyh4ID0gY3VzdG9tZXJfYWdlLCB5ID0gbW9udGhseV9mZWUpKSArIA0KICBnZW9tX3BvaW50KCkgKw0KICBnZW9tX3Ntb290aChtZXRob2QgPSBsbSkgKw0KICBsYWJzKA0KICAgIHRpdGxlID0gIlJlbGF0aW9uc2hpcCBiZXR3ZWVuIE1vbnRobHkgRmVlIGFuZCBcbkN1c3RvbWVyIEFnZSIsDQogICAgeCA9ICJDdXN0b21lciBBZ2UiLA0KICAgIHkgPSAiTW9udGhseSBGZWUiDQogICkNCmBgYA0KDQpgYGB7ciBzY2F0dGVyX3Bsb3RfMywgZWNobz1UUlVFLCBmaWcud2lkdGg9NSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnBhY21hbjo6cF9sb2FkKCJnZ3Bsb3QyIikNCmdncGxvdChzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSwNCiAgICAgICBhZXMoeCA9IGN1c3RvbWVyX2FnZSwgeSA9IG1vbnRobHlfZmVlLCBjb2xvciA9IHJlbmV3KSkgKyANCiAgZ2VvbV9wb2ludCgpICsNCiAgZ2VvbV9zbW9vdGgobWV0aG9kID0gbG0pICsNCiAgbGFicygNCiAgICB0aXRsZSA9ICJSZWxhdGlvbnNoaXAgYmV0d2VlbiBNb250aGx5IEZlZSBhbmQgXG5DdXN0b21lciBBZ2UgZm9yIEVhY2ggUmVuZXdhbCBTdGF0dXMiLA0KICAgIHggPSAiQ3VzdG9tZXIgQWdlIiwNCiAgICB5ID0gIk1vbnRobHkgRmVlIiwNCiAgICBjb2xvciA9ICJSZW5ld2FsIFN0YXR1cyINCiAgKSArDQogIHNjYWxlX2NvbG9yX2Rpc2NyZXRlKA0KICAgIGxhYmVscyA9IGMoIjEiID0gIlJlbmV3ZWQgU3Vic2NyaXB0aW9uIiwgIjAiID0gIkNhbmNlbGxlZCBTdWJzY3JpcHRpb24iKQ0KICApICsgDQogIHRoZW1lX21pbmltYWwoKSAgIyBPcHRpb25hbDogYWRkcyBhIGNsZWFuZXIgdGhlbWUNCmBgYA0KDQojIFN0YXRpc3RpY2FsIFRlc3QNCg0KV2UgdGhlbiBhcHBseSBhIGxvZ2lzdGljIHJlZ3Jlc3Npb24gYXMgYSBzdGF0aXN0aWNhbCB0ZXN0IGZvciByZWdyZXNzaW9uLg0KDQpgYGB7ciBzdGF0aXN0aWNhbF90ZXN0X1NMUiwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KbG9nX3Rlc3QgPC0gZ2xtKHJlbmV3IH4gbW9udGhseV9mZWUgKyBjdXN0b21lcl9hZ2UgKyBzdXBwb3J0X2NhbGxzLA0KICAgICAgICAgICAgICAgICMgVGhpcyBzcGVjaWZpZXMgdGhhdCB0aGUgZ2VuZXJhbGl6ZWQgbGluZWFyIG1vZGVsIHRvIHVzZQ0KICAgICAgICAgICAgICAgICMgaXMgbG9naXN0aWMgcmVncmVzc2lvbg0KICAgICAgICAgICAgICAgIGZhbWlseSA9IGJpbm9taWFsLA0KICAgICAgICAgICAgICAgIGRhdGEgPSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSkNCmBgYA0KDQpWaWV3IHRoZSBzdW1tYXJ5IG9mIHRoZSBtb2RlbC4NCg0KYGBge3Igc3RhdGlzdGljYWxfdGVzdF9pbnRlcnByZXRhdGlvbiwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0Kc3VtbWFyeShsb2dfdGVzdCkNCmBgYA0KDQpUaGUgbG9naXN0aWMgcmVncmVzc2lvbiBlcXVhdGlvbiBpcyBpbiB0aGUgZm9sbG93aW5nIGZvcm06DQoNCiQkXHRleHR7bG9nLW9kZHMocmVuZXcpfSA9IFxiZXRhXzAgKyBcYmV0YV8xIFxjZG90IGZlZSArIFxiZXRhXzIgXGNkb3QgYWdlICsgXGJldGFfMyBcY2RvdCBjYWxscyQkDQoNClBsdWdnaW5nIGluIHRoZSBjb2VmZmljaWVudHMgZnJvbSB0aGUgb3V0cHV0IGdpdmVzOg0KDQokJFx0ZXh0e2xvZy1vZGRzKHJlbmV3KX0gPSAtMC45NDE3NzggKyAtMC4wNDM1NjMgXGNkb3QgZmVlICsgMC4wMjYxMTAgXGNkb3QgYWdlICsgMC42OTc3OTUgXGNkb3QgY2FsbHMkJA0KDQpUaGUgbG9nLW9kZHMgaXMgdGhlbiBjb252ZXJ0ZWQgaW50byBhIHByb2JhYmlsaXR5IHVzaW5nIHRoZSBsb2dpc3RpYyBmdW5jdGlvbiBhczoNCg0KJCRQKFx0ZXh0e3JlbmV3ID0gMX0pID0gXGZyYWN7MX17MStlXnstXHRleHR7bG9nLW9kZHN9fX0kJA0KDQotIElmIFAocmVuZXc9MSniiaUwLjUsIHByZWRpY3QgcmVuZXdhbCBvZiBzdWJzY3JpcHRpb24oMSkuDQoNCi0gSWYgUChyZW5ldz0xKVw8MC41LCBwcmVkaWN0IGNhbmNlbGxhdGlvbiBvZiBzdWJzY3JpcHRpb24gKDApLg0KDQpGb3IgZXhhbXBsZSwgYSBtb250aGx5IGZlZSBvZiA1MCwgY3VzdG9tZXIgYWdlIG9mIDYyLCBhbmQgMyBzdXBwb3J0IGNhbGxzIGluIHRoZSBwYXN0IG1vbnRoIGlzIHByb2JhYmx5IGdvaW5nIHRvIHJlbmV3IHRoZWlyIHN1YnNjcmlwdGlvbjoNCg0KYGBge3Igc2FtcGxlX3ByZWRpY3Rpb25fYSwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KY29lZnMgPC0gY29lZihsb2dfdGVzdCkNCmxvZ19vZGRzICAgPC0gY29lZnNbIihJbnRlcmNlcHQpIl0gKyANCiAgY29lZnNbIm1vbnRobHlfZmVlIl0gKiA1MCArDQogIGNvZWZzWyJjdXN0b21lcl9hZ2UiXSAqIDYyICsNCiAgY29lZnNbInN1cHBvcnRfY2FsbHMiXSAqIDMNCg0KcF9tYW51YWwgPC0gMSAvICgxICsgZXhwKC1sb2dfb2RkcykpDQoNCnByaW50KHBfbWFudWFsKQ0KDQpgYGANCg0KRm9yIGV4YW1wbGUsIGEgbW9udGhseSBmZWUgb2YgNTAsIGN1c3RvbWVyIGFnZSBvZiAyMSwgYW5kIDMgc3VwcG9ydCBjYWxscyBpbiB0aGUgcGFzdCBtb250aCBpcyBwcm9iYWJseSBnb2luZyB0byBjYW5jZWwgdGhlaXIgc3Vic2NyaXB0aW9uOg0KDQpgYGB7ciBzYW1wbGVfcHJlZGljdGlvbl9iLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpjb2VmcyA8LSBjb2VmKGxvZ190ZXN0KQ0KbG9nX29kZHMgICA8LSBjb2Vmc1siKEludGVyY2VwdCkiXSArIA0KICBjb2Vmc1sibW9udGhseV9mZWUiXSAqIDUwICsNCiAgY29lZnNbImN1c3RvbWVyX2FnZSJdICogMjEgKw0KICBjb2Vmc1sic3VwcG9ydF9jYWxscyJdICogMw0KDQpwX21hbnVhbCA8LSAxIC8gKDEgKyBleHAoLWxvZ19vZGRzKSkNCg0KcHJpbnQocF9tYW51YWwpDQpgYGANCg0KIyMgVGhlICRcY2hpXjIkIFN0YXRpc3RpYyBhbmQgaXRzIHAtVmFsdWUNCg0KVG8gb2J0YWluIHRoZSBwLXZhbHVlIG9mIHRoZSAkXGNoaV4yJCBzdGF0aXN0aWM6DQoNCmBgYHtyIHBfdmFsdWVfb2ZfY2hpXzIsIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCiMgY2hpXzIgPC0gbG9nX3Rlc3QkbnVsbC5kZXZpYW5jZS8xIC0gbG9nX3Rlc3QkcmVzaWR1YWxzDQpjaGlfMiA8LSAxMDE3LjIyIC0gOTA2LjE5DQoNCnByaW50KGNoaV8yKQ0KDQojIFRvIGdldCB0aGUgZGVncmVlcyBvZiBmcmVlZG9tOg0KY2FsY3VsYXRlZF9kZiA9IGxlbmd0aChjb2VmKGxvZ190ZXN0KSkgLSAxICAjIFN1YnRyYWN0IDEgZm9yIGludGVyY2VwdA0KDQoNCnAgPC0gMSAtIHBjaGlzcShjaGlfMiwgZGYgPSBjYWxjdWxhdGVkX2RmKQ0KIyB0byBmb3JtYXQgYXMgYSBzY2llbnRpZmljIG5vdGF0aW9uIHdpdGggZm91ciBkaWdpdHMgYWZ0ZXIgdGhlIGRlY2ltYWwgcGxhY2UNCiMgc3ByaW50ZigiJS40ZSIsIHApDQpmb3JtYXQucHZhbChwLCBlcHMgPSAuTWFjaGluZSRkb3VibGUuZXBzLCBkaWdpdHMgPSAyKQ0KYGBgDQoNCiMjIDk1JSBDb25maWRlbmNlIEludGVydmFsIG9mIHRoZSBQYXJhbWV0ZXJzDQoNClRvIG9idGFpbiBhIDk1JSBjb25maWRlbmNlIGludGVydmFsIGZvciB0aGUgcGFyYW1ldGVyczoNCg0KYGBge3IgOTVfY29uZmlkZW5jZV9pbnRlcnZhbCwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KY29uZmludChsb2dfdGVzdCwgbGV2ZWwgPSAwLjk1KQ0KYGBgDQoNCiMjIE9kZHMgUmF0aW8NCg0KRXhwb25lbnRpYXRpbmcgdGhlIGNvZWZmaWNpZW50cyB5aWVsZHMgb2RkcyByYXRpb3MsIHdoaWNoIHF1YW50aWZ5IHRoZSBtdWx0aXBsaWNhdGl2ZSBjaGFuZ2UgaW4gb2RkcyBmb3IgYSBvbmXigJF1bml0IGluY3JlYXNlIGluIHRoZSBwcmVkaWN0b3IuDQoNCmBgYHtyIG9kZHNfcmF0aW8sIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCmV4cChjb2VmKGxvZ190ZXN0KSkNCmBgYA0KDQojIyMgOTUlIENvbmZpZGVuY2UgSW50ZXJ2YWwgZm9yIHRoZSBPZGRzIFJhdGlvDQoNClRvIG9idGFpbiBhIDk1JSBjb25maWRlbmNlIGludGVydmFsIGZvciB0aGUgT2RkcyBSYXRpbzoNCg0KYGBge3IgOTVfY29uZmlkZW5jZV9pbnRlcnZhbF9PUiwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImRwbHlyIikNCmNvbmZpbnQobG9nX3Rlc3QpICU+JSBleHAoKQ0KYGBgDQoNCiMjIEFrYWlrZSBJbmZvcm1hdGlvbiBDcml0ZXJpb24gKEFJQykNCg0KQUlDIHNwZWNpZmllcyBob3cgd2VsbCBhIG1vZGVsIGZpdHMgdGhlIGRhdGEgZnJvbSB3aGljaCBpdCB3YXMgZ2VuZXJhdGVkLiBUaGUgQUlDIHZhbHVlIGlzIGNhbGN1bGF0ZWQgdXNpbmcgdGhlIG51bWJlciBvZiBwcmVkaWN0b3IgdmFyaWFibGVzIGFuZCBhbHNvIHRoZSBlc3RpbWF0ZSBvZiB0aGUgbWF4aW11bSBsaWtlbGlob29kIG9mIHRoZSBtb2RlbC4gQUlDIHBlbmFsaXplcyBjb21wbGV4aXR5LCB0aGVyZWZvcmUsIGFueSBtb2RlbCB3aXRoIGEgbGVzc2VyIEFJQyB2YWx1ZSBpcyBhIG1vcmUgc2lnbmlmaWNhbnQgbW9kZWwuIEEgbG93ZXIgQUlDIHZhbHVlIG1lYW5zIHRoZSBjb21wbGV4aXR5IG9mIHRoZSBtb2RlbCBpcyBsb3dlciBhbmQgdGhlIG1vZGVsIGJldHRlciBleHBsYWlucyB0aGUgdmFyaWF0aW9ucy4gVGhlIG1vZGVsJ3MgQUlDIHZhbHVlIG9mIDkxNC4xOSBjYW4gYmUgY29tcGFyZWQgd2l0aCB0aGUgQUlDIHZhbHVlIG9mIGFsdGVybmF0aXZlIG1vZGVscywgZS5nLiwgYSBsb2dpc3RpYyByZWdyZXNzaW9uIHRoYXQgaGFzIGRyb3BwZWQgb25lIG9mIHRoZSBvcmlnaW5hbCBwcmVkaWN0b3JzLg0KDQojIyBNY0ZhZGRlbuKAmXMgUHNldWRvIFJeMl4NCg0KTG9naXN0aWMgcmVncmVzc2lvbiBkb2VzIG5vdCB1c2UgdGhlIHRyYWRpdGlvbmFsIFLCsiwgYnV0IHdlIGNhbiBjb21wdXRlIGEgKipwc2V1ZG8tUsKyKiogKE1jRmFkZGVu4oCZcykgYXMgZm9sbG93czoNCg0KYGBge3IgbWNmYWRkZW5zX3BzZXVkb19SMiwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcHNldWRvX3IyIDwtIDEgLSAobG9nX3Rlc3QkZGV2aWFuY2UgLyBsb2dfdGVzdCRudWxsLmRldmlhbmNlKQ0KcHJpbnQocHNldWRvX3IyKQ0KYGBgDQoNCkEgTWNGYWRkZW4ncyBwc2V1ZG8tUl4yXiBvZiAwLjEwOSBzdWdnZXN0cyB0aGF0IHRoZSBwcmVkaWN0b3JzIGV4cGxhaW4gYXBwcm94aW1hdGVseSAxMC45MSUgb2YgdGhlIHZhcmlhbmNlIGluIHRoZSBvdXRjb21lLiBwc2V1ZG8tUl4yXiBcPiAwLjIgYXJlIGNvbnNpZGVyZWQgc3Ryb25nIGluIGxvZ2lzdGljIHJlZ3Jlc3Npb24uDQoNCiMjIEZpc2hlciBTY29yaW5nIEl0ZXJhdGlvbnMNCg0KVGhlcmUgd2VyZSA0IEZpc2hlciBzY29yaW5nIGl0ZXJhdGlvbnMgd2hpY2ggaW5kaWNhdGVzIHRoYXQgdGhlIGZpdHRpbmcgcm91dGluZSByZXF1aXJlZCBmb3VyIGl0ZXJhdGl2ZSB1cGRhdGVzIHRvIHJlYWNoIGNvbnZlcmdlbmNlLiBBIHNtYWxsIG51bWJlciAoXDwgMTApIHN1Z2dlc3RzIHRoYXQgdGhlIGFsZ29yaXRobSBmb3VuZCB0aGUgbWF4aW11bS1saWtlbGlob29kIGVzdGltYXRlcyBlZmZpY2llbnRseSB3aXRob3V0IGNvbnZlcmdlbmNlIHdhcm5pbmdzLg0KDQojIyBNb2RlbCBGaXQgTWV0cmljcw0KDQpUaGUgUk9DIEN1cnZlIGFuZCB0aGUgQVVDIGdpdmVzIGluc2lnaHQgaW50byBob3cgd2VsbCB0aGUgbG9naXN0aWMgcmVncmVzc2lvbiBtb2RlbCBkaXN0aW5ndWlzaGVzIGJldHdlZW4gdGhlIHR3byBvdXRjb21lIGNsYXNzZXMgKDEgPSByZW5ldyBhbmQgMCA9IGNhbmNlbCkuDQoNCi0gVGhlIHgtYXhpcyBzaG93cyB0aGUgRmFsc2UgUG9zaXRpdmUgUmF0ZSAoRlBSKSwgb3Igc3BlY2lmaWNpdHkuDQoNCi0gVGhlIHktYXhpcyBzaG93cyB0aGUgVHJ1ZSBQb3NpdGl2ZSBSYXRlIChUUFIpLCBvciBzZW5zaXRpdml0eS4NCg0KLSBUaGUgY3VydmUgc2hvd3MgaG93IFRQUiBhbmQgRlBSIGNoYW5nZSBhcyB0aGUgZGVjaXNpb24gdGhyZXNob2xkIGNoYW5nZXMgZnJvbSAwIHRvIDEuDQoNCi0gQSBjdXJ2ZSBjbG9zZXIgdG8gdGhlIHRvcC1sZWZ0IGNvcm5lciBpbmRpY2F0ZXMgYmV0dGVyIG1vZGVsIHBlcmZvcm1hbmNlLg0KDQpgYGB7ciBtb2RlbF9maXRfYSwgZWNobz1UUlVFLCBmaWcud2lkdGg9NSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnBhY21hbjo6cF9sb2FkKCJwUk9DIikNCg0KcHJlZGljdGVkX3Byb2JzIDwtIHByZWRpY3QobG9nX3Rlc3QsIHR5cGUgPSAicmVzcG9uc2UiKQ0KDQpyb2Nfb2JqIDwtIHJvYyhzdWJzY3JpcHRpb25fY2h1cm5fZGF0YSRyZW5ldywgcHJlZGljdGVkX3Byb2JzKQ0KYXVjX3ZhbHVlIDwtIGF1Yyhyb2Nfb2JqKQ0KcGxvdChyb2Nfb2JqLCBjb2wgPSAiYmx1ZSIsIG1haW4gPSAiUk9DIEN1cnZlIGZvciBMb2dpc3RpYyBSZWdyZXNzaW9uIikNCmBgYA0KDQpgYGB7ciBtb2RlbF9maXRfYiwgZWNobz1UUlVFLCBmaWcud2lkdGg9NSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnByaW50KGF1Y192YWx1ZSkNCmBgYA0KDQp8IEFVQyBWYWx1ZSB8IEludGVycHJldGF0aW9uIHwNCnwtLS0tfC0tLS18DQp8IDAuNSB8IFVzaW5nIHRoZSBsb2dpc3RpYyByZWdyZXNzaW9uIG1vZGVsIGlzIGVxdWl2YWxlbnQgdG8gcmFuZG9tbHkgZ3Vlc3NpbmcgfA0KfCAwLjYgLSAwLjcgfCBQb29yIGRpc2NyaW1pbmF0aW9uIG9mIHRoZSBjbGFzc2VzIHwNCnwgMC43IC0gMC44IHwgQWNjZXB0YWJsZSBkaXNjcmltaW5hdGlvbiBvZiB0aGUgY2xhc3NlcyAoZmFpcikgfA0KfCAwLjggLSAwLjkgfCBHb29kIGRpc2NyaW1pbmF0aW9uIHwNCnwgMC45IC0gMS4wIHwgRXhjZWxsZW50IGRpc2NyaW1pbmF0aW9uIHwNCg0KOiBBVUMgVmFsdWUgSW50ZXJwcmV0YXRpb24NCg0KQW4gQVVDIG9mIDAuNzE2NyBpbmRpY2F0ZXMgdGhhdCB0aGUgbW9kZWwgaGFzIGFuIGFjY2VwdGFibGUgYWJpbGl0eSB0byBkaXNjcmltaW5hdGUgYmV0d2VlbiB0aGUgdHdvIGNsYXNzZXMuDQoNCiMgRGlhZ25vc3RpYyBFREENCg0KRGlhZ25vc3RpYyBFREEgaXMgcGVyZm9ybWVkIHRvIHZhbGlkYXRlIHRoYXQgdGhlIHJlZ3Jlc3Npb24gYXNzdW1wdGlvbnMgYXJlIHRydWUgd2l0aCByZXNwZWN0IHRvIHRoZSBzdGF0aXN0aWNhbCB0ZXN0LiBWYWxpZGF0aW5nIHRoZSByZWdyZXNzaW9uIGFzc3VtcHRpb24gaW4gdHVybiBlbnN1cmVzIHRoYXQgdGhlIHN0YXRpc3RpY2FsIHRlc3RzIGFwcGxpZWQgYXJlIGFwcHJvcHJpYXRlIGZvciB0aGUgZGF0YSBhbmQgaGVscHMgdG8gcHJldmVudCBpbmNvcnJlY3QgY29uY2x1c2lvbnMuDQoNCiMjIFRlc3Qgb2YgTGluZWFyaXR5DQoNClRoZSB0ZXN0IG9mIGxpbmVhcml0eSBpcyBuZWNlc3NhcnkgZ2l2ZW4gdGhhdCBsaW5lYXJpdHkgaXMgb25lIG9mIHRoZSBrZXkgYXNzdW1wdGlvbnMgb2Ygc3RhdGlzdGljYWwgdGVzdHMgb2YgcmVncmVzc2lvbiBhbmQgdmVyaWZ5aW5nIGl0IGlzIGNydWNpYWwgZm9yIGVuc3VyaW5nIHRoZSB2YWxpZGl0eSBvZiB0aGUgbW9kZWwncyBlc3RpbWF0ZXMgYW5kIHByZWRpY3Rpb25zLg0KDQoqKkNvbXBvbmVudC1QbHVzLVJlc2lkdWFsIChQYXJ0aWFsLVJlc2lkdWFsKSBQbG90cyoqDQoNCkxvZ2lzdGljIHJlZ3Jlc3Npb24gYXNzdW1lcyB0aGF0IHRoZSByZWxhdGlvbnNoaXAgYmV0d2VlbiB0aGUgbG9nLW9kZHMgb2YgdGhlIG91dGNvbWUgYW5kIHRoZSBjb250aW51b3VzIHByZWRpY3RvcnMgaXMgbGluZWFyLiBBIGxvZy1vZGRzIGlzIHRoZSBuYXR1cmFsIGxvZ2FyaXRobSBvZiB0aGUgb2RkcyBvZiBhbiBldmVudCBvY2N1cnJpbmcuDQoNCklmICpwKiBpcyB0aGUgcHJvYmFiaWxpdHkgb2YgYW4gZXZlbnQgKHdoZXJlIDAgXDwgKnAqIFw8IDEpLCB0aGUgb2RkcyBvZiB0aGUgZXZlbnQgb2NjdXJpbmcgaXMgdGhlIHJhdGlvIG9mIHRoZSBwcm9iYWJpbGl0eSB0aGF0IHRoZSBldmVudCBvY2N1cnMgdG8gdGhlIHByb2JhYmlsaXR5IHRoYXQgdGhlIGV2ZW50IGRvZXMgbm90IG9jY3VyLCBpLmUuLCAkXGZyYWN7cH17MSAtIHB9JCBhbmQgdGhlIGxvZy1vZGRzIChjb21wdXRlZCB1c2luZyB0aGUgbG9naXQgZnVuY3Rpb24pIG9mIHRoZSBldmVudCwgKnAqLCBpczoNCg0KJCQgXHRleHR7bG9naXR9KHApID0gXGxuXGxlZnQoXGZyYWN7cH17MS1wfVxyaWdodCkgJCQNCg0KQSByb3VnaGx5IHN0cmFpZ2h0IGxpbmUgaW5kaWNhdGVzIHRoZSAibG9nLW9kZHMgLSBwcmVkaWN0b3IiIGxpbmVhcml0eSBhc3N1bXB0aW9uIGlzIG1ldC4NCg0KYGBge3IgdGVzdF9vZl9saW5lYXJpdHksIGVjaG89VFJVRSwgZmlnLndpZHRoPTUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpwYWNtYW46OnBfbG9hZCgiY2FyIikNCg0KY3JQbG90cyhsb2dfdGVzdCkNCg0KYGBgDQoNCiMjIFsqKlRlc3Qgb2YgSW5kZXBlbmRlbmNlIG9mIEVycm9ycyAoQXV0b2NvcnJlbGF0aW9uKSoqXXsudW5kZXJsaW5lfQ0KDQpUaGlzIHRlc3QgaXMgbmVjZXNzYXJ5IHRvIGNvbmZpcm0gdGhhdCBlYWNoIG9ic2VydmF0aW9uIGlzIGluZGVwZW5kZW50IG9mIHRoZSBvdGhlci4gSXQgaGVscHMgdG8gaWRlbnRpZnkgKiphdXRvY29ycmVsYXRpb24qKiB0aGF0IGlzIGludHJvZHVjZWQgd2hlbiB0aGUgZGF0YSBpcyBjb2xsZWN0ZWQgb3ZlciBhIGNsb3NlIHBlcmlvZCBvZiB0aW1lIG9yIHdoZW4gb25lIG9ic2VydmF0aW9uIGlzIHJlbGF0ZWQgdG8gYW5vdGhlciBvYnNlcnZhdGlvbi4gQXV0b2NvcnJlbGF0aW9uIGxlYWRzIHRvIHVuZGVyZXN0aW1hdGVkIHN0YW5kYXJkIGVycm9ycyBhbmQgaW5mbGF0ZWQgdGVzdCBzdGF0aXN0aWNzLiBJdCBjYW4gYWxzbyBtYWtlIGZpbmRpbmdzIGFwcGVhciBtb3JlIHNpZ25pZmljYW50IHRoYW4gdGhleSBhY3R1YWxseSBhcmUuDQoNClRoZSAiKipEdXJiaW4tV2F0c29uIFRlc3QqKiIgY2FuIGJlIHVzZWQgYXMgYSB0ZXN0IG9mIGluZGVwZW5kZW5jZSBvZiBlcnJvcnMgKHRlc3Qgb2YgYXV0b2NvcnJlbGF0aW9uKS4gQSBEdXJiaW4tV2F0c29uIHN0YXRpc3RpYyBjbG9zZSB0byAyIHN1Z2dlc3RzIG5vIGF1dG9jb3JyZWxhdGlvbiwgd2hpbGUgdmFsdWVzIGFwcHJvYWNoaW5nIDAgb3IgNCBpbmRpY2F0ZSBwb3NpdGl2ZSBvciBuZWdhdGl2ZSBhdXRvY29ycmVsYXRpb24sIHJlc3BlY3RpdmVseS4NCg0KLSBUaGUgbnVsbCBoeXBvdGhlc2lzLCBIfjB+LCBpcyB0aGF0IHRoZXJlIGlzIG5vIGF1dG9jb3JyZWxhdGlvbg0KDQotIFRoZSBhbHRlcm5hdGl2ZSBoeXBvdGhlc2lzLCBIfmF+LCBpcyB0aGF0IHRoZXJlIGlzIGF1dG9jb3JyZWxhdGlvbg0KDQpJZiB0aGUgcC12YWx1ZSBvZiB0aGUgRHVyYmluLVdhdHNvbiBzdGF0aXN0aWMgaXMgZ3JlYXRlciB0aGFuIDAuMDUgdGhlbiB0aGVyZSBpcyBubyBldmlkZW5jZSB0byByZWplY3QgdGhlIG51bGwgaHlwb3RoZXNpcyB0aGF0ICJ0aGVyZSBpcyBubyBhdXRvY29ycmVsYXRpb24iLiBUaGUgcmVzdWx0cyBiZWxvdyBzaG93IGEgcC12YWx1ZSBvZiAwLjE1NzMsIHRoZXJlZm9yZSwgdGhlIHRlc3Qgb2YgaW5kZXBlbmRlbmNlIG9mIGVycm9ycyBhcm91bmQgdGhlIHJlZ3Jlc3Npb24gbGluZSBwYXNzZXMuDQoNCmBgYHtyIHRlc3Rfb2ZfaW5kZXBlbmRlbmNlX29mX2Vycm9ycywgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImxtdGVzdCIpDQpkd3Rlc3QobG9nX3Rlc3QpDQpgYGANCg0KIyMgVGVzdCBvZiBOb3JtYWxpdHkNCg0KTG9naXN0aWMgcmVncmVzc2lvbiBkb2VzIG5vdCBhc3N1bWUgbm9ybWFsaXR5IG9mIHJlc2lkdWFscyBvciBwcmVkaWN0b3JzLg0KDQojIyBUZXN0IG9mIEhvbW9zY2VkYXN0aWNpdHkNCg0KVGhlIHRlc3Qgb2YgaG9tb3NjZWRhc3RpY2l0eSBpcyBub3QgcmVsZXZhbnQgZm9yIGxvZ2lzdGljIHJlZ3Jlc3Npb24uDQoNCiMjIFRlc3Qgb2YgTXVsdGljb2xsaW5lYXJpdHkNCg0KTXVsdGljb2xsaW5lYXJpdHkgYXJpc2VzIHdoZW4gdHdvIG9yIG1vcmUgaW5kZXBlbmRlbnQgdmFyaWFibGVzIChwcmVkaWN0b3JzKSBhcmUgaGlnaGx5IGludGVyY29ycmVsYXRlZC4gVGhlICoqVmFyaWFuY2UgSW5mbGF0aW9uIEZhY3RvciAoVklGKSoqIHF1YW50aWZpZXMgaG93IG11Y2ggdGhlIHZhcmlhbmNlIG9mIGEgY29lZmZpY2llbnQgZXN0aW1hdGUgaXMg4oCcaW5mbGF0ZWTigJ0gZHVlIHRvIG11bHRpY29sbGluZWFyaXR5LiBBIFZJRiBvZiAxIGluZGljYXRlcyBubyBjb2xsaW5lYXJpdHk7IHZhbHVlcyBhYm92ZSA1IHN1Z2dlc3QgcHJvYmxlbWF0aWMgbGV2ZWxzIG9mIGNvbGxpbmVhcml0eS4gSGlnaCBWSUYgdmFsdWVzIChWSUYgXD4gNSkgc3VnZ2VzdCB0aGF0IHRoZSBjb2VmZmljaWVudCBlc3RpbWF0ZXMgYXJlIGxlc3MgcmVsaWFibGUgZHVlIHRvIHRoZSBjb3JyZWxhdGlvbnMgYmV0d2VlbiBwcmVkaWN0b3JzLg0KDQpgYGB7ciBtdWx0aWNvbGxpbmVhcml0eSwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KcGFjbWFuOjpwX2xvYWQoImNhciIpDQpjYXI6OnZpZihsb2dfdGVzdCkNCmBgYA0KDQojIyBUZXN0IG9mIE91dGxpZXJzDQoNClRoZSBgaW5mbHVlbmNlUGxvdCgpYCBmdW5jdGlvbiBpbiBSIGNvbWJpbmVzIDMga2V5IGRpYWdub3N0aWMgbWVhc3VyZXMgaW50byBhIHNpbmdsZSBwbG90IHRvIGlkZW50aWZ5IGluZmx1ZW50aWFsIG9ic2VydmF0aW9ucy4NCg0KVGhlIHBsb3QgZGlzcGxheXM6DQoNCi0gWS1heGlzOiBTdHVkZW50aXplZCByZXNpZHVhbHMgKHN0YW5kYXJkaXplZCByZXNpZHVhbHMgYWRqdXN0ZWQgZm9yIGxldmVyYWdlKS4gVGhpcyBtZWFzdXJlcyAib3V0bGllcm5lc3MiIGluIHRoZSBvdXRjb21lIHZhcmlhYmxlLg0KDQotIFgtYXhpczogTGV2ZXJhZ2UgKGhhdCB2YWx1ZXMpLCBtZWFzdXJpbmcgaG93ICJ1bnVzdWFsIiBhbiBvYnNlcnZhdGlvbiBpcyBpbiB0ZXJtcyBvZiBpdHMgcHJlZGljdG9yIHZhbHVlcy4NCg0KLSBCdWJibGUgc2l6ZTogQ29va+KAmXMgZGlzdGFuY2UsIHF1YW50aWZ5aW5nIHRoZSBpbmZsdWVuY2Ugb2YgZWFjaCBvYnNlcnZhdGlvbiBvbiB0aGUgbW9kZWwgY29lZmZpY2llbnRzLg0KDQpUb3AtbGVmdC9ib3R0b20tbGVmdDoNCg0KLSBJbmRpY2F0ZXMgb2JzZXJ2YXRpb25zIHdpdGggaGlnaCByZXNpZHVhbHMgYnV0IGxvdyBsZXZlcmFnZTogT3V0bGllcnMgaW4gdGhlIG91dGNvbWUgYnV0IG5vdCBwcmVkaWN0b3JzLg0KDQotIFBvc3NpYmxlIG5leHQgc3RlcDogSW52ZXN0aWdhdGUgdGhlIG9ic2VydmF0aW9ucyBmb3IgbWlzY2xhc3NpZmllZCBvdXRjb21lcy4NCg0KVG9wLXJpZ2h0L2JvdHRvbS1yaWdodDoNCg0KLSBJbmRpY2F0ZXMgaGlnaCByZXNpZHVhbHMgYW5kIGhpZ2ggbGV2ZXJhZ2U6IEluZmx1ZW50aWFsIG91dGxpZXJzIHRoYXQgZGlzdG9ydCB0aGUgbW9kZWwuDQoNCi0gUG9zc2libGUgbmV4dCBzdGVwOiBUaGVzZSBhcmUgdGhlIG1vc3QgcHJvYmxlbWF0aWMgb2JzZXJ2YXRpb25zLiBZb3UgbmVlZCB0byBjaGVjayBpZiB0aGV5IGFyZSB2YWxpZCBkYXRhIHBvaW50cyBvciBlcnJvcnMuDQoNCk1pZGRsZS1yaWdodDoNCg0KLSBIaWdoIGxldmVyYWdlIGJ1dCByZXNpZHVhbHMgbmVhciAwOiBVbnVzdWFsIHByZWRpY3RvciB2YWx1ZXMgYnV0IHdlbGwtcHJlZGljdGVkIG91dGNvbWVzLg0KDQotIFBvc3NpYmxlIG5leHQgc3RlcDogVGhlc2Ugb2JzZXJ2YXRpb25zIGFyZSBnZW5lcmFsbHkgc2FmZSB0byBrZWVwLg0KDQpgYGB7ciBvdXRsaWVyc19wbG90LCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpwYWNtYW46OnBfbG9hZCgiY2FyIikNCg0KaW5mbHVlbmNlUGxvdChsb2dfdGVzdCwgDQogICAgICAgICAgICAgIGlkID0gbGlzdChuID0gNSksICAjIExhYmVsIHRvcCA1IGluZmx1ZW50aWFsIHBvaW50cw0KICAgICAgICAgICAgICBtYWluID0gIkluZmx1ZW5jZSBQbG90IiwNCiAgICAgICAgICAgICAgc3ViID0gIkNpcmNsZSBzaXplID0gQ29vaydzIERpc3RhbmNlIikNCmBgYA0KDQpUaGUgaW5mbHVlbnRpYWwgb3V0bGllcnMgY2FuIHRoZW4gYmU6DQoNCjEuICBDb3JyZWN0ZWQgZm9yIGRhdGEgZW50cnkgZXJyb3JzLCBlLmcuLCBhbiBhZ2Ugb2YgMjQwIHllYXJzDQoNCjIuICBEZWxldGVkIHNvIHRoYXQgdGhlIHN0YXRpc3RpY2FsIHRlc3QgY2FuIGJlIHJ1biBhZ2FpbiB3aXRob3V0IHRoZW0NCg0KYGBge3Igb3V0bGllcnNfaW5mbHVlbmNlcnNfYSwgZWNobz1UUlVFLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KaW5mbHVlbnRpYWxfcG9pbnRzIDwtIGFzLm51bWVyaWMocm93Lm5hbWVzKGluZmx1ZW5jZVBsb3QobG9nX3Rlc3QpKSkNCg0Kc3Vic2NyaXB0aW9uX2NodXJuX2RhdGFfaW5mbCA8LSBzdWJzY3JpcHRpb25fY2h1cm5fZGF0YVtpbmZsdWVudGlhbF9wb2ludHMsIF0NCmBgYA0KDQpQcmludCB0aGUgb2JzZXJ2YXRpb24gbnVtYmVycyB0aGF0IGhhdmUgYmVlbiBpZGVudGlmaWVkIGFzIGluZmx1ZW50aWFsIG91dGxpZXJzDQoNCmBgYHtyIG91dGxpZXJzX2luZmx1ZW5jZXJzX2IsIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRSwgd2FybmluZz1GQUxTRX0NCnByaW50KGluZmx1ZW50aWFsX3BvaW50cykNCmBgYA0KDQpQcmludCB0aGUgaW5mbHVlbnRpYWwgb2JzZXJ2YXRpb25zJyBwcmVkaWN0b3IgYW5kIG91dGNvbWUgdmFsdWVzLg0KDQpgYGB7ciBvdXRsaWVyc19pbmZsdWVuY2Vyc19jLCBlY2hvPVRSVUUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpoZWFkKHN1YnNjcmlwdGlvbl9jaHVybl9kYXRhX2luZmwpDQpgYGANCg0KIyBJbnRlcnByZXRhdGlvbiBvZiB0aGUgUmVzdWx0cw0KDQojIyBBY2FkZW1pYyBTdGF0ZW1lbnQNCg0KQSBsb2dpc3RpYyByZWdyZXNzaW9uIGFuYWx5c2lzIHdhcyBjb25kdWN0ZWQgb24gZGF0YSAoTiA9IDEsMDAwKSB0byBleGFtaW5lIHdoZXRoZXIgbW9udGhseSBzdWJzY3JpcHRpb24gZmVlIHBhaWQgYnkgYSBjdXN0b21lciwgdGhlIGN1c3RvbWVyJ3MgYWdlLCBhbmQgdGhlIG51bWJlciBvZiBzdXBwb3J0IGNhbGxzIHRoZSBjdXN0b21lciBtYWRlIGluIHRoZSBsYXN0IG1vbnRoIHByZWRpY3RlZCB0aGUgc3Vic2NyaXB0aW9uIHJlbmV3YWwsIHdoZXJlIHJlbmV3IHdhcyBjb2RlZCAxIGZvciBzdWJzY3JpcHRpb24gcmVuZXdhbCBhbmQgMCBmb3Igc3Vic2NyaXB0aW9uIGNhbmNlbGxhdGlvbi4NCg0KU3VidHJhY3RpbmcgdGhlIHJlc2lkdWFsIGRldmlhbmNlICg5MDYuMTkgb24gOTk2IGRmKSBmcm9tIHRoZSBudWxsIGRldmlhbmNlICgxLDAxNy4yMiBvbiA5OTkgZGYpIGdhdmUgYSAkXGNoaV4yJCgzLCBOID0gMSwwMDApID0gMTExLjAzLCAqcCogXDwgLjAwMSwgdGh1cyBzaG93aW5nIHRoYXQgdGhlIG1vZGVsIHdhcyBzdGF0aXN0aWNhbGx5IHNpZ25pZmljYW50IGNvbXBhcmVkIHRvIHRoZSBudWxsIG1vZGVsLiBUaGUgc2V0IG9mIHByZWRpY3RvcnMgcmVsaWFibHkgZGlzdGluZ3Vpc2hlZCBiZXR3ZWVuIHJlbmV3YWxzIGFuZCBjYW5jZWxsYXRpb25zLg0KDQpUaGUgcmVzdWx0cyBhcmUgcmVwb3J0ZWQgaW4gdGhlIHRhYmxlIGJlbG93Og0KDQp8ICAgICAgICBQcmVkaWN0b3IgICAgICAgIHwgJFxiZXRhJCB8ICAgICAgOTUlIENJICAgICAgfCAgU0UgIHwgICp6KiAgfCAgICpwKiAgIHwNCnw6LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS06fDotLS0tLS0tOnw6LS0tLS0tLS0tLS0tLS0tLTp8Oi0tLS06fDotLS0tLTp8Oi0tLS0tLS06fA0KfCAgICAgICAoSW50ZXJjZXB0KSAgICAgICB8ICAtMC45NCAgfCBcWy0yLjAyLCAwLjEyXF0gIHwgMC41NSB8IC0xLjczIHwgIDAuMDg1ICB8DQp8ICAgICAgIE1vbnRobHkgRmVlICAgICAgIHwgIC0wLjA0ICB8IFxbLTAuMDYsIC0wLjAzXF0gfCAwLjAxIHwgLTQuODggfCBcPCAuMDAxIHwNCnwgICAgIEN1c3RvbWVyJ3MgQWdlICAgICAgfCAgMC4wMyAgIHwgIFxbMC4wMSwgMC4wNFxdICB8IDAuMDEgfCAzLjA5ICB8ICAuMDAyICAgfA0KfCBOdW1iZXIgb2YgU3VwcG9ydCBDYWxscyB8ICAwLjcwICAgfCAgXFswLjU0LCAwLjg2XF0gIHwgMC4wOCB8IDguNTYgIHwgXDwgLjAwMSB8DQoNCjogUmVncmVzc2lvbiBDb2VmZmljaWVudHMgUHJlZGljdGluZyBSZW5ld2FsIGZyb20gTXVsdGlwbGUgQ3VzdG9tZXIgRmVhdHVyZXMNCg0KKioqTm90ZS4qKiogTuKArz3igK8xLDAwMDsgU0XigK894oCvc3RhbmRhcmQgZXJyb3I7IENJ4oCvPeKAr2NvbmZpZGVuY2UgaW50ZXJ2YWwuDQoNCioqUHJlZGljdG9yIEVmZmVjdHMqKg0KDQotIFRoZSBtb250aGx5IGZlZSAoJFxiZXRhJCA9IC0wLjA0LCA5NSUgQ0kgXFstMC4wNiwgLTAuMDNcXSwgU0UgPSAwLjAxLCAqeiogPSAtNC44OCwgKnAqIFw8IC4wMDEpIHdhcyB0aGUgZmlyc3QgcHJlZGljdG9yLiBGb3IgZXZlcnkgdW5pdCBpbmNyZWFzZSBpbiBtb250aGx5IGZlZXMsIHRoZSBvZGRzIG9mIHJlbmV3YWwgZGVjcmVhc2UgYnkgNCUgKCpPUiogPSAwLjk2LCA5NSUgQ0kgXFswLjk0LCAwLjk3XF0sIHBcPCAuMDAxKS4NCg0KLSBUaGUgY3VzdG9tZXIgYWdlICgkXGJldGEkID0gMC4wMywgOTUlIENJIFxbMC4wMSwgMC4wNFxdLCBTRSA9IDAuMDEsICp6KiA9IDMuMDksICpwKiA9IC4wMDIpLiBGb3IgZXZlcnkgdW5pdCBpbmNyZWFzZSBpbiB0aGUgY3VzdG9tZXIncyBhZ2UsIHRoZSBvZGRzIG9mIHJlbmV3YWwgaW5jcmVhc2VkIGJ5IDMlICgqT1IqID0gMS4wMywgOTUlIENJIFxbMS4wMSwgMS4wNFxdLCAqcCogPSAuMDAyKS4NCg0KLSBUaGUgbnVtYmVyIG9mIHN1cHBvcnQgY2FsbHMgKCRcYmV0YSQgPSAwLjcwLCA5NSUgQ0kgXFswLjU0LCAwLjg2XF0sIFNFID0gMC4wOCwgKnoqID0gOC41NiwgKnAqIFw8IC4wMDEpLiBGb3IgZXZlcnkgdW5pdCBpbmNyZWFzZSBpbiB0aGUgbnVtYmVyIG9mIHN1cHBvcnQgY2FsbHMsIHRoZSBvZGRzIG9mIHJlbmV3YWwgaW5jcmVhc2VkIGJ5IDEwMSUgKCpPUiogPSAyLjAxLCA5NSUgQ0kgXFsxLjcyLCAyLjM2XF0sICpwKiBcPCAuMDAxKQ0KDQotIFRoZSBpbnRlcmNlcHQgdGVybSB3YXMgbm90IHN0YXRpc3RpY2FsbHkgc2lnbmlmaWNhbnQgKCRcYmV0YSQgPSAtMC45NCwgOTUgJSBDSSBcWy0yLjAyLCAwLjEyXF0sIFNFID0gMC41NSwgKnoqID0gLTEuNzMsICpwKiA9IDAuMDg1KSB0aHVzIGluZGljYXRpbmcgbm8gc2lnbmlmaWNhbnQgYmFzZWxpbmUgb2RkcyBvZiByZW5ld2FsIHdoZW4gYWxsIHByZWRpY3RvcnMgYXJlIHplcm8uDQoNCiMjIEJ1c2luZXNzIEFuYWx5c2lzDQoNCktleSBpbnNpZ2h0czoNCg0KMS4gIE1vbnRobHkgRmVlOg0KDQogICAgLSBGaW5kaW5nOiBIaWdoZXIgbW9udGhseSBmZWVzIHNpZ25pZmljYW50bHkgcmVkdWNlIHJlbmV3YWwgb2RkcyAo4oiSNCUgcGVyIHVuaXQgaW5jcmVhc2UgaW4gbW9udGhseSBmZWUpLg0KDQogICAgLSBJbXBsaWNhdGlvbjogQ3VzdG9tZXJzIGFyZSBwcmljZS1zZW5zaXRpdmU7IGZlZSBoaWtlcyByaXNrIGNhbmNlbGxhdGlvbnMuDQoNCiAgICAtIFJlY29tbWVuZGF0aW9uOiBBdm9pZCBhZ2dyZXNzaXZlIGZlZSBpbmNyZWFzZXMuIENvbnNpZGVyIHNtYWxsLCBpbmNyZW1lbnRhbCBmZWUgYWRqdXN0bWVudHMgZm9yIGhpZ2gtdmFsdWUgY3VzdG9tZXJzLg0KDQoyLiAgQ3VzdG9tZXIgQWdlOg0KDQogICAgLSBGaW5kaW5nOiBPbGRlciBjdXN0b21lcnMgYXJlIG1vcmUgbGlrZWx5IHRvIHJlbmV3ICgrMyUgb2RkcyBwZXIgeWVhciBvZiBhZ2UpLg0KDQogICAgLSBJbXBsaWNhdGlvbjogWW91bmdlciBjdXN0b21lcnMgbWF5IG5lZWQgdGFyZ2V0ZWQgcmV0ZW50aW9uIGVmZm9ydHMuDQoNCiAgICAtIFJlY29tbWVuZGF0aW9uOiBMYXVuY2ggZW5nYWdlbWVudCBjYW1wYWlnbnMsIGUuZy4sIHBlcnNvbmFsaXplZCBvZmZlcnMNCg0KMy4gIFN1cHBvcnQgQ2FsbHM6DQoNCiAgICAtIEZpbmRpbmc6IEVhY2ggc3VwcG9ydCBjYWxsIGRvdWJsZXMgcmVuZXdhbCBvZGRzICgrMTAxJSBwZXIgdW5pdCBpbmNyZWFzZSBpbiBzdXBwb3J0IGNhbGxzKS4NCg0KICAgIC0gSW1wbGljYXRpb246IFByb2FjdGl2ZSBjdXN0b21lciBzdXBwb3J0IGRyaXZlcyBsb3lhbHR5IGFuZCByZXRlbnRpb24uDQoNCiAgICAtIFJlY29tbWVuZGF0aW9uczoNCg0KICAgICAgLSBUcmFpbiBjdXN0b21lciBjYXJlIG9mZmljZXJzIHRvIHJlc29sdmUgaXNzdWVzIGZ1bGx5IGFuZCB0byBhbnRpY2lwYXRlIG5lZWRzLCBlLmcuLCBmb2xsb3ctdXAgY2FsbHMgYWZ0ZXIgdGlja2V0IGNsb3N1cmUNCg0KICAgICAgLSBBdm9pZCBvdmVyLXJlbGlhbmNlIG9uIHN1cHBvcnQgY2FsbHM6IEhpZ2ggY2FsbCB2b2x1bWVzIG1heSBpbmRpY2F0ZSB1bnJlc29sdmVkIHByb2R1Y3QgaXNzdWVzLg0KDQojIyBMaW1pdGF0aW9ucw0KDQoxLiAgTG9naXN0aWMgcmVncmVzc2lvbiBwZXJmb3JtcyBwb29ybHkgd2l0aCBzbWFsbCBkYXRhc2V0cyBvciByYXJlIGV2ZW50cyAoZS5nLiwgdmVyeSBmZXcgY2FuY2VsbGF0aW9ucykuIFJlbmV3YWwgcmF0ZXMgYXJlIGltYmFsYW5jZWQsIDc5LjQlIHJlbmV3YWxzLCB0aGVyZWZvcmUsIHRoZSBjb2VmZmljaWVudCBlc3RpbWF0ZXMgY291bGQgYmUgYmlhc2VkLg0KDQoyLiAgQXNzdW1lcyBubyBjbHVzdGVyaW5nIChlLmcuLCBtdWx0aXBsZSBzdWJzY3JpcHRpb25zIHBlciBjdXN0b21lcikgb3IgYXV0b2NvcnJlbGF0aW9uIChlLmcuLCB0aW1lLXNlcmllcyB0cmVuZHMpLg0KDQozLiAgU3Rha2Vob2xkZXJzIG1heSBzdHJ1Z2dsZSB0byBpbnRlcnByZXQgZGV2aWFuY2Ugb3IgQUlDIHZhbHVlcy4NCg0KNC4gIFN1cHBvcnQgQ2FsbCBQYXJhZG94OiBXaGlsZSBgc3VwcG9ydF9jYWxsc2AgaGFkIGEgc3Ryb25nIHBvc2l0aXZlIGVmZmVjdCwgZXhjZXNzaXZlIGNhbGxzIGNvdWxkIHNpZ25hbCBkaXNzYXRpc2ZhY3Rpb24gKHdoaWNoIGlzIG5vdCBjYXB0dXJlZCBieSB0aGUgbW9kZWwpLg0K</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+$(document).ready(function () {
+  $('.knitsql-table').addClass('kable-table');
+  var container = $('.kable-table');
+  container.each(function() {
+
+    // move the caption out of the table
+    var table = $(this).children('table');
+    var caption = table.children('caption').detach();
+    caption.insertBefore($(this)).css('display', 'inherit');
+  });
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("3_a_binary_logistic_regression.qmd");
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

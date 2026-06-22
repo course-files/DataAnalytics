@@ -1,6 +1,8 @@
 {
     "recommendations": [
         "reditorsupport.r",
-        "reditorsupport.r-syntax"
+        "reditorsupport.r-syntax",
+        "esbenp.prettier-vscode",
+        "davidanson.vscode-markdownlint"
     ]
 }

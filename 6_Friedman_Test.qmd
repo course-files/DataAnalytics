@@ -779,7 +779,7 @@ Average ranks (1 = lowest accuracy, 4 = highest accuracy, within each dataset) w
 Post hoc comparisons using the Nemenyi test (critical difference = 1.48 at α = .05) indicated that three of the six pairwise comparisons reached statistical significance:
 
 | Comparison | Rank Diff. | *z* | *p* (adj.) | Significant |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 | Logistic Regression vs. Random Forest | 1.80 | 3.12 | .010 | Yes |
 | Logistic Regression vs. SVM | 0.60 | 1.04 | .726 | No |
 | Logistic Regression vs. Gradient Boosting | 2.80 | 4.85 | \< .001 | Yes |
