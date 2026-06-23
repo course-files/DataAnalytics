@@ -23,11 +23,13 @@ Click here to download Quarto: [https://quarto.org/docs/get-started/](https://qu
 ```text
 .
 ├── 0_ClickHouse_Connection.R
+├── 0_admin_instructions
+│   ├── 0_instructions_for_project_setup.md
+│   ├── 1_instructions_for_python_installation.md
+│   └── 2_instructions_for_project_teardown.md
 ├── 1_simple_linear_regression.qmd
 ├── 2_multiple_linear_regression.qmd
-├── 3_a_binary_logistic_regression.nb.html
 ├── 3_a_binary_logistic_regression.qmd
-├── 3_b_binary_logistic_regression_siwaka_dishes.nb.html
 ├── 3_b_binary_logistic_regression_siwaka_dishes.qmd
 ├── 4_t_test.qmd
 ├── 5_ANOVA.docx
@@ -42,7 +44,7 @@ Click here to download Quarto: [https://quarto.org/docs/get-started/](https://qu
 ├── 7_correlation.qmd
 ├── DataAnalytics.Rproj
 ├── LICENSE
-├── README.md
+├── README.md           ← This is the file you are reading now
 ├── RecommendedCitation.bib
 ├── data
 │   ├── advertising.csv
@@ -66,11 +68,13 @@ Click here to download Quarto: [https://quarto.org/docs/get-started/](https://qu
 │   ├── synthetic-data-for-business-correlation.R
 │   ├── synthetic-data-for-ml-model-comparison.R
 │   └── t-test-data.R
+├── lab_submission_instructions.md
 ├── lecture_notes_on_computational_notebooks.md
 ├── lecture_notes_on_statistical_tests.md
 └── lecture_notes_on_statistical_tests_examples.md
 
-2 directories, 46 files
+3 directories, 48 files
+
 ```
 
 ## Lecture Notes
