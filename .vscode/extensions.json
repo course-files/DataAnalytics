@@ -3,6 +3,7 @@
         "reditorsupport.r",
         "reditorsupport.r-syntax",
         "esbenp.prettier-vscode",
-        "davidanson.vscode-markdownlint"
+        "davidanson.vscode-markdownlint",
+        "quarto.quarto"
     ]
 }

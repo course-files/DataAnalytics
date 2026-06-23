@@ -51,7 +51,7 @@ knitr:
 ---
 
 ```{r knitr_setup}
-#| echo: false
+#| include: false
 #| message: false
 #| warning: false
 
@@ -64,10 +64,13 @@ knitr:
 # how the analysis was performed and for reproducing the results.
 
 # `#| echo: false` can be used to override the default options for a specific
-# code chunk. This would imply that the code in that chunk will not be displayed
-# in the output document when it is rendered. This can be useful for hiding code
-# that is not relevant to the reader or for keeping the output document clean
-# and focused on the results.
+# code chunk. This would imply that the output of the code in that chunk will
+# not be displayed in the document when it is rendered. This can be useful for
+# hiding code that is not relevant to the reader or for keeping the output
+# document clean and focused on the results.
+
+# An alternative is to use `#| include: false` which hides both the code and
+# the output of a code chunk.
 
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -231,6 +234,10 @@ dim(ml_performance_data)
 #| echo: true
 #| message: false
 #| warning: false
+
+# sapply() is designed to apply a function to a variable in a dataset
+# Example: `sapply(clv_data, class)` applies the `class()` function to each
+# variable in the `clv_data` dataset, returning the data type of each variable.
 
 sapply(ml_performance_data, class)
 ```
@@ -1077,7 +1084,7 @@ A Durbin-Watson test found no evidence of positive autocorrelation in the residu
 Post hoc comparisons using Tukey's HSD test were conducted to examine all pairwise differences. Every comparison was statistically significant, producing a complete and unambiguous ranking: Gradient Boosting \> Random Forest \> Support Vector Machine \> Logistic Regression.
 
 | Comparison | Mean Diff. | 95% CI | *p* (adj.) | Cohen's *d*¹ |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 | Gradient Boosting vs. Logistic Regression | 0.090 | \[0.075, 0.105\] | \< .001 | 3.20 |
 | Gradient Boosting vs. SVM | 0.069 | \[0.054, 0.083\] | \< .001 | 2.44 |
 | Gradient Boosting vs. Random Forest | 0.027 | \[0.012, 0.041\] | \< .001 | 0.95 |
@@ -1123,7 +1130,7 @@ The main effect of Algorithm was statistically significant and large, *F*(3, 160
 **Post hoc comparisons: Algorithm.** Tukey's HSD confirmed that all six pairwise algorithm differences were statistically significant, reproducing the strict ordering Gradient Boosting \> Random Forest \> Support Vector Machine \> Logistic Regression.
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|-----------------------------------------|-------|----------------|------------|------|
+|----------------------------|-----------|-----------|-----------|-----------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.08, 0.11\] | \< .001    | 3.12 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.38 |
 | Gradient Boosting – Random Forest       | 0.03  | \[0.01, 0.04\] | \< .001    | 0.93 |
@@ -1178,7 +1185,7 @@ All three effects were significant and large, with Algorithm explaining between 
 *Accuracy*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|-----------------------------------------|-------|----------------|------------|------|
+|----------------------------|-----------|-----------|-----------|-----------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.08, 0.11\] | \< .001    | 3.21 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.45 |
 | Gradient Boosting – Random Forest       | 0.03  | \[0.01, 0.04\] | \< .001    | 0.95 |
@@ -1189,7 +1196,7 @@ All three effects were significant and large, with Algorithm explaining between 
 *Precision*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|-----------------------------------------|-------|----------------|------------|------|
+|----------------------------|-----------|-----------|-----------|-----------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.07, 0.11\] | \< .001    | 2.64 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.00 |
 | Gradient Boosting – Random Forest       | 0.02  | \[0.00, 0.04\] | .018       | 0.59 |
@@ -1200,7 +1207,7 @@ All three effects were significant and large, with Algorithm explaining between 
 *Recall*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|-----------------------------------------|-------|----------------|------------|------|
+|----------------------------|-----------|-----------|-----------|-----------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.07, 0.11\] | \< .001    | 2.69 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 1.99 |
 | Gradient Boosting – Random Forest       | 0.02  | \[0.00, 0.04\] | .030       | 0.56 |

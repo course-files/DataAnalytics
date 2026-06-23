@@ -13,7 +13,10 @@
 
 <p align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/r/r-original.svg" width="40"/>
+<img src="https://quarto.org/quarto.png" width="140"/>
 </p>
+
+Click here to download Quarto: [https://quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
 
 ## Repository Structure
 
@@ -94,6 +97,10 @@ Refer to the files below, in the order specified, for more details:
 
 - [Lab Submission Instructions](lab_submission_instructions.md)
 
-## Cleanup Instructions (to be done after submitting the lab)
+## Setup Instructions (to be done after submitting the lab and receiving a grade)
 
-- [Cleanup Instructions](0_admin_instructions/2_instructions_for_project_cleanup.md)
+- [Setup Instructions](0_admin_instructions/0_instructions_for_project_setup.md)
+
+## Teardown Instructions (to be done after submitting the lab and receiving a grade)
+
+- [Teardown Instructions](0_admin_instructions/2_instructions_for_project_teardown.md)

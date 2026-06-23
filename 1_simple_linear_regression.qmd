@@ -50,33 +50,70 @@ knitr:
     comment: "#>"
 ---
 
-```{r setup_chunk, message=FALSE, warning=FALSE}
+```{r knitr_setup}
+#| include: false
+#| message: false
+#| warning: false
+
+# `knitr::opts_chunk$set()` is used to set the default options for code chunks
+# in a Quarto document.
+
+# The `echo = TRUE` option means that, by default, the code will be displayed in
+# the output document when it is rendered. This allows readers to see the code
+# that was used to generate the results, which can be helpful for understanding
+# how the analysis was performed and for reproducing the results.
+
+# `#| echo: false` can be used to override the default options for a specific
+# code chunk. This would imply that the output of the code in that chunk will
+# not be displayed in the document when it is rendered. This can be useful for
+# hiding code that is not relevant to the reader or for keeping the output
+# document clean and focused on the results.
+
+# An alternative is to use `#| include: false` which hides both the code and
+# the output of a code chunk.
+
 knitr::opts_chunk$set(echo = TRUE)
+
+# `normalizePath(".")` returns the absolute path of the current working
+# directory. This can be useful for ensuring that the code is running in the
+# correct directory and can find the files it requires.
+
+knitr::opts_knit$set(root.dir = normalizePath("."))
+
+# cat("Current working directory:", getwd(), "\n")
+# list.files(".")
+```
+
+```{r install_dependencies}
+#| echo: true
+#| message: false
+#| warning: false
+
 # `installed.packages()` retrieves a matrix of all installed packages
-# `[, "Package"]` extracts on the "Package" column from the matrix of all packages
-# The %in% operator is used to test if the specified package is in the matrix of all packages
-# `character.only = TRUE` ensures that the quoted name of the package is not treated as a symbol
-# `dependencies = TRUE` instructs R to install not only the specified package but also its dependencies
-# `pacman::p_load("here")` installs the package called "here". This package is used in the next line.
-# `knitr::opts_knit$set(root.dir = here::here())` is used to ensure that the "knitr" utility in R knows where to find the files required to create the HTML, Word, or PDF version of the notebook.
+# `[, "Package"]` extracts on the "Package" column from the matrix of all
+# packages. This contains the name of the package.
+# The %in% operator is used to test if the specified package is in the matrix of
+# all packages
+# `dependencies = TRUE` instructs R to install not only the specified package but
+# also its dependencies
 
 if (!"pacman" %in% installed.packages()[, "Package"]) {
   install.packages("pacman", dependencies = TRUE)
-  library("pacman", character.only = TRUE)
+  library("pacman")
 }
 
-pacman::p_load("here")
-
-knitr::opts_knit$set(root.dir = here::here())
+# For reading data from a CSV file
+pacman::p_load("readr")
 ```
 
 # Load the Dataset
 
 The following synthetic dataset contains the estimated Customer Lifetime Value (CLV) as the dependent variable and the customer purchase frequency as the independent variable. The dataset is loaded as shown below.
 
-```{r load_dataset, echo=TRUE, message=FALSE, warning=FALSE}
-# `pacman::p_load()` is designed to both install and load packages
-pacman::p_load("readr")
+```{r load_dataset}
+#| echo: true
+#| message: false
+#| warning: false
 
 clv_data <- read_csv("./data/clv_data.csv")
 head(clv_data)
@@ -88,33 +125,49 @@ head(clv_data)
 
 The number of observations and variables.
 
-```{r show_dimensions, echo=TRUE, message=FALSE, warning=FALSE}
+```{r show_dimensions}
+#| echo: true
+#| message: false
+#| warning: false
+
 dim(clv_data)
 ```
 
 [**View the Data Types**]{.underline}
 
-```{r show_data_types_1, echo=TRUE, message=FALSE, warning=FALSE}
+```{r show_data_types_1}
+#| echo: true
+#| message: false
+#| warning: false
+
+# sapply() is designed to apply a function to a variable in a dataset
+# Example: `sapply(clv_data, class)` applies the `class()` function to each
+# variable in the `clv_data` dataset, returning the data type of each variable.
+
 sapply(clv_data, class)
 ```
 
-```{r show_data_types_2, echo=TRUE, message=FALSE, warning=FALSE}
+```{r show_data_types_2}
+#| echo: true
+#| message: false
+#| warning: false
+
 str(clv_data)
 ```
 
 [**Descriptive Statistics**]{.underline}
 
-Understanding your data can lead to:
+Descriptive statistics can be used to understand your data. Understanding your data can lead to:
 
-- **Data cleaning:** To remove extreme outliers or impute missing data.
+- Verifying data-entry accuracy, investigating unusual cases, deleting observations with outliers or imputing missing data.
 
-- **Data transformation:** To reduce skewness
+- **Data transformation:** Using techniques such as scaling (dividing each value by the standard deviation), centering (subtracting the mean from each value), standardization (ensuring each numeric attribute has a mean of 0 and a standard deviation of 1), normalization (rescaling the values to a range of between 0 and 1 (inclusive)), reducing skewness using Box-Cox or Yeo-Johnson transformations.
 
-- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify.
 
-- **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+- **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and parametric (linear) or non-parametric (non-linear) algorithms.
 
-Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
+Typical descriptive statistics include:
 
 1.  **Measures of frequency:** count and percent
 
@@ -124,7 +177,7 @@ Descriptive statistics can be used to understand your data. Typical descriptive 
 
 4.  **Measures of relationship:** covariance and correlation
 
-## [**Measures of Frequency**]{.underline}
+## [**Measures of Frequency — Not Applicable**]{.underline}
 
 This is applicable in cases where you have categorical variables, e.g., 60% of the observations are male and 40% are female (2 categories for the gender).
 
@@ -132,19 +185,31 @@ This is applicable in cases where you have categorical variables, e.g., 60% of t
 
 The median and the mean of each numeric variable:
 
-```{r central_tendency, echo=TRUE, message=FALSE, warning=FALSE}
+```{r central_tendency}
+#| echo: true
+#| message: false
+#| warning: false
+
 summary(clv_data)
 ```
 
-The first 5 rows in the dataset:
+The first 5 observations (rows) in the dataset:
 
-```{r first_five, echo=TRUE, message=FALSE, warning=FALSE}
+```{r first_five_observations}
+#| echo: true
+#| message: false
+#| warning: false
+
 head(clv_data, 5)
 ```
 
-The last 5 rows in the dataset:
+The last 5 observations (rows) in the dataset:
 
-```{r last_five, echo=TRUE, message=FALSE, warning=FALSE}
+```{r last_five_observations}
+#| echo: true
+#| message: false
+#| warning: false
+
 tail(clv_data, 5)
 ```
 
@@ -158,15 +223,21 @@ The syntax `dataset[rows, columns]` can be used to specify the exact rows and co
 
 ### **Variance**
 
-```{r distribution_variance, echo=TRUE, message=FALSE, warning=FALSE}
-# `sapply()` is designed to apply a function to a variable in a dataset
-# In this case, we use `sapply()` to apply the `var()` function used to compute the variance.
+```{r distribution_variance}
+#| echo: true
+#| message: false
+#| warning: false
+
 sapply(clv_data[,], var)
 ```
 
 ### **Standard Deviation**
 
-```{r distribution_standard_deviation, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_standard_deviation}
+#| echo: true
+#| message: false
+#| warning: false
+
 sapply(clv_data[,], sd)
 ```
 
@@ -184,7 +255,11 @@ In “type = 2” (used in SPSS and SAS):
 
 High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies a possible underestimation of real-world variability. The typical remedy includes trimming outliers or using robust statistical methods that are less affected by outliers.
 
-```{r distribution_kurtosis, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_kurtosis}
+#| echo: true
+#| message: false
+#| warning: false
+
 pacman::p_load("e1071")
 sapply(clv_data[,],  kurtosis, type = 2)
 ```
@@ -201,9 +276,13 @@ Using “type = 2” (common in other statistical software like SPSS and SAS) ca
 
 3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
 
-Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
+Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as Box–Cox or Yeo-Johnson transformations to reduce skewness.
 
-```{r distribution_skewness, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_skewness}
+#| echo: true
+#| message: false
+#| warning: false
+
 sapply(clv_data[,], skewness, type = 2)
 ```
 
@@ -223,7 +302,11 @@ Covariance is a statistical measure that indicates the direction of the linear r
 
 While covariance indicates the direction of a relationship, it does not convey the strength or consistency of the relationship. The correlation coefficient is used to indicate the strength of the relationship.
 
-```{r distribution_covariance, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_covariance}
+#| echo: true
+#| message: false
+#| warning: false
+
 cov(clv_data, method = "spearman")
 ```
 
@@ -233,13 +316,21 @@ A strong correlation between variables enables us to better predict the value of
 
 We can measure the statistical significance of the correlation using Spearman's rank correlation *rho*. This shows us if the variables are significantly monotonically related. A monotonic relationship between two variables implies that as one variable increases, the other variable either consistently increases or consistently decreases. The key characteristic is the preservation of the direction of change, though the rate of change may vary.
 
-```{r distribution_correlation_1, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_correlation_1}
+#| echo: true
+#| message: false
+#| warning: false
+
 cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = "spearman")
 ```
 
 To view the correlation of all variables
 
-```{r distribution_correlation_2, echo=TRUE, message=FALSE, warning=FALSE}
+```{r distribution_correlation_2}
+#| echo: true
+#| message: false
+#| warning: false
+
 cor(clv_data, method = "spearman")
 ```
 
@@ -247,46 +338,202 @@ cor(clv_data, method = "spearman")
 
 ### **Histogram**
 
-```{r visualization_histogram, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-# `par(mfrow = c(1, 2))` This is used to divide the area used to plot
-# the visualization into a 1 row by 2 columns grid
-# `for (i in 1:2)` This is used to identify the variable (column) 
-# that is being processed
-# `clv_data[[i]]` This is used to extract the i-th column as a vector
-# `hist()` This is the function used to plot the histogram
-par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    hist(clv_data[[i]],
-         main = names(clv_data)[i],
-         xlab = names(clv_data)[i])
-  } else {
-    message(paste("Column", names(clv_data)[i],
-                  "is not numeric and will be skipped."))
+```{r visualization_histogram}
+#| echo: true
+#| message: false
+#| warning: false
+
+pacman::p_load("ggplot2")
+
+# `col_index` identifies which column(s) (by position) are being plotted;
+# seq_along() generates 1, 2, ..., ncol(data_frame) automatically,
+# so every column in the data frame is covered without manually listing
+# positions
+col_index <- seq_along(clv_data)
+# the right-hand `col_index` (the full vector) is evaluated once when the
+# loop starts; col_index is then reassigned to one position per iteration.
+for (col_index in col_index) {
+  
+  # skip silently, with no message/warning, if the position does not exist
+  # in the data (out of range) or if the column at that position is not
+  # numeric; `next` moves straight to the following value of col_index
+  if (col_index > ncol(clv_data) ||
+      !is.numeric(clv_data[[col_index]])) {
+    next
   }
+  
+  col_name <- names(clv_data)[col_index]
+  
+  # for a histogram, the continuous variable goes on x; geom_histogram()
+  # bins it and computes the count on y automatically, so y is left
+  # unmapped here (the reverse of the boxplot version, where x was a
+  # blank placeholder and y held the continuous variable)
+  p <- ggplot2::ggplot(clv_data, aes(x = .data[[col_name]])) +
+    geom_histogram(bins = 30, fill = "#4F6EA4", color = "#FFFFFF") +
+    
+    # reduces the default 5% padding on the x and y axes
+    scale_x_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    scale_y_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    labs(
+      title = paste0("Histogram of the Variable '", col_name, "'"),
+      subtitle = paste0("EDA for distribution shape and outlier check ",
+                        "before statistical tests and modelling"),
+      x = col_name,
+      y = "Count",
+      caption = paste0("Source: ML Model Performance Data | n = ",
+                       nrow(clv_data), ", ",
+                       "M = ",
+                       sprintf("%.2f",
+                               mean(clv_data[[col_name]], na.rm = TRUE)),
+                       ", ",
+                       "sd = ",
+                       sprintf("%.2f",
+                               sd(clv_data[[col_name]], na.rm = TRUE)))
+    ) +
+    theme_minimal(base_size = 12) +
+    
+    theme(
+      plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+      axis.title          = element_text(color = "#1D1D1D"),
+      axis.text           = element_text(color = "#898989"),
+      axis.text.x         = element_text(angle = 30, hjust = 1),
+      plot.caption         = element_text(color = "#898989"),
+      # removes vertical gridlines
+      panel.grid.major.x  = element_blank(),
+      panel.grid.minor.x  = element_blank(),
+      # horizontal gridlines are kept (at major breaks only) since they
+      # help the reader judge bar heights against the y-axis scale
+      panel.grid.minor.y  = element_blank(),
+      # draws only the x-axis and y-axis lines (the "L" frame)
+      axis.line.x         = element_line(color = "#1D1D1D"),
+      axis.line.y         = element_line(color = "#1D1D1D")
+      # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+      #                            linewidth = 0.5)
+    )
+  # ggplot objects do not auto-print inside a for-loop, therefore,
+  # each one must be printed explicitly otherwise it will never appear
+  print(p)
 }
 ```
 
 ### **Box and Whisker Plot**
 
-```{r visualization_boxplot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-# `boxplot()` This is the function used to plot the box and whisker plot visualization
-par(mfrow = c(1, 2))
-for (i in 1:2) {
-  if (is.numeric(clv_data[[i]])) {
-    boxplot(clv_data[[i]], main = names(clv_data)[i])
-  } else {
-    message(paste("Column", names(clv_data)[i], "is not numeric and will be skipped."))
+```{r visualization_boxplot}
+#| echo: true
+#| message: true
+#| warning: false
+
+# `col_index` identifies which column(s) (by position) are being plotted;
+# seq_along() generates 1, 2, ..., ncol(data_frame) automatically,
+# so every column in the data frame is covered without manually listing
+# positions
+col_index <- seq_along(clv_data)
+
+# the right-hand `col_index` (the full vector) is evaluated once when the
+# loop starts; col_index is then reassigned to one position per iteration.
+for (col_index in col_index) {
+  
+  # skip silently, with no message/warning, if the position does not exist
+  # in the data (out of range) or if the column at that position is not
+  # numeric; `next` moves straight to the following value of col_index
+  if (col_index > ncol(clv_data) ||
+      !is.numeric(clv_data[[col_index]])) {
+    next
   }
+  
+  col_name <- names(clv_data)[col_index]
+  
+  p <- ggplot2::ggplot(clv_data, aes(x = "", y = .data[[col_name]])) +
+    stat_boxplot(geom = "errorbar", width = 0.15, color = "#1D1D1D") +
+    geom_boxplot(fill = "#4F6EA4", color = "#1D1D1D", width = 0.3) +
+    
+    # reduces the default 5% padding on the x and y axes
+    # scale_x_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    # scale_y_continuous(expand = expansion(mult = c(0.00, 0.00))) +
+    labs(
+      title = paste0("Box and Whisker Plot of the Variable '", col_name, "'"),
+      subtitle = paste0("EDA for spread and outlier check before ",
+                        "statistical tests and modelling"),
+      x = NULL,  # no x-axis label needed
+      y = col_name,
+      caption = paste0("Source: ML Model Performance Data | n = ",
+                       nrow(clv_data), ", ",
+                       "M = ",
+                       sprintf("%.2f",
+                               mean(clv_data[[col_name]], na.rm = TRUE)),
+                       ", ",
+                       "sd = ",
+                       sprintf("%.2f",
+                               sd(clv_data[[col_name]], na.rm = TRUE)))
+    ) +
+    theme_minimal(base_size = 12) +
+
+    theme(
+      plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+      axis.title          = element_text(color = "#1D1D1D"),
+      axis.text           = element_text(color = "#898989"),
+      # axis.text.x         = element_text(angle = 30, hjust = 1),
+      plot.caption         = element_text(color = "#898989"),
+      # removes vertical gridlines
+      panel.grid.major.x  = element_blank(),
+      panel.grid.minor.x  = element_blank(),
+      # horizontal gridlines are kept (at major breaks only) since they
+      # help the reader judge bar heights against the y-axis scale
+      panel.grid.minor.y  = element_blank(),
+      # draws only the x-axis and y-axis lines (the "L" frame)
+      axis.line.x         = element_line(color = "#1D1D1D"),
+      axis.line.y         = element_line(color = "#1D1D1D")
+      # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+      #                            linewidth = 0.5)
+    )
+  # ggplot objects do not auto-print inside a for-loop, therefore,
+  # each one must be printed explicitly otherwise it will never appear
+  print(p)
 }
 ```
 
 ### **Missing Data Plot**
 
-```{r missing_data_plot, echo=TRUE, fig.width=6, message=FALSE, warning=FALSE}
-pacman::p_load("Amelia")
+```{r missing_data_plot}
+#| echo: true
+#| message: false
+#| warning: false
 
-missmap(clv_data, col = c("red", "grey"), legend = TRUE)
+# `vis_miss()` plots a matrix of observations (rows) by variables (columns),
+# shading each cell by whether the value is missing or present; this is
+# the ggplot2-native counterpart to Amelia's missmap()
+naniar::vis_miss(clv_data) +
+  labs(
+    title = "Missing Data Overview",
+    subtitle = "EDA for missingness pattern before data imputation or data removal",
+    caption = paste0("Source: ML Model Performance Data | n = ",
+                     nrow(clv_data))
+  ) +
+  # overrides vis_miss()'s default black/grey fill; vis_miss() has no
+  # built-in color argument, but since it returns a standard ggplot
+  # object, the fill scale can be replaced afterward like any other
+  scale_fill_manual(values = c("Present" = "#4F6EA4", "Missing" = "#E03C31")) +
+  
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    # axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    # axis.line.x         = element_line(color = "#1D1D1D"),
+    # axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+                               # linewidth = 0.5)
+  )
 ```
 
 ### **Correlation Plot**
@@ -316,6 +563,74 @@ ggplot(clv_data,
     title = "Relationship between Customer Lifetime Value and Purchase Frequency",
     x = "Purchase Frequency",
     y = "Customer Lifetime Value"
+  ) +
+  
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    # axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    # axis.line.x         = element_line(color = "#1D1D1D"),
+    # axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+                               # linewidth = 0.5)
+  )
+```
+
+```{r scatter_plot_with_box_plot}
+#| echo: true
+#| message: false
+#| warning: false
+
+ggplot2::ggplot(clv_data,
+                aes(x = clv_data$purchase_frequency, y = clv_data$customer_lifetime_value)) +
+  stat_boxplot(geom = "errorbar", width = 0.15, color = "#1D1D1D") +
+  # layering the raw data points underneath the boxes with geom_jitter()
+  # shows you both the summary statistics and the actual spread/sample size
+  # per category, which a box alone hides, for instance you cannot tell
+  # from a box alone whether one category was tested on 5 runs and another
+  # on 50.
+  geom_jitter(width = 0.1, alpha = 0.4, color = "#1D1D1D", size = 1.5) +
+  # one box per category
+  geom_boxplot(fill = "#4F6EA4", color = "#1D1D1D", width = 0.4) +
+  labs(
+    title = "Distribution of Accuracy by Algorithm",
+    subtitle = "EDA for comparing model performance before selection",
+    x = "Algorithm",
+    y = "Accuracy",
+    caption = paste0("Source: ML Model Performance Data | n = ",
+                     nrow(clv_data))
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    # uncomment if algorithm names are long enough to overlap when
+    # printed horizontally (e.g. "Random Forest", "Gradient Boosting")
+    axis.text.x        = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # vertical gridlines removed: even with categorical groups on x,
+    # there is no continuous scale for the lines to reference, so they
+    # add no information
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+    # linewidth = 0.5)
   )
 ```
 
