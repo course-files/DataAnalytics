@@ -97,10 +97,10 @@ Refer to the files below, in the order specified, for more details:
 
 - [Lab Submission Instructions](lab_submission_instructions.md)
 
-## Setup Instructions (to be done after submitting the lab and receiving a grade)
+## Setup Instructions
 
 - [Setup Instructions](0_admin_instructions/0_instructions_for_project_setup.md)
 
-## Teardown Instructions (to be done after submitting the lab and receiving a grade)
+## Teardown Instructions
 
 - [Teardown Instructions](0_admin_instructions/2_instructions_for_project_teardown.md)

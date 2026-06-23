@@ -1,5 +1,4 @@
 Version: 1.0
-ProjectId: e77bfde0-c228-49a2-ba0d-3167ad4e25d1
 
 RestoreWorkspace: Default
 SaveWorkspace: Default
@@ -12,3 +11,6 @@ Encoding: UTF-8
 
 RnwWeave: Sweave
 LaTeX: XeLaTeX
+
+MarkdownWrap: Column
+MarkdownWrapAtColumn: 80
