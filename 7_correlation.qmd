@@ -119,7 +119,7 @@ This notebook uses one dataset containing two genuinely different relationships,
 The dataset simulates store-level performance data for a retail chain (40 stores), the kind of data a business analyst or supply-chain analyst might use to evaluate whether marketing investment pays off in sales, or whether delivery delays are costing customer goodwill.
 
 | Variable | Description |
-|----|----|
+|------------------------------------|------------------------------------|
 | `Store_ID` | Unique store identifier |
 | `Marketing_Spend_USD` | Monthly marketing spend per store (USD) |
 | `Monthly_Sales_USD` | Monthly sales revenue per store (USD) |

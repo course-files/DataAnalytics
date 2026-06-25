@@ -255,13 +255,20 @@ pacman::p_load("e1071")
 pacman::p_load("naniar")
 # For reshaping data required by the correlation plot
 pacman::p_load("reshape2")
+# For various tests for linear regression models
+pacman::p_load("lmtest")
+# For quantitative validation of assumptions of linear regression models
+pacman::p_load("gvlma")
 ```
 
 # Load the Dataset
 
-The following synthetic dataset contains the estimated Customer Lifetime Value
-(CLV) as the dependent variable and the customer purchase frequency as the
-independent variable. The dataset is loaded as shown below.
+Execute the following R script to generate the synthetic data:
+`./data/synthetic_data_for_simple_linear_regression.R`
+
+The synthetic dataset contains the estimated Customer Lifetime Value (CLV) as
+the dependent variable and the customer purchase frequency as the independent
+variable. The dataset is loaded as shown below.
 
 ```{r load_dataset}
 #| echo: true
@@ -535,7 +542,10 @@ direction of change, though the rate of change may vary.
 #| message: false
 #| warning: false
 
-cor.test(clv_data$customer_lifetime_value, clv_data$purchase_frequency, method = "spearman")
+cor.test(
+  clv_data$customer_lifetime_value,
+  clv_data$purchase_frequency,
+  method = "spearman")
 ```
 
 To view the correlation of all variables
@@ -1055,11 +1065,8 @@ View the summary of the model.
 summary(slr_test)
 ```
 
-The confidence level represents the degree of certainty that a confidence
-interval contains the true population parameter. For example, a 95% confidence
-level means that if you were to take many random samples and compute the
-confidence interval from each, about 95% of those intervals would contain the
-true population value, while about 5% would not.
+A 95% confidence level means that the procedure used to construct the interval
+will capture the true population parameter in 95% of repeated samples.
 
 To obtain a 95% confidence interval:
 
@@ -1083,6 +1090,8 @@ given that linearity is one of the key assumptions of statistical tests of
 regression and verifying it is crucial for ensuring the validity of the model's
 estimates and predictions.
 
+### **Residuals vs. Fitted Values Plot**
+
 A plot of the residuals versus the fitted values enables us to test for
 linearity. For the model to pass the test of linearity, there should be no
 pattern in the distribution of residuals and the residuals should be randomly
@@ -1090,15 +1099,34 @@ placed around the 0.0 residual line.
 
 ```{r test_of_linearity}
 #| echo: true
-#| fig-width: 6
 #| message: false
 #| warning: false
 
 pacman::p_load("ggfortify")
-autoplot(slr_test, which = 1, smooth.colour = "red") +
+autoplot(slr_test, which = 1, smooth.colour = "#E03C31") +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "bold", color = "#1D1D1D"),
-        axis.text  = element_text(color = "#898989"))
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    # This is part of maintaining a high data-to-ink ratio in your
+    # visualizations as discussed during the theory class.
+    # panel.grid.major.y  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+    #                             linewidth = 0.5)
+  )
 ```
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
@@ -1106,12 +1134,87 @@ autoplot(slr_test, which = 1, smooth.colour = "red") +
 This test is necessary to confirm that each observation is independent of the
 other. It helps to identify autocorrelation that is introduced when the data is
 collected over a close period of time or when one observation is related to
-another observation. Autocorrelation leads to underestimated standard errors and
-inflated t-statistics. It can also make findings appear more significant than
-they actually are. The "Durbin-Watson Test" can be used as a test of
-independence of errors (test of autocorrelation). A Durbin-Watson statistic
-close to 2 suggests no autocorrelation, while values approaching 0 or 4 indicate
-positive or negative autocorrelation, respectively.
+another observation.
+
+**Example 1:** Algorithm benchmarks run sequentially on the same machine, where
+thermal throttling, caching, or background load could make consecutive runs
+correlated.
+
+**Example 2:** A retail store's daily revenue observations collected over
+consecutive days may be correlated because a promotional campaign running today
+continues to drive carry-over purchases tomorrow — meaning each day's revenue is
+partly a function of the preceding day's revenue.
+
+### Residuals vs. Observation Order Plot
+
+The Residuals vs Observation Order Plot is used to assess whether the residuals
+are independent of one another. The horizontal axis represents the order in
+which observations appear in the dataset, while the vertical axis represents the
+residual values.
+
+**Assumption Satisfied**
+
+If the residuals appear randomly scattered around zero with no obvious pattern,
+trend, cycles, or clustering, the independence assumption is likely satisfied.
+
+**Assumption Violated**
+
+If the residuals show a systematic pattern, trend, wave-like structure, long
+runs of positive or negative values, or clustering, the independence assumption
+may be violated, indicating possible autocorrelation.
+
+```{r residuals_vs_observation_order_plot}
+#| echo: true
+#| message: false
+#| warning: false
+
+residual_data <- data.frame(
+  Observation = seq_along(residuals(slr_test)),
+  Residual = residuals(slr_test)
+)
+
+ggplot(residual_data, aes(x = Observation, y = Residual)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(
+    title = "Residuals vs Observation Order",
+    x = "Observation Order",
+    y = "Residual"
+  ) +
+  theme_minimal(base_size = 12) +
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    # This is part of maintaining a high data-to-ink ratio in your
+    # visualizations as discussed during the theory class.
+    # panel.grid.major.y  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+    #                             linewidth = 0.5)
+  )
+```
+
+### Durbin-Watson Test
+
+Autocorrelation leads to underestimated standard errors and inflated
+t-statistics. It can also make findings appear more significant than they
+actually are. The "Durbin-Watson Test" can be used as a test of independence of
+errors (test of autocorrelation). A Durbin-Watson statistic close to 2 suggests
+no autocorrelation, while values approaching 0 or 4 indicate positive or
+negative autocorrelation, respectively.
 
 For the Durbin-Watson test:
 
@@ -1126,15 +1229,13 @@ For the Durbin-Watson test:
 If the p-value of the Durbin-Watson statistic is greater than 0.05 then there is
 no evidence to reject the null hypothesis that "there is no autocorrelation".
 
-```{r test_of_independence_of_errors, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("lmtest")
-dwtest(slr_test)
-```
+```{r test_of_independence_of_errors}
+#| echo: true
+#| message: false
+#| warning: false
 
-The results show a p-value of \>.05 (and a DW statistic of 1.91), therefore, the
-test of independence of errors around the regression line passes, i.e., there is
-no autocorrelation. In other words, there is no evidence to reject the null
-hypothesis that states that, "there is no aurocorrelation".
+lmtest::dwtest(slr_test)
+```
 
 ## [**Test of Normality of the Distribution of the Errors**]{.underline}
 
@@ -1143,34 +1244,100 @@ errors (residuals) are approximately normally distributed, i.e., most errors are
 close to zero and large errors are rare. A Q-Q plot can be used to conduct the
 test of normality.
 
+### Q-Q Plot
+
 A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles
 of a normal distribution. Quantiles are statistical values that divide a dataset
 or probability distribution into equal-sized intervals. They help in
 understanding how data is distributed by marking specific points that separate
 the data into groups of equal size. Examples of quantiles include: quartiles (4
-equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+equal parts), deciles (10 equal parts), and percentiles (100 equal parts).
 
-If the points in the Q-Q plot fall along a straight line, then the normality
-assumption is satisfied. If the points in the Q-Q plot do not fall along a
-straight line, then the normality assumption is not satisfied.
+If the points show substantial departures from the straight diagonal line, then
+the normality assumption may not be satisfied.
 
 ```{r test_of_normality}
 #| echo: true
-#| fig-width: 6
 #| message: false
 #| warning: false
 
 autoplot(slr_test, which = 2, smooth.colour = NA) +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "bold", color = "#1D1D1D"),
-        axis.text  = element_text(color = "#898989"))
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    # This is part of maintaining a high data-to-ink ratio in your
+    # visualizations as discussed during the theory class.
+    # panel.grid.major.y  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+    #                             linewidth = 0.5)
+  )
+```
+
+### Shapiro-Wilk Test
+
+The Shapiro–Wilk test is a statistical test used to determine whether the
+residuals are approximately normally distributed.
+
+The hypotheses are:
+
+-  H₀: The residuals are normally distributed.
+
+-  H₁: The residuals are not normally distributed.
+
+The test produces a p-value which is compared against a chosen significance
+level (usually α = 0.05).
+
+**Decision Rule**
+
+-  If p-value \> 0.05, fail to reject H₀. The residuals can be considered
+  approximately normally distributed.
+
+-  If p-value ≤ 0.05, reject H₀. The residuals are not normally distributed.
+
+```{r Shapiro-Wilk-Test}
+#| echo: true
+#| #| message: false
+#| #| warning: false
+
+pacman::p_load("tidyverse") 
+map_dfr(numeric_cols, function(col) {
+  # The Shapiro-Wilk test works with data between
+  # 3 observations and 5,000 observations.
+  # Below is an example of how to sample 500
+  # observations from the original dataset.
+  test <- shapiro.test(sample(clv_data[[col]], 200))
+  tibble(
+    column = col,
+    statistic = test$statistic,
+    p_value = test$p.value
+    )
+  }
+)
 ```
 
 ## [**Test of Homoscedasticity**]{.underline}
 
-Homoscedasticity requires that the spread of residuals should be constant across
-all levels of the independent variable. A scale-location plot (a.k.a.
-spread-location plot) can be used to conduct a test of homoscedasticity.
+The spread of the variance of the error term should be approximately equal
+across all levels of the independent variable. In the case of comparison tests,
+the variances of the groups being compared should be approximately equal. A
+scale-location plot (a.k.a. spread-location plot) can be used to conduct a test
+of homoscedasticity.
+
+### Scale-Location Plot
 
 The x-axis shows the fitted (predicted) values from the model and the y-axis
 shows the square root of the standardized residuals. The red line is added to
@@ -1192,44 +1359,61 @@ heteroscedasticity with increasing variance for larger fitted values.
 
 ```{r test_of_homoscedasticity}
 #| echo: true
-#| fig-width: 6
 #| message: false
 #| warning: false
 
-autoplot(slr_test, which = 3, smooth.colour = "red") +
+autoplot(slr_test, which = 3, smooth.colour = "#E03C31") +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(face = "bold", color = "#1D1D1D"),
-        axis.text  = element_text(color = "#898989"))
+  
+  theme(
+    plot.title          = element_text(face = "bold", color = "#1D1D1D"),
+    axis.title          = element_text(color = "#1D1D1D"),
+    axis.text           = element_text(color = "#898989"),
+    axis.text.x         = element_text(angle = 30, hjust = 1),
+    plot.caption         = element_text(color = "#898989"),
+    # removes vertical gridlines
+    panel.grid.major.x  = element_blank(),
+    # panel.grid.minor.x  = element_blank(),
+    # horizontal gridlines are kept (at major breaks only) since they
+    # help the reader judge bar heights against the y-axis scale
+    # This is part of maintaining a high data-to-ink ratio in your
+    # visualizations as discussed during the theory class.
+    # panel.grid.major.y  = element_blank(),
+    panel.grid.minor.y  = element_blank(),
+    # draws only the x-axis and y-axis lines (the "L" frame)
+    axis.line.x         = element_line(color = "#1D1D1D"),
+    axis.line.y         = element_line(color = "#1D1D1D")
+    # panel.border = element_rect(color = "#1D1D1D", fill = NA,
+    #                             linewidth = 0.5)
+  )
 ```
 
-**Breusch-Pagan Test**
+### **Breusch-Pagan Test**
 
 The Breusch-Pagan Test can also be used in addition to the visual inspection of
 a Scale-Location plot.
 
 Formally:
 
-- Null hypothesis (H₀): The residuals are homoscedastic (equal variance).
+- Null hypothesis (H₀): The spread of the variance of the error term is
+  homoscedastic (equal variance).
 
-- Alternative hypothesis (H₁): The residuals are heteroscedastic (non-constant
-  variance).
+- Alternative hypothesis (H₁): The spread of the variance of the error term is
+  heteroscedastic (non-constant variance).
 
 p-Value:
 
-- p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → good,
-  model passes.
+- p-value ≥ 0.05: Fail to reject H₀ → no evidence of heteroscedasticity → this
+  is good; model passes.
 
-- p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → bad, model
-  fails.
+- p-value \< 0.05: Reject H₀ → evidence of heteroscedasticity → this is bad;
+  model fails.
 
-Interpretation: If the p-value is less than 0.05, then we reject the null
-hypothesis that states that “the residuals are homoscedastic”
+```{r Breusch-PaganTest}
+#| echo: true
+#| message: false
+#| warning: false
 
-With a p-value \< 0.05, there is statistically significant evidence of
-heteroscedasticity in the residuals in this case (which is bad).
-
-```{r Breusch-PaganTest, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("lmtest")
 lmtest::bptest(slr_test)
 ```
 
@@ -1239,9 +1423,12 @@ The graphical representations of the various tests of assumptions should be
 accompanied by quantitative values. The `gvlma` package (Global Validation of
 Linear Models Assumptions) is useful for this purpose.
 
-```{r QuantitativeValidationofAssumptions, echo=TRUE, message=FALSE, warning=FALSE}
-pacman::p_load("gvlma")
-gvlma_results <- gvlma(slr_test)
+```{r QuantitativeValidationofAssumptions}
+#| echo: true
+#| message: false
+#| warning: false
+
+gvlma_results <- gvlma::gvlma(slr_test)
 summary(gvlma_results)
 ```
 
@@ -1341,14 +1528,14 @@ uncertainty about the true value.
 Below are some key considerations to note when reporting statistical analysis
 using the APA style:\
 
-1.  The type of statistical test must be stated.
+1.  State the type of correlation test explicitly.
 
 2.  Although not mandatory, the dependent variable is usually stated first
     followed by the independent variable when describing relationships, e.g.,
-    “…to examine whether advertising expenditures on YouTube, TikTok, and
-    Facebook collectively predict Sales” such that Sales is the dependent
-    variable that depends on advertising expenditures on YouTube, TikTok, and
-    Facebook.
+    “…to examine whether the sum of sales is collectively affected by
+    advertising expenditures on YouTube, TikTok, and Facebook” such that sum of
+    sales is the dependent variable that depends on advertising expenditures on
+    YouTube, TikTok, and Facebook.
 
 3.  Test statistic and parameters: Report the appropriate test statistic
     (*t*-Statistic, *F*-Statistic, $\chi^2$ , etc.) with the degrees of freedom
@@ -1359,15 +1546,18 @@ using the APA style:\
 4.  Exact p-values: Report exact p-values, when possible (e.g., *p* = .032),
     unless they are less than .001, then report as *p* \< .001.
 
-5.  Effect sizes: Include appropriate effect size measures (e.g., R²) to
-    indicate practical significance.
+5.  Effect sizes: Include appropriate effect size measures (e.g., R², Kendall's
+    W, etc.) to indicate practical significance.
 
-6.  Standard errors: Report standard errors of estimates when relevant. The
+6.  When the omnibus test is significant, report the post-hoc procedure used
+    (e.g., the Nemenyi test)
+
+7.  Standard errors: Report standard errors of estimates when relevant. The
     standard error tells you how much your estimate might vary if you were to
     repeat your study with different random samples from the same population. A
     smaller standard error indicates a more precise estimate.
 
-7.  Confidence Intervals (CI): The confidence level should be clearly stated
+8.  Confidence Intervals (CI): The confidence level should be clearly stated
     whenever you report point estimates (e.g., means, regression coefficients,
     correlations, etc.). The 95% confidence interval is the most common, and if
     another level is used (e.g., 90% CI, 99% CI), it should be explicitly
@@ -1376,14 +1566,14 @@ using the APA style:\
     CI \[-.03, .04\]. They are usually reported directly after the statistic
     they describe, often within the same sentence or in parentheses.
 
-8.  Two decimal places: Report to two decimal places, except p-values which may
+9.  Two decimal places: Report to two decimal places, except p-values which may
     need three or more decimal places.
 
-9.  Descriptive statistics: Report relevant means, standard deviations, and
+10. Descriptive statistics: Report relevant means, standard deviations, and
     sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD
     = 4.62).
 
-10. Italicize statistical symbols: Use italics for statistical symbols (*t*,
+11. Italicize statistical symbols: Use italics for statistical symbols (*t*,
     *F*, *p*, etc.) but not for Greek letters ( $\mu$, $\sigma$, $\alpha$),
     subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) =
     15.62, *p* \< .001, The participants (*N* = 120) had an average score (*M* =
@@ -1391,15 +1581,7 @@ using the APA style:\
 
 Further reading: <https://apastyle.apa.org/jars>
 
-## Limitations and Diagnostic Findings
-
-The model employed is a simple linear regression, which only considers the
-linear relationship between purchase frequency and CLV. Other potentially
-influential factors that are not included in this model could also play a
-significant role in determining CLV, e.g., the average monetary value of each
-purchase.
-
-## Academic Statement (APA)—Academic-Ready Language
+## Technical Academic Report (Based on APA Guidelines of Reporting Results)
 
 A simple linear regression was conducted on data from 500 observations (N = 500)
 to examine the relationship between customer lifetime value (CLV) and purchase
@@ -1411,7 +1593,7 @@ increased by approximately 19.54 units. The intercept was 52.25, 95 % CI
 \[50.48, 54.03\], and the residual standard error was 7.73, indicating strong
 predictive accuracy.
 
-## Business Analysis—Boardroom-Ready Language
+## Non-Technical Business Report
 
 The strength of the relationship highlights the critical importance of customer
 retention. Initiatives that effectively encourage repeat purchases appear to be

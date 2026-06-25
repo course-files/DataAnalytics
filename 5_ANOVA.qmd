@@ -1,5 +1,5 @@
 ---
-title: "ANOVA"
+title: "Statistical Tests of Comparison: ANOVA"
 subtitle: "v1.0.0"
 author: "Allan Omondi"
 date: today
@@ -122,13 +122,17 @@ pacman::p_load("heplots")
 
 ## 4 Algorithms, 10 independent datasets, and 5 independent runs
 
-This simulates data collected from a Machine Learning model comparison experiment. The research question in this simulation is:
+This simulates data collected from a Machine Learning model comparison
+experiment. The research question in this simulation is:
 
-> Is there a statistically significant difference in mean classification accuracy across the Machine Learning algorithms?
+> Is there a statistically significant difference in mean classification
+> accuracy across the Machine Learning algorithms?
 
-There are 4 algorithms, 10 independent datasets, and 5 independent runs per algorithm–dataset pair.
+There are 4 algorithms, 10 independent datasets, and 5 independent runs per
+algorithm–dataset pair.
 
-Execute the following R script to generate the synthetic dataset: `./data/synthetic-data-for-ml-model-comparison.R`
+Execute the following R script to generate the synthetic dataset:
+`./data/synthetic-data-for-ml-model-comparison.R`
 
 “**4 × 10 × 5 = 200 observations**” means:
 
@@ -146,7 +150,8 @@ A "run" means:
 
 - Possibly different train/test split
 
-Therefore, the unit of analysis is the dataset, not the run. The 5 runs are replicates, not new experimental units.
+Therefore, the unit of analysis is the dataset, not the run. The 5 runs are
+replicates, not new experimental units.
 
 ## NOT the same as Cross-Validation with Repeats
 
@@ -160,7 +165,9 @@ For each algorithm on one dataset:
 
 - The entire 10-fold process is repeated 5 times
 
-That gives 50 performance estimates per algorithm per dataset. However — and this is the critical part — those 50 values are [**NOT independent observations**]{.underline}.
+That gives 50 performance estimates per algorithm per dataset. However — and
+this is the critical part — those 50 values are [**NOT independent
+observations**]{.underline}.
 
 They are correlated because:
 
@@ -170,17 +177,20 @@ They are correlated because:
 
 - Test sets are reused across repeats
 
-This disqualifies it from being used in statistical tests of comparison that expect independence of observations.
+This disqualifies it from being used in statistical tests of comparison that
+expect independence of observations.
 
 ## Valid ways to Create Independent Datasets
 
 1.  Naturally distinct datasets
     - Different real-world sources
     - Different domains or tasks
-    - Examples: Different UCI datasets, different companies’ sales datasets, different medical studies
+    - Examples: Different UCI datasets, different companies’ sales datasets,
+      different medical studies
 2.  Independent data-generating processes
     - Simulated datasets with independent random draws
-    - Different parameterizations (noise level, class imbalance, feature correlations)
+    - Different parameterizations (noise level, class imbalance, feature
+      correlations)
 3.  Independent experimental units
     - Different time periods where stationarity holds
     - Different geographical regions
@@ -258,19 +268,28 @@ Understanding your data can lead to:
 
 - **Data transformation:** To reduce skewness
 
-- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you identify
+- **Hypothesis formulation:** Formulate a hypothesis based on the patterns you
+  identify
 
-- **Choosing the appropriate statistical test:** You may notice properties of the data such as distributions or data types that suggest the use of parametric or non-parametric statistical tests and algorithms
+- **Choosing the appropriate statistical test:** You may notice properties of
+  the data such as distributions or data types that suggest the use of
+  parametric or non-parametric statistical tests and algorithms
 
-Descriptive statistics can be used to understand your data. Typical descriptive statistics include:
+Descriptive statistics can be used to understand your data. Typical descriptive
+statistics include:
 
 1.  **Measures of frequency:** count and percent
 
 2.  **Measures of central tendency:** mean, median, and mode
 
-3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum, quartiles, maximum, variance, standard deviation, coefficient of variation, range, interquartile range (IQR) \[includes a box and whisker plot for visualization\], kurtosis, skewness \[includes a histogram for visualization\]).
+3.  **Measures of distribution/dispersion/spread/scatter/variability:** minimum,
+    quartiles, maximum, variance, standard deviation, coefficient of variation,
+    range, interquartile range (IQR) \[includes a box and whisker plot for
+    visualization\], kurtosis, skewness \[includes a histogram for
+    visualization\]).
 
-4.  **Measures of relationship:** covariance and correlation \[includes a correlation plot and a scatter plot for visualization\].
+4.  **Measures of relationship:** covariance and correlation \[includes a
+    correlation plot and a scatter plot for visualization\].
 
 ## [**Measures of Frequency**]{.underline}
 
@@ -318,11 +337,22 @@ tail(ml_performance_data, 5)
 
 ## [**Measures of Distribution**]{.underline}
 
-Measuring the variability in the dataset is important because the amount of variability determines **how well you can generalize** results from the sample to a new observation in the population.
+Measuring the variability in the dataset is important because the amount of
+variability determines **how well you can generalize** results from the sample
+to a new observation in the population.
 
-Low variability is ideal because it means that you can better predict information about the population based on the sample data. High variability means that the values are less consistent, thus making it harder to make predictions.
+Low variability is ideal because it means that you can better predict
+information about the population based on the sample data. High variability
+means that the values are less consistent, thus making it harder to make
+predictions.
 
-The syntax `dataset[rows, columns]` can be used to specify the exact rows and columns to be considered. `dataset[, columns]` implies all rows will be considered. For example, specifying `BostonHousing[, -4]` implies all the columns except column number 4. This can also be stated as `BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to perform calculations on only columns that are numeric, thus leaving out the columns termed as “factors” (categorical) or those that have a string data type.
+The syntax `dataset[rows, columns]` can be used to specify the exact rows and
+columns to be considered. `dataset[, columns]` implies all rows will be
+considered. For example, specifying `BostonHousing[, -4]` implies all the
+columns except column number 4. This can also be stated as
+`BostonHousing[, c(1,2,3,5,6,7,8,9,10,11,12,13,14)]`. This allows us to perform
+calculations on only columns that are numeric, thus leaving out the columns
+termed as “factors” (categorical) or those that have a string data type.
 
 ### **Variance**
 
@@ -349,7 +379,11 @@ sapply(ml_performance_data[,c(4)], sd)
 
 ### **Kurtosis (Pearson)**
 
-The Kurtosis informs us of how often outliers occur in the results. There are different formulas for calculating kurtosis. Specifying “type = 2” allows us to use the 2^nd^ formula which is the same kurtosis formula used in other statistical software like SPSS and SAS. It is referred to as "Pearson's definition of kurtosis".
+The Kurtosis informs us of how often outliers occur in the results. There are
+different formulas for calculating kurtosis. Specifying “type = 2” allows us to
+use the 2^nd^ formula which is the same kurtosis formula used in other
+statistical software like SPSS and SAS. It is referred to as "Pearson's
+definition of kurtosis".
 
 In “type = 2” (used in SPSS and SAS):
 
@@ -359,7 +393,11 @@ In “type = 2” (used in SPSS and SAS):
 
 3.  Kurtosis \> 3 implies a high number of outliers → leptokurtic
 
-High kurtosis (leptokurtic) affects models that are sensitive to outliers. Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies a possible underestimation of real-world variability. The typical remedy includes trimming outliers or using robust statistical methods that are less affected by outliers.
+High kurtosis (leptokurtic) affects models that are sensitive to outliers.
+Estimates of the variance are also inflated. Low kurtosis (platykurtic) implies
+a possible underestimation of real-world variability. The typical remedy
+includes trimming outliers or using robust statistical methods that are less
+affected by outliers.
 
 ```{r distribution_kurtosis}
 #| echo: true
@@ -372,17 +410,24 @@ sapply(ml_performance_data[,c(4)],  kurtosis, type = 2)
 
 ### **Skewness**
 
-The skewness is used to identify the asymmetry of the distribution of results. Similar to kurtosis, there are several ways of computing the skewness.
+The skewness is used to identify the asymmetry of the distribution of results.
+Similar to kurtosis, there are several ways of computing the skewness.
 
-Using “type = 2” (common in other statistical software like SPSS and SAS) can be interpreted as:
+Using “type = 2” (common in other statistical software like SPSS and SAS) can be
+interpreted as:
 
-1.  Skewness between -0.4 and 0.4 (inclusive) implies that there is no skew in the distribution of results; the distribution of results is symmetrical; it is a normal distribution; a Gaussian distribution.
+1.  Skewness between -0.4 and 0.4 (inclusive) implies that there is no skew in
+    the distribution of results; the distribution of results is symmetrical; it
+    is a normal distribution; a Gaussian distribution.
 
 2.  Skewness above 0.4 implies a positive skew; a right-skewed distribution.
 
 3.  Skewness below -0.4 implies a negative skew; a left-skewed distribution.
 
-Skewed data results in misleading averages and potentially biased model coefficients. The typical remedy to skewed data involves applying data transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce skewness.
+Skewed data results in misleading averages and potentially biased model
+coefficients. The typical remedy to skewed data involves applying data
+transformations such as logarithmic, square-root, or Box–Cox, etc. to reduce
+skewness.
 
 ```{r distribution_skewness}
 #| echo: true
@@ -392,7 +437,10 @@ Skewed data results in misleading averages and potentially biased model coeffici
 sapply(ml_performance_data[,c(4)], skewness, type = 2)
 ```
 
-As a data analyst, you need to confirm if the distortion in kurtosis or skewness is a data problem or it is a real-world insight. For example, a real-world insight could be that few customers drive most of the value. This is as opposed to always looking it at it as a distortion that needs to be corrected.
+As a data analyst, you need to confirm if the distortion in kurtosis or skewness
+is a data problem or it is a real-world insight. For example, a real-world
+insight could be that few customers drive most of the value. This is as opposed
+to always looking it at it as a distortion that needs to be corrected.
 
 ## [**Basic Visualizations**]{.underline}
 
@@ -641,7 +689,9 @@ ggplot2::ggplot(ml_performance_data,
   )
 ```
 
-`geom_smooth(method = "lm")` fits a linear regression, which requires a continuous x-variable; `Algorithm` is categorical, therefore, this is not useful. Below is an alternative for a case where you have categorical data.
+`geom_smooth(method = "lm")` fits a linear regression, which requires a
+continuous x-variable; `Algorithm` is categorical, therefore, this is not
+useful. Below is an alternative for a case where you have categorical data.
 
 ```{r scatter_plot_with_box_plot}
 #| echo: true
@@ -694,10 +744,15 @@ ggplot2::ggplot(ml_performance_data,
 
 ## One-Way ANOVA
 
-**Purpose:** Compares the means of three or more groups defined by a single categorical independent variable, to test whether at least one group differs from the others.\
-**Variables:** One categorical independent variable (three or more levels); one continuous dependent variable.\
-**Output:** A single F-statistic and p-value; if significant, followed by a post-hoc test (e.g., Tukey's HSD) to identify which specific groups differ.\
-**Example:** Comparing Accuracy across four algorithms used to train ML models (accuracy depends on the chosen algorithm).
+**Purpose:** Compares the means of three or more groups defined by a single
+categorical independent variable, to test whether at least one group differs
+from the others.\
+**Variables:** One categorical independent variable (three or more levels); one
+continuous dependent variable.\
+**Output:** A single F-statistic and p-value; if significant, followed by a
+post-hoc test (e.g., Tukey's HSD) to identify which specific groups differ.\
+**Example:** Comparing Accuracy across four algorithms used to train ML models
+(accuracy depends on the chosen algorithm).
 
 ```{r one_way_anova}
 #| echo: true
@@ -708,7 +763,11 @@ one_way_anova_result <- aov(Accuracy ~ Algorithm, data = ml_performance_data)
 summary(one_way_anova_result)
 ```
 
-Effect size addresses a gap that the F-test and p-value do not: those tell you whether the groups differ by more than chance, but not how much of the outcome's variability is actually attributable to the grouping factor. Eta squared (η²) answers that second question. It is defined as the proportion of total variance in the dependent variable explained by the factor.
+Effect size addresses a gap that the F-test and p-value do not: those tell you
+whether the groups differ by more than chance, but not how much of the outcome's
+variability is actually attributable to the grouping factor. Eta squared (η²)
+answers that second question. It is defined as the proportion of total variance
+in the dependent variable explained by the factor.
 
 ```{r eta_squared_for_one_way_anova}
 #| echo: true
@@ -733,10 +792,17 @@ TukeyHSD(one_way_anova_result)
 
 ## Two-Way ANOVA
 
-**Purpose:** Examines the effects of two categorical independent variables on a continuous outcome simultaneously, including whether the two variables interact, meaning the effect of one depends on the level of the other.\
-**Variables:** Two categorical independent variables; one continuous dependent variable.\
-**Output:** An F-statistic and p-value for each main effect, plus a separate F-statistic and p-value for the interaction effect; a significant interaction is interpreted before the main effects.\
-**Example:** Comparing `Accuracy` across `Algorithm` and `Dataset`, and testing whether an algorithm's relative performance changes depending on which dataset it was run on.
+**Purpose:** Examines the effects of two categorical independent variables on a
+continuous outcome simultaneously, including whether the two variables interact,
+meaning the effect of one depends on the level of the other.\
+**Variables:** Two categorical independent variables; one continuous dependent
+variable.\
+**Output:** An F-statistic and p-value for each main effect, plus a separate
+F-statistic and p-value for the interaction effect; a significant interaction is
+interpreted before the main effects.\
+**Example:** Comparing `Accuracy` across `Algorithm` and `Dataset`, and testing
+whether an algorithm's relative performance changes depending on which dataset
+it was run on.
 
 ```{r two_way_anova}
 #| echo: true
@@ -757,7 +823,11 @@ leveneTest(Accuracy ~ Algorithm * Dataset, data = ml_performance_data)
 summary(two_way_anova_result)
 ```
 
-Effect size addresses a gap that the F-test and p-value do not: those tell you whether the groups differ by more than chance, but not how much of the outcome's variability is actually attributable to the grouping factor. Eta squared (η²) answers that second question. It is defined as the proportion of total variance in the dependent variable explained by the factor.
+Effect size addresses a gap that the F-test and p-value do not: those tell you
+whether the groups differ by more than chance, but not how much of the outcome's
+variability is actually attributable to the grouping factor. Eta squared (η²)
+answers that second question. It is defined as the proportion of total variance
+in the dependent variable explained by the factor.
 
 ```{r eta_squared_for_two_way_anova}
 #| echo: true
@@ -782,10 +852,16 @@ TukeyHSD(two_way_anova_result)
 
 ## Multiple Analysis of Variance (MANOVA)
 
-**Purpose:** Compares group means across two or more continuous dependent variables at the same time, accounting for the correlation between them, rather than testing each outcome separately.\
-**Variables:** One or more categorical independent variables; two or more continuous dependent variables, analyzed jointly.\
-**Output:** A multivariate test statistic (commonly Pillai's Trace); if significant, followed by univariate ANOVAs on each dependent variable individually to see which specific outcome(s) drove the result.\
-**Example:** Comparing Accuracy, Precision, and Recall together across Algorithm, rather than running three separate one-way ANOVAs.
+**Purpose:** Compares group means across two or more continuous dependent
+variables at the same time, accounting for the correlation between them, rather
+than testing each outcome separately.\
+**Variables:** One or more categorical independent variables; two or more
+continuous dependent variables, analyzed jointly.\
+**Output:** A multivariate test statistic (commonly Pillai's Trace); if
+significant, followed by univariate ANOVAs on each dependent variable
+individually to see which specific outcome(s) drove the result.\
+**Example:** Comparing Accuracy, Precision, and Recall together across
+Algorithm, rather than running three separate one-way ANOVAs.
 
 ```{r manova}
 #| echo: true
@@ -808,7 +884,11 @@ summary(manova_result, test = "Pillai")
 summary.aov(manova_result)
 ```
 
-Effect size addresses a gap that the F-test and p-value do not: those tell you whether the groups differ by more than chance, but not how much of the outcome's variability is actually attributable to the grouping factor. Eta squared (η²) answers that second question. It is defined as the proportion of total variance in the dependent variable explained by the factor.
+Effect size addresses a gap that the F-test and p-value do not: those tell you
+whether the groups differ by more than chance, but not how much of the outcome's
+variability is actually attributable to the grouping factor. Eta squared (η²)
+answers that second question. It is defined as the proportion of total variance
+in the dependent variable explained by the factor.
 
 ```{r eta_squared_for_manova}
 #| echo: true
@@ -848,27 +928,49 @@ TukeyHSD(aov(Recall ~ Algorithm, data = ml_performance_data))
 
 ## [**Test of Linearity — Not Applicable**]{.underline}
 
-Linearity only exists between a predictor and outcome in a regression model. Group membership has no inherent order or scale, so there is no "relationship" between predictor and outcome whose shape (linear or otherwise) could be tested.
+Linearity only exists between a predictor and outcome in a regression model.
+Group membership has no inherent order or scale, so there is no "relationship"
+between predictor and outcome whose shape (linear or otherwise) could be tested.
 
 ## [**Test of Independence of Errors (Autocorrelation)**]{.underline}
 
-When observations are collected in a sequence (for example, repeated measurements over time, or runs executed one after another), the assumption of independence may be violated by autocorrelation: a correlation between residuals based on their order or proximity in the sequence. The Durbin-Watson test can be used to detect this. This test is not generally required for ANOVA designs without a natural ordering, since independence in those cases follows from random assignment and study design rather than from a statistical test.
+When observations are collected in a sequence (for example, repeated
+measurements over time, or runs executed one after another), the assumption of
+independence may be violated by autocorrelation: a correlation between residuals
+based on their order or proximity in the sequence. The Durbin-Watson test can be
+used to detect this. This test is not generally required for ANOVA designs
+without a natural ordering, since independence in those cases follows from
+random assignment and study design rather than from a statistical test.
 
-Autocorrelation is consequential because, when positive, it leads to underestimated standard errors and inflated t-statistics, which can make findings appear more significant than they actually are. Negative autocorrelation has the opposite effect: standard errors become overestimated and tests become conservative.
+Autocorrelation is consequential because, when positive, it leads to
+underestimated standard errors and inflated t-statistics, which can make
+findings appear more significant than they actually are. Negative
+autocorrelation has the opposite effect: standard errors become overestimated
+and tests become conservative.
 
-A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values approaching 0 indicate positive autocorrelation and values approaching 4 indicate negative autocorrelation.
+A Durbin-Watson statistic close to 2 suggests no autocorrelation, while values
+approaching 0 indicate positive autocorrelation and values approaching 4
+indicate negative autocorrelation.
 
 For the Durbin-Watson test, as implemented by default in R's `dwtest()`:
 
 - The null hypothesis, H~0~, is that there is no autocorrelation (ρ = 0).
 
-- The alternative hypothesis, H~a~, is that there is positive autocorrelation (ρ \> 0).
+- The alternative hypothesis, H~a~, is that there is positive autocorrelation (ρ
+  \> 0).
 
-By default, `dwtest()` tests only for positive autocorrelation, since this is the form most commonly encountered in sequential data. If a test against negative autocorrelation, or against autocorrelation in either direction, is needed instead, the `alternative` argument can be set to `"less"` or `"two.sided"`, respectively.
+By default, `dwtest()` tests only for positive autocorrelation, since this is
+the form most commonly encountered in sequential data. If a test against
+negative autocorrelation, or against autocorrelation in either direction, is
+needed instead, the `alternative` argument can be set to `"less"` or
+`"two.sided"`, respectively.
 
-If the p-value of the Durbin-Watson statistic is greater than 0.05, there is no evidence to reject the null hypothesis of no autocorrelation.
+If the p-value of the Durbin-Watson statistic is greater than 0.05, there is no
+evidence to reject the null hypothesis of no autocorrelation.
 
-Example: Algorithm benchmarks run sequentially on the same machine, where thermal throttling, caching, or background load could make consecutive runs correlated.
+Example: Algorithm benchmarks run sequentially on the same machine, where
+thermal throttling, caching, or background load could make consecutive runs
+correlated.
 
 ```{r test_of_independence_of_errors}
 #| echo: true
@@ -880,18 +982,28 @@ lmtest::dwtest(two_way_anova_result)
 lmtest::dwtest(manova_result)
 ```
 
-**Interpretation:** The Durbin-Watson statistic for one-way ANOVA (DW = 2.1638), two-way ANOVA (DW=2.1142), and multiple analysis of variance (MANOVA) (DW=2.1559) are all close to 2, indicating little evidence of autocorrelation among the residuals. The one-way ANOVA p-value (0.8292), two-way ANOVA p-value (0.7862), and MANOVA p-value (0.8146) are far greater than 0.05, so there is no evidence to reject the null hypothesis. The assumption of independent errors is therefore reasonably supported.
+**Interpretation:** The Durbin-Watson statistic for one-way ANOVA (DW = 2.1638),
+two-way ANOVA (DW=2.1142), and multiple analysis of variance (MANOVA)
+(DW=2.1559) are all close to 2, indicating little evidence of autocorrelation
+among the residuals. The one-way ANOVA p-value (0.8292), two-way ANOVA p-value
+(0.7862), and MANOVA p-value (0.8146) are far greater than 0.05, so there is no
+evidence to reject the null hypothesis. The assumption of independent errors is
+therefore reasonably supported.
 
 ## [**Test of Normality of the Distribution of the Errors**]{.underline}
 
-The Shapiro–Wilk test assesses whether a sample of data could reasonably have come from a normally distributed population. It enables you to answer the question, "Is this data “normal enough” for methods that assume normality?"
+The Shapiro–Wilk test assesses whether a sample of data could reasonably have
+come from a normally distributed population. It enables you to answer the
+question, "Is this data “normal enough” for methods that assume normality?"
 
 It tests the following hypothesis:
 
 > H₀: The population from which the sample is drawn is normally distributed.\
 > H₁: The population from which the sample is drawn is not normally distributed.
 
-The test compares your ordered data values to the values you would expect if the data were perfectly normal. The more they disagree, the lower the Shapiro–Wilk statistic (W), and the smaller the p-value.
+The test compares your ordered data values to the values you would expect if the
+data were perfectly normal. The more they disagree, the lower the Shapiro–Wilk
+statistic (W), and the smaller the p-value.
 
 It uses the same logic as a Q–Q plot, but expressed mathematically.
 
@@ -899,13 +1011,22 @@ It uses the same logic as a Q–Q plot, but expressed mathematically.
 
 If p-value \> 0.05
 
-You fail to reject the null hypothesis. There is no evidence that the data deviates from a normal distribution. However, this does not mean the data is truly normal. It simply means it is "normal enough" for the chosen statistical test of hypothesis.
+You fail to reject the null hypothesis. There is no evidence that the data
+deviates from a normal distribution. However, this does not mean the data is
+truly normal. It simply means it is "normal enough" for the chosen statistical
+test of hypothesis.
 
 **Sample Size Matters**
 
-- Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect non-normality even when it is present.
+- Small samples (n \< 30): Shapiro–Wilk has low power. It often fails to detect
+  non-normality even when it is present.
 
-- Large samples (n \> 50): Shapiro–Wilk gains enough power to detect very small, practically negligible deviations from normality. A significant result at large n does not necessarily mean the deviation matters for your analysis; ANOVA is fairly robust to mild non-normality when samples are large. Pairing the test with a Q-Q plot helps judge whether a detected deviation is practically meaningful.
+- Large samples (n \> 50): Shapiro–Wilk gains enough power to detect very small,
+  practically negligible deviations from normality. A significant result at
+  large n does not necessarily mean the deviation matters for your analysis;
+  ANOVA is fairly robust to mild non-normality when samples are large. Pairing
+  the test with a Q-Q plot helps judge whether a detected deviation is
+  practically meaningful.
 
 ```{r test_of_normality}
 #| echo: true
@@ -918,11 +1039,21 @@ result <- MVN::mvn(data = residuals(manova_result), mvn_test = "mardia")
 print(result$multivariate_normality)
 ```
 
-The test of normality of the distribution of the errors assesses whether the errors (residuals) are approximately normally distributed, i.e., most errors are close to zero and large errors are rare. A Q-Q plot can be used to conduct the test of normality.
+The test of normality of the distribution of the errors assesses whether the
+errors (residuals) are approximately normally distributed, i.e., most errors are
+close to zero and large errors are rare. A Q-Q plot can be used to conduct the
+test of normality.
 
-A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles of a normal distribution. Quantiles are statistical values that divide a dataset or probability distribution into equal-sized intervals. They help in understanding how data is distributed by marking specific points that separate the data into groups of equal size. Examples of quantiles include: quartiles (4 equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
+A Q-Q plot is a scatterplot of the quantiles of the errors against the quantiles
+of a normal distribution. Quantiles are statistical values that divide a dataset
+or probability distribution into equal-sized intervals. They help in
+understanding how data is distributed by marking specific points that separate
+the data into groups of equal size. Examples of quantiles include: quartiles (4
+equal parts), percentiles (100 equal parts), deciles (10 equal parts), etc.
 
-If the points in the Q-Q plot fall along a straight line, then the normality assumption is satisfied. If the points in the Q-Q plot do not fall along a straight line, then the normality assumption is not satisfied.
+If the points in the Q-Q plot fall along a straight line, then the normality
+assumption is satisfied. If the points in the Q-Q plot do not fall along a
+straight line, then the normality assumption is not satisfied.
 
 ```{r Q-Q_plot}
 #| echo: true
@@ -941,28 +1072,52 @@ for (i in 1:ncol(resid_matrix)) {
 par(mfrow = c(1, 1))
 ```
 
-**Interpretation:** The Shapiro-Wilk statistic for one-way ANOVA (W = 0.98827, p = 0.09886) and two-way ANOVA (W = 0.99391, p = 0.587) both yield p-values greater than 0.05, so there is no evidence to reject the null hypothesis of normality for either model; the assumption of normally distributed residuals is reasonably supported in both cases.
+**Interpretation:** The Shapiro-Wilk statistic for one-way ANOVA (W = 0.98827, p
+= 0.09886) and two-way ANOVA (W = 0.99391, p = 0.587) both yield p-values
+greater than 0.05, so there is no evidence to reject the null hypothesis of
+normality for either model; the assumption of normally distributed residuals is
+reasonably supported in both cases.
 
-For MANOVA, residuals were instead evaluated using Mardia's multivariate normality test, since MANOVA's normality assumption concerns the joint distribution of residuals across all response variables rather than each variable individually. Mardia's skewness statistic (10.708, p = 0.381) and kurtosis statistic (0.277, p = 0.782) both yield p-values well above 0.05, so there is no evidence to reject the null hypothesis of multivariate normality. The assumption of normally distributed residuals is therefore reasonably supported for the MANOVA model as well.
+For MANOVA, residuals were instead evaluated using Mardia's multivariate
+normality test, since MANOVA's normality assumption concerns the joint
+distribution of residuals across all response variables rather than each
+variable individually. Mardia's skewness statistic (10.708, p = 0.381) and
+kurtosis statistic (0.277, p = 0.782) both yield p-values well above 0.05, so
+there is no evidence to reject the null hypothesis of multivariate normality.
+The assumption of normally distributed residuals is therefore reasonably
+supported for the MANOVA model as well.
 
-`shapiro.test()` evaluates only a single variable's residuals at a time, while MANOVA's normality assumption is inherently multivariate. The Mardia test, which properly accounts for the joint distribution, is the appropriate diagnostic here and indicates that the assumption holds.
+`shapiro.test()` evaluates only a single variable's residuals at a time, while
+MANOVA's normality assumption is inherently multivariate. The Mardia test, which
+properly accounts for the joint distribution, is the appropriate diagnostic here
+and indicates that the assumption holds.
 
 ## [**Test of Homoscedasticity (Homogeneity of Variance)**]{.underline}
 
-Homoscedasticity (homogeneity of variance) means that the variability of the dependent variable is approximately the same across all groups of the independent variable.
+Homoscedasticity (homogeneity of variance) means that the variability of the
+dependent variable is approximately the same across all groups of the
+independent variable.
 
-**Levene's Test** is used in cases where the dependent variable is numeric and the independent variable is categorical.
+**Levene's Test** is used in cases where the dependent variable is numeric and
+the independent variable is categorical.
 
 It tests the following hypothesis:
 
-> H₀: The variance of the dependent variable is equal across all levels of the independent variable.\
+> H₀: The variance of the dependent variable is equal across all levels of the
+> independent variable.\
 > H₁: At least one level of the independent variable has a different variance.
 
-If the p-value is greater than 0.05, we fail to reject the null hypothesis and conclude that there is insufficient evidence to suggest that the group variances differ.
+If the p-value is greater than 0.05, we fail to reject the null hypothesis and
+conclude that there is insufficient evidence to suggest that the group variances
+differ.
 
-The purpose of checking variances is not only to satisfy a statistical assumption. Variance can provide important practical insights about the consistency or stability of different groups.
+The purpose of checking variances is not only to satisfy a statistical
+assumption. Variance can provide important practical insights about the
+consistency or stability of different groups.
 
-A group with a high variance may indicate greater uncertainty, inconsistency, instability, or risk compared with other groups. The interpretation depends on the application domain.
+A group with a high variance may indicate greater uncertainty, inconsistency,
+instability, or risk compared with other groups. The interpretation depends on
+the application domain.
 
 ```{r test_of_homoscedasticity_one_way_anova}
 #| echo: true
@@ -974,7 +1129,8 @@ car::leveneTest(Accuracy ~ Algorithm, data = ml_performance_data)
 
 Meaning of the degrees of freedom from the one-way anova:
 
-- `3` = between-group degrees of freedom, suggesting there are 4 algorithms (`k − 1 = 3`)
+- `3` = between-group degrees of freedom, suggesting there are 4 algorithms
+  (`k − 1 = 3`)
 
 - `196` = within-group (error) degrees of freedom
 
@@ -992,7 +1148,9 @@ assuming no missing values.
 car::leveneTest(Accuracy ~ Algorithm * Dataset, data = ml_performance_data)
 ```
 
-MANOVA has multiple response variables, and the assumption it actually requires is homogeneity of the *variance-covariance matrices* across groups, not homogeneity of variance for each outcome individually.
+MANOVA has multiple response variables, and the assumption it actually requires
+is homogeneity of the *variance-covariance matrices* across groups, not
+homogeneity of variance for each outcome individually.
 
 ```{r test_of_homoscedasticity_manova}
 heplots::boxM(cbind(Accuracy, Precision, Recall) ~ Algorithm,
@@ -1001,63 +1159,140 @@ heplots::boxM(cbind(Accuracy, Precision, Recall) ~ Algorithm,
 
 **Interpretation:**
 
-For the one-way ANOVA, Levene's test indicated that the variances of accuracy scores were not significantly different across the algorithms, *F*(3, 196) = 0.256, p = .857. The assumption of homogeneity of variance was therefore satisfied.
+For the one-way ANOVA, Levene's test indicated that the variances of accuracy
+scores were not significantly different across the algorithms, *F*(3, 196) =
+0.256, p = .857. The assumption of homogeneity of variance was therefore
+satisfied.
 
-For the two-way ANOVA, Levene's test was conducted across all combinations of Algorithm and Dataset to assess homogeneity of variance within each cell of the design. The result was non-significant, *F*(39, 160) = 0.908, p = .629, indicating that the assumption of homogeneity of variance was satisfied across the crossed design.
+For the two-way ANOVA, Levene's test was conducted across all combinations of
+Algorithm and Dataset to assess homogeneity of variance within each cell of the
+design. The result was non-significant, *F*(39, 160) = 0.908, p = .629,
+indicating that the assumption of homogeneity of variance was satisfied across
+the crossed design.
 
-For the MANOVA, homogeneity of variance-covariance matrices across Algorithm groups was assessed using Box's M test, since MANOVA's assumption concerns the joint covariance structure across all dependent variables (Accuracy, Precision, Recall) rather than the variance of each outcome individually. The result was non-significant, $\chi2$ (18) = 12.360, p = .828, indicating no evidence against the assumption of homogeneous covariance matrices across groups. The assumption was therefore reasonably supported.
+For the MANOVA, homogeneity of variance-covariance matrices across Algorithm
+groups was assessed using Box's M test, since MANOVA's assumption concerns the
+joint covariance structure across all dependent variables (Accuracy, Precision,
+Recall) rather than the variance of each outcome individually. The result was
+non-significant, $\chi2$ (18) = 12.360, p = .828, indicating no evidence against
+the assumption of homogeneous covariance matrices across groups. The assumption
+was therefore reasonably supported.
 
-Box's M test is known to be highly sensitive to departures from multivariate normality and tends to reject the null more readily as sample size increases; a non-significant result here is reassuring, but a significant result would not necessarily indicate a fatal violation, particularly with reasonably balanced group sizes, given MANOVA's general robustness to this assumption under such conditions.
+Box's M test is known to be highly sensitive to departures from multivariate
+normality and tends to reject the null more readily as sample size increases; a
+non-significant result here is reassuring, but a significant result would not
+necessarily indicate a fatal violation, particularly with reasonably balanced
+group sizes, given MANOVA's general robustness to this assumption under such
+conditions.
 
 ## [**Quantitative Validation of Assumptions — Not Applicable**]{.underline}
 
-Although `aov()` objects do generate residuals and can technically be passed to `gvlma()`, the function's link function (linearity) component is not meaningful here, since the indepenent variable is a categorical factor with no inherent order or numeric scale. Quantitative validation is instead carried out using assumption-specific tests: `shapiro.test()` for normality, `leveneTest()` for homogeneity of variance, and, where observations are sequentially ordered, `dwtest()` for independence.
+Although `aov()` objects do generate residuals and can technically be passed to
+`gvlma()`, the function's link function (linearity) component is not meaningful
+here, since the indepenent variable is a categorical factor with no inherent
+order or numeric scale. Quantitative validation is instead carried out using
+assumption-specific tests: `shapiro.test()` for normality, `leveneTest()` for
+homogeneity of variance, and, where observations are sequentially ordered,
+`dwtest()` for independence.
 
 # Interpretation of the Results
 
-The presentation of the results and its subsequent interpretation is based on the following notes.
+The presentation of the results and its subsequent interpretation is based on
+the following notes.
 
-**t-Statistic—t(d.f.):** In a one-sample t-test, the t-statistic measures how far the sample mean is from the hypothesised population mean.
+**t-Statistic—t(d.f.):** In a one-sample t-test, the t-statistic measures how
+far the sample mean is from the hypothesised population mean.
 
-- A t-value close to 0 indicates that the sample mean is very close to the hypothesised value.
+- A t-value close to 0 indicates that the sample mean is very close to the
+  hypothesised value.
 
-- A larger absolute t-value indicates that the observed mean is many standard errors away from the hypothesised mean, providing stronger evidence against the null hypothesis.
+- A larger absolute t-value indicates that the observed mean is many standard
+  errors away from the hypothesised mean, providing stronger evidence against
+  the null hypothesis.
 
-The t-statistic has an associated p-value, which quantifies how likely it is to observe a t-value this extreme (or more extreme) if the null hypothesis were true.
+The t-statistic has an associated p-value, which quantifies how likely it is to
+observe a t-value this extreme (or more extreme) if the null hypothesis were
+true.
 
-**Degrees of Freedom—(d.f.):** Degrees of freedom refers to the number of values in a calculation that are free to vary. It is essentially a measure of how much independent information is available for estimating a statistical parameter.
+**Degrees of Freedom—(d.f.):** Degrees of freedom refers to the number of values
+in a calculation that are free to vary. It is essentially a measure of how much
+independent information is available for estimating a statistical parameter.
 
-For example: Imagine you need to calculate the average height of 5 people, and you know the sum of all their heights is 340 inches. If you know the heights of 4 of these people (65, 70, 68, and 72 inches), you can automatically determine the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72) = 65 inches In this example, even though there are 5 people, you only have 4 degrees of freedom because once you know 4 heights and the total, the 5th height is no longer “free to vary” – it is determined by the other values.
+For example: Imagine you need to calculate the average height of 5 people, and
+you know the sum of all their heights is 340 inches. If you know the heights of
+4 of these people (65, 70, 68, and 72 inches), you can automatically determine
+the height of the fifth person without measuring them: 340 - (65 + 70 + 68 + 72)
+= 65 inches In this example, even though there are 5 people, you only have 4
+degrees of freedom because once you know 4 heights and the total, the 5th height
+is no longer “free to vary” – it is determined by the other values.
 
 **Confidence Interval**
 
-A 95% confidence interval (CI) for a parameter provides a range that, under repeated sampling, would contain the true (but unknown) population parameter 95% of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle around where 95% of your arrows landed, that circle is like a confidence interval—it captures the region in which your “shots” (i.e., estimates from different samples) tend to fall.
+A 95% confidence interval (CI) for a parameter provides a range that, under
+repeated sampling, would contain the true (but unknown) population parameter 95%
+of the time. Analogy: Imagine shooting arrows at a target. If you drew a circle
+around where 95% of your arrows landed, that circle is like a confidence
+interval—it captures the region in which your “shots” (i.e., estimates from
+different samples) tend to fall.
 
-**Uncertainty quantification:** A CI communicates your estimate’s precision—narrower intervals imply more precise estimates (often due to larger samples or less variability), whereas wider intervals indicate greater uncertainty about the true value.
+**Uncertainty quantification:** A CI communicates your estimate’s
+precision—narrower intervals imply more precise estimates (often due to larger
+samples or less variability), whereas wider intervals indicate greater
+uncertainty about the true value.
 
 **Academic Reporting (based on the APA 7th Edition Style)**
 
-Below are some key considerations to note when reporting statistical analysis using the APA style:
+Below are some key considerations to note when reporting statistical analysis
+using the APA style:
 
 1.  The type of statistical test must be stated.
 
-2.  Although not mandatory, the dependent variable is usually stated first followed by the independent variable when describing relationships, e.g., “…to examine whether advertising expenditures on YouTube, TikTok, and Facebook collectively predict Sales” such that Sales is the dependent variable that depends on advertising expenditures on YouTube, TikTok, and Facebook.
+2.  Although not mandatory, the dependent variable is usually stated first
+    followed by the independent variable when describing relationships, e.g.,
+    “…to examine whether advertising expenditures on YouTube, TikTok, and
+    Facebook collectively predict Sales” such that Sales is the dependent
+    variable that depends on advertising expenditures on YouTube, TikTok, and
+    Facebook.
 
-3.  Test statistic and parameters: Report the appropriate test statistic (*t*-Statistic, *F*-Statistic, $\chi^2$ , etc.) with the degrees of freedom in parentheses. The italicized statistical symbol is immediately followed by the degrees of freedom in parentheses without a space, e.g., *t*(498) and not t (498).
+3.  Test statistic and parameters: Report the appropriate test statistic
+    (*t*-Statistic, *F*-Statistic, $\chi^2$ , etc.) with the degrees of freedom
+    in parentheses. The italicized statistical symbol is immediately followed by
+    the degrees of freedom in parentheses without a space, e.g., *t*(498) and
+    not t (498).
 
-4.  Exact p-values: Report exact p-values, when possible (e.g., *p* = .032), unless they are less than .001, then report as *p* \< .001.
+4.  Exact p-values: Report exact p-values, when possible (e.g., *p* = .032),
+    unless they are less than .001, then report as *p* \< .001.
 
-5.  Effect sizes: Include appropriate effect size measures (e.g., R²) to indicate practical significance.
+5.  Effect sizes: Include appropriate effect size measures (e.g., R²) to
+    indicate practical significance.
 
-6.  Standard errors: Report standard errors of estimates when relevant. The standard error tells you how much your estimate might vary if you were to repeat your study with different random samples from the same population. A smaller standard error indicates a more precise estimate.
+6.  Standard errors: Report standard errors of estimates when relevant. The
+    standard error tells you how much your estimate might vary if you were to
+    repeat your study with different random samples from the same population. A
+    smaller standard error indicates a more precise estimate.
 
-7.  Confidence Intervals (CI): The confidence level should be clearly stated whenever you report point estimates (e.g., means, regression coefficients, correlations, etc.). The 95% confidence interval is the most common, and if another level is used (e.g., 90% CI, 99% CI), it should be explicitly mentioned. Confidence intervals are typically enclosed in square brackets \[\], with the lower and upper limits separated by a comma. For example: 95% CI \[-.03, .04\]. They are usually reported directly after the statistic they describe, often within the same sentence or in parentheses.
+7.  Confidence Intervals (CI): The confidence level should be clearly stated
+    whenever you report point estimates (e.g., means, regression coefficients,
+    correlations, etc.). The 95% confidence interval is the most common, and if
+    another level is used (e.g., 90% CI, 99% CI), it should be explicitly
+    mentioned. Confidence intervals are typically enclosed in square brackets
+    \[\], with the lower and upper limits separated by a comma. For example: 95%
+    CI \[-.03, .04\]. They are usually reported directly after the statistic
+    they describe, often within the same sentence or in parentheses.
 
-8.  Two decimal places: Report to two decimal places, except p-values which may need three or more decimal places. Round to the nearest value; do not truncate.
+8.  Two decimal places: Report to two decimal places, except p-values which may
+    need three or more decimal places. Round to the nearest value; do not
+    truncate.
 
-9.  Descriptive statistics: Report relevant means, standard deviations, and sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD = 4.62).
+9.  Descriptive statistics: Report relevant means, standard deviations, and
+    sample sizes, e.g., The sample size included 500 observations (M = 25.43, SD
+    = 4.62).
 
-10. Italicize statistical symbols: Use italics for statistical symbols (*t*, *F*, *p*, etc.) but not for Greek letters ( $\mu$, $\sigma$, $\alpha$), subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) = 15.62, *p* \< .001, The participants (*N* = 120) had an average score (*M* = 25.43, *SD* = 4.62) on the cognitive test.
+10. Italicize statistical symbols: Use italics for statistical symbols (*t*,
+    *F*, *p*, etc.) but not for Greek letters ( $\mu$, $\sigma$, $\alpha$),
+    subscripts, or parenthetical information, e.g., R² = .45, *F*(2, 97) =
+    15.62, *p* \< .001, The participants (*N* = 120) had an average score (*M* =
+    25.43, *SD* = 4.62) on the cognitive test.
 
 Further reading: <https://apastyle.apa.org/jars>
 
@@ -1065,11 +1300,21 @@ Further reading: <https://apastyle.apa.org/jars>
 
 ### Technical Academic Report (Based on APA Guidelines of Reporting Results)
 
-A one-way analysis of variance was conducted to compare the effect of the chosen algorithm (Logistic Regression, Random Forest, Support Vector Machine, Gradient Boosting) on classification accuracy. The effect of the chosen algorithm was statistically significant, *F*(3, 196) = 104.70, *p* \< .001, η² = .62, indicating that algorithm choice accounted for approximately 62% of the variance in accuracy — a large effect by conventional benchmarks.
+A one-way analysis of variance was conducted to compare the effect of the chosen
+algorithm (Logistic Regression, Random Forest, Support Vector Machine, Gradient
+Boosting) on classification accuracy. The effect of the chosen algorithm was
+statistically significant, *F*(3, 196) = 104.70, *p* \< .001, η² = .62,
+indicating that algorithm choice accounted for approximately 62% of the variance
+in accuracy — a large effect by conventional benchmarks.
 
 | *An omnibus test is a statistical test that evaluates whether there is a significant effect or difference somewhere among three or more groups or variables, without identifying which specific groups or pairs are driving that effect. The term "omnibus" (Latin for "for all") reflects that the test addresses a single overall question across the entire set of groups simultaneously, rather than each pairwise comparison individually.*
 
-Prior to interpreting the omnibus test, assumptions were checked. Levene's test indicated no violation of homogeneity of variance, *F*(3, 196) = 0.26, *p* = .857. The Shapiro-Wilk test indicated that residuals did not significantly depart from normality, *W* = .99, *p* = .099, though this value approaches the conventional threshold and warrants visual confirmation given the sample size. See the figure below for the Q-Q plot that provides a visual confirmation.
+Prior to interpreting the omnibus test, assumptions were checked. Levene's test
+indicated no violation of homogeneity of variance, *F*(3, 196) = 0.26, *p* =
+.857. The Shapiro-Wilk test indicated that residuals did not significantly
+depart from normality, *W* = .99, *p* = .099, though this value approaches the
+conventional threshold and warrants visual confirmation given the sample size.
+See the figure below for the Q-Q plot that provides a visual confirmation.
 
 ```{r Q-Q_plot_for_result}
 #| echo: false
@@ -1079,12 +1324,17 @@ Prior to interpreting the omnibus test, assumptions were checked. Levene's test 
 plot(one_way_anova_result, which = 2)
 ```
 
-A Durbin-Watson test found no evidence of positive autocorrelation in the residuals, *DW* = 2.16, *p* = .829; this result is meaningful only insofar as the row order of the dataset reflects a genuine sequence.
+A Durbin-Watson test found no evidence of positive autocorrelation in the
+residuals, *DW* = 2.16, *p* = .829; this result is meaningful only insofar as
+the row order of the dataset reflects a genuine sequence.
 
-Post hoc comparisons using Tukey's HSD test were conducted to examine all pairwise differences. Every comparison was statistically significant, producing a complete and unambiguous ranking: Gradient Boosting \> Random Forest \> Support Vector Machine \> Logistic Regression.
+Post hoc comparisons using Tukey's HSD test were conducted to examine all
+pairwise differences. Every comparison was statistically significant, producing
+a complete and unambiguous ranking: Gradient Boosting \> Random Forest \>
+Support Vector Machine \> Logistic Regression.
 
 | Comparison | Mean Diff. | 95% CI | *p* (adj.) | Cohen's *d*¹ |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 | Gradient Boosting vs. Logistic Regression | 0.090 | \[0.075, 0.105\] | \< .001 | 3.20 |
 | Gradient Boosting vs. SVM | 0.069 | \[0.054, 0.083\] | \< .001 | 2.44 |
 | Gradient Boosting vs. Random Forest | 0.027 | \[0.012, 0.041\] | \< .001 | 0.95 |
@@ -1092,31 +1342,62 @@ Post hoc comparisons using Tukey's HSD test were conducted to examine all pairwi
 | Random Forest vs. SVM | 0.042 | \[0.027, 0.057\] | \< .001 | 1.49 |
 | SVM vs. Logistic Regression | 0.021 | \[0.007, 0.036\] | .001 | 0.76 |
 
-¹*d* computed as mean difference divided by the pooled residual SD (√MSE = .0281); not part of the original output, included for effect-size reporting.
+¹*d* computed as mean difference divided by the pooled residual SD (√MSE =
+.0281); not part of the original output, included for effect-size reporting.
 
 ### Non-Technical Business Report
 
-Four predictive algorithms were tested head-to-head on the same accuracy benchmark. The result is unambiguous: Gradient Boosting is the top performer, Random Forest is a clear second, Support Vector Machine is third, and Logistic Regression trails all three. The gap between the best and worst performer is approximately nine percentage points of accuracy, and statistical testing confirms this gap is real, not a product of random variation in the sample. All underlying data-quality checks passed, so the result can be relied upon as stated. The open question is not whether Gradient Boosting wins on accuracy — it does, decisively — but whether accuracy alone is the right basis for a deployment decision, given that cost, speed, and interpretability were not part of this comparison.
+Four predictive algorithms were tested head-to-head on the same accuracy
+benchmark. The result is unambiguous: Gradient Boosting is the top performer,
+Random Forest is a clear second, Support Vector Machine is third, and Logistic
+Regression trails all three. The gap between the best and worst performer is
+approximately nine percentage points of accuracy, and statistical testing
+confirms this gap is real, not a product of random variation in the sample. All
+underlying data-quality checks passed, so the result can be relied upon as
+stated. The open question is not whether Gradient Boosting wins on accuracy — it
+does, decisively — but whether accuracy alone is the right basis for a
+deployment decision, given that cost, speed, and interpretability were not part
+of this comparison.
 
 ### **Recommendations**
 
-1.  **Shortlist Gradient Boosting** as the lead candidate for further development, on the strength of a statistically validated and practically meaningful accuracy advantage over all alternatives.
+1.  **Shortlist Gradient Boosting** as the lead candidate for further
+    development, on the strength of a statistically validated and practically
+    meaningful accuracy advantage over all alternatives.
 
-2.  **Do not finalize the deployment decision on accuracy alone.** Gather comparative data on training cost, inference latency, and interpretability before committing, since these factors were outside the scope of this analysis and may offset the accuracy gain depending on the application.
+2.  **Do not finalize the deployment decision on accuracy alone.** Gather
+    comparative data on training cost, inference latency, and interpretability
+    before committing, since these factors were outside the scope of this
+    analysis and may offset the accuracy gain depending on the application.
 
-3.  **Confirm comparison fairness retrospectively**: verify that all four algorithms received equivalent tuning effort and identical data splits. An accuracy advantage attributable to unequal tuning budgets would not be a genuine algorithm effect.
+3.  **Confirm comparison fairness retrospectively**: verify that all four
+    algorithms received equivalent tuning effort and identical data splits. An
+    accuracy advantage attributable to unequal tuning budgets would not be a
+    genuine algorithm effect.
 
-4.  **Replicate on a held-out or temporally distinct dataset** before treating this ranking as generalizable, since a single benchmark run cannot rule out dataset-specific idiosyncrasy.
+4.  **Replicate on a held-out or temporally distinct dataset** before treating
+    this ranking as generalizable, since a single benchmark run cannot rule out
+    dataset-specific idiosyncrasy.
 
-5.  **Document the data-generating process** behind the 200 accuracy observations (e.g., repeated k-fold cross-validation, repeated random splits) — this directly affects whether the independence assumption underlying the reported *p*-values holds.
+5.  **Document the data-generating process** behind the 200 accuracy
+    observations (e.g., repeated k-fold cross-validation, repeated random
+    splits) — this directly affects whether the independence assumption
+    underlying the reported *p*-values holds.
 
 ## Two-Way Analysis of Variance
 
 ### Technical Academic Report (Based on APA Guidelines of Reporting Results)
 
-A two-way analysis of variance was conducted to examine the effects of Algorithm (Logistic Regression, Random Forest, Support Vector Machine, Gradient Boosting), Dataset (10 distinct datasets), and their interaction on classification accuracy.
+A two-way analysis of variance was conducted to examine the effects of Algorithm
+(Logistic Regression, Random Forest, Support Vector Machine, Gradient Boosting),
+Dataset (10 distinct datasets), and their interaction on classification
+accuracy.
 
-Assumption checks supported the validity of the model. Levene's test indicated homogeneity of variance across all 40 algorithm-by-dataset cells, *F*(39, 160) = 0.91, *p* = .629. The Shapiro-Wilk test indicated that residuals did not depart from normality, *W* = 0.99, *p* = .587. A Durbin-Watson test found no evidence of positive autocorrelation, *DW* = 2.11, *p* = .786.
+Assumption checks supported the validity of the model. Levene's test indicated
+homogeneity of variance across all 40 algorithm-by-dataset cells, *F*(39, 160) =
+0.91, *p* = .629. The Shapiro-Wilk test indicated that residuals did not depart
+from normality, *W* = 0.99, *p* = .587. A Durbin-Watson test found no evidence
+of positive autocorrelation, *DW* = 2.11, *p* = .786.
 
 | Source              | *df* | *SS*  | *MS* | *F*   | *p*     | η²  |
 |---------------------|------|-------|------|-------|---------|-----|
@@ -1125,12 +1406,21 @@ Assumption checks supported the validity of the model. Levene's test indicated h
 | Algorithm × Dataset | 27   | 0.02  | 0.00 | 0.68  | .881    | .04 |
 | Residuals           | 160  | 0.133 | 0.00 | —     | —       | .33 |
 
-The main effect of Algorithm was statistically significant and large, *F*(3, 160) = 99.18, *p* \< .001, η² = .616. The main effect of Dataset was not significant, *F*(9, 160) = 0.81, *p* = .612, η² = .02, indicating that accuracy did not differ systematically across the ten datasets when averaged over algorithm. The Algorithm × Dataset interaction was not significant, *F*(27, 160) = 0.68, *p* = .881, η² = .04, indicating that the relative ordering of the four algorithms did not vary meaningfully from one dataset to another.
+The main effect of Algorithm was statistically significant and large, *F*(3,
+160) = 99.18, *p* \< .001, η² = .616. The main effect of Dataset was not
+significant, *F*(9, 160) = 0.81, *p* = .612, η² = .02, indicating that accuracy
+did not differ systematically across the ten datasets when averaged over
+algorithm. The Algorithm × Dataset interaction was not significant, *F*(27, 160)
+= 0.68, *p* = .881, η² = .04, indicating that the relative ordering of the four
+algorithms did not vary meaningfully from one dataset to another.
 
-**Post hoc comparisons: Algorithm.** Tukey's HSD confirmed that all six pairwise algorithm differences were statistically significant, reproducing the strict ordering Gradient Boosting \> Random Forest \> Support Vector Machine \> Logistic Regression.
+**Post hoc comparisons: Algorithm.** Tukey's HSD confirmed that all six pairwise
+algorithm differences were statistically significant, reproducing the strict
+ordering Gradient Boosting \> Random Forest \> Support Vector Machine \>
+Logistic Regression.
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|----------------------------|-----------|-----------|-----------|-----------|
+|-----------------------------------------|-------|----------------|------------|------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.08, 0.11\] | \< .001    | 3.12 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.38 |
 | Gradient Boosting – Random Forest       | 0.03  | \[0.01, 0.04\] | \< .001    | 0.93 |
@@ -1138,39 +1428,81 @@ The main effect of Algorithm was statistically significant and large, *F*(3, 160
 | Random Forest – SVM                     | 0.04  | \[0.03, 0.06\] | \< .001    | 1.46 |
 | SVM – Logistic Regression               | 0.02  | \[0.01, 0.04\] | .002       | 0.74 |
 
-¹*d* = mean difference / √MSE (√0.00083 = 0.0288); included for effect-size context, not part of original output.
+¹*d* = mean difference / √MSE (√0.00083 = 0.0288); included for effect-size
+context, not part of original output.
 
-**Post hoc comparisons: Dataset.** Consistent with the non-significant main effect, none of the 45 pairwise dataset comparisons reached significance (*p* adj. range = .838–1.000).
+**Post hoc comparisons: Dataset.** Consistent with the non-significant main
+effect, none of the 45 pairwise dataset comparisons reached significance (*p*
+adj. range = .838–1.000).
 
-**Post hoc comparisons: Algorithm × Dataset.** Given the non-significant omnibus interaction, the 780 individual cell-level contrasts are not interpreted or reported in full. A number of these contrasts nonetheless show small adjusted *p*-values (e.g., Gradient Boosting:Dataset_1 vs. Logistic Regression:Dataset_2, *p* = .0002); this pattern reflects the large main effect of Algorithm surfacing within individual cell pairs, not a true interaction, and should not be read as evidence that algorithm performance depends on dataset. Standard practice is to withhold interpretation of simple effects when the omnibus interaction test is non-significant, and that practice is followed here.
+**Post hoc comparisons: Algorithm × Dataset.** Given the non-significant omnibus
+interaction, the 780 individual cell-level contrasts are not interpreted or
+reported in full. A number of these contrasts nonetheless show small adjusted
+*p*-values (e.g., Gradient Boosting:Dataset_1 vs. Logistic Regression:Dataset_2,
+*p* = .0002); this pattern reflects the large main effect of Algorithm surfacing
+within individual cell pairs, not a true interaction, and should not be read as
+evidence that algorithm performance depends on dataset. Standard practice is to
+withhold interpretation of simple effects when the omnibus interaction test is
+non-significant, and that practice is followed here.
 
 ### Non-Technical Business Report
 
-The earlier finding — that Gradient Boosting outperforms the other three algorithms — has now been stress-tested across ten distinct datasets, and it holds without exception. Performance does not vary meaningfully by dataset on its own, and, critically, the ranking of algorithms (Gradient Boosting first, then Random Forest, then SVM, then Logistic Regression) is identical across all ten datasets — there is no scenario in this evidence base where a different algorithm comes out on top. This substantially strengthens the earlier conclusion: the advantage is not a quirk of one dataset or one lucky sample, but a consistent pattern. All data-quality checks passed. The remaining decision is the same one flagged previously: accuracy is settled, but cost, latency, and interpretability still need to be considered before committing to a production choice.
+The earlier finding — that Gradient Boosting outperforms the other three
+algorithms — has now been stress-tested across ten distinct datasets, and it
+holds without exception. Performance does not vary meaningfully by dataset on
+its own, and, critically, the ranking of algorithms (Gradient Boosting first,
+then Random Forest, then SVM, then Logistic Regression) is identical across all
+ten datasets — there is no scenario in this evidence base where a different
+algorithm comes out on top. This substantially strengthens the earlier
+conclusion: the advantage is not a quirk of one dataset or one lucky sample, but
+a consistent pattern. All data-quality checks passed. The remaining decision is
+the same one flagged previously: accuracy is settled, but cost, latency, and
+interpretability still need to be considered before committing to a production
+choice.
 
 ### Recommendations
 
-1.  **Proceed with Gradient Boosting as the lead candidate** with higher confidence than before — the result is now supported by consistency across ten datasets, not a single benchmark run.
+1.  **Proceed with Gradient Boosting as the lead candidate** with higher
+    confidence than before — the result is now supported by consistency across
+    ten datasets, not a single benchmark run.
 
-2.  **Establish precisely what the ten "datasets" represent** before treating this as evidence of cross-domain generalization. This single clarification materially changes how strong a claim can be made.
+2.  **Establish precisely what the ten "datasets" represent** before treating
+    this as evidence of cross-domain generalization. This single clarification
+    materially changes how strong a claim can be made.
 
-3.  **Still price in cost, latency, and interpretability** before finalizing deployment, as these remain untested dimensions.
+3.  **Still price in cost, latency, and interpretability** before finalizing
+    deployment, as these remain untested dimensions.
 
-4.  **Do not interpret the individual Algorithm × Dataset cell comparisons** in any downstream reporting; only the omnibus interaction test (non-significant) is the supportable claim.
+4.  **Do not interpret the individual Algorithm × Dataset cell comparisons** in
+    any downstream reporting; only the omnibus interaction test
+    (non-significant) is the supportable claim.
 
-5.  **Validate on at least one genuinely held-out dataset** collected independently of the original ten, to confirm the result is not an artifact of how those ten datasets were originally selected or constructed.
+5.  **Validate on at least one genuinely held-out dataset** collected
+    independently of the original ten, to confirm the result is not an artifact
+    of how those ten datasets were originally selected or constructed.
 
 ## Multiple Analysis of Variance
 
 ### Technical Academic Report (Based on APA Guidelines of Reporting Results)
 
-A one-way multivariate analysis of variance (MANOVA) was conducted to examine the effect of Algorithm (Logistic Regression, Random Forest, Support Vector Machine, Gradient Boosting) on a combined outcome of classification Accuracy, Precision, and Recall.
+A one-way multivariate analysis of variance (MANOVA) was conducted to examine
+the effect of Algorithm (Logistic Regression, Random Forest, Support Vector
+Machine, Gradient Boosting) on a combined outcome of classification Accuracy,
+Precision, and Recall.
 
-**Assumption checks.** Mardia's test indicated no significant departure from multivariate normality in skewness, *b* = 10.71, *p* = .381, or kurtosis, *b* = 0.28, *p* = .782. Box's M test indicated no significant violation of the homogeneity of covariance matrices assumption, χ²(18) = 12.36, *p* = .828. A Durbin-Watson test found no evidence of positive autocorrelation, *DW* = 2.16, *p* = .815.
+**Assumption checks.** Mardia's test indicated no significant departure from
+multivariate normality in skewness, *b* = 10.71, *p* = .381, or kurtosis, *b* =
+0.28, *p* = .782. Box's M test indicated no significant violation of the
+homogeneity of covariance matrices assumption, χ²(18) = 12.36, *p* = .828. A
+Durbin-Watson test found no evidence of positive autocorrelation, *DW* = 2.16,
+*p* = .815.
 
-**Multivariate effect.** The multivariate effect of Algorithm on the combined outcome was statistically significant, Pillai's Trace = 0.67, *F*(9, 588) = 18.60, *p* \< .001.
+**Multivariate effect.** The multivariate effect of Algorithm on the combined
+outcome was statistically significant, Pillai's Trace = 0.67, *F*(9, 588) =
+18.60, *p* \< .001.
 
-**Univariate follow-up tests.** Given the significant multivariate effect, univariate ANOVAs were examined for each outcome as protected follow-up tests.
+**Univariate follow-up tests.** Given the significant multivariate effect,
+univariate ANOVAs were examined for each outcome as protected follow-up tests.
 
 | Outcome   | *df*   | *MS*   | *F*    | *p*     | η²   |
 |-----------|--------|--------|--------|---------|------|
@@ -1178,14 +1510,15 @@ A one-way multivariate analysis of variance (MANOVA) was conducted to examine th
 | Precision | 3, 196 | 0.0833 | 74.55  | \< .001 | .533 |
 | Recall    | 3, 196 | 0.0838 | 77.71  | \< .001 | .543 |
 
-All three effects were significant and large, with Algorithm explaining between 53% and 62% of variance depending on outcome.
+All three effects were significant and large, with Algorithm explaining between
+53% and 62% of variance depending on outcome.
 
 **Post hoc comparisons.** Tukey's HSD was conducted separately for each outcome.
 
 *Accuracy*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|----------------------------|-----------|-----------|-----------|-----------|
+|-----------------------------------------|-------|----------------|------------|------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.08, 0.11\] | \< .001    | 3.21 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.45 |
 | Gradient Boosting – Random Forest       | 0.03  | \[0.01, 0.04\] | \< .001    | 0.95 |
@@ -1196,7 +1529,7 @@ All three effects were significant and large, with Algorithm explaining between 
 *Precision*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|----------------------------|-----------|-----------|-----------|-----------|
+|-----------------------------------------|-------|----------------|------------|------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.07, 0.11\] | \< .001    | 2.64 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 2.00 |
 | Gradient Boosting – Random Forest       | 0.02  | \[0.00, 0.04\] | .018       | 0.59 |
@@ -1207,7 +1540,7 @@ All three effects were significant and large, with Algorithm explaining between 
 *Recall*
 
 | Comparison                              | Diff. | 95% CI         | *p* (adj.) | *d*¹ |
-|----------------------------|-----------|-----------|-----------|-----------|
+|-----------------------------------------|-------|----------------|------------|------|
 | Gradient Boosting – Logistic Regression | 0.09  | \[0.07, 0.11\] | \< .001    | 2.69 |
 | Gradient Boosting – SVM                 | 0.07  | \[0.05, 0.08\] | \< .001    | 1.99 |
 | Gradient Boosting – Random Forest       | 0.02  | \[0.00, 0.04\] | .030       | 0.56 |
@@ -1215,28 +1548,67 @@ All three effects were significant and large, with Algorithm explaining between 
 | Random Forest – SVM                     | 0.05  | \[0.03, 0.06\] | \< .001    | 1.43 |
 | SVM – Logistic Regression               | 0.02  | \[0.01, 0.04\] | .003       | 0.71 |
 
-¹*d* = mean difference / √MSE; not part of the original output, included for effect-size context.
+¹*d* = mean difference / √MSE; not part of the original output, included for
+effect-size context.
 
-**Synthesis.** Across all three outcomes, every pairwise comparison was statistically significant, and the rank ordering was identical: Gradient Boosting \> Random Forest \> SVM \> Logistic Regression. This convergence across three distinct, though related, performance metrics provides stronger evidence for the algorithm ranking than any single outcome could provide alone. The Gradient Boosting–Random Forest contrast was consistently the smallest margin among the six comparisons in every outcome and is identified below as the comparison most sensitive to multiplicity correction.
+**Synthesis.** Across all three outcomes, every pairwise comparison was
+statistically significant, and the rank ordering was identical: Gradient
+Boosting \> Random Forest \> SVM \> Logistic Regression. This convergence across
+three distinct, though related, performance metrics provides stronger evidence
+for the algorithm ranking than any single outcome could provide alone. The
+Gradient Boosting–Random Forest contrast was consistently the smallest margin
+among the six comparisons in every outcome and is identified below as the
+comparison most sensitive to multiplicity correction.
 
 ### Non-Technical Business Report
 
-The conclusion is now fully confirmed: Gradient Boosting leads, Random Forest is second, SVM third, Logistic Regression last — and this exact ordering holds independently across all three quality measures (accuracy, precision, and recall), with every single pairwise difference statistically significant in every measure. This is the most complete evidence produced across this evaluation: no algorithm wins on one metric while losing on another, and no result depends on which single metric is chosen to judge the algorithms. The only nuance worth flagging at the leadership level is that the gap between the top two performers — Gradient Boosting and Random Forest — is consistently the narrowest of the six comparisons across all three metrics. The overall ranking is not in question; how decisively Gradient Boosting separates itself from the runner-up is the one place where the margin is closer than the headline result suggests.
+The conclusion is now fully confirmed: Gradient Boosting leads, Random Forest is
+second, SVM third, Logistic Regression last — and this exact ordering holds
+independently across all three quality measures (accuracy, precision, and
+recall), with every single pairwise difference statistically significant in
+every measure. This is the most complete evidence produced across this
+evaluation: no algorithm wins on one metric while losing on another, and no
+result depends on which single metric is chosen to judge the algorithms. The
+only nuance worth flagging at the leadership level is that the gap between the
+top two performers — Gradient Boosting and Random Forest — is consistently the
+narrowest of the six comparisons across all three metrics. The overall ranking
+is not in question; how decisively Gradient Boosting separates itself from the
+runner-up is the one place where the margin is closer than the headline result
+suggests.
 
 ### Recommendations
 
-1.  **Proceed with Gradient Boosting as the recommended algorithm.** The conclusion is now supported by full convergence across three independent performance metrics, the strongest evidentiary standard reached in this evaluation.
+1.  **Proceed with Gradient Boosting as the recommended algorithm.** The
+    conclusion is now supported by full convergence across three independent
+    performance metrics, the strongest evidentiary standard reached in this
+    evaluation.
 
-2.  **Treat the Gradient Boosting vs. Random Forest margin as the genuine decision point**, not the broader ranking. If training cost, inference latency, or interpretability favor Random Forest, this is the one comparison where that trade-off is close enough to matter.
+2.  **Treat the Gradient Boosting vs. Random Forest margin as the genuine
+    decision point**, not the broader ranking. If training cost, inference
+    latency, or interpretability favor Random Forest, this is the one comparison
+    where that trade-off is close enough to matter.
 
-3.  **Apply a stricter correction across the three outcome families** (e.g., Bonferroni at α = .0167 instead of .05) specifically to the Gradient Boosting–Random Forest contrasts before treating them as fully secure, since Tukey's correction here only protects within each individual metric's six comparisons, not across all eighteen.
+3.  **Apply a stricter correction across the three outcome families** (e.g.,
+    Bonferroni at α = .0167 instead of .05) specifically to the Gradient
+    Boosting–Random Forest contrasts before treating them as fully secure, since
+    Tukey's correction here only protects within each individual metric's six
+    comparisons, not across all eighteen.
 
-4.  **Report all three Tukey tables together**, as done above, rather than any one in isolation — the convergence across metrics is itself part of the evidentiary strength and should not be dropped in summarized reporting.
+4.  **Report all three Tukey tables together**, as done above, rather than any
+    one in isolation — the convergence across metrics is itself part of the
+    evidentiary strength and should not be dropped in summarized reporting.
 
-5.  **If forced to choose between Gradient Boosting and Random Forest under resource constraints**, treat it as a genuine cost-benefit decision rather than a statistical formality, given how narrow and comparatively fragile that specific margin is.
+5.  **If forced to choose between Gradient Boosting and Random Forest under
+    resource constraints**, treat it as a genuine cost-benefit decision rather
+    than a statistical formality, given how narrow and comparatively fragile
+    that specific margin is.
 
 # References and Further Reading
 
-American Psychological Association. (2025, February). *Journal Article Reporting Standards (JARS)*. APA Style. Retrieved April 28, 2025, from <https://apastyle.apa.org/jars>
+American Psychological Association. (2025, February). *Journal Article Reporting
+Standards (JARS)*. APA Style. Retrieved April 28, 2025, from
+<https://apastyle.apa.org/jars>
 
-Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress. <https://link.springer.com/book/10.1007/978-1-4842-8754-5>
+Hodeghatta, U. R., & Nayak, U. (2023). *Practical Business Analytics Using R and
+Python: Solve Business Problems Using a Data-driven Approach* (2nd ed.). Apress.
+<https://link.springer.com/book/10.1007/978-1-4842-8754-5>
